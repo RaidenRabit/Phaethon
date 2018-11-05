@@ -1,24 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Core.Model;
 using InternalApi.Controller;
-using NUnit.Framework;
 
-namespace Tests.UnitTests
+namespace InternalApi
 {
-    public class InvoiceTest
+    class Program
     {
-        [Test]
-        public void CreateInvoiceSuccess()
+        static void Main(string[] args)
         {
-            Company receiverCompany = new Company();
-            receiverCompany.ID = 64;
-            receiverCompany.Location = "Nibevej 2344 location";
-            receiverCompany.Name = "shufle";
-            receiverCompany.RegNumber = "54555556";
-            receiverCompany.Address = "Nibevej 2344 Address";
-            receiverCompany.BankNumber = "DK34745624547";
+            Company receiverCompany = new Company
+            {
+                ID = 1,
+                Location = "Nibevej 2344 location",
+                Name = "shufle",
+                RegNumber = "54555556",
+                Address = "Nibevej 2344 Address",
+                BankNumber = "DK34745624547"
+            };
 
             Representative receiver = new Representative();
+            receiver.ID = 1;
             receiver.Name = "Kabola";
             receiver.Company = receiverCompany;
 
@@ -32,7 +37,7 @@ namespace Tests.UnitTests
             Representative sender = new Representative();
             sender.Name = "Kasper";
             sender.Company = senderCompany;
-            
+
             Invoice invoice = new Invoice();
             invoice.DocNumber = "136381022";
             invoice.PaymentDate = DateTime.Now;
@@ -43,8 +48,8 @@ namespace Tests.UnitTests
             invoice.Transport = 5;
 
             InvoiceController invoiceController = new InvoiceController();
-            invoice = invoiceController.CreateInvoice(invoice);
-            Assert.IsNotNull(invoice);
+            invoiceController.CreateInvoice(invoice);
+            Console.WriteLine(invoiceController.GetInvoices().Count);
         }
     }
 }

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E9EA7535-5737-4563-8B5F-4A39B27492DE}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>InternalApi</RootNamespace>
     <AssemblyName>InternalApi</AssemblyName>
@@ -52,9 +52,8 @@
   <ItemGroup>
     <Compile Include="Controller\InvoiceController.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
-    <Compile Include="DataManagement\CompanyData.cs" />
-    <Compile Include="DataManagement\InvoiceData.cs" />
-    <Compile Include="DataManagement\RepresentativeData.cs" />
+    <Compile Include="DataAccess\InvoiceDA.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,56 +1,53 @@
 ﻿using Core.Model;
 using InternalApi.DataAccess;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InternalApi.DataManagement
 {
-    public class RepresentativeData
+    public class InvoiceDA
     {
-        public void Create(Representative representative)
+        public void Create(Invoice invoice)
         {
             using (var db = new DatabaseContext())
             {
-                db.Representatives.Add(representative);
+                db.Invoices.Attach(invoice);
                 db.SaveChanges();
             }
         }
 
-        public Representative Read(int id)
+        public Invoice Read(int id)
         {
             using (var db = new DatabaseContext())
             {
-                return db.Representatives.Find(id);
+                return db.Invoices.Find(id);
             }
         }
 
-        public List<Representative> GetCompaniesRepresentatives(int id)
+        public List<Invoice> GetInvoices()
         {
             using (var db = new DatabaseContext())
             {
-                return db.Representatives.Where(r => r.Company.ID == id).ToList();
+                return db.Invoices.ToList();
             }
         }
 
-        public void Update(Representative representative)
+        public void Update(Invoice invoice)
         {
             using (var db = new DatabaseContext())
             {
-                db.Representatives.AddOrUpdate(representative);
+                db.Invoices.AddOrUpdate(invoice);
                 db.SaveChanges();
             }
         }
 
-        public void Delete(Representative representative)
+        public void Delete(Invoice invoice)
         {
             using (var db = new DatabaseContext())
             {
-                db.Representatives.Attach(representative);
-                db.Representatives.Remove(representative);
+                db.Invoices.Attach(invoice);
+                db.Invoices.Remove(invoice);
                 db.SaveChanges();
             }
         }

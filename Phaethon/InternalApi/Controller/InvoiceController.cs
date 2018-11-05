@@ -14,11 +14,11 @@ namespace InternalApi.Controller
         {
             try
             {
-                InvoiceData invoiceData = new InvoiceData();
-                invoiceData.Create(invoice);
-                return invoiceData.Read(invoice.ID);
+                InvoiceDA invoiceDA = new InvoiceDA();
+                invoiceDA.Create(invoice);
+                return invoiceDA.Read(invoice.ID);
             }
-            catch
+            catch(Exception e)
             {
                 return null;
             }
@@ -28,7 +28,7 @@ namespace InternalApi.Controller
         {
             try
             {
-                InvoiceData invoiceData = new InvoiceData();
+                InvoiceDA invoiceData = new InvoiceDA();
                 return invoiceData.Read(id);
             }
             catch
@@ -41,7 +41,7 @@ namespace InternalApi.Controller
         {
             try
             {
-                InvoiceData invoiceData = new InvoiceData();
+                InvoiceDA invoiceData = new InvoiceDA();
                 return invoiceData.GetInvoices();
             }
             catch
@@ -54,7 +54,7 @@ namespace InternalApi.Controller
         {
             try
             {
-                InvoiceData invoiceData = new InvoiceData();
+                InvoiceDA invoiceData = new InvoiceDA();
                 invoiceData.Update(invoice);
                 Invoice dbInvoice = invoiceData.Read(invoice.ID);
                 if (dbInvoice.Equals(invoice))//if was updated right
@@ -76,7 +76,7 @@ namespace InternalApi.Controller
         {
             try
             {
-                InvoiceData invoiceData = new InvoiceData();
+                InvoiceDA invoiceData = new InvoiceDA();
                 Invoice invoice = invoiceData.Read(id);
                 invoiceData.Delete(invoice);
                 if (invoiceData.Read(invoice.ID) == null)//if was deleted

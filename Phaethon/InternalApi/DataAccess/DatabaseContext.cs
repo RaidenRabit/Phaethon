@@ -5,7 +5,7 @@ namespace InternalApi.DataAccess
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Company> Companys { get; set; }
+        public DbSet<Company> Companies { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Element> Elements { get; set; }
         public DbSet<Product> Products { get; set; }
