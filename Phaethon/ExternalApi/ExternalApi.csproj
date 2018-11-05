@@ -46,5 +46,15 @@
     <Folder Include="Controller\" />
     <Folder Include="SwaggerDocumentation\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{2f81d45f-2fd1-442c-b663-d04af5982d28}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InternalApi\InternalApi.csproj">
+      <Project>{e9ea7535-5737-4563-8b5f-4a39b27492de}</Project>
+      <Name>InternalApi</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

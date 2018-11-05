@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1180</x>
+      <y>130</y>
+      <w>230</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Companies
+--
+ID INT PRIMARY KEY,
+Name VARCHAR,
+RegNumber VARCHAR,
+Location VARCHAR,
+Address VARCHAR,
+BankNumber VARCHAR</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>790</x>
+      <y>340</y>
+      <w>230</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Products
+--
+ID INT PRIMARY KEY,
+ProductGroup_ID INT FOREIGN KEY,
+Name VARCHAR,
+Barcode VARCHAR</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1140</x>
+      <y>340</y>
+      <w>230</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>ProductGroups
+--
+ID INT PRIMARY KEY,
+Name VARCHAR,
+Tax INT</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1010</x>
+      <y>360</y>
+      <w>150</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;60.0;30.0;60.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>400</y>
+      <w>230</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Items
+--
+ID INT PRIMARY KEY,
+Product_ID INT FOREIGN KEY,
+SerNumber VARCHAR,
+Price DECIMAL,
+InStock BIT</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>360</y>
+      <w>110</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;50.0;90.0;50.0;10.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>460</x>
+      <y>130</y>
+      <w>230</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>Invoices
+--
+ID INT PRIMARY KEY,
+Sender_ID INT FOREIGN KEY,
+Receiver_ID INT FOREIGN KEY,
+Transport DECIMAL,
+DocNumber VARCHAR,
+PrescriptionDate DATE,
+ReceptionDate DATE,
+PaymentDate DATE
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>840</x>
+      <y>130</y>
+      <w>230</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Representatives
+--
+ID INT PRIMARY KEY,
+Company_ID INT FOREIGN KEY,
+Name VARCHARs</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1060</x>
+      <y>150</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;50.0;30.0;50.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>150</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;40.0;80.0;40.0;80.0;10.0;160.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>150</y>
+      <w>180</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;70.0;30.0;70.0;10.0;160.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>150</y>
+      <w>310</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Elements
+--
+Invoice_ID INT FOREIGN KEY PRIMARY KEY,
+Item_ID INT FOREIGN KEY PRIMARY KEY</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>180</y>
+      <w>200</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0;70.0;250.0;180.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>150</y>
+      <w>180</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;70.0;30.0;70.0;10.0;160.0;10.0</additional_attributes>
+  </element>
+</diagram>
