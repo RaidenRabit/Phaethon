@@ -22,6 +22,7 @@ namespace InternalApi.Controller
             _invoiceDa = new InvoiceDa();
         }
         
+        //do like this
         [Route("Create")]
         [HttpPost]
         public HttpResponseMessage Create(Invoice invoice)
@@ -30,7 +31,7 @@ namespace InternalApi.Controller
         }
 
         [Route("Read")]
-        [HttpGet]
+        [HttpGet]//post
         public Invoice Read(int id)
         {
             try

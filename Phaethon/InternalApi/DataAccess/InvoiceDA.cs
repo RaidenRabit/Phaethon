@@ -10,7 +10,7 @@ namespace InternalApi.DataAccess
         internal bool Create(Invoice invoice)
         {
             using (var db = new DatabaseContext())
-            {
+            { 
                 if (db.Invoices.Any(i => i.ID == invoice.ID))
                     db.Entry(invoice).State = EntityState.Modified;
                 if (db.Representatives.Any(i => i.ID == invoice.Receiver.ID))
