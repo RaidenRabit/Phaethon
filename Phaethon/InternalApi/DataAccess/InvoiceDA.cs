@@ -1,54 +1,64 @@
-﻿using Core.Model;
-using InternalApi.DataAccess;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using Core.Model;
 
-namespace InternalApi.DataManagement
+namespace InternalApi.DataAccess
 {
-    public class InvoiceDA
+    class InvoiceDa
     {
-        public void Create(Invoice invoice)
+        internal bool Create(Invoice invoice)
         {
             using (var db = new DatabaseContext())
             {
-                db.Invoices.Attach(invoice);
-                db.SaveChanges();
+                if (db.Invoices.Any(i => i.ID == invoice.ID))
+                    db.Entry(invoice).State = EntityState.Modified;
+                if (db.Representatives.Any(i => i.ID == invoice.Receiver.ID))
+                    db.Entry(invoice.Receiver).State = EntityState.Modified;
+                if (db.Companies.Any(i => i.ID == invoice.Receiver.Company.ID))
+                    db.Entry(invoice.Receiver.Company).State = EntityState.Modified;
+                if (db.Representatives.Any(i => i.ID == invoice.Sender.ID))
+                    db.Entry(invoice.Sender).State = EntityState.Modified;
+                if (db.Companies.Any(i => i.ID == invoice.Sender.Company.ID))
+                    db.Entry(invoice.Sender.Company).State = EntityState.Modified;
+                db.Invoices.Add(invoice);
+                
+                return db.SaveChanges() > 0;
             }
         }
 
-        public Invoice Read(int id)
+        internal Invoice Read(int id)
         {
             using (var db = new DatabaseContext())
             {
-                return db.Invoices.Find(id);
+                return db.Invoices
+                    .Include(x => x.Sender)
+                    .Include(x => x.Sender.Company)
+                    .Include(x => x.Receiver)
+                    .Include(x => x.Receiver.Company)
+                    .SingleOrDefault(x => x.ID == id);
             }
         }
 
-        public List<Invoice> GetInvoices()
+        internal List<Invoice> GetInvoices()
         {
             using (var db = new DatabaseContext())
             {
-                return db.Invoices.ToList();
+                return db.Invoices
+                    .Include(x => x.Sender)
+                    .Include(x => x.Sender.Company)
+                    .Include(x => x.Receiver)
+                    .Include(x => x.Receiver.Company)
+                    .ToList();
             }
         }
 
-        public void Update(Invoice invoice)
+        internal bool Delete(int id)
         {
             using (var db = new DatabaseContext())
             {
-                db.Invoices.AddOrUpdate(invoice);
-                db.SaveChanges();
-            }
-        }
-
-        public void Delete(Invoice invoice)
-        {
-            using (var db = new DatabaseContext())
-            {
-                db.Invoices.Attach(invoice);
-                db.Invoices.Remove(invoice);
-                db.SaveChanges();
+                db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == id));
+                return db.SaveChanges() > 0;
             }
         }
     }
