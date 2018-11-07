@@ -14,7 +14,7 @@ using NUnit.Framework.Internal.Commands;
 
 namespace Tests.IntegrationTests
 {
-    public class InvoiceTest
+    public class InvoiceTest : IntegrationTestBase
     {
         private static Invoice GetInvoiceSeed()
         {
@@ -88,14 +88,16 @@ namespace Tests.IntegrationTests
         {
             //Setup
             var json = JsonConvert.SerializeObject(null);
-            HttpClient client = new HttpClient();
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             //Act
-            var result = client.PostAsync("http://localhost:64007/Invoice/Create", stringContent).Result;
+            var result = _client.PostAsync("http://localhost:64007/Invoice/Create", stringContent).Result;
 
             //Assert
             Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
+
+            //TearDown
+            Dispose();
         }
 
         [Test]
