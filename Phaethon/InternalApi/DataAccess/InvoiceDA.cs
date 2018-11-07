@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    class InvoiceDa
+    internal class InvoiceDa
     {
         internal bool Create(Invoice invoice)
         {
@@ -57,7 +58,7 @@ namespace InternalApi.DataAccess
         {
             using (var db = new DatabaseContext())
             {
-                db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == id));
+                db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == id) ?? throw new InvalidOperationException());
                 return db.SaveChanges() > 0;
             }
         }

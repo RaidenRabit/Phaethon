@@ -16,14 +16,6 @@ namespace Tests.IntegrationTests
 {
     public class InvoiceTest
     {
-        private readonly InvoiceController _invoiceController;
-        private readonly CompanyController _companyController;
-        public InvoiceTest()
-        {
-            _invoiceController = new InvoiceController();
-            _companyController = new CompanyController();
-        }
-
         private static Invoice GetInvoiceSeed()
         {
             Company receiverCompany = new Company
@@ -72,15 +64,8 @@ namespace Tests.IntegrationTests
 
         #region invoice
         [Test]
-        public void CreateInvoiceSuccess()
-        {
-            //Assert.AreEqual(true, _invoiceController.Create(GetInvoiceSeed()));
-            Assert.AreEqual(true, true);
-        }
-
-        [Test]
-        public void CreateInvoice_InvoiceObjectNull_InternalServerErrorReturned()
-        {
+        public void CreateInvoice_NewInvoiceRepresentativeCompanyObject_OKReturned()
+        {//check if count increeses
             //Setup
             var json = JsonConvert.SerializeObject(GetInvoiceSeed());
             HttpClient client = new HttpClient();
@@ -90,7 +75,39 @@ namespace Tests.IntegrationTests
             var result = client.PostAsync("http://localhost:64007/Invoice/Create", stringContent).Result;
 
             //Assert
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+        }
+
+        [Test]
+        public void CreateInvoice_InvoiceObjectNull_InternalServerErrorReturned()
+        {
+            //Setup
+            var json = JsonConvert.SerializeObject(null);
+            HttpClient client = new HttpClient();
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            //Act
+            var result = client.PostAsync("http://localhost:64007/Invoice/Create", stringContent).Result;
+
+            //Assert
             Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
+        }
+
+        [Test]
+        public void GetInvoices_CallGetInvoicesMethod_InvoicesReturned()
+        {
+            //Setup
+            HttpClient client = new HttpClient();
+
+            //Act
+            var result = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result;
+            string json = result.Content.ReadAsStringAsync().Result;
+            List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);//check if internal server error
+            Assert.AreNotEqual("", json);//check if json is empty
+            Assert.AreNotEqual(0, invoices.Count);//check if coverts right
         }
 
         //[Test]

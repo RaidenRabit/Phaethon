@@ -94,6 +94,8 @@
     <Compile Include="DataAccess\CompanyDa.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
     <Compile Include="DataAccess\InvoiceDa.cs" />
+    <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
+    <Compile Include="DataManagement\InvoiceManagement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -111,7 +113,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DataManagement\IDataManagement\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

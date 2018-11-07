@@ -1,75 +1,48 @@
-﻿using Core.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
-using InternalApi.DataAccess;
+using Core.Model;
+using InternalApi.DataManagement;
+using InternalApi.DataManagement.IDataManagement;
 
-namespace InternalApi.Controller
+namespace InternalApi.Controllers
 {
     [RoutePrefix("Invoice")]
     public class InvoiceController: ApiController
     {
-        private readonly InvoiceDa _invoiceDa;
+        private readonly IInvoiceManagement _invoiceManagement;
 
         public InvoiceController()
         {
-            _invoiceDa = new InvoiceDa();
+            _invoiceManagement = new InvoiceManagement();
         }
         
-        //do like this
         [Route("Create")]
         [HttpPost]
         public HttpResponseMessage Create(Invoice invoice)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceDa.Create(invoice));
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Create(invoice));
         }
 
         [Route("Read")]
-        [HttpGet]//post
-        public Invoice Read(int id)
+        [HttpGet]
+        public HttpResponseMessage Read(int id)
         {
-            try
-            {
-                return _invoiceDa.Read(id);
-            }
-            catch
-            {
-                return null;
-            }
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Read(id));
         }
 
         [Route("GetInvoices")]
         [HttpGet]
-        public List<Invoice> GetInvoices()
+        public HttpResponseMessage GetInvoices()
         {
-            try
-            {
-                return _invoiceDa.GetInvoices();
-            }
-            catch
-            {
-                return null;
-            }
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices());
         }
 
         [Route("Delete")]
         [HttpPost]
-        public bool Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
-            try
-            {
-                return _invoiceDa.Delete(id);
-            }
-            catch
-            {
-                return false;
-            }
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Delete(id));
         }
     }
 }
