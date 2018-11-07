@@ -91,7 +91,7 @@ namespace Tests.IntegrationTests
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             //Act
-            var result = _client.PostAsync("http://localhost:64007/Invoice/Create", stringContent).Result;
+            var result = _client.PostAsync("/Invoice/Create", stringContent).Result;
 
             //Assert
             Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
