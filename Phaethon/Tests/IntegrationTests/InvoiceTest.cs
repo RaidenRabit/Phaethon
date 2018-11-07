@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Security.Policy;
 using System.Text;
 using Core.Model;
-using InternalApi.Controller;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -61,45 +60,53 @@ namespace Tests.IntegrationTests
 
             return invoice;
         }
-
-        #region invoice
+        
+        #region Create
         [Test]
-        public void CreateInvoice_NewInvoiceRepresentativeCompanyObject_OKReturned()
+        public void Create_NewInvoiceObject_ObjectCreated()
         {
             //Setup
             HttpClient client = new HttpClient();
-            var stringContent = new StringContent(JsonConvert.SerializeObject(GetInvoiceSeed()), Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            
+            //Act
+            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            int beforeInvoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
+            
+            var result = client.PostAsJsonAsync("http://localhost:64007/Invoice/Create", GetInvoiceSeed()).Result;
+            
+            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            int afterInvoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);//check if executed
+            Assert.AreEqual(beforeInvoiceCount + 1, afterInvoiceCount);//checks if invoice was added
+        }
+
+        [Test]
+        public void Create_InvoiceObjectNull_NothingAddedInternalServerErrorReturned()
+        {
+            //Setup
+            HttpClient client = new HttpClient();
 
             //Act
             string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
-            List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
-
-            var result = client.PostAsync("http://localhost:64007/Invoice/Create", stringContent).Result;
+            int beforeInvoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
             
+            var result = client.PostAsJsonAsync("http://localhost:64007/Invoice/Create", new Invoice()).Result;
+
             json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
-            invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
+            int afterInvoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
 
             //Assert
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);//check if executed
+            Assert.AreEqual(beforeInvoiceCount, afterInvoiceCount);//checks if invoice was added
         }
+        #endregion
 
+        #region GetInvoices
         [Test]
-        public void CreateInvoice_InvoiceObjectNull_InternalServerErrorReturned()
-        {
-            //Setup
-            var json = JsonConvert.SerializeObject(null);
-            HttpClient client = new HttpClient();
-            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-
-            //Act
-            var result = client.PostAsync("http://localhost:64007/Invoice/Create", stringContent).Result;
-
-            //Assert
-            Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
-        }
-
-        [Test]
-        public void GetInvoices_CallGetInvoicesMethod_InvoicesReturned()
+        public void GetInvoices_MethodCalled_InvoicesReturned()
         {
             //Setup
             HttpClient client = new HttpClient();
@@ -111,87 +118,103 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);//check if internal server error
-            Assert.AreNotEqual("", json);//check if json is empty
-            Assert.AreNotEqual(0, invoices.Count);//check if coverts right
+            Assert.AreNotEqual(null, invoices);//Check if result returned
+        }
+        #endregion
+
+        #region Read
+        [Test]
+        public void Read_CorrectID_SameObjectReturned()
+        {
+            //Setup
+            HttpClient client = new HttpClient();
+            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
+            if (invoices.Count < 1)//if no invoices create new
+            {
+                Create_NewInvoiceObject_ObjectCreated();
+
+                json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+                invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
+            }
+
+            //Act
+            var result = client.GetAsync("http://localhost:64007/Invoice/Read?id="+ invoices[0].ID).Result;
+            json = result.Content.ReadAsStringAsync().Result;
+            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(json);
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);//check if internal server error
+            Assert.AreEqual(true, invoice.ID == invoices[0].ID &&
+                                  invoice.DocNumber.Equals(invoices[0].DocNumber) &&
+                                  invoice.PaymentDate.Equals(invoices[0].PaymentDate) &&
+                                  invoice.ReceptionDate.Equals(invoices[0].ReceptionDate) &&
+                                  invoice.PrescriptionDate.Equals(invoices[0].PrescriptionDate) &&
+                                  invoice.Transport == invoices[0].Transport);//check if object received is the same
         }
 
-        //[Test]
-        //public void CreateInvoice_SenderCompanyAlreadyExists_OneCompanyAddedAndExistingCompanyUpdated()
-        //{
-        //    //Set up
-        //    List<Company> companies = _companyController.GetCompanies();
-        //    Invoice invoice = GetInvoiceSeed();
-        //    if (companies.Count < 1)//there are companies in database
-        //    {
-        //        _invoiceController.Create(invoice);
-        //    }
+        [Test]
+        public void Read_WrongId_NullReturned()
+        {
+            //Setup
+            HttpClient client = new HttpClient();
 
-        //    //Act
-        //    invoice.Sender.Company.ID = companies[0].ID;
-        //    _invoiceController.Create(invoice);
-        //    Company company = _companyController.Read(invoice.Sender.Company.ID);
+            //Act
+            var result = client.GetAsync("http://localhost:64007/Invoice/Read?id=" + 0).Result;
+            string json = result.Content.ReadAsStringAsync().Result;
+            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(json);
+            
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);//check if internal server error
+            Assert.AreEqual(null, invoice);//check if object received is the sames
+        }
+        #endregion
 
-        //    //Assert
-        //    Assert.AreEqual(companies.Count + 1, _companyController.GetCompanies().Count);//1 new company added
-        //    Assert.AreEqual(true, company.ID == invoice.Sender.Company.ID &&
-        //                          company.Address.Equals(invoice.Sender.Company.Address) &&
-        //                          company.BankNumber.Equals(invoice.Sender.Company.BankNumber) &&
-        //                          company.Location.Equals(invoice.Sender.Company.Location) &&
-        //                          company.Name.Equals(invoice.Sender.Company.Name) &&
-        //                          company.RegNumber.Equals(invoice.Sender.Company.RegNumber));//info of existing was updated
-        //}
+        #region Delete
+        [Test]
+        public void Delete_CorrectID_InvoiceDeleted()
+        {
+            //Setup
+            HttpClient client = new HttpClient();
+            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
+            if (invoices.Count < 1)//if no invoices create new
+            {
+                Create_NewInvoiceObject_ObjectCreated();
 
-        //[Test]
-        //public void CreateInvoiceReceiverCompanyAlreadyExists()
-        //{
-        //    List<Company> companies = _companyController.GetCompanies();
-        //    Invoice invoice = GetInvoiceSeed();
-        //    if (companies.Count < 1)//there are companies in database
-        //    {
-        //        _invoiceController.Create(invoice);
-        //    }
-        //    invoice.Receiver.Company.ID = companies[0].ID;
-        //    _invoiceController.Create(invoice);
-        //    Company company = _companyController.Read(invoice.Receiver.Company.ID);
-        //    Assert.AreEqual(companies.Count + 1, _companyController.GetCompanies().Count);//1 new company added
-        //    Assert.AreEqual(true, company.ID == invoice.Receiver.Company.ID &&
-        //                          company.Address.Equals(invoice.Receiver.Company.Address) &&
-        //                          company.BankNumber.Equals(invoice.Receiver.Company.BankNumber) &&
-        //                          company.Location.Equals(invoice.Receiver.Company.Location) &&
-        //                          company.Name.Equals(invoice.Receiver.Company.Name) &&
-        //                          company.RegNumber.Equals(invoice.Receiver.Company.RegNumber));//info of existing was updated
-        //}
+                json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+                invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
+            }
 
-        //[Test]
-        //public void CreateInvoiceCompaniesAlreadyExists()
-        //{
-        //    List<Company> companies = _companyController.GetCompanies();
-        //    Invoice invoice = GetInvoiceSeed();
-        //    if (companies.Count < 2)//there too few companies in database
-        //    {
-        //        _invoiceController.Create(invoice);
-        //    }
-        //    invoice.Sender.Company.ID = companies[0].ID;
-        //    invoice.Receiver.Company.ID = companies[1].ID;
-        //    _invoiceController.Create(invoice);
-        //    Company senderCompany = _companyController.Read(invoice.Sender.Company.ID);
-        //    Company receiverCompany = _companyController.Read(invoice.Receiver.Company.ID);
-        //    Assert.AreEqual(companies.Count, _companyController.GetCompanies().Count);//no new company was added
-        //    Assert.AreEqual(true, (senderCompany.ID == invoice.Sender.Company.ID && //sender company was updated
-        //                           senderCompany.Address.Equals(invoice.Sender.Company.Address) &&
-        //                           senderCompany.BankNumber.Equals(invoice.Sender.Company.BankNumber) &&
-        //                           senderCompany.Location.Equals(invoice.Sender.Company.Location) &&
-        //                           senderCompany.Name.Equals(invoice.Sender.Company.Name) &&
-        //                           senderCompany.RegNumber.Equals(invoice.Sender.Company.RegNumber)) &&
+            //Act
+            var result = client.PostAsJsonAsync("http://localhost:64007/Invoice/Delete", invoices[0].ID).Result;
 
-        //                          (receiverCompany.ID == invoice.Receiver.Company.ID && //receiver company was updated
-        //                           receiverCompany.Address.Equals(invoice.Receiver.Company.Address) &&
-        //                           receiverCompany.BankNumber.Equals(invoice.Receiver.Company.BankNumber) &&
-        //                           receiverCompany.Location.Equals(invoice.Receiver.Company.Location) &&
-        //                           receiverCompany.Name.Equals(invoice.Receiver.Company.Name) &&
-        //                           receiverCompany.RegNumber.Equals(invoice.Receiver.Company.RegNumber))
-        //                            );//info of existing was updated
-        //}
+            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            int invoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);//check if internal server error
+            Assert.AreEqual(invoices.Count - 1, invoiceCount);//check object removed
+        }
+
+        [Test]
+        public void Delete_WrongId_InvoiceNotDeletedInternalServerErrorReturned()
+        {
+            //Setup
+            HttpClient client = new HttpClient();
+            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
+
+            //Act
+            var result = client.PostAsJsonAsync("http://localhost:64007/Invoice/Delete", 0).Result;
+
+            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            int invoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);//check if internal server error
+            Assert.AreEqual(invoices.Count, invoiceCount);//check object removeds
+        }
         #endregion
     }
 }

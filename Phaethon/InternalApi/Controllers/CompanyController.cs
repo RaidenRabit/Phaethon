@@ -1,44 +1,36 @@
-﻿using Core.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using Core.Model;
 using InternalApi.DataAccess;
+using InternalApi.DataManagement;
+using InternalApi.DataManagement.IDataManagement;
 
-namespace InternalApi.Controller
+namespace InternalApi.Controllers
 {
-    public class CompanyController
+    [RoutePrefix("Company")]
+    public class CompanyController: ApiController
     {
-        private readonly CompanyDa _companyDa = null;
+        private readonly ICompanyManagement _companyManagement = null;
 
         public CompanyController()
         {
-            _companyDa = new CompanyDa();
+            _companyManagement = new CompanyManagement();
         }
 
-        public Company Read(int id)
+        [Route("Read")]
+        [HttpGet]
+        public HttpResponseMessage Read(int id)
         {
-            try
-            {
-                return _companyDa.Read(id);
-            }
-            catch
-            {
-                return null;
-            }
+             return Request.CreateResponse(HttpStatusCode.OK, _companyManagement.Read(id));
         }
 
-        public List<Company> GetCompanies()
+        [Route("GetCompanies")]
+        [HttpGet]
+        public HttpResponseMessage GetCompanies()
         {
-            try
-            {
-                return _companyDa.GetCompanies();
-            }
-            catch
-            {
-                return null;
-            }
+            return Request.CreateResponse(HttpStatusCode.OK, _companyManagement.GetCompanies());
         }
     }
 }

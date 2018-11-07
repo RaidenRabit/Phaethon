@@ -10,19 +10,20 @@ using System.Threading.Tasks;
 namespace Core.Model
 {
     [Serializable]
-    [DataContract(Name = "Representative")]
+    [DataContract]
     public class Representative
     {
         [Key]
-        [DataMember(Name = "ID")]
+        [Required]
+        [DataMember]
         public int ID { get; set; }
 
-        [DataMember(Name = "Name")]
+        [Required]
+        [DataMember]
         public string Name { get; set; }
-
-
-        [DataMember(Name = "Company")]
+        
+        [DataMember]
         public virtual Company Company { get; set; }
-        public virtual ICollection<Invoice> Invoice { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }

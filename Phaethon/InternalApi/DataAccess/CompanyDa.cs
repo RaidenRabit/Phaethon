@@ -5,7 +5,7 @@ using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    class CompanyDa
+    internal class CompanyDa
     {
         internal Company Read(int id)
         {

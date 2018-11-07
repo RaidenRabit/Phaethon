@@ -94,6 +94,8 @@
     <Compile Include="DataAccess\CompanyDa.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
     <Compile Include="DataAccess\InvoiceDa.cs" />
+    <Compile Include="DataManagement\CompanyManagement.cs" />
+    <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
     <Compile Include="DataManagement\InvoiceManagement.cs" />
     <Compile Include="Global.asax.cs">

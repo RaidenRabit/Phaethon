@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -9,29 +11,37 @@ using System.Threading.Tasks;
 namespace Core.Model
 {
     [Serializable]
-    [DataContract(Name = "Company")]
+    [DataContract]
     public class Company
     {
         [Key]
-        [DataMember(Name = "ID")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
+        [DataMember]
         public int ID { get; set; }
 
-        [DataMember(Name = "Name")]
+        [Required]
+        [DataMember]
         public string Name { get; set; }
 
-        [DataMember(Name = "RegNumber")]
+        [Required]
+        [DataMember]
         public string RegNumber { get; set; }
 
-        [DataMember(Name = "Location")]
+        [Required]
+        [DataMember]
         public string Location { get; set; }
 
-        [DataMember(Name = "Address")]
+        [Required]
+        [DataMember]
         public string Address { get; set; }
-
-        [DataMember(Name = "BankNumber")]
+        
+        [DataMember]
         public string BankNumber { get; set; }
 
 
-        public virtual ICollection<Representative> Representatives { get; set; } = new List<Representative>();
+        [DataMember]
+        [DefaultValue(null)]
+        public virtual ICollection<Representative> Representatives { get; set; }
     }
 }

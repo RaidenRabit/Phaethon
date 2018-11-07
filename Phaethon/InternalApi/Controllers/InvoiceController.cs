@@ -19,7 +19,7 @@ namespace InternalApi.Controllers
         
         [Route("Create")]
         [HttpPost]
-        public HttpResponseMessage Create(Invoice invoice)
+        public HttpResponseMessage Create([FromBody] Invoice invoice)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Create(invoice));
         }
@@ -40,7 +40,7 @@ namespace InternalApi.Controllers
 
         [Route("Delete")]
         [HttpPost]
-        public HttpResponseMessage Delete(int id)
+        public HttpResponseMessage Delete([FromBody] int id)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Delete(id));
         }

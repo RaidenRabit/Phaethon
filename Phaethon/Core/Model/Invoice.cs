@@ -10,33 +10,37 @@ using System.Threading.Tasks;
 namespace Core.Model
 {
     [Serializable]
-    [DataContract(Name = "Invoice")]
+    [DataContract]
     public class Invoice
     {
         [Key]
-        [DataMember(Name = "ID")]
+        [Required]
+        [DataMember]
         public int ID { get; set; }
 
-        [DataMember(Name = "Transport")]
+        [Required]
+        [DataMember]
         public decimal Transport { get; set; }
 
-        [DataMember(Name = "DocNumber")]
+        [Required]
+        [DataMember]
         public string DocNumber { get; set; }
 
-        [DataMember(Name = "PrescriptionDate")]
+        [Required]
+        [DataMember]
         public DateTime PrescriptionDate { get; set; }
 
-        [DataMember(Name = "ReceptionDate")]
+        [Required]
+        [DataMember]
         public DateTime ReceptionDate { get; set; }
 
-        [DataMember(Name = "PaymentDate")]
+        [Required]
+        [DataMember]
         public DateTime PaymentDate { get; set; }
-
-
-        [DataMember(Name = "Sender")]
+        
+        [DataMember]
         public virtual Representative Sender { get; set; }
-
-        [DataMember(Name = "Receiver")]
+        [DataMember]
         public virtual Representative Receiver { get; set; }
         public virtual ICollection<Element> Elements { get; set; }
     }
