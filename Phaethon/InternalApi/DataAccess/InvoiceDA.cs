@@ -58,7 +58,7 @@ namespace InternalApi.DataAccess
         {
             using (var db = new DatabaseContext())
             {
-                db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == id) ?? throw new InvalidOperationException());
+                db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == id));
                 return db.SaveChanges() > 0;
             }
         }

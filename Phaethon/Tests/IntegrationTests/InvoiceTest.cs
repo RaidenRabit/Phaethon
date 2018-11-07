@@ -65,14 +65,19 @@ namespace Tests.IntegrationTests
         #region invoice
         [Test]
         public void CreateInvoice_NewInvoiceRepresentativeCompanyObject_OKReturned()
-        {//check if count increeses
+        {
             //Setup
-            var json = JsonConvert.SerializeObject(GetInvoiceSeed());
             HttpClient client = new HttpClient();
-            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var stringContent = new StringContent(JsonConvert.SerializeObject(GetInvoiceSeed()), Encoding.UTF8, "application/json");
 
             //Act
+            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
+
             var result = client.PostAsync("http://localhost:64007/Invoice/Create", stringContent).Result;
+            
+            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
 
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
