@@ -1,24 +1,39 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http;
+using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
     public class InternalTestFakeServerBase
     {
-        public HttpClient _client;
+        protected HttpClient _client;
         private HttpServer _server;
 
         public InternalTestFakeServerBase()
         {
-            var config = new HttpConfiguration();
+        }
+
+        [SetUp]
+        public void StartServer()
+        {
+            HttpConfiguration config = new HttpConfiguration();
+
+            config.Filters.Add(new Core.Decorators.ExceptionFilter());
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
+                = ReferenceLoopHandling.Ignore;
+            config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling
+                = NullValueHandling.Ignore;
             InternalApi.WebApiConfig.Register(config);
-            // additional config ...
+
             _server = new HttpServer(config);
             _client = new HttpClient(_server);
             _client.BaseAddress = new Uri("http://localhost:64007/");
+
         }
 
+        [TearDown]
         public void Dispose()
         {
             _client.Dispose();

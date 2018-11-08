@@ -11,17 +11,16 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class CompanyTest
+    public class CompanyTest : InternalTestFakeServerBase
     {
         #region GetCompanies
         [Test]
         public void GetCompanies_MethodCalled_CompaniesReturned()
         {
             //Setup
-            HttpClient client = new HttpClient();
 
             //Act
-            var result = client.GetAsync("http://localhost:64007/Company/GetCompanies").Result;
+            var result = _client.GetAsync("Company/GetCompanies").Result;
             string json = result.Content.ReadAsStringAsync().Result;
             List<Company> companies = JsonConvert.DeserializeObject<List<Company>>(json);
 
@@ -36,19 +35,18 @@ namespace Tests.IntegrationTests
         public void Read_CorrectID_SameObjectReturned()
         {
             //Setup
-            HttpClient client = new HttpClient();
-            string json = client.GetAsync("http://localhost:64007/Company/GetCompanies").Result.Content.ReadAsStringAsync().Result;
+            string json = _client.GetAsync("Company/GetCompanies").Result.Content.ReadAsStringAsync().Result;
             List<Company> companies = JsonConvert.DeserializeObject<List<Company>>(json);
             if (companies.Count < 1)//if no invoices create new
             {
                 new InvoiceTest().Create_NewInvoiceObject_ObjectCreated();
 
-                json = client.GetAsync("http://localhost:64007/Company/GetCompanies").Result.Content.ReadAsStringAsync().Result;
+                json = _client.GetAsync("Company/GetCompanies").Result.Content.ReadAsStringAsync().Result;
                 companies = JsonConvert.DeserializeObject<List<Company>>(json);
             }
 
             //Act
-            var result = client.GetAsync("http://localhost:64007/Company/Read?id=" + companies[0].ID).Result;
+            var result = _client.GetAsync("Company/Read?id=" + companies[0].ID).Result;
             json = result.Content.ReadAsStringAsync().Result;
             Company company = JsonConvert.DeserializeObject<Company>(json);
 
@@ -66,10 +64,9 @@ namespace Tests.IntegrationTests
         public void Read_WrongId_NullReturned()
         {
             //Setup
-            HttpClient client = new HttpClient();
 
             //Act
-            var result = client.GetAsync("http://localhost:64007/Company/Read?id=" + 0).Result;
+            var result = _client.GetAsync("Company/Read?id=" + 0).Result;
             string json = result.Content.ReadAsStringAsync().Result;
             Company company = JsonConvert.DeserializeObject<Company>(json);
 
