@@ -33,10 +33,10 @@ namespace ExternalApi.Controllers
 
         [Route("GetInvoices")]
         [HttpGet]
-        public HttpResponseMessage GetInvoices()
+        public HttpResponseMessage GetInvoices(int numOfRecords)
         {
             HttpClient client = new HttpClient();
-            var result = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result;
+            var result = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords="+numOfRecords).Result;
             return result;
         }
 
