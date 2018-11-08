@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Core.Model.Invoice>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Edit")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Transport)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DocNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrescriptionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReceptionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaymentDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sender.Company.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Receiver.Company.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transport)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrescriptionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReceptionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sender.Company.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Receiver.Company.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Edit", new { id = item.ID })
+        </td>
+    </tr>
+}
+
+</table>
