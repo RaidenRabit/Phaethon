@@ -32,13 +32,16 @@ namespace Core.Model
 
         [Required]
         [DataMember]
+        [DisplayName("Location")]
         public string Location { get; set; }
 
         [Required]
         [DataMember]
+        [DisplayName("Address")]
         public string Address { get; set; }
         
         [DataMember]
+        [DisplayName("BankNumber")]
         public string BankNumber { get; set; }
 
 

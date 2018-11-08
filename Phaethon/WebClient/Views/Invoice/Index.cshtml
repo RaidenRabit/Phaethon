@@ -4,64 +4,85 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="panel-body" style="padding-left: 20px;">
+    <div class="row">
+        <div id="VersionControl" class="col-sm-12">
+            <div class="panel panel-default" style="height: 130px; height: auto;">
+                <div class="panel-heading" style="clear:both;" data-toggle="collapse" href="#demo">Invoice search</div>
+                
+                <div id="demo" class="panel-body collapse" style="padding-left: 20px;">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="VersionControl" class="col-sm-12">
+            <div class="panel panel-default" style="height: 130px; overflow: hidden;">
+                <div class="panel-heading" style="clear: both;">Invoices<div style="float: right">@Html.ActionLink("Create New", "Edit")</div></div>
 
-<p>
-    @Html.ActionLink("Create New", "Edit")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Transport)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DocNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PrescriptionDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReceptionDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaymentDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sender.Company.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Receiver.Company.Name)
-        </th>
-        <th></th>
-    </tr>
+                <div class="panel-body" style="padding-left: 20px;">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Transport)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DocNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PrescriptionDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ReceptionDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PaymentDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Sender.Company.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Receiver.Company.Name)
+                            </th>
+                            <th></th>
+                        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Transport)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DocNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrescriptionDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReceptionDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sender.Company.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Receiver.Company.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Edit", new { id = item.ID })
-        </td>
-    </tr>
-}
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Transport)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DocNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PrescriptionDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ReceptionDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PaymentDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Sender.Company.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Receiver.Company.Name)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Edit", new { id = item.ID })
+                                </td>
+                            </tr>
+                        }
 
-</table>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
