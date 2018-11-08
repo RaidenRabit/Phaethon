@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Core.Model
 
         [Required]
         [DataMember]
+        [DisplayName("Representative name")]
         public string Name { get; set; }
         
         [DataMember]
