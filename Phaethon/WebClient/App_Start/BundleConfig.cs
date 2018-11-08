@@ -8,8 +8,15 @@ namespace WebClient
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            #region ScriptBundles
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-{version}.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Invoice").Include(
+                        "~/Scripts/moment.min.js",
+                        "~/Scripts/daterangepicker.js",
+                        "~/Scripts/invoice.index.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -22,10 +29,16 @@ namespace WebClient
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
+            #endregion
 
+            #region StyleBundles
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Daterangepicker").Include(
+                      "~/Content/daterangepicker.css"));
+            #endregion
         }
     }
 }
