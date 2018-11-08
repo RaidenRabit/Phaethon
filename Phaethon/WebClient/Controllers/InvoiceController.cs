@@ -20,9 +20,13 @@ namespace WebClient.Controllers
             return View(invoices);
         }
 
-        public ActionResult Statement()
+        public ActionResult Edit(int id)
         {
-            return View();
+            HttpClient client = new HttpClient();
+            var result = client.GetAsync("http://localhost:64007/Invoice/Read?id="+id).Result;
+            string json = result.Content.ReadAsStringAsync().Result;
+            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(json);
+            return View(invoice);
         }
     }
 }
