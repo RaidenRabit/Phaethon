@@ -41,7 +41,7 @@ namespace Core.Model
         public string Address { get; set; }
         
         [DataMember]
-        [DisplayName("BankNumber")]
+        [DisplayName("Bank number")]
         public string BankNumber { get; set; }
 
 

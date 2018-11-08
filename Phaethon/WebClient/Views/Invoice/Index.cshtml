@@ -1,25 +1,28 @@
 ﻿@model IEnumerable<Core.Model.Invoice>
-
-@{
-    ViewBag.Title = "Index";
-}
+@Styles.Render("~/Content/Daterangepicker")
+@{ViewBag.Title = "Index";}
 
 <div class="panel-body" style="padding-left: 20px;">
     <div class="row">
-        <div id="VersionControl" class="col-sm-12">
+        <div class="col-sm-12">
             <div class="panel panel-default" style="height: 130px; height: auto;">
-                <div class="panel-heading" style="clear:both;" data-toggle="collapse" href="#demo">Invoice search</div>
-                
-                <div id="demo" class="panel-body collapse" style="padding-left: 20px;">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                <div class="panel-heading" style="clear:both;" data-toggle="collapse" href="#invoiceSearch">Invoice search</div>
+
+                <div id="invoiceSearch" class="panel-body collapse" style="padding-left: 20px;">
+                    <input type="datetime" class="daterange form-control" />
+                    <input type="text" class="form-control" list="companies" placeholder="Companies" />
+                    <datalist id="companies">
+                        <option value="Means">
+                        <option value="Lattelecom">
+                        <option value="Grindex">
+                        <option value="Nasa">
+                    </datalist>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div id="VersionControl" class="col-sm-12">
+        <div class="col-sm-12">
             <div class="panel panel-default" style="height: 130px; overflow: hidden;">
                 <div class="panel-heading" style="clear: both;">Invoices<div style="float: right">@Html.ActionLink("Create New", "Edit")</div></div>
 
@@ -86,3 +89,5 @@
         </div>
     </div>
 </div>
+
+@Scripts.Render("~/bundles/Invoice")
