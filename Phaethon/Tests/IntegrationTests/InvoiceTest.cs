@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Policy;
-using System.Text;
 using Core.Model;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using NUnit.Framework.Internal.Commands;
 
 namespace Tests.IntegrationTests
 {
