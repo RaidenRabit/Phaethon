@@ -33,9 +33,9 @@ namespace InternalApi.Controllers
 
         [Route("GetInvoices")]
         [HttpGet]
-        public HttpResponseMessage GetInvoices()
+        public HttpResponseMessage GetInvoices(int numOfRecords)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices());
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords));
         }
 
         [Route("Delete")]

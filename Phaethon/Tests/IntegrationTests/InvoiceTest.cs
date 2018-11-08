@@ -67,12 +67,12 @@ namespace Tests.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             
             //Act
-            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
             int beforeInvoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
             
             var result = client.PostAsJsonAsync("http://localhost:64007/Invoice/Create", GetInvoiceSeed()).Result;
             
-            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
             int afterInvoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
 
             //Assert
@@ -87,12 +87,12 @@ namespace Tests.IntegrationTests
             HttpClient client = new HttpClient();
 
             //Act
-            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
             int beforeInvoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
             
             var result = client.PostAsJsonAsync("http://localhost:64007/Invoice/Create", new Invoice()).Result;
 
-            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
             int afterInvoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
 
             //Assert
@@ -107,13 +107,13 @@ namespace Tests.IntegrationTests
         {
             //Setup
             HttpClient client = new HttpClient();
-            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
             List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
             if (invoices.Count < 1)//if no invoices create new
             {
                 Create_NewInvoiceObject_ObjectCreated();
 
-                json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+                json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
                 invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
             }
 
@@ -157,7 +157,7 @@ namespace Tests.IntegrationTests
             HttpClient client = new HttpClient();
 
             //Act
-            var result = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result;
+            var result = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=5").Result;
             string json = result.Content.ReadAsStringAsync().Result;
             List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
 
@@ -173,20 +173,20 @@ namespace Tests.IntegrationTests
         {
             //Setup
             HttpClient client = new HttpClient();
-            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
             List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
             if (invoices.Count < 1)//if no invoices create new
             {
                 Create_NewInvoiceObject_ObjectCreated();
 
-                json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+                json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
                 invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
             }
 
             //Act
             var result = client.PostAsJsonAsync("http://localhost:64007/Invoice/Delete", invoices[0].ID).Result;
 
-            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
             int invoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
 
             //Assert
@@ -199,13 +199,13 @@ namespace Tests.IntegrationTests
         {
             //Setup
             HttpClient client = new HttpClient();
-            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            string json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
             List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
 
             //Act
             var result = client.PostAsJsonAsync("http://localhost:64007/Invoice/Delete", 0).Result;
 
-            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result.Content.ReadAsStringAsync().Result;
+            json = client.GetAsync("http://localhost:64007/Invoice/GetInvoices?numOfRecords=10").Result.Content.ReadAsStringAsync().Result;
             int invoiceCount = JsonConvert.DeserializeObject<List<Invoice>>(json).Count;
 
             //Assert

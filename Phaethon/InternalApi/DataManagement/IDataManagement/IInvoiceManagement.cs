@@ -13,7 +13,7 @@ namespace InternalApi.DataManagement.IDataManagement
 
         Invoice Read(int id);
 
-        List<Invoice> GetInvoices();
+        List<Invoice> GetInvoices(int numOfRecords);
 
         bool Delete(int id);
     }

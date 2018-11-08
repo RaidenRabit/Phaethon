@@ -6,11 +6,24 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default" style="height: 130px; height: auto;">
-                <div class="panel-heading" style="clear:both;" data-toggle="collapse" href="#invoiceSearch">Invoice search</div>
+                <div class="panel-heading" style="clear: both;" data-toggle="collapse" href="#invoiceSearch">Invoice search</div>
 
                 <div id="invoiceSearch" class="panel-body collapse" style="padding-left: 20px;">
-                    <input type="datetime" class="daterange form-control" />
-                    <input type="text" class="form-control" list="companies" placeholder="Companies" />
+
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="options" checked> @Html.DisplayNameFor(model => model.PrescriptionDate)
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="options"> @Html.DisplayNameFor(model => model.ReceptionDate)
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="options "> @Html.DisplayNameFor(model => model.PaymentDate)
+                        </label>
+                    </div>
+
+                    <input type="datetime" class="daterange form-control"/>
+                    <input type="text" class="form-control" list="companies" placeholder="Companies"/>
                     <datalist id="companies">
                         <option value="Means">
                         <option value="Lattelecom">
@@ -23,66 +36,71 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <div class="panel panel-default" style="height: 130px; overflow: hidden;">
-                <div class="panel-heading" style="clear: both;">Invoices<div style="float: right">@Html.ActionLink("Create New", "Edit")</div></div>
+            <div class="panel panel-default" style="height: 130px; height: auto;">
+                <div class="panel-heading" style="clear: both;">Invoices<div style="float: right">@Html.ActionLink("New invoice", "Edit", new { id = 0 })</div></div>
 
                 <div class="panel-body" style="padding-left: 20px;">
                     <table class="table">
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Transport)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DocNumber)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PrescriptionDate)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ReceptionDate)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PaymentDate)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Sender.Company.Name)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Receiver.Company.Name)
-                            </th>
-                            <th></th>
-                        </tr>
-
-                        @foreach (var item in Model)
-                        {
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Transport)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DocNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PrescriptionDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ReceptionDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PaymentDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Sender.Company.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Receiver.Company.Name)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Details", "Edit", new { id = item.ID })
-                                </td>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Transport)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DocNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PrescriptionDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ReceptionDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PaymentDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Sender.Company.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Receiver.Company.Name)
+                                </th>
+                                <th>
+                                    <input id="numOfRecords" type="number" class="form-control" value="@ViewBag.NumOfRecords"/>
+                                </th>
                             </tr>
-                        }
-
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Transport)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DocNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PrescriptionDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ReceptionDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PaymentDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Sender.Company.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Receiver.Company.Name)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Details", "Edit", new {id = item.ID}) |
+                                        @Ajax.ActionLink("Delete", "Delete", new {id = item.ID}, new AjaxOptions {HttpMethod = "POST", OnSuccess = "window.location.reload()"})
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>
