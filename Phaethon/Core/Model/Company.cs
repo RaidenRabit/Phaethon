@@ -22,10 +22,12 @@ namespace Core.Model
 
         [Required]
         [DataMember]
+        [DisplayName("Company name")]
         public string Name { get; set; }
 
         [Required]
         [DataMember]
+        [DisplayName("Registration Number")]
         public string RegNumber { get; set; }
 
         [Required]
