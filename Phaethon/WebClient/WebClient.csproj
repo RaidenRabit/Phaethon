@@ -153,6 +153,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -195,6 +196,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -214,9 +216,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExternalApi\ExternalApi.csproj">
-      <Project>{c2e30e40-91e8-4fe7-90b1-55e41829fce2}</Project>
-      <Name>ExternalApi</Name>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{2f81d45f-2fd1-442c-b663-d04af5982d28}</Project>
+      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

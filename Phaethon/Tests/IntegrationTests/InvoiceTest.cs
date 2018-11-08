@@ -104,24 +104,6 @@ namespace Tests.IntegrationTests
         }
         #endregion
 
-        #region GetInvoices
-        [Test]
-        public void GetInvoices_MethodCalled_InvoicesReturned()
-        {
-            //Setup
-            HttpClient client = new HttpClient();
-
-            //Act
-            var result = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result;
-            string json = result.Content.ReadAsStringAsync().Result;
-            List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
-
-            //Assert
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);//check if internal server error
-            Assert.AreNotEqual(null, invoices);//Check if result returned
-        }
-        #endregion
-
         #region Read
         [Test]
         public void Read_CorrectID_SameObjectReturned()
@@ -139,7 +121,7 @@ namespace Tests.IntegrationTests
             }
 
             //Act
-            var result = client.GetAsync("http://localhost:64007/Invoice/Read?id="+ invoices[0].ID).Result;
+            var result = client.GetAsync("http://localhost:64007/Invoice/Read?id=" + invoices[0].ID).Result;
             json = result.Content.ReadAsStringAsync().Result;
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(json);
 
@@ -163,10 +145,28 @@ namespace Tests.IntegrationTests
             var result = client.GetAsync("http://localhost:64007/Invoice/Read?id=" + 0).Result;
             string json = result.Content.ReadAsStringAsync().Result;
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(json);
-            
+
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);//check if internal server error
             Assert.AreEqual(null, invoice);//check if object received is the sames
+        }
+        #endregion
+
+        #region GetInvoices
+        [Test]
+        public void GetInvoices_MethodCalled_InvoicesReturned()
+        {
+            //Setup
+            HttpClient client = new HttpClient();
+
+            //Act
+            var result = client.GetAsync("http://localhost:64007/Invoice/GetInvoices").Result;
+            string json = result.Content.ReadAsStringAsync().Result;
+            List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);//check if internal server error
+            Assert.AreNotEqual(null, invoices);//Check if result returned
         }
         #endregion
 
