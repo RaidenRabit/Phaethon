@@ -32,14 +32,14 @@ namespace Tests.IntegrationTests
 
         #region Read
         [Test]
-        public void Read_CorrectID_SameObjectReturned()
+        public async Task Read_CorrectID_SameObjectReturned()
         {
             //Setup
             string json = _client.GetAsync("Company/GetCompanies").Result.Content.ReadAsStringAsync().Result;
             List<Company> companies = JsonConvert.DeserializeObject<List<Company>>(json);
             if (companies.Count < 1)//if no invoices create new
             {
-                new InvoiceTest().Create_NewInvoiceObject_ObjectCreated();
+                await _client.PostAsJsonAsync("Invoice/Create", GetInvoiceSeed());
 
                 json = _client.GetAsync("Company/GetCompanies").Result.Content.ReadAsStringAsync().Result;
                 companies = JsonConvert.DeserializeObject<List<Company>>(json);
@@ -75,5 +75,50 @@ namespace Tests.IntegrationTests
             Assert.AreEqual(null, company);//check if object received is the sames
         }
         #endregion
+        private static Invoice GetInvoiceSeed()
+        {
+            Company receiverCompany = new Company
+            {
+                Location = "Nibevej 2344 location",
+                Name = "shufle",
+                RegNumber = "54555556",
+                Address = "Nibevej 2344 Address",
+                BankNumber = "DK34745624547"
+            };
+
+            Representative receiver = new Representative
+            {
+                Name = "Kabola",
+                Company = receiverCompany
+            };
+
+            Company senderCompany = new Company
+            {
+                Location = "Wallstreet location",
+                Name = "Pop-top-spain",
+                RegNumber = "1233333",
+                Address = "Wallstreet Address",
+                BankNumber = "DK3477777777"
+            };
+
+            Representative sender = new Representative
+            {
+                Name = "Kasper",
+                Company = senderCompany
+            };
+
+            Invoice invoice = new Invoice
+            {
+                DocNumber = "136381022",
+                PaymentDate = DateTime.Now,
+                PrescriptionDate = DateTime.Now,
+                ReceptionDate = DateTime.Now,
+                Receiver = receiver,
+                Sender = sender,
+                Transport = 5
+            };
+
+            return invoice;
+        }
     }
 }
