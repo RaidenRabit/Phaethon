@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using Core.Model;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Tests.IntegrationTests
 {

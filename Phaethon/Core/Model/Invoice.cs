@@ -43,11 +43,19 @@ namespace Core.Model
         [DataMember]
         [DisplayName("Payment date")]
         public DateTime PaymentDate { get; set; }
-        
+
+
+
         [DataMember]
+        [ForeignKey("Sender_ID")]
         public virtual Representative Sender { get; set; }
+        public int? Sender_ID { get; set; }
+
         [DataMember]
+        [ForeignKey("Receiver_ID")]
         public virtual Representative Receiver { get; set; }
+        public int? Receiver_ID { get; set; }
+
         public virtual ICollection<Element> Elements { get; set; }
     }
 }

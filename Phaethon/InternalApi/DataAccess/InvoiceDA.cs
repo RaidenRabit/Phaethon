@@ -13,17 +13,13 @@ namespace InternalApi.DataAccess
         {
             using (var db = new DatabaseContext())
             {
-                if (db.Invoices.Any(i => i.ID == invoice.ID))
-                    db.Entry(invoice).State = EntityState.Modified;
-                if (db.Representatives.Any(i => i.ID == invoice.Receiver.ID))
-                    db.Entry(invoice.Receiver).State = EntityState.Modified;
-                if (db.Companies.Any(i => i.ID == invoice.Receiver.Company.ID))
-                    db.Entry(invoice.Receiver.Company).State = EntityState.Modified;
-                if (db.Representatives.Any(i => i.ID == invoice.Sender.ID))
-                    db.Entry(invoice.Sender).State = EntityState.Modified;
-                if (db.Companies.Any(i => i.ID == invoice.Sender.Company.ID))
-                    db.Entry(invoice.Sender.Company).State = EntityState.Modified;
-                db.Invoices.Add(invoice);
+                db.Companies.AddOrUpdate(invoice.Receiver.Company);
+                db.Representatives.AddOrUpdate(invoice.Receiver);
+                db.Companies.AddOrUpdate(invoice.Sender.Company);
+                db.Representatives.AddOrUpdate(invoice.Sender);
+                invoice.Receiver_ID = invoice.Receiver.ID;
+                invoice.Sender_ID = invoice.Sender.ID;
+                db.Invoices.AddOrUpdate(invoice);
 
                 return db.SaveChanges() > 0;
             }
