@@ -7,8 +7,8 @@ using Core.Model;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
-    internal interface ICompanyManagement
+    interface IRepresentativeManagement
     {
-        List<Company> GetCompanies();
+        List<Representative> GetRepresentatives(int id);
     }
 }

@@ -19,13 +19,6 @@ namespace InternalApi.Controllers
             _companyManagement = new CompanyManagement();
         }
 
-        [Route("Read")]
-        [HttpGet]
-        public HttpResponseMessage Read(int id)
-        {
-             return Request.CreateResponse(HttpStatusCode.OK, _companyManagement.Read(id));
-        }
-
         [Route("GetCompanies")]
         [HttpGet]
         public HttpResponseMessage GetCompanies()
