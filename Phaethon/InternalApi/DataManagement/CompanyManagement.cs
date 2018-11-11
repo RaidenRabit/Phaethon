@@ -21,10 +21,5 @@ namespace InternalApi.DataManagement
         {
             return _companyDa.GetCompanies();
         }
-
-        public Company Read(int id)
-        {
-            return _companyDa.Read(id);
-        }
     }
 }
