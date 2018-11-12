@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.Model.Invoice>
+﻿@model Core.Model.Invoice
 @Styles.Render("~/Content/Daterangepicker")
 @{ViewBag.Title = "Index";}
 
@@ -10,38 +10,33 @@
 
                 <div id="invoiceSearch" class="panel-body collapse" style="padding-left: 20px;">
                     <div class="form-group">
-                        <div class="btn-group btn-group" data-toggle="buttons">
+                        <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default active">
-                                <input type="radio" name="options" checked> @Html.DisplayNameFor(model => model.PrescriptionDate)
+                                <input type="radio" name="dateOption" value="0" checked> @Html.DisplayNameFor(model => model.PrescriptionDate)
                             </label>
                             <label class="btn btn-default">
-                                <input type="radio" name="options"> @Html.DisplayNameFor(model => model.ReceptionDate)
+                                <input type="radio" name="dateOption" value="1"> @Html.DisplayNameFor(model => model.ReceptionDate)
                             </label>
                             <label class="btn btn-default">
-                                <input type="radio" name="options "> @Html.DisplayNameFor(model => model.PaymentDate)
+                                <input type="radio" name="dateOption" value="2"> @Html.DisplayNameFor(model => model.PaymentDate)
                             </label>
                         </div>
 
-                        <input type="datetime" class="daterange form-control" />
+                        <input id="dateRange" type="datetime" class="daterange form-control" />
                     </div>
                     
                     <div class="form-group">
-                        <div class="btn-group btn-group" data-toggle="buttons">
+                        <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default active">
-                                <input type="radio" name="options" checked> Sender company
+                                <input type="radio" name="companyOption" value="0" checked> Receiver company
                             </label>
                             <label class="btn btn-default">
-                                <input type="radio" name="options"> Receiver company
+                                <input type="radio" name="companyOption" value="1"> Sender company
                             </label>
                         </div>
 
-                        <input type="text" class="form-control" list="companies" placeholder="Companies" />
-                        <datalist id="companies">
-                            <option value="Means">
-                            <option value="Lattelecom">
-                            <option value="Grindex">
-                            <option value="Nasa">
-                        </datalist>
+                        <input id="companyName" type="text" class="form-control" list="companies" placeholder="Companies" value="@ViewBag.CompanyName" />
+                        <datalist id="companies"></datalist>
                     </div>
                 </div>
             </div>
@@ -53,7 +48,7 @@
                 <div class="panel-heading" style="clear: both;">Invoices<div style="float: right">@Html.ActionLink("New invoice", "Edit", new { id = 0 })</div></div>
 
                 <div class="panel-body" style="padding-left: 20px;">
-                    <table class="table">
+                    <table id="invoiceTable" class="table">
                         <thead>
                             <tr>
                                 <th>
@@ -72,47 +67,17 @@
                                     @Html.DisplayNameFor(model => model.PaymentDate)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Sender.Company.Name)
+                                    Sender @Html.DisplayNameFor(model => model.Sender.Company.Name)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Receiver.Company.Name)
+                                    Receiver @Html.DisplayNameFor(model => model.Receiver.Company.Name)
                                 </th>
                                 <th>
-                                    <input id="numOfRecords" type="number" class="form-control" value="@ViewBag.NumOfRecords"/>
+                                    <input id="numOfRecords" type="number" class="form-control" value="10"/>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Transport)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DocNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PrescriptionDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ReceptionDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PaymentDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Sender.Company.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Receiver.Company.Name)
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Details", "Edit", new {id = item.ID}) |
-                                        @Ajax.ActionLink("Delete", "Delete", new {id = item.ID}, new AjaxOptions {HttpMethod = "POST", OnSuccess = "window.location.reload()"})
-                                    </td>
-                                </tr>
-                            }
                         </tbody>
                     </table>
                 </div>

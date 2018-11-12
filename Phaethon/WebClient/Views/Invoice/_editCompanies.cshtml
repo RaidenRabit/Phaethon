@@ -22,7 +22,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Receiver.Company.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Receiver.Company.Name, new { htmlAttributes = new { @class = "form-control", @list = "Companies", @required = "required" } })
+                        @Html.EditorFor(model => model.Receiver.Company.Name, new { htmlAttributes = new { @class = "form-control", @list = "companies", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Sender.Company.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Sender.Company.Name, new { htmlAttributes = new { @class = "form-control", @list = "Companies", @required = "required" } })
+                        @Html.EditorFor(model => model.Sender.Company.Name, new { htmlAttributes = new { @class = "form-control", @list = "companies", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -133,4 +133,4 @@
     </div>
 </div>
 
-<datalist id="Companies"></datalist>
+<datalist id="companies"></datalist>
