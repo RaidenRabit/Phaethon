@@ -12,6 +12,7 @@ namespace WebClient
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-{version}.min.js",
+                        "~/Scripts/jquery-ui-1.12.1.min.js",
                         "~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/Invoice").Include(
@@ -38,6 +39,7 @@ namespace WebClient
             #region StyleBundles
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/themes/base/jquery-ui.min.css",
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/Daterangepicker").Include(

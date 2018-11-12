@@ -9,27 +9,40 @@
                 <div class="panel-heading" style="clear: both;" data-toggle="collapse" href="#invoiceSearch">Invoice search</div>
 
                 <div id="invoiceSearch" class="panel-body collapse" style="padding-left: 20px;">
+                    <div class="form-group">
+                        <div class="btn-group btn-group" data-toggle="buttons">
+                            <label class="btn btn-default active">
+                                <input type="radio" name="options" checked> @Html.DisplayNameFor(model => model.PrescriptionDate)
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="options"> @Html.DisplayNameFor(model => model.ReceptionDate)
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="options "> @Html.DisplayNameFor(model => model.PaymentDate)
+                            </label>
+                        </div>
 
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-secondary active">
-                            <input type="radio" name="options" checked> @Html.DisplayNameFor(model => model.PrescriptionDate)
-                        </label>
-                        <label class="btn btn-secondary">
-                            <input type="radio" name="options"> @Html.DisplayNameFor(model => model.ReceptionDate)
-                        </label>
-                        <label class="btn btn-secondary">
-                            <input type="radio" name="options "> @Html.DisplayNameFor(model => model.PaymentDate)
-                        </label>
+                        <input type="datetime" class="daterange form-control" />
                     </div>
+                    
+                    <div class="form-group">
+                        <div class="btn-group btn-group" data-toggle="buttons">
+                            <label class="btn btn-default active">
+                                <input type="radio" name="options" checked> Sender company
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="options"> Receiver company
+                            </label>
+                        </div>
 
-                    <input type="datetime" class="daterange form-control"/>
-                    <input type="text" class="form-control" list="companies" placeholder="Companies"/>
-                    <datalist id="companies">
-                        <option value="Means">
-                        <option value="Lattelecom">
-                        <option value="Grindex">
-                        <option value="Nasa">
-                    </datalist>
+                        <input type="text" class="form-control" list="companies" placeholder="Companies" />
+                        <datalist id="companies">
+                            <option value="Means">
+                            <option value="Lattelecom">
+                            <option value="Grindex">
+                            <option value="Nasa">
+                        </datalist>
+                    </div>
                 </div>
             </div>
         </div>
