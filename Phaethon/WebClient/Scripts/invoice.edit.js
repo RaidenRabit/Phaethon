@@ -2,34 +2,9 @@
 var receiverElement = "Receiver";
 
 $(function () {//on code load
-    //gets all companies
-    $.ajax({
-        type: "GET",
-        url: "/Company/GetCompanies",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            var htmlText = "";
-            for (var i = 0; i < data.length; i++) {
-                htmlText += "<option value='" + data[i].Name + "' " +
-                    "data-ID='" + data[i].ID + "'" +
-                    "data-RegNumber='" + data[i].RegNumber + "'" +
-                    "data-Location='" + data[i].Location + "'" +
-                    "data-Address='" + data[i].Address + "'" +
-                    "data-BankNumber='" + data[i].BankNumber + "'/>";
-            }
-            $("#Companies").html(htmlText);
-        },
-        error: function () {
-            alert("There was a issue getting companies");
-        }
-    });
-
-    //Gets selected companies info
     CompanyChange(receiverElement);
     CompanyChange(senderElement);
-
-    //Gets selected representatives info
+    
     RepresentativeChange(receiverElement);
     RepresentativeChange(senderElement);
 
@@ -55,6 +30,29 @@ $(function () {//on code load
 });
 
 function CompanyChange(element) {
+    //gets all companies
+    $.ajax({
+        type: "GET",
+        url: "/Company/GetCompanies",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            var htmlText = "";
+            for (var i = 0; i < data.length; i++) {
+                htmlText += "<option value='" + data[i].Name + "' " +
+                    "data-ID='" + data[i].ID + "'" +
+                    "data-RegNumber='" + data[i].RegNumber + "'" +
+                    "data-Location='" + data[i].Location + "'" +
+                    "data-Address='" + data[i].Address + "'" +
+                    "data-BankNumber='" + data[i].BankNumber + "'/>";
+            }
+            $("#companies").html(htmlText);
+        },
+        error: function () {
+            alert("There was a issue getting companies");
+        }
+    });
+
     //sets info to create new company
     $("#reset" + element).click(function () {
         $("#" + element + "_ID").val(0);
@@ -70,6 +68,7 @@ function CompanyChange(element) {
         $("#" + element + "_Company_ID").change();
     });
 
+    //Shows if new company will be added
     $("#" + element + "_Company_ID").change(function () {
         if ($(this).val() == 0) {
             $("#" + element + "_Company_Name").closest(".form-group").addClass("has-success");
@@ -86,8 +85,9 @@ function CompanyChange(element) {
         }
     });
 
+    //sets companies companies info
     $("#" + element + "_Company_Name").change(function () {
-        var option = $("#Companies option[value='" + $(this).val() + "']");
+        var option = $("#companies option[value='" + $(this).val() + "']");
         $("#" + element + "_Company_ID").val(option.data('id'));
         $("#" + element + "_Company_Name").val(option.val());
         $("#" + element + "_Company_BankNumber").val(option.data('banknumber'));
@@ -100,6 +100,7 @@ function CompanyChange(element) {
 }
 
 function RepresentativeChange(element) {
+    //shows if new representative will be added
     $("#" + element + "_ID").change(function () {
         if ($(this).val() == 0) {
             $("#" + element + "_Name").closest(".form-group").addClass("has-success");
@@ -108,6 +109,7 @@ function RepresentativeChange(element) {
         }
     });
 
+    //sets corresponding id for representative
     $("#" + element + "_Name").change(function () {
         var option = $("#" + element + "Representatives option[value='" + $("#" + element + "_Name").val() + "']");
         if (option.length !== 0) {

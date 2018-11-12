@@ -14,16 +14,9 @@ namespace WebClient.Controllers
     public class InvoiceController : Controller
     {
         [HttpGet]
-        public ActionResult Index(int numOfRecords = 10)
+        public ActionResult Index()
         {
-            HttpClient client = new HttpClient();
-            var result = client.GetAsync("http://localhost:64010/Invoice/GetInvoices?numOfRecords="+ numOfRecords).Result;
-            string json = result.Content.ReadAsStringAsync().Result;
-            List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(json);
-            if(invoices == null)
-                invoices = new List<Invoice>();
-            ViewBag.NumOfRecords = numOfRecords;
-            return View(invoices);
+            return View();
         }
 
         [HttpGet]
