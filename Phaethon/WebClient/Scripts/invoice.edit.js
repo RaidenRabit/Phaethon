@@ -2,10 +2,6 @@
 var receiverElement = "Receiver";
 
 $(function () {//on code load
-    //clears fields for company and representative
-    NewCompany(senderElement);
-    NewCompany(receiverElement);
-    
     //gets all companies
     $.ajax({
         type: "GET",
@@ -29,16 +25,37 @@ $(function () {//on code load
         }
     });
 
-    //Gets selected companies name
+    //Gets selected companies info
     CompanyChange(receiverElement);
     CompanyChange(senderElement);
+
+    //Gets selected representatives info
+    RepresentativeChange(receiverElement);
+    RepresentativeChange(senderElement);
 
     //gets representatives of company
     GetRepresentatives(receiverElement);
     GetRepresentatives(senderElement);
+
+    $(".date-picker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-20:+0", // You can set the year range as per as your need
+        dateFormat: "dd-M-yy"
+    });
+
+    $("#Transport").keydown(function (e) {
+        if (!((e.keyCode > 95 && e.keyCode < 106)
+            || (e.keyCode > 47 && e.keyCode < 58)
+            || e.keyCode == 8)) {
+            return false;
+        }
+        return true;
+    });
 });
 
-function NewCompany(element) {
+function CompanyChange(element) {
+    //sets info to create new company
     $("#reset" + element).click(function () {
         $("#" + element + "_ID").val(0);
         $("#" + element + "_Name").val("");
@@ -48,10 +65,27 @@ function NewCompany(element) {
         $("#" + element + "_Company_RegNumber").val("");
         $("#" + element + "_Company_Address").val("");
         $("#" + element + "_Company_Location").val("");
-    });
-}
 
-function CompanyChange(element) {
+        $("#" + element + "_ID").change();
+        $("#" + element + "_Company_ID").change();
+    });
+
+    $("#" + element + "_Company_ID").change(function () {
+        if ($(this).val() == 0) {
+            $("#" + element + "_Company_Name").closest(".form-group").addClass("has-success");
+            $("#" + element + "_Company_BankNumber").closest(".form-group").addClass("has-success");
+            $("#" + element + "_Company_RegNumber").closest(".form-group").addClass("has-success");
+            $("#" + element + "_Company_Address").closest(".form-group").addClass("has-success");
+            $("#" + element + "_Company_Location").closest(".form-group").addClass("has-success");
+        } else {
+            $("#" + element + "_Company_Name").closest(".form-group").removeClass("has-success");
+            $("#" + element + "_Company_BankNumber").closest(".form-group").removeClass("has-success");
+            $("#" + element + "_Company_RegNumber").closest(".form-group").removeClass("has-success");
+            $("#" + element + "_Company_Address").closest(".form-group").removeClass("has-success");
+            $("#" + element + "_Company_Location").closest(".form-group").removeClass("has-success");
+        }
+    });
+
     $("#" + element + "_Company_Name").change(function () {
         var option = $("#Companies option[value='" + $(this).val() + "']");
         $("#" + element + "_Company_ID").val(option.data('id'));
@@ -60,7 +94,29 @@ function CompanyChange(element) {
         $("#" + element + "_Company_RegNumber").val(option.data('regnumber'));
         $("#" + element + "_Company_Address").val(option.data('address'));
         $("#" + element + "_Company_Location").val(option.data('location'));
+        $("#" + element + "_Company_ID").change();
         GetRepresentatives(element);
+    });
+}
+
+function RepresentativeChange(element) {
+    $("#" + element + "_ID").change(function () {
+        if ($(this).val() == 0) {
+            $("#" + element + "_Name").closest(".form-group").addClass("has-success");
+        } else {
+            $("#" + element + "_Name").closest(".form-group").removeClass("has-success");
+        }
+    });
+
+    $("#" + element + "_Name").change(function () {
+        var option = $("#" + element + "Representatives option[value='" + $("#" + element + "_Name").val() + "']");
+        if (option.length !== 0) {
+            $("#" + element + "_Name").val(option.val());
+            $("#" + element + "_ID").val(option.data("id"));
+        } else {
+            $("#" + element + "_ID").val(0);
+        }
+        $("#" + element + "_ID").change();
     });
 }
 
@@ -77,10 +133,16 @@ function GetRepresentatives(element) {
                     "data-ID='" + data[i].ID + "'/>";
             }
             $("#" + element + "Representatives").html(htmlText);
-            $("#" + element + "_Name").val(document.getElementById(element + "Representatives").options[0].value);
+            var option = $("#" + element + "Representatives option[data-id='" + $("#" + element + "_ID").val() + "']");
+            if (option.length === 0) {
+                option = $("#" + element + "Representatives option");
+                $("#" + element + "_Name").val(option.val());
+                $("#" + element + "_ID").val(option.data("id"));
+                $("#" + element + "_ID").change();
+            }
         },
         error: function () {
-            alert("There was a issue getting representatives");
+            $("#" + element + "Representatives").html("");
         }
     });
 }
