@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using System.Data.Entity.Infrastructure;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -19,22 +21,35 @@ namespace InternalApi.Controllers
             _jobDm = new JobDm();
         }
         
-        [Route("Create")]
+        [Route("InsertOrUpdate")]
         [HttpPost]
         public async Task<HttpResponseMessage> Create()
         {
             var requestContent = await Request.Content.ReadAsStringAsync();
             Job job = JsonConvert.DeserializeObject<Job>(requestContent);
-            return Request.CreateResponse(HttpStatusCode.OK, _jobDm.Create(job));
+            try
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.Create(job));
+            }
+            catch (DbUpdateException)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Posted Object is invalid");
+            }
         }
 
         [Route("Read")]
         [HttpGet]
-        public async Task<HttpResponseMessage> Read()
+        public async Task<HttpResponseMessage> Read(string id)
         {
-            var requestContent = await Request.Content.ReadAsStringAsync();
-            int id = JsonConvert.DeserializeObject<int>(requestContent);
-            return Request.CreateResponse(HttpStatusCode.OK, _jobDm.Read(id));
+            try
+            {
+                Int32.TryParse(id, out var Id);
+                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.Read(Id));
+            }
+            catch (Exception)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "No such Id");
+            }
         }
     }
 }

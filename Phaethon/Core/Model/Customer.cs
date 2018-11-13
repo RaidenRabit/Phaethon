@@ -8,7 +8,7 @@ namespace Core.Model
 {
     [Serializable]
     [DataContract]
-    public class Customer
+    public class Customer :IEquatable<Customer>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -31,5 +31,17 @@ namespace Core.Model
 
         [DataMember]
         public string Email { get; set; }
+
+        public bool Equals(Customer other)
+        {
+            if (other == null)
+                return false;
+            return this.ID.Equals(other.ID) &&
+                   this.Address.ID.Equals(other.Address.ID) &&
+                   this.Email.Equals(other.Email) &&
+                   this.FamilyName.Equals(other.FamilyName) &&
+                   this.GivenName.Equals(other.GivenName) &&
+                   this.Phone.Equals(other.Phone);
+        }
     }
 }
