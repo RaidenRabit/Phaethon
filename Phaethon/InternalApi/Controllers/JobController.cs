@@ -43,12 +43,11 @@ namespace InternalApi.Controllers
         {
             try
             {
-                Int32.TryParse(id, out var Id);
-                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.Read(Id));
+                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.Read(id));
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "No such Id");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
     }
