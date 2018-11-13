@@ -13,6 +13,14 @@ namespace WebClient.Controllers
 {
     public class InvoiceController : Controller
     {
+        private readonly HttpClient _client;
+
+        public InvoiceController()
+        {
+            _client = new HttpClient();
+            _client.BaseAddress = new Uri("http://localhost:64010/Invoice/");
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -20,20 +28,20 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            HttpClient client = new HttpClient();
-            var result = client.GetAsync("http://localhost:64010/Invoice/Read?id=" + id).Result;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = id.ToString();
+            var result = await _client.GetAsync("Read?" + parameters);
             string json = result.Content.ReadAsStringAsync().Result;
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(json);
             return View(invoice);
         }
 
         [HttpPost]
-        public ActionResult Edit(Invoice invoice)
+        public async Task<ActionResult> Edit(Invoice invoice)
         {
-            HttpClient client = new HttpClient();
-            var result = client.PostAsJsonAsync("http://localhost:64010/Invoice/Create", invoice).Result;
+            var result = await _client.PostAsJsonAsync("Create", invoice);
             if (HttpStatusCode.OK == result.StatusCode)
             {
                 return View();
@@ -47,8 +55,7 @@ namespace WebClient.Controllers
         [HttpPost]
         public void Delete(int id)
         {
-            HttpClient client = new HttpClient();
-            var result = client.PostAsJsonAsync("http://localhost:64010/Invoice/Delete", id).Result;
+            _client.PostAsJsonAsync("Delete", id);
         }
     }
 }
