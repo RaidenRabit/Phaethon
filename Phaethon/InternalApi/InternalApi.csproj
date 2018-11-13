@@ -90,14 +90,18 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="DataAccess\CompanyDa.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
     <Compile Include="DataAccess\InvoiceDa.cs" />
+    <Compile Include="DataAccess\JobDa.cs" />
     <Compile Include="DataManagement\CompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
+    <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
     <Compile Include="DataManagement\InvoiceManagement.cs" />
+    <Compile Include="DataManagement\JobDM.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
