@@ -7,7 +7,7 @@ namespace Core.Model
 {
     [Serializable]
     [DataContract]
-    public class Address
+    public class Address : IEquatable<Address>
     {
 
         [Key]
@@ -30,5 +30,16 @@ namespace Core.Model
         /// </summary>
         [DataMember]
         public string Extra { get; set; }
+
+        public bool Equals(Address other)
+        {
+            if (other == null)
+                return false;
+            return this.ID.Equals(other.ID) &&
+                   this.City.Equals(other.City) &&
+                   this.Street.Equals(other.Street) &&
+                   this.Number.Equals(other.Number) &&
+                   this.Extra.Equals(other.Extra);
+        }
     }
 }

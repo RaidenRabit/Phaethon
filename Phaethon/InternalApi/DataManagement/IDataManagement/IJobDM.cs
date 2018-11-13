@@ -4,7 +4,7 @@ namespace InternalApi.DataManagement.IDataManagement
 {
     internal interface IJobDm
     {
-        bool Create(Job job);
+        int Create(Job job);
 
         Job Read(int id);
     }
