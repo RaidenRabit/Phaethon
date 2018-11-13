@@ -6,6 +6,6 @@ namespace InternalApi.DataManagement.IDataManagement
     {
         int Create(Job job);
 
-        Job Read(int id);
+        Job Read(string id);
     }
 }

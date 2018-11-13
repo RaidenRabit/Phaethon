@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Core.Model;
 using NUnit.Framework;
 using Newtonsoft.Json;
@@ -61,7 +62,7 @@ namespace Tests.IntegrationTests
 
         #region Read
         [Test]
-        public async Task Read_CorrectID_SameObjectReturned()
+        public async Task ReadJob_CorrectID_SameObjectReturned()
         {
             //Setup
             InitializeData();
@@ -80,21 +81,22 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public void Read_WrongId_NullReturned()
+        public async Task ReadJob_WrongId_BadRequest()
         {
             //Setup
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = "";
 
             //Act
-            var result = _client.GetAsync("Invoice/Read?id=" + 0).Result;
-            string json = result.Content.ReadAsStringAsync().Result;
-            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(json);
+            var result = await _client.GetAsync("Job/Read?" + parameters);
 
             //Assert
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);//check if internal server error
-            Assert.AreEqual(null, invoice);//check if object received is the sames
+            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);//check if internal server error
             
         }
         #endregion
+
+
         
     }
 }

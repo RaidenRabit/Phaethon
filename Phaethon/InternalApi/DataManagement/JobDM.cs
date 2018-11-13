@@ -1,4 +1,5 @@
-﻿using Core.Model;
+﻿using System;
+using Core.Model;
 using InternalApi.DataAccess;
 using InternalApi.DataManagement.IDataManagement;
 
@@ -18,9 +19,16 @@ namespace InternalApi.DataManagement
             return _jobDa.InsertOrUpdate(job);
         }
 
-        public Job Read(int id)
+        public Job Read(string id)
         {
-            return _jobDa.Read(id);
+            if (id != null && !id.Equals(""))
+            {
+                int Id = Int32.Parse(id);
+                Job job = _jobDa.Read(Id);
+                if (job != null)
+                    return job;
+            }
+            throw new Exception("No Job with such id");
         }
     }
 }
