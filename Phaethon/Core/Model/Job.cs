@@ -8,7 +8,7 @@ namespace Core.Model
 {
     [Serializable]
     [DataContract]
-    public class Job
+    public class Job : IEquatable<Job>
     {
 
         [Key]
@@ -39,5 +39,19 @@ namespace Core.Model
 
         [DataMember]
         public string Description { get; set; }
+
+        public bool Equals(Job other)
+        {
+            if (other == null)
+                return false;
+            return this.Customer.ID.Equals(other.Customer.ID) &&
+                   this.ID.Equals(other.ID) &&
+                   this.JobName.Equals(other.JobName) &&
+                   this.Cost.Equals(other.Cost) &&
+                   this.Description.Equals(other.Description) &&
+                   this.JobStatus.Equals(other.JobStatus) &&
+                   this.StartedTime.Equals(other.StartedTime) &&
+                   this.FinishedTime.Equals(other.FinishedTime);
+        }
     }
 }

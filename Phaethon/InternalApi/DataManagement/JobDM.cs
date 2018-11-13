@@ -13,9 +13,9 @@ namespace InternalApi.DataManagement
             _jobDa = new JobDa();
         }
 
-        public bool Create(Job job)
+        public int Create(Job job)
         {
-            return _jobDa.Create(job);
+            return _jobDa.InsertOrUpdate(job);
         }
 
         public Job Read(int id)
