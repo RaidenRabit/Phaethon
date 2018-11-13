@@ -18,5 +18,14 @@ namespace ExternalApi.Controllers
             var result = client.GetAsync("http://localhost:64007/Company/GetCompanies").Result;
             return result;
         }
+
+        [Route("GetCompany")]
+        [HttpGet]
+        public HttpResponseMessage GetCompany(int id)
+        {
+            HttpClient client = new HttpClient();
+            var result = client.GetAsync("http://localhost:64007/Company/GetCompany?id="+id).Result;
+            return result;
+        }
     }
 }

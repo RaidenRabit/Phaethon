@@ -25,5 +25,12 @@ namespace InternalApi.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _companyManagement.GetCompanies());
         }
+
+        [Route("GetCompany")]
+        [HttpGet]
+        public HttpResponseMessage GetCompany(int id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _companyManagement.GetCompany(id));
+        }
     }
 }

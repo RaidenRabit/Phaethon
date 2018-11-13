@@ -91,17 +91,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
-    <Compile Include="Controllers\RepresentativeController.cs" />
     <Compile Include="DataAccess\CompanyDa.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
     <Compile Include="DataAccess\InvoiceDa.cs" />
-    <Compile Include="DataAccess\RepresentativeDa.cs" />
     <Compile Include="DataManagement\CompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IRepresentativeManagement.cs" />
     <Compile Include="DataManagement\InvoiceManagement.cs" />
-    <Compile Include="DataManagement\RepresentativeManagement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
