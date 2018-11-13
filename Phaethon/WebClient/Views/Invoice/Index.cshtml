@@ -24,7 +24,7 @@
 
                         <input id="dateRange" type="datetime" class="daterange form-control" />
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default active">
@@ -35,8 +35,12 @@
                             </label>
                         </div>
 
-                        <input id="companyName" type="text" class="form-control" list="companies" placeholder="Companies" value="@ViewBag.CompanyName" />
+                        <input id="companyName" type="text" class="form-control" list="companies" placeholder="Companies"/>
                         <datalist id="companies"></datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="docNumber" type="text" class="form-control" placeholder="Barcode"/>
                     </div>
                 </div>
             </div>

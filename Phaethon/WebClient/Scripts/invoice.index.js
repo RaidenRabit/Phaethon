@@ -1,64 +1,60 @@
-﻿$('.daterange').daterangepicker({ startDate: '01/01/2000'});
-//gets companies
-$.ajax({
-    type: "GET",
-    url: "/Company/GetCompanies",
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    success: function (data) {
-        var htmlText = "";
-        for (var i = 0; i < data.length; i++) {
-            htmlText += "<option value='" + data[i].Name + "' " +
-                "data-ID='" + data[i].ID + "'" +
-                "data-RegNumber='" + data[i].RegNumber + "'" +
-                "data-Location='" + data[i].Location + "'" +
-                "data-Address='" + data[i].Address + "'" +
-                "data-BankNumber='" + data[i].BankNumber + "'/>";
+﻿$(function () {
+    //creates date range picker
+    $('.daterange').daterangepicker({ startDate: '01/01/2000' });
+
+    //gets existing companies
+    $.ajax({
+        type: "GET",
+        url: "/Api/Company/GetCompanies",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            var htmlText = "";
+            for (var i = 0; i < data.length; i++) {
+                htmlText += "<option value='" + data[i].Name + "'/>";
+            }
+            $("#companies").html(htmlText);
+        },
+        error: function () {
+            $("#companies").html("");
         }
-        $("#companies").html(htmlText);
-    },
-    error: function () {
-        alert("There was a issue getting companies");
-    }
+    });
+
+    GetInvoices();
+
+    //on search option change get corresponding invoices
+    $("#numOfRecords, #companyName, #dateRange, input[name=companyOption], input[name=dateOption], #docNumber").change(function() {
+        GetInvoices();
+    });
 });
-
-//index
-//change shown date formats
-//add search by number
-//fix this js file (organize)
-
-//edit
-//if create new doesnt color in the begining
-//if remove company than representative stends
-
-//fix the path ptoblem
-//use headers to pass info
-
-GetInvoices();
 
 //gets invoices
 function GetInvoices()
 {
     $.ajax({
         type: "GET",
-        url: "/InvoiceApi/GetInvoices" +
+        url: "/Api/Invoice/GetInvoices" +
             "?numOfRecords=" + $("#numOfRecords").val() +
             "&selectedCompany=" + $('input[name=companyOption]:checked').val() +
             "&name=" + $("#companyName").val() +
             "&selectedDate=" + $('input[name=dateOption]:checked').val() +
             "&from=" + $("#dateRange").data('daterangepicker').startDate.format('DD/MM/YYYY') +
-            "&to=" + $("#dateRange").data('daterangepicker').endDate.format('DD/MM/YYYY'),
+            "&to=" + $("#dateRange").data('daterangepicker').endDate.format('DD/MM/YYYY') +
+            "&docNumber=" + $("#docNumber").val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
             var htmlText = "";
             for (var i = 0; i < data.length; i++) {
+                var PrescriptionDate = moment(data[i].PrescriptionDate).format('DD-MM-YYYY');
+                var ReceptionDate = moment(data[i].ReceptionDate).format('DD-MM-YYYY');
+                var PaymentDate = moment(data[i].PaymentDate).format('DD-MM-YYYY');
                 htmlText += "<tr>" +
                     "<td>" + data[i].Transport + "</td>" +
                     "<td>" + data[i].DocNumber + "</td>" +
-                    "<td>" + data[i].PrescriptionDate + "</td>" +
-                    "<td>" + data[i].ReceptionDate + "</td>" +
-                    "<td>" + data[i].PaymentDate + "</td>" +
+                    "<td>" + PrescriptionDate + "</td>" +
+                    "<td>" + ReceptionDate + "</td>" +
+                    "<td>" + PaymentDate + "</td>" +
                     "<td>" + data[i].Sender.Company.Name + "</td>" +
                     "<td>" + data[i].Receiver.Company.Name + "</td>" +
                     "<td>" +
@@ -74,7 +70,3 @@ function GetInvoices()
         }
     });
 }
-
-$("#numOfRecords, #companyName, #dateRange, input[name=companyOption], input[name=dateOption]").change(function () {
-    GetInvoices();
-});

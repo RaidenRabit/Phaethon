@@ -34,10 +34,11 @@ namespace InternalApi.Controllers
 
         [Route("GetInvoices")]
         [HttpGet]
-        public HttpResponseMessage GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, string from, string to)
+        public HttpResponseMessage GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, string from, string to, string docNumber)
         {
             if (name == null) name = "";
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, DateTime.Parse(from), DateTime.Parse(to)));
+            if (docNumber == null) docNumber = "";
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, DateTime.Parse(from), DateTime.Parse(to), docNumber));
         }
 
         [Route("Delete")]

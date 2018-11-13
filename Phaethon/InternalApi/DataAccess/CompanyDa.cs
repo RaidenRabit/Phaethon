@@ -14,5 +14,15 @@ namespace InternalApi.DataAccess
                 return db.Companies.ToList();
             }
         }
+
+        internal Company GetCompany(int id)
+        {
+            using (var db = new DatabaseContext())
+            {
+                return db.Companies
+                    .Include(x => x.Representatives)
+                    .SingleOrDefault(x => x.ID == id);
+            }
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace InternalApi.DataManagement.IDataManagement
     internal interface ICompanyManagement
     {
         List<Company> GetCompanies();
+
+        Company GetCompany(int id);
     }
 }

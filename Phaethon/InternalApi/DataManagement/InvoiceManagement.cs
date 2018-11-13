@@ -27,9 +27,9 @@ namespace InternalApi.DataManagement
             return _invoiceDa.Read(id);
         }
 
-        List<Invoice> IInvoiceManagement.GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to)
+        List<Invoice> IInvoiceManagement.GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to, string docNumber)
         {
-            return _invoiceDa.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, from, to);
+            return _invoiceDa.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, from, to, docNumber);
         }
 
         bool IInvoiceManagement.Delete(int id)

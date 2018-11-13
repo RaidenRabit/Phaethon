@@ -7,8 +7,8 @@ using System.Web.Http;
 
 namespace ExternalApi.Controllers
 {
-    [RoutePrefix("Company")]
-    public class CompanyController : ApiController
+    [RoutePrefix("Api/Company")]
+    public class CompanyApiController : ApiController
     {
         [Route("GetCompanies")]
         [HttpGet]
@@ -16,6 +16,15 @@ namespace ExternalApi.Controllers
         {
             HttpClient client = new HttpClient();
             var result = client.GetAsync("http://localhost:64010/Company/GetCompanies").Result;
+            return result;
+        }
+
+        [Route("GetCompany")]
+        [HttpGet]
+        public HttpResponseMessage GetCompany(int id)
+        {
+            HttpClient client = new HttpClient();
+            var result = client.GetAsync("http://localhost:64010/Company/GetCompany?id=" + id).Result;
             return result;
         }
     }

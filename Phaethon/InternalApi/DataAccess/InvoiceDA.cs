@@ -38,18 +38,19 @@ namespace InternalApi.DataAccess
             }
         }
 
-        internal List<Invoice> GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate,  DateTime from, DateTime to)
+        internal List<Invoice> GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate,  DateTime from, DateTime to, string docNumber)
         {
             using (var db = new DatabaseContext())
             {
                 return db.Invoices
                     .Include(x => x.Sender.Company)
                     .Include(x => x.Receiver.Company)
-                    .Where(x => (selectedCompany == 0 && x.Receiver.Company.Name.Contains(name)) ||
-                                (selectedCompany == 1 && x.Sender.Company.Name.Contains(name)))
-                    .Where(x => selectedDate == 0 && from <= x.PrescriptionDate && x.PrescriptionDate <= to ||
+                    .Where(x => (selectedCompany == 0 && x.Receiver.Company.Name.Contains(name) ||
+                                selectedCompany == 1 && x.Sender.Company.Name.Contains(name)) &&
+                                (selectedDate == 0 && from <= x.PrescriptionDate && x.PrescriptionDate <= to ||
                                 selectedDate == 1 && from <= x.ReceptionDate && x.ReceptionDate <= to ||
-                                selectedDate == 2 && from <= x.PaymentDate && x.PaymentDate <= to)
+                                selectedDate == 2 && from <= x.PaymentDate && x.PaymentDate <= to) &&
+                                x.DocNumber.Contains(docNumber))
                     .Take(numOfRecords)
                     .ToList();
             }
