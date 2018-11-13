@@ -49,9 +49,7 @@ namespace Core.Model
                    this.JobName.Equals(other.JobName) &&
                    this.Cost.Equals(other.Cost) &&
                    this.Description.Equals(other.Description) &&
-                   this.JobStatus.Equals(other.JobStatus) &&
-                   this.StartedTime.Equals(other.StartedTime) &&
-                   this.FinishedTime.Equals(other.FinishedTime);
+                   this.JobStatus.Equals(other.JobStatus);
         }
     }
 }
