@@ -16,9 +16,14 @@ namespace Core.Model
         [DataMember]
         public int ID { get; set; }
 
+        //[DataMember]
+        //[DefaultValue(null)]
+        //public virtual Address Address { get; set; }
+
         [DataMember]
-        [DefaultValue(null)]
+        [ForeignKey("Address_ID")]
         public virtual Address Address { get; set; }
+        public int? Address_ID { get; set; }
 
         [DataMember]
         public string GivenName { get; set; }
