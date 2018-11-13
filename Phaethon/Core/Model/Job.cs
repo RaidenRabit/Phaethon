@@ -18,9 +18,13 @@ namespace Core.Model
         public int ID { get; set; }
 
         //TODO: add FK to User, once Login is implemented
+        //[DataMember]
+        //[DefaultValue(null)]
+        //public virtual Customer Customer { get; set; }
         [DataMember]
-        [DefaultValue(null)]
+        [ForeignKey("Customer_ID")]
         public virtual Customer Customer { get; set; }
+        public int? Customer_ID { get; set; }
 
         [DataMember]
         public JobStatus_enum JobStatus { get; set; }

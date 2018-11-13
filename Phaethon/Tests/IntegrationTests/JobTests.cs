@@ -38,11 +38,10 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _client.PostAsync("/Job/InsertOrUpdate", content);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
         }
 
         [Test]
@@ -81,7 +80,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task ReadJob_WrongId_BadRequest()
+        public async Task ReadJob_EmptyString_BadRequest()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -94,9 +93,114 @@ namespace Tests.IntegrationTests
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);//check if internal server error
             
         }
+
+        [Test]
+        public async Task ReadJob_NegativeString_BadRequest()
+        {
+            //Setup
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = "-1";
+
+            //Act
+            var result = await _client.GetAsync("Job/Read?" + parameters);
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);//check if internal server error
+
+        }
+        [Test]
+        public async Task ReadJob_Character_BadRequest()
+        {
+            //Setup
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = "as";
+
+            //Act
+            var result = await _client.GetAsync("Job/Read?" + parameters);
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);//check if internal server error
+
+        }
+        #endregion
+
+        #region Put
+
+        [Test]
+        public async Task PutJob_UpdateAddress_JobId()
+        {
+            //Set up
+            InitializeData();
+            JobDa jobDa = new JobDa();
+            int jobId = jobDa.InsertOrUpdate(_job);
+            Job job = jobDa.Read(jobId);
+            _address = new Address{ID = job.Customer.Address.ID, City = "TestChangedCity1", Number = "21", Street = "TestChangedStreet1"};
+            _job.Customer.Address = _address;
+
+            //Act
+            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+            Job putJob = jobDa.Read(deserializedResponse);
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(putJob.Equals(_job));
+
+        }
+
+        [Test]
+        public async Task PutJob_UpdateCustomer_JobId()
+        {
+            //Set up
+            InitializeData();
+            JobDa jobDa = new JobDa();
+            int jobId = jobDa.InsertOrUpdate(_job);
+            Job job = jobDa.Read(jobId);
+            _customer = new Customer { ID = job.Customer.ID, Email = "changedTestEmail@email.com", FamilyName = "TestChangedFamily", GivenName = "TestChangedGiven", Phone = "072379899" };
+            _job.Customer.Address = _address;
+
+            //Act
+            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+            Job putJob = jobDa.Read(deserializedResponse);
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(putJob.Equals(_job));
+        }
+
+        [Test]
+        public async Task PutJob_UpdateJob_JobId()
+        {
+
+        }
+
+        [Test]
+        public async Task PutJob_UpdateJobStatus_JobId()
+        {
+
+        }
+
+        [Test]
+        public async Task PutJob_UpdateAddress_BadRequest()
+        {
+
+        }
+
+        [Test]
+        public async Task PutJob_UpdateCustomer_BadRequest()
+        {
+
+        }
+
+        [Test]
+        public async Task PutJob_UpdateJob_BadRequest()
+        {
+
+        }
         #endregion
 
 
-        
+
     }
 }
