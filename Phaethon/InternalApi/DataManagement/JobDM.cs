@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.Model;
 using InternalApi.DataAccess;
 using InternalApi.DataManagement.IDataManagement;
@@ -29,6 +30,11 @@ namespace InternalApi.DataManagement
                     return job;
             }
             throw new Exception("No Job with such id");
+        }
+
+        public List<Job> ReadAll()
+        {
+            return _jobDa.ReadAll();
         }
     }
 }

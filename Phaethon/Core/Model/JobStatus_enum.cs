@@ -8,8 +8,8 @@ namespace Core.Model
 {
     public enum JobStatus_enum
     {
-        InProgress = 1,
-        AwaitingCustomerApproval = 2,
+        Unassigned = 1,
+        InProgress = 2,
         Completed = 3,
     }
 }
