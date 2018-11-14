@@ -1,59 +1,57 @@
 ﻿@using WebClient.Controllers
 @model Core.Model.Invoice
 
-<div class="col-sm-6">
-    <div class="panel panel-default" style="height: 130px; height: auto;">
-        <div class="panel-heading" style="clear:both;" data-toggle="collapse" href="#receivingCompany">Receiving company</div>
-
-        <div id="receivingCompany" class="panel-body collapse" style="padding-left: 20px;">
-            <div class="form-horizontal">
-
+<div class="row">
+    <div class="col-sm">
+        <div class="card" style="height: 130px; height: auto;">
+            <div class="card-header" style="clear:both;" data-toggle="collapse" href="#receivingCompany">Receiving company</div>
+            <div id="receivingCompany" class="card-body collapse" style="padding-left: 20px;">
+                <datalist id="ReceiverRepresentatives"></datalist>
                 @Html.HiddenFor(model => model.Receiver.ID)
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Receiver.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Receiver.Name, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Name, new { htmlAttributes = new { @class = "form-control", @list = "ReceiverRepresentatives", @required = "required" } })
-                        <datalist id="ReceiverRepresentatives"></datalist>
                         @Html.ValidationMessageFor(model => model.Receiver.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 @Html.HiddenFor(model => model.Receiver.Company.ID)
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Receiver.Company.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Receiver.Company.Name, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Company.Name, new { htmlAttributes = new { @class = "form-control", @list = "companies", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Receiver.Company.BankNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Receiver.Company.BankNumber, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Company.BankNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.BankNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Receiver.Company.RegNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Receiver.Company.RegNumber, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Company.RegNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.RegNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Receiver.Company.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Receiver.Company.Address, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Company.Address, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.Address, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Receiver.Company.Location, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Receiver.Company.Location, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Company.Location, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.Location, "", new { @class = "text-danger" })
                     </div>
@@ -65,61 +63,57 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="col-sm-6">
-    <div class="panel panel-default" style="height: 130px; height: auto;">
-        <div class="panel-heading" style="clear:both;" data-toggle="collapse" href="#sendingCompany">Sending company</div>
-
-        <div id="sendingCompany" class="panel-body collapse" style="padding-left: 20px;">
-            <div class="form-horizontal">
-
+    <div class="col-sm">
+        <div class="card" style="height: 130px; height: auto;">
+            <div class="card-header" style="clear:both;" data-toggle="collapse" href="#sendingCompany">Sending company</div>
+            <div id="sendingCompany" class="card-body collapse" style="padding-left: 20px;">
+                <datalist id="SenderRepresentatives"></datalist>
                 @Html.HiddenFor(model => model.Sender.ID)
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Sender.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Sender.Name, new { htmlAttributes = new { @class = "form-control", @list = "SenderRepresentatives", @required = "required" } })
-                        <datalist id="SenderRepresentatives"></datalist>
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Sender.Name, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Sender.Name, new { htmlAttributes = new { @class = "form-control", @list = "ReceiverRepresentatives", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 @Html.HiddenFor(model => model.Sender.Company.ID)
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Sender.Company.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Sender.Company.Name, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Company.Name, new { htmlAttributes = new { @class = "form-control", @list = "companies", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Sender.Company.BankNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Sender.Company.BankNumber, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Company.BankNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.BankNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Sender.Company.RegNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Sender.Company.RegNumber, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Company.RegNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.RegNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Sender.Company.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Sender.Company.Address, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Company.Address, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.Address, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Sender.Company.Location, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Sender.Company.Location, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Company.Location, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.Location, "", new { @class = "text-danger" })
                     </div>
@@ -131,6 +125,5 @@
             </div>
         </div>
     </div>
+    <datalist id="companies"></datalist>
 </div>
-
-<datalist id="companies"></datalist>

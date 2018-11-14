@@ -4,13 +4,13 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="panel-body" style="padding-left: 20px;">
+    <div class="card-body" style="padding-left: 20px;">
         <div class="row">
             <div class="col-sm-12">
-                <div class="panel panel-default" style="height: 130px; height: auto;">
-                    <div class="panel-heading" style="clear:both;" data-toggle="collapse" href="#invoiceInfo">Invoice Info</div>
+                <div class="card" style="height: 130px; height: auto;">
+                    <div class="card-header" style="clear:both;" data-toggle="collapse" href="#invoiceInfo">Invoice Info</div>
 
-                    <div id="invoiceInfo" class="panel-body collapse" style="padding-left: 20px;">
+                    <div id="invoiceInfo" class="card-body collapse" style="padding-left: 20px;">
                         @{ Html.RenderPartial("_editInvoice", Model); }
                         @{ Html.RenderPartial("_editCompanies", Model); }
                     </div>
@@ -19,10 +19,10 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="panel panel-default" style="height: 130px; height: auto;">
-                    <div class="panel-heading" style="clear: both;">Products</div>
+                <div class="card" style="height: 130px; height: auto;">
+                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#products">Products</div>
 
-                    <div class="panel-body" style="padding-left: 20px;">
+                    <div id="products" class="card-body collapse show" style="padding-left: 20px;">
                         @{ Html.RenderPartial("_editItems", Model); }
                     </div>
                 </div>
