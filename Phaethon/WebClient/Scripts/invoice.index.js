@@ -1,6 +1,15 @@
 ﻿$(function () {
     //creates date range picker
-    $('.daterange').daterangepicker({ startDate: '01/01/2000' });
+    $('.daterange').daterangepicker({
+        "showDropdowns": true,
+        "showWeekNumbers": true,
+        "autoApply": true,
+        "linkedCalendars": false,
+        "startDate": "01/01/2001",
+        locale: {
+            format: 'DD/MMM/YYYY'
+        }
+    });
 
     //gets existing companies
     $.ajax({
