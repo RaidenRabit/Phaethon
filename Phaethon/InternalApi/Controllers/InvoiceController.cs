@@ -37,8 +37,10 @@ namespace InternalApi.Controllers
         public HttpResponseMessage GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, string from, string to, string docNumber)
         {
             if (name == null) name = "";
+            if (from == null) from = "";
+            if (to == null) to = "";
             if (docNumber == null) docNumber = "";
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, DateTime.Parse(from), DateTime.Parse(to), docNumber));
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, DateTime.Parse(from), DateTime.Parse(to).AddDays(1), docNumber));
         }
 
         [Route("Delete")]

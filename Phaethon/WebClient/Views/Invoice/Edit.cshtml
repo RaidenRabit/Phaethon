@@ -19,11 +19,11 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="panel panel-default" style="height: 130px; overflow: hidden;">
+                <div class="panel panel-default" style="height: 130px; height: auto;">
                     <div class="panel-heading" style="clear: both;">Products</div>
 
                     <div class="panel-body" style="padding-left: 20px;">
-
+                        @{ Html.RenderPartial("_editItems", Model); }
                     </div>
                 </div>
             </div>
