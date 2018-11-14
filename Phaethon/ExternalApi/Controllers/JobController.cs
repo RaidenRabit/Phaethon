@@ -32,7 +32,7 @@ namespace ExternalApi.Controllers
 
         [Route("Read")]
         [HttpGet]
-        public async Task<HttpResponseMessage> Read()
+        public async Task<HttpResponseMessage> Read(string id)
         {
             var request = new UriBuilder(Request.RequestUri)
             {

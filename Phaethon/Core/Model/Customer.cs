@@ -26,9 +26,11 @@ namespace Core.Model
         public int? Address_ID { get; set; }
 
         [DataMember]
+        [DisplayName("Given Name")]
         public string GivenName { get; set; }
 
         [DataMember]
+        [DisplayName("Family Name")]
         public string FamilyName { get; set; }
 
         [DataMember]
