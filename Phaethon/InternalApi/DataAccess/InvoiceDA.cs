@@ -21,6 +21,17 @@ namespace InternalApi.DataAccess
                 invoice.Sender_ID = invoice.Sender.ID;
                 db.Invoices.AddOrUpdate(invoice);
 
+                foreach (Element element in invoice.Elements)
+                {
+                    db.ProductGroups.AddOrUpdate(element.Item.Product.ProductGroup);
+                    element.Item.Product.ProductGroup_ID = element.Item.Product.ProductGroup.ID;
+                    db.Products.AddOrUpdate(element.Item.Product);
+                    element.Item.Product_ID = element.Item.Product.ID;
+                    db.Items.AddOrUpdate(element.Item);
+                    element.Item_ID = element.Item.ID;
+                    db.Elements.AddOrUpdate(element);
+                }
+
                 return db.SaveChanges() > 0;
             }
         }
