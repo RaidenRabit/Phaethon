@@ -31,9 +31,9 @@ namespace InternalApi.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.OK, _jobDm.Create(job));
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Posted Object is invalid");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
@@ -44,6 +44,20 @@ namespace InternalApi.Controllers
             try
             {
                 return Request.CreateResponse(HttpStatusCode.OK, _jobDm.Read(id));
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        [Route("ReadAll")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> ReadAll()
+        {
+            try
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll());
             }
             catch (Exception e)
             {
