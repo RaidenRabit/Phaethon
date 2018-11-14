@@ -30,19 +30,16 @@ namespace Core.Model
         public string DocNumber { get; set; }
 
         [DataType(DataType.DateTime), Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataMember]
         [DisplayName("Prescription date")]
         public DateTime PrescriptionDate { get; set; }
 
         [DataType(DataType.DateTime), Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataMember]
         [DisplayName("Reception date")]
         public DateTime ReceptionDate { get; set; }
 
         [DataType(DataType.DateTime), Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataMember]
         [DisplayName("Payment date")]
         public DateTime PaymentDate { get; set; }

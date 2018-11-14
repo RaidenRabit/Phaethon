@@ -12,8 +12,8 @@
     <td>@Html.EditorFor(model => model.Item.Product.Barcode, new { htmlAttributes = new { @class = "form-control", @required = "required" } })</td>
     <td>@Html.EditorFor(model => model.Item.SerNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })</td>
     <td>@Html.EditorFor(model => model.Item.Product.ProductGroup.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })</td>
-    <td>@Html.EditorFor(model => model.Item.Price, new { htmlAttributes = new { @class = "form-control", @required = "required" } })</td>
+    <td>@Html.EditorFor(model => model.Item.Price, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number", @min = "0", @step = "0.01", @value = "0" } })</td>
     <td>@Html.EditorFor(model => model.Item.Product.ProductGroup.Tax, new { htmlAttributes = new { @class = "form-control", @required = "required" } })</td>
-    <td><input type="text" class="form-control" value="0" /></td>
-    <td>@Html.ActionLink("Delete", "Delete", new { id = Model.Item.ID })</td>
+    <td><input type="number" class="form-control" value="0" /></td>
+    <td><input type="button" class="btn btn-danger btn-block" value="Delete" onclick="window.location.href='https://stackoverflow.com'" /></td>
 </tr>
