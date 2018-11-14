@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -24,7 +25,7 @@ namespace Tests.IntegrationTests
             DateTime b = DateTime.Now;
             _address = new Address { City = "TestCity1", Number = "21", Street = "TestStreet1" };
             _customer = new Customer { Address = _address, Email = "testEmail@email.com", FamilyName = "TestFamily", GivenName = "TestGiven", Phone = "072379899" };
-            _job = new Job { Customer = _customer, Description = "Repair TestProduct1", FinishedTime = a, StartedTime = b, JobName = "Repair", JobStatus = JobStatus_enum.Completed };
+            _job = new Job { Customer = _customer, Description = "Repair TestProduct1", FinishedTime = a, StartedTime = b, JobName = "Repair", JobStatus = JobStatus_enum.Unassigned };
         }
         
         #region Post
@@ -122,6 +123,28 @@ namespace Tests.IntegrationTests
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);//check if internal server error
 
         }
+
+
+        [Test]
+        public async Task ReadJob_ReadAll_ListOfJobs()
+        {
+            //Setup
+            InitializeData();
+            JobDa _jobDa = new JobDa();
+            _jobDa.InsertOrUpdate(_job);
+            _job.ID = 0;
+            _jobDa.InsertOrUpdate(_job);
+
+            //Act
+            var result = await _client.GetAsync("Job/ReadAll");
+            string json = await result.Content.ReadAsStringAsync();
+            List<Job> jobs = JsonConvert.DeserializeObject<List<Job>>(json);
+
+            //Assert
+            Assert.IsTrue(result.IsSuccessStatusCode);
+            Assert.IsTrue(jobs.Count >= 2);
+
+        }
         #endregion
 
         #region Put
@@ -172,31 +195,63 @@ namespace Tests.IntegrationTests
         [Test]
         public async Task PutJob_UpdateJob_JobId()
         {
+            //Set up
+            InitializeData();
+            JobDa jobDa = new JobDa();
+            int jobId = jobDa.InsertOrUpdate(_job);
+            Job job = jobDa.Read(jobId);
+            _job.JobName = "testChangedJobName";
 
+            //Act
+            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+            Job putJob = jobDa.Read(deserializedResponse);
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(!putJob.Equals(job));
+            Assert.IsTrue(putJob.ID.Equals(job.ID));
+            Assert.IsTrue(putJob.JobName.Equals("testChangedJobName"));
         }
 
         [Test]
         public async Task PutJob_UpdateJobStatus_JobId()
         {
 
+            //Set up
+            InitializeData();
+            JobDa jobDa = new JobDa();
+            int jobId = jobDa.InsertOrUpdate(_job);
+            Job job = jobDa.Read(jobId);
+            _job.JobStatus = JobStatus_enum.Completed;
+
+            //Act
+            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+            Job putJob = jobDa.Read(deserializedResponse);
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(!putJob.Equals(job));
+            Assert.IsTrue(putJob.ID.Equals(job.ID));
+            Assert.IsTrue(putJob.JobStatus.Equals(JobStatus_enum.Completed));
         }
 
         [Test]
-        public async Task PutJob_UpdateAddress_BadRequest()
+        public async Task PutJob_UpdateJobNoOrInvalidDateTime_BadRequest()
         {
+            //Set up
+            InitializeData();
+            JobDa jobDa = new JobDa();
+            int jobId = jobDa.InsertOrUpdate(_job);
+            Job job = jobDa.Read(jobId);
+            _job = new Job { ID = job.ID, Customer = job.Customer, JobName = "testChangedJobName" };
 
-        }
+            //Act
+            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
 
-        [Test]
-        public async Task PutJob_UpdateCustomer_BadRequest()
-        {
-
-        }
-
-        [Test]
-        public async Task PutJob_UpdateJob_BadRequest()
-        {
-
+            //Assert
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest);
         }
         #endregion
 

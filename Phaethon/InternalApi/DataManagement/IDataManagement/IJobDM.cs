@@ -1,4 +1,5 @@
-﻿using Core.Model;
+﻿using System.Collections.Generic;
+using Core.Model;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
@@ -7,5 +8,7 @@ namespace InternalApi.DataManagement.IDataManagement
         int Create(Job job);
 
         Job Read(string id);
+
+        List<Job> ReadAll();
     }
 }
