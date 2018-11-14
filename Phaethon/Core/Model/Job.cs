@@ -27,15 +27,21 @@ namespace Core.Model
         public int? Customer_ID { get; set; }
 
         [DataMember]
+        [DisplayName("Job Status")]
         public JobStatus_enum JobStatus { get; set; }
 
         [DataMember]
+        [DisplayName("Job Name")]
         public string JobName { get; set; }
 
         [DataMember]
+        [DisplayName("Started Time")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartedTime { get; set; }
 
         [DataMember]
+        [DisplayName("Finished Time")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FinishedTime { get; set; }
 
         [DataMember]
