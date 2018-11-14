@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -20,11 +21,34 @@ namespace WebClient.Controllers
         }
 
         // GET: Job
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var a = await _client.GetAsync("ReadAll");
-            var b = JsonConvert.DeserializeObject<List<Job>>(await a.Content.ReadAsStringAsync());
-            return View(b);
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
+        {
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = id.ToString();
+            var result = await _client.GetAsync("Read?" + parameters);
+            string json = await result.Content.ReadAsStringAsync();
+            Job job = JsonConvert.DeserializeObject<Job>(json);
+            return View(job);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(Job job)
+        {
+            var result = await _client.PostAsJsonAsync("InsertOrUpdate", job);
+            if (HttpStatusCode.OK == result.StatusCode)
+            {
+                return View();
+            }
+            else
+            {
+                return View("Error");
+            }
         }
     }
 }

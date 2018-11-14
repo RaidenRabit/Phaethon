@@ -1,60 +1,88 @@
-﻿@model IEnumerable<Core.Model.Job>
+﻿@*@model IEnumerable<Core.Model.Job>
 
-@{
-    ViewBag.Title = "Index";
-}
+    @{
+        ViewBag.Title = "Index";
+    }
 
-<table class="table">
-    <tr>
-        <th>
-            Job ID
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.JobName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartedTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FinishedTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            Customer Name
-        </th>
-        <th></th>
-    </tr>
+    <table class="table">
+        <tr>
+            <th>
+                Job ID
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinishedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Customer Name
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model)
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>
+                @Html.DisplayFor(modelItem => item.ID)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinishedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @item.Customer.FamilyName @item.Customer.GivenName
+            </td>
+        </tr>
+    }
+
+    </table>*@
+@model Core.Model.Job
+@{ViewBag.Title = "Edit";}
+
+@using (Html.BeginForm())
 {
-    <tr>
-        <th>
-            @Html.DisplayFor(modelItem => item.ID)
-        </th>
-        <td>
-            @Html.DisplayFor(modelItem => item.JobName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartedTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FinishedTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @item.Customer.FamilyName @item.Customer.GivenName
-        </td>
-    </tr>
-}
+    @Html.AntiForgeryToken()
+    <div class="panel-body" style="padding-left: 20px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default" style="height: 130px; height: auto;">
+                    <div class="panel-heading" style="clear:both;" data-toggle="collapse" href="#invoiceInfo">All Jobs</div>
 
-</table>
+                    <div id="jobInfo" class="panel-body collapse" style="padding-left: 20px;">
+                        @{ Html.RenderPartial("_editJob", Model); }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary btn-lg btn-block" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@Scripts.Render("~/bundles/Job")
