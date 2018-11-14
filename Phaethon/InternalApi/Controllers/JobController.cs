@@ -39,7 +39,7 @@ namespace InternalApi.Controllers
 
         [Route("Read")]
         [HttpGet]
-        public async Task<HttpResponseMessage> Read(string id)
+        public HttpResponseMessage Read(string id)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace InternalApi.Controllers
 
         [Route("ReadAll")]
         [HttpGet]
-        public async Task<HttpResponseMessage> ReadAll()
+        public HttpResponseMessage ReadAll()
         {
             try
             {
