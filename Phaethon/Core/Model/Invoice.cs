@@ -59,6 +59,7 @@ namespace Core.Model
         public virtual Representative Receiver { get; set; }
         public int? Receiver_ID { get; set; }
 
+        [DataMember]
         public virtual ICollection<Element> Elements { get; set; }
     }
 }

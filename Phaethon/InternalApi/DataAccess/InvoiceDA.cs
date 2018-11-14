@@ -30,10 +30,9 @@ namespace InternalApi.DataAccess
             using (var db = new DatabaseContext())
             {
                 return db.Invoices
-                    .Include(x => x.Receiver)
                     .Include(x => x.Receiver.Company)
-                    .Include(x => x.Sender)
                     .Include(x => x.Sender.Company)
+                    .Include(x => x.Elements.Select(i => i.Item.Product.ProductGroup))
                     .SingleOrDefault(x => x.ID == id);
             }
         }
