@@ -1,7 +1,7 @@
 ﻿@using Core.Model
 @model Core.Model.Invoice
 
-<table class="table table-hover">
+<table id="itemTable" class="table table-hover">
     <thead>
     @{
         Item item = new Item();
@@ -43,7 +43,7 @@
                 <input type="text" class="form-control" value="0" />
             </td>
             <td colspan="6">
-                <input type="button" class="btn btn-success" value="Add new item"/>
+                <input type="button" id="newItemRow" class="btn btn-success" value="Add new item"/>
             </td>
         </tr>
     </tfoot>
