@@ -59,7 +59,6 @@ function GetInvoices()
                 var ReceptionDate = moment(data[i].ReceptionDate).format('DD-MM-YYYY');
                 var PaymentDate = moment(data[i].PaymentDate).format('DD-MM-YYYY');
                 htmlText += "<tr>" +
-                    "<td>" + data[i].Transport + "</td>" +
                     "<td>" + data[i].DocNumber + "</td>" +
                     "<td>" + PrescriptionDate + "</td>" +
                     "<td>" + ReceptionDate + "</td>" +

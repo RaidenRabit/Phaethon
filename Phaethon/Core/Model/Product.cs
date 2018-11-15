@@ -27,7 +27,6 @@ namespace Core.Model
         [Required]
         [DataMember]
         [DisplayName("Barcode")]
-        [Index(IsUnique = true)]
         public int Barcode { get; set; }
 
         [DataMember]

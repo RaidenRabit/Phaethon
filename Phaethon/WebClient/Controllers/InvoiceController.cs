@@ -44,7 +44,7 @@ namespace WebClient.Controllers
             var result = await _client.PostAsJsonAsync("Create", invoice);
             if (HttpStatusCode.OK == result.StatusCode)
             {
-                return View();
+                return View(invoice);
             }
             else
             {

@@ -56,20 +56,17 @@ function products() {
             rowValue = parseInt($('#itemTable tbody tr:last').find('input').attr("name").split('[')[1].split(']')[0]) + 1;
         }
         $("#itemTable tbody").append("<tr><input data-val='true' data-val-number='The field Invoice_ID must be a number.' data-val-required='The Invoice_ID field is required.' id='Elements_" + rowValue + "__Invoice_ID' name='Elements[" + rowValue + "].Invoice_ID' type='hidden' value='" + $("#ID").val() +"'>" +
-            "<input data-val='true' data-val-number='The field Item_ID must be a number.' data-val-required='The Item_ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item_ID' type='hidden' value='0'>" +
             "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item.ID' type='hidden' value='0'>" +
-            "<input data-val='true' data-val-number='The field Product_ID must be a number.' id='Elements_" + rowValue + "__Item_Product_ID' name='Elements[" + rowValue + "].Item.Product_ID' type='hidden' value=''>" +
             "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ID' name='Elements[" + rowValue + "].Item.Product.ID' type='hidden' value='0'>" +
-            "<input data-val='true' data-val-number='The field ProductGroup_ID must be a number.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_ID' name='Elements[" + rowValue + "].Item.Product.ProductGroup_ID' type='hidden' value=''>" +
             "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_ID' name='Elements[" + rowValue + "].Item.Product.ProductGroup.ID' type='hidden' value='0'>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value=''></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='text' value=''></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Serial number field is required.' id='Elements_" + rowValue + "__Item_SerNumber' name='Elements[" + rowValue + "].Item.SerNumber' type='text' value=''></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product group name field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_Name' name='Elements[" + rowValue + "].Item.Product.ProductGroup.Name' list='ProductGroups' required='required' type='text' value=''></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Price must be a number.' data-val-required='The Price field is required.' id='Elements_" + rowValue + "__Item_Price' min='0' name='Elements[" + rowValue + "].Item.Price' required='required' step='0.01' type='number' value='0'></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Product group tax must be a number.' data-val-required='The Product group tax field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_Tax' name='Elements[" + rowValue + "].Item.Product.ProductGroup.Tax' required='required' type='number' value='0'></td>" +
-            "<td><input type='number' class='form-control' value='0'></td>" +
-            "<td><input type='button' class='btn btn-danger btn-block' value='Delete' onclick='window.location.href='https://stackoverflow.com''></td></tr>");
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text'></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='text'></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Serial number field is required.' id='Elements_" + rowValue + "__Item_SerNumber' name='Elements[" + rowValue + "].Item.SerNumber' type='text'></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product group name field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_Name' name='Elements[" + rowValue + "].Item.Product.ProductGroup.Name' list='ProductGroups' required='required' type='text'></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Price must be a number.' data-val-required='The Price field is required.' id='Elements_" + rowValue + "__Item_Price' min='0' name='Elements[" + rowValue + "].Item.Price' required='required' step='0.01' type='number'></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Product group tax must be a number.' data-val-required='The Product group tax field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_Tax' name='Elements[" + rowValue + "].Item.Product.ProductGroup.Tax' required='required' max='100' min='0' type='number'></td>" +
+            "<td><input type='number' class='form-control' readonly></td>" +
+            "<td><input type='button' class='btn btn-danger btn-block' value='Delete'></td></tr>");
 
         //search for product by barcode
         addActionToItem(rowValue);
@@ -93,7 +90,6 @@ function onlyNumbers(path) {
 
 function addActionToItem(rowValue) {
     //on barcode change get corresponding info in database for product, product group and item
-    //might end up updating product...
     $("#Elements_" + rowValue + "__Item_Product_Barcode").change(function () {
         var c = $(this).val();
         $.ajax({
@@ -109,6 +105,8 @@ function addActionToItem(rowValue) {
                     $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val(data.ProductGroup.ID);
                     $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Name").val(data.ProductGroup.Name);
                     $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Tax").val(data.ProductGroup.Tax);
+                } else {
+                    $("#Elements_" + rowValue + "__Item_Product_ID").val(0);
                 }
             }
         });
@@ -126,8 +124,10 @@ function addActionToItem(rowValue) {
         }
     });
 
-    //delete row
-    //show if will be added
+    //delete button clicked 
+    $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Name").closest("tr").find(":input[type='button']").click(function () {
+        $(this).closest("tr").remove();
+    });
 }
 
 function CompanyChange(element) {
