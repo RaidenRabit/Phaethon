@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Core.Model;
-using InternalApi.DataAccess;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 

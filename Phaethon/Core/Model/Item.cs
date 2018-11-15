@@ -18,8 +18,7 @@ namespace Core.Model
         [Required]
         [DataMember]
         public int ID { get; set; }
-
-        [Required]
+        
         [DataMember]
         [DisplayName("Serial number")]
         public string SerNumber { get; set; }

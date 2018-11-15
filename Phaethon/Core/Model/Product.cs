@@ -27,13 +27,15 @@ namespace Core.Model
         [Required]
         [DataMember]
         [DisplayName("Barcode")]
-        public string Barcode { get; set; }
+        [Index(IsUnique = true)]
+        public int Barcode { get; set; }
 
         [DataMember]
         [ForeignKey("ProductGroup_ID")]
         public virtual ProductGroup ProductGroup { get; set; }
         public int? ProductGroup_ID { get; set; }
 
+        [DataMember]
         public virtual ICollection<Item> Items { get; set; }
     }
 }

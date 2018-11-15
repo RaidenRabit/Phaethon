@@ -51,7 +51,8 @@ namespace Tests.IntegrationTests
                 ReceptionDate = DateTime.Now,
                 Receiver = receiver,
                 Sender = sender,
-                Transport = 5
+                Transport = 5,
+                Elements = new List<Element>()
             };
 
             return invoice;
