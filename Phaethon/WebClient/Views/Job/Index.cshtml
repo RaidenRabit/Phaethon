@@ -1,88 +1,96 @@
-﻿@*@model IEnumerable<Core.Model.Job>
+﻿@model Core.Model.Job
+@Styles.Render("~/Content/Daterangepicker")
+@{ViewBag.Title = "Index";}
 
-    @{
-        ViewBag.Title = "Index";
-    }
+<div class="card-body" style="padding-left: 20px;">
+    <div class="row">
+        <div class="col-sm-12">
+                <div class="card" style="height: 130px; height: auto;">
+                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">Job search</div>
+                    <div id="jobSearch" class="card-body collapse show" style="padding-left: 20px;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-info active">
+                                            <input type="radio" name="jobStatus" value="1" checked> Unassigned
+                                        </label>
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="jobStatus" value="2"> In progress
+                                        </label>
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="jobStatus" value="3"> Completed
+                                        </label>
+                                    </div>
 
-    <table class="table">
-        <tr>
-            <th>
-                Job ID
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JobName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartedTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FinishedTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                Customer Name
-            </th>
-            <th></th>
-        </tr>
+                                    <input id="jobName" type="text" class="form-control" list="jobs" placeholder="JobNames" />
+                                    <datalist id="jobs"></datalist>
+                                </div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <th>
-                @Html.DisplayFor(modelItem => item.ID)
-            </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartedTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinishedTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @item.Customer.FamilyName @item.Customer.GivenName
-            </td>
-        </tr>
-    }
+                                <div class="form-group">
+                                    <input id="jobId" type="text" class="form-control" placeholder="Job Id" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-info active">
+                                            <input type="radio" name="dateOption" value="0" checked> @Html.DisplayNameFor(model => model.StartedTime)
+                                        </label>
+                                        <label class="btn btn-info">
+                                            <input type="radio" name="dateOption" value="1"> @Html.DisplayNameFor(model => model.FinishedTime)
+                                        </label>
+                                    </div>
 
-    </table>*@
-@model Core.Model.Job
-@{ViewBag.Title = "Edit";}
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="panel-body" style="padding-left: 20px;">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel panel-default" style="height: 130px; height: auto;">
-                    <div class="panel-heading" style="clear:both;" data-toggle="collapse" href="#invoiceInfo">All Jobs</div>
-
-                    <div id="jobInfo" class="panel-body collapse" style="padding-left: 20px;">
-                        @{ Html.RenderPartial("_editJob", Model); }
+                                    <input id="dateRange" type="datetime" class="datepicker form-control" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary btn-lg btn-block" />
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card" style="height: 130px; height: auto;">
+                <div class="card-header" style="clear: both;">Jobs<div style="float: right">@Html.ActionLink("New job", "Edit", new { id = 0 })</div></div>
+
+                <div class="card-body" style="padding-left: 20px;">
+                    <table id="jobTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Job ID
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.JobName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StartedTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FinishedTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Cost)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th>
+                                    Customer Name
+                                </th>
+                                <th>
+                                    <input id="numOfRecords" type="number" class="form-control" value="10" />
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-}
+</div>
+
 @Scripts.Render("~/bundles/Job")
