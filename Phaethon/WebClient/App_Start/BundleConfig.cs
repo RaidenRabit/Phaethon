@@ -26,6 +26,14 @@ namespace WebClient
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Daterangepicker").Include(
+                "~/Content/daterangepicker.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Job").Include(
+                "~/Scripts/moment.min.js",
+                "~/Scripts/job.index.js",
+                "~/Scripts/daterangepicker.js"));
         }
     }
 }
