@@ -7,26 +7,8 @@ $(function () {//on code load
     
     RepresentativeChange(receiverElement);
     RepresentativeChange(senderElement);
-    
-    $("#newItemRow").click(function () {
-        var lastRow = $('#itemTable tbody tr:last');
-        var lastRowValue = parseInt(lastRow.find('input').attr("name").split('[')[1].split(']')[0]) + 1;
-        lastRow.after("<tr><input data-val='true' data-val-number='The field Invoice_ID must be a number.' data-val-required='The Invoice_ID field is required.' id='Elements_" + lastRowValue + "__Invoice_ID' name='Elements[" + lastRowValue + "].Invoice_ID' type='hidden' value='0'>" +
-            "<input data-val='true' data-val-number='The field Item_ID must be a number.' data-val-required='The Item_ID field is required.' id='Elements_" + lastRowValue + "__Item_ID' name='Elements[" + lastRowValue + "].Item_ID' type='hidden' value='0'>" +
-            "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + lastRowValue + "__Item_ID' name='Elements[" + lastRowValue + "].Item.ID' type='hidden' value='0'>" +
-            "<input data-val='true' data-val-number='The field Product_ID must be a number.' id='Elements_" + lastRowValue + "__Item_Product_ID' name='Elements[" + lastRowValue + "].Item.Product_ID' type='hidden' value=''>" +
-            "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + lastRowValue + "__Item_Product_ID' name='Elements[" + lastRowValue + "].Item.Product.ID' type='hidden' value='0'>" +
-            "<input data-val='true' data-val-number='The field ProductGroup_ID must be a number.' id='Elements_" + lastRowValue + "__Item_Product_ProductGroup_ID' name='Elements[" + lastRowValue + "].Item.Product.ProductGroup_ID' type='hidden' value=''>" +
-            "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + lastRowValue + "__Item_Product_ProductGroup_ID' name='Elements[" + lastRowValue + "].Item.Product.ProductGroup.ID' type='hidden' value='1'>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + lastRowValue + "__Item_Product_Name' name='Elements[" + lastRowValue + "].Item.Product.Name' required='required' type='text' value=''></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + lastRowValue + "__Item_Product_Barcode' name='Elements[" + lastRowValue + "].Item.Product.Barcode' required='required' type='text' value=''></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Serial number field is required.' id='Elements_" + lastRowValue + "__Item_SerNumber' name='Elements[" + lastRowValue + "].Item.SerNumber' required='required' type='text' value=''></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product group name field is required.' id='Elements_" + lastRowValue + "__Item_Product_ProductGroup_Name' name='Elements[" + lastRowValue + "].Item.Product.ProductGroup.Name' required='required' type='text' value=''></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Price must be a number.' data-val-required='The Price field is required.' id='Elements_" + lastRowValue + "__Item_Price' min='0' name='Elements[" + lastRowValue + "].Item.Price' required='required' step='0.01' type='number' value='0'></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Product group tax must be a number.' data-val-required='The Product group tax field is required.' id='Elements_" + lastRowValue + "__Item_Product_ProductGroup_Tax' name='Elements[" + lastRowValue + "].Item.Product.ProductGroup.Tax' required='required' type='number' value='0'></td>" +
-            "<td><input type='number' class='form-control' value='0'></td>" +
-            "<td><input type='button' class='btn btn-danger btn-block' value='Delete' onclick='window.location.href='https://stackoverflow.com''></td></tr>");
-    });
+
+    products();
 
     $(".date-picker").datepicker({
         changeMonth: true,
@@ -34,8 +16,72 @@ $(function () {//on code load
         yearRange: "-20:+0", // You can set the year range as per as your need
         dateFormat: "dd-M-yy"
     });
+    
+    //allows only int values
+    onlyNumbers("");
+    
+    //adds action listeners to existing input fields in items
+    $("#itemTable tbody tr").each(function () {
+        addActionToItem($(this).find('input').attr("name").split('[')[1].split(']')[0]);
+    });
+});
 
-    $("#Transport").keydown(function (e) {
+function products() {
+    //gets all product groups
+    $.ajax({
+        type: "GET",
+        url: "/Api/ProductGroup/GetProductGroups",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            var htmlText = "";
+            for (var i = 0; i < data.length; i++) {
+                htmlText += "<option value='" + data[i].Name + "' " +
+                    "data-ID='" + data[i].ID + "'" +
+                    "data-tax='" + data[i].Tax + "'/>";
+            }
+            $("#ProductGroups").html(htmlText);
+        },
+        error: function () {
+            $("#ProductGroups").html("1");
+        }
+    });
+
+    //adds new item row to table
+    $("#newItemRow").click(function () {
+        var rowValue;
+        if ($('#itemTable tbody tr').length == 0) {
+            rowValue = 0;
+        } else {
+            rowValue = parseInt($('#itemTable tbody tr:last').find('input').attr("name").split('[')[1].split(']')[0]) + 1;
+        }
+        $("#itemTable tbody").append("<tr><input data-val='true' data-val-number='The field Invoice_ID must be a number.' data-val-required='The Invoice_ID field is required.' id='Elements_" + rowValue + "__Invoice_ID' name='Elements[" + rowValue + "].Invoice_ID' type='hidden' value='" + $("#ID").val() +"'>" +
+            "<input data-val='true' data-val-number='The field Item_ID must be a number.' data-val-required='The Item_ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item_ID' type='hidden' value='0'>" +
+            "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item.ID' type='hidden' value='0'>" +
+            "<input data-val='true' data-val-number='The field Product_ID must be a number.' id='Elements_" + rowValue + "__Item_Product_ID' name='Elements[" + rowValue + "].Item.Product_ID' type='hidden' value=''>" +
+            "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ID' name='Elements[" + rowValue + "].Item.Product.ID' type='hidden' value='0'>" +
+            "<input data-val='true' data-val-number='The field ProductGroup_ID must be a number.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_ID' name='Elements[" + rowValue + "].Item.Product.ProductGroup_ID' type='hidden' value=''>" +
+            "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_ID' name='Elements[" + rowValue + "].Item.Product.ProductGroup.ID' type='hidden' value='0'>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value=''></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='text' value=''></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Serial number field is required.' id='Elements_" + rowValue + "__Item_SerNumber' name='Elements[" + rowValue + "].Item.SerNumber' type='text' value=''></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product group name field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_Name' name='Elements[" + rowValue + "].Item.Product.ProductGroup.Name' list='ProductGroups' required='required' type='text' value=''></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Price must be a number.' data-val-required='The Price field is required.' id='Elements_" + rowValue + "__Item_Price' min='0' name='Elements[" + rowValue + "].Item.Price' required='required' step='0.01' type='number' value='0'></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Product group tax must be a number.' data-val-required='The Product group tax field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_Tax' name='Elements[" + rowValue + "].Item.Product.ProductGroup.Tax' required='required' type='number' value='0'></td>" +
+            "<td><input type='number' class='form-control' value='0'></td>" +
+            "<td><input type='button' class='btn btn-danger btn-block' value='Delete' onclick='window.location.href='https://stackoverflow.com''></td></tr>");
+
+        //search for product by barcode
+        addActionToItem(rowValue);
+
+        //allows only int values
+        onlyNumbers("#itemTable tbody tr:last ");
+    });
+}
+
+function onlyNumbers(path) {
+    //on keypress checks if value is correct
+    $(path + ":input[type='number']").keydown(function (e) {
         if (!((e.keyCode > 95 && e.keyCode < 106)
             || (e.keyCode > 47 && e.keyCode < 58)
             || e.keyCode == 8)) {
@@ -43,7 +89,46 @@ $(function () {//on code load
         }
         return true;
     });
-});
+}
+
+function addActionToItem(rowValue) {
+    //on barcode change get corresponding info in database for product, product group and item
+    //might end up updating product...
+    $("#Elements_" + rowValue + "__Item_Product_Barcode").change(function () {
+        var c = $(this).val();
+        $.ajax({
+            type: "GET",
+            url: "/Api/Product/GetProduct?barcode=" + c,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data !== null) {
+                    $("#Elements_" + rowValue + "__Item_Price").val(data.Items[0].Price);
+                    $("#Elements_" + rowValue + "__Item_Product_Name").val(data.Name);
+                    $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
+                    $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val(data.ProductGroup.ID);
+                    $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Name").val(data.ProductGroup.Name);
+                    $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Tax").val(data.ProductGroup.Tax);
+                }
+            }
+        });
+    });
+
+    //changes product group info depending on existing groups
+    $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Name").change(function () {
+        var option = $("#ProductGroups option[value='" + $(this).val() + "']");
+        if (option.length !== 0) {
+            $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val(option.data('id'));
+            $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Tax").val(option.data('tax'));
+        } else {
+            $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val(0);
+            $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Tax").val("");
+        }
+    });
+
+    //delete row
+    //show if will be added
+}
 
 function CompanyChange(element) {
     //gets all companies
@@ -99,7 +184,7 @@ function CompanyChange(element) {
     });
 
     //sets selected companies companies info
-    $("#" + element + "_Company_Name").change(function () {
+    $(":input[list='companies']").change(function () {
         var option = $("#companies option[value='" + $(this).val() + "']");
         if (option.length !== 0) {
             $.ajax({
