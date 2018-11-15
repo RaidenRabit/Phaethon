@@ -7,7 +7,7 @@
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
                 <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceSearch">Invoice search</div>
-
+                
                 <div id="invoiceSearch" class="card-body collapse" style="padding-left: 20px;">
                     <div class="form-group">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -49,15 +49,12 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;">Invoices<div style="float: right">@Html.ActionLink("New invoice", "Edit", new { id = 0 })</div></div>
+                <div class="card-header" style="clear: both;"  data-toggle="collapse" href="#invoiceList">Invoices<div style="float: right">@Html.ActionLink("New invoice", "Edit", new { id = 0 })</div></div>
 
-                <div class="card-body" style="padding-left: 20px;">
+                <div id="invoiceList" class="card-body collapse show" style="padding-left: 20px;">
                     <table id="invoiceTable" class="table">
                         <thead>
                             <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Transport)
-                                </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.DocNumber)
                                 </th>
