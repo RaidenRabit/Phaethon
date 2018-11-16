@@ -9,6 +9,6 @@ namespace InternalApi.DataManagement.IDataManagement
 
         Job Read(string id);
 
-        List<Job> ReadAll();
+        List<Job> ReadAll(int numOfRecords, int jobId, string jobName, string from, string to, int jobStatus, int dateOption, string customerName, string description);
     }
 }

@@ -32,9 +32,9 @@ namespace InternalApi.DataManagement
             throw new Exception("No Job with such id");
         }
 
-        public List<Job> ReadAll()
+        public List<Job> ReadAll(int numOfRecords, int jobId, string jobName, string from, string to, int jobStatus, int dateOption, string customerName, string description)
         {
-            return _jobDa.ReadAll();
+            return _jobDa.ReadAll(jobName, from, to, dateOption, customerName, jobStatus, numOfRecords, jobId, description);
         }
     }
 }
