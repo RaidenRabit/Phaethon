@@ -122,7 +122,7 @@ PaymentDate DATE
 --
 ID INT PRIMARY KEY,
 Company_ID INT FOREIGN KEY,
-Name VARCHARs</panel_attributes>
+Name VARCHAR</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
