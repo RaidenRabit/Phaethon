@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -53,11 +54,11 @@ namespace InternalApi.Controllers
 
         [Route("ReadAll")]
         [HttpGet]
-        public HttpResponseMessage ReadAll()
+        public HttpResponseMessage ReadAll(int numOfRecords = 10, int jobId = 0, string jobName = "", string from = "", string to = "", int jobStatus = 0, int dateOption = 0, string customerName = "", string description ="")
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll());
+                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll(numOfRecords, jobId, jobName, from, to, jobStatus, dateOption, customerName, description));
             }
             catch (Exception e)
             {

@@ -43,7 +43,7 @@ namespace ExternalApi.Controllers
 
         [Route("ReadAll")]
         [HttpGet]
-        public async Task<HttpResponseMessage> ReadAll()
+        public async Task<HttpResponseMessage> ReadAll(int numOfRecords = 10, int jobId = 0, string jobName = "", string from = "", string to = "", int jobStatus = 0, int dateOption = 0, string customerName = "", string description ="")
         {
             UriBuilder request = new UriBuilder(Request.RequestUri)
             {

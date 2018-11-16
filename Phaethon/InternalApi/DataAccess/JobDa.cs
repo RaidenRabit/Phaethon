@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -34,15 +35,32 @@ namespace InternalApi.DataAccess
             }
         }
 
-        public List<Job> ReadAll()
+        public List<Job> ReadAll(string jobName, string from, string to, int dateOption, string customerName, int jobStatus, int numOfRecords, int jobId, string description)
         {
             using (var db = new DatabaseContext())
             {
-                var result = db.Jobs
+                var query = db.Jobs
                     .Include(x => x.Customer)
                     .Include(x => x.Customer.Address)
-                    .ToList();
-                return result;
+                    .Where(x => (jobId == 0 || x.ID == jobId) &&
+                                x.JobName.Contains(jobName) &&
+                                (x.Customer.GivenName + x.Customer.FamilyName).Contains(customerName) &&
+                                x.Description.Contains(description) &&
+                                (jobStatus == 0 || (int)x.JobStatus == jobStatus)
+                    )
+                    .Take(numOfRecords);
+
+                if (!string.IsNullOrEmpty(from) && !string.IsNullOrEmpty(to))
+                {
+                    DateTime.TryParse(from, out var fromTime);
+                    DateTime.TryParse(to, out var toTime);
+                    query = query.Where(x => (dateOption == 0 && fromTime <= x.StartedTime && x.StartedTime <= toTime ||
+                                              dateOption == 1 && fromTime <= x.FinishedTime && x.FinishedTime <= toTime)
+                    );
+
+                }
+
+                return query.ToList();
             }
         }
     }
