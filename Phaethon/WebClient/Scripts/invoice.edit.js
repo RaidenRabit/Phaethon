@@ -38,7 +38,8 @@ function products() {
             for (var i = 0; i < data.length; i++) {
                 htmlText += "<option value='" + data[i].Name + "' " +
                     "data-ID='" + data[i].ID + "'" +
-                    "data-tax='" + data[i].Tax + "'/>";
+                    "data-tax='" + data[i].Tax + "'" +
+                    "label = '" + data[i].Tax + "'/>";
             }
             $("#ProductGroups").html(htmlText);
         },
@@ -60,13 +61,13 @@ function products() {
             "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ID' name='Elements[" + rowValue + "].Item.Product.ID' type='hidden' value='0'>" +
             "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_ID' name='Elements[" + rowValue + "].Item.Product.ProductGroup.ID' type='hidden' value='0'>" +
             "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text'></td>" +
-            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='text'></td>" +
+            "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number'></td>" +
             "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Serial number field is required.' id='Elements_" + rowValue + "__Item_SerNumber' name='Elements[" + rowValue + "].Item.SerNumber' type='text'></td>" +
             "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product group name field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_Name' name='Elements[" + rowValue + "].Item.Product.ProductGroup.Name' list='ProductGroups' required='required' type='text'></td>" +
             "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Price must be a number.' data-val-required='The Price field is required.' id='Elements_" + rowValue + "__Item_Price' min='0' name='Elements[" + rowValue + "].Item.Price' required='required' step='0.01' type='number'></td>" +
             "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Product group tax must be a number.' data-val-required='The Product group tax field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_Tax' name='Elements[" + rowValue + "].Item.Product.ProductGroup.Tax' required='required' max='100' min='0' type='number'></td>" +
             "<td><input type='number' class='form-control' readonly></td>" +
-            "<td><input type='button' class='btn btn-danger btn-block' value='Delete'></td></tr>");
+            "<td><input type='button' class='btn btn-danger btn-block' value='Delete' title='This button removes item, action cant be canceled.'></td></tr>");
 
         //search for product by barcode
         addActionToItem(rowValue);
@@ -91,15 +92,16 @@ function onlyNumbers(path) {
 function addActionToItem(rowValue) {
     //on barcode change get corresponding info in database for product, product group and item
     $("#Elements_" + rowValue + "__Item_Product_Barcode").change(function () {
-        var c = $(this).val();
         $.ajax({
             type: "GET",
-            url: "/Api/Product/GetProduct?barcode=" + c,
+            url: "/Api/Product/GetProduct?barcode=" + $(this).val(),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
                 if (data !== null) {
-                    $("#Elements_" + rowValue + "__Item_Price").val(data.Items[0].Price);
+                    if (data.Items.length != 0) {
+                        $("#Elements_" + rowValue + "__Item_Price").val(data.Items[0].Price);
+                    }
                     $("#Elements_" + rowValue + "__Item_Product_Name").val(data.Name);
                     $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
                     $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val(data.ProductGroup.ID);
@@ -123,10 +125,21 @@ function addActionToItem(rowValue) {
             $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Tax").val("");
         }
     });
-
+    
     //delete button clicked 
     $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Name").closest("tr").find(":input[type='button']").click(function () {
-        $(this).closest("tr").remove();
+        var row = $(this).closest("tr");
+        if ($("#Elements_" + rowValue + "__Item_ID").val() == 0) {
+            row.remove();
+        } else {
+            if ($("#Elements_" + rowValue + "__Invoice_ID").val() == 0) {
+                $("#Elements_" + rowValue + "__Invoice_ID").val($("#ID").val());
+                row.css("background-color", "");
+            } else {
+                $("#Elements_" + rowValue + "__Invoice_ID").val(0);
+                row.css("background-color", "#ffcccc");
+            }
+        }
     });
 }
 
@@ -184,7 +197,7 @@ function CompanyChange(element) {
     });
 
     //sets selected companies companies info
-    $(":input[list='companies']").change(function () {
+    $("#" + element + "_Company_Name").change(function () {
         var option = $("#companies option[value='" + $(this).val() + "']");
         if (option.length !== 0) {
             $.ajax({

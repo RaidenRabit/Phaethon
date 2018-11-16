@@ -23,13 +23,20 @@ namespace InternalApi.DataAccess
 
                 foreach (Element element in invoice.Elements)
                 {
-                    db.ProductGroups.AddOrUpdate(element.Item.Product.ProductGroup);
-                    element.Item.Product.ProductGroup_ID = element.Item.Product.ProductGroup.ID;
-                    db.Products.AddOrUpdate(element.Item.Product);
-                    element.Item.Product_ID = element.Item.Product.ID;
-                    db.Items.AddOrUpdate(element.Item);
-                    element.Item_ID = element.Item.ID;
-                    db.Elements.AddOrUpdate(element);
+                    if (element.Invoice_ID != 0)
+                    {
+                        db.ProductGroups.AddOrUpdate(element.Item.Product.ProductGroup);
+                        element.Item.Product.ProductGroup_ID = element.Item.Product.ProductGroup.ID;
+                        db.Products.AddOrUpdate(element.Item.Product);
+                        element.Item.Product_ID = element.Item.Product.ID;
+                        db.Items.AddOrUpdate(element.Item);
+                        element.Item_ID = element.Item.ID;
+                        db.Elements.AddOrUpdate(element);
+                    }
+                    else
+                    {
+                        db.Items.Remove(db.Items.SingleOrDefault(x => x.ID == element.Item.ID));
+                    }
                 }
 
                 return db.SaveChanges() > 0;
