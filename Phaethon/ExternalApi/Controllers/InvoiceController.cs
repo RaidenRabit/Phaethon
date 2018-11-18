@@ -23,20 +23,20 @@ namespace ExternalApi.Controllers
             _client.BaseAddress = new Uri("http://localhost:64007/Invoice/");
         }
 
-        [Route("Create")]
+        [Route("CreateOrUpdate")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Create([FromBody] Invoice invoice)
+        public async Task<HttpResponseMessage> CreateOrUpdate([FromBody] Invoice invoice)
         {
-            return await _client.PostAsJsonAsync("Create", invoice);
+            return await _client.PostAsJsonAsync("CreateOrUpdate", invoice);
         }
 
-        [Route("Read")]
+        [Route("GetInvoice")]
         [HttpGet]
-        public async Task<HttpResponseMessage> Read(int id)
+        public async Task<HttpResponseMessage> GetInvoice(int id)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = id.ToString();
-            return await _client.GetAsync("Read?" + parameters);
+            return await _client.GetAsync("GetInvoice?" + parameters);
         }
 
         [Route("GetInvoices")]

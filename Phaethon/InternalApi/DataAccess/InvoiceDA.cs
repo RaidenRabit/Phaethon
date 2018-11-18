@@ -9,41 +9,13 @@ namespace InternalApi.DataAccess
 {
     internal class InvoiceDa
     {
-        internal bool Create(Invoice invoice)
+        internal void CreateOrUpdate(DatabaseContext db, Invoice invoice)
         {
-            using (var db = new DatabaseContext())
-            {
-                db.Companies.AddOrUpdate(invoice.Receiver.Company);
-                db.Representatives.AddOrUpdate(invoice.Receiver);
-                db.Companies.AddOrUpdate(invoice.Sender.Company);
-                db.Representatives.AddOrUpdate(invoice.Sender);
-                invoice.Receiver_ID = invoice.Receiver.ID;
-                invoice.Sender_ID = invoice.Sender.ID;
-                db.Invoices.AddOrUpdate(invoice);
-
-                foreach (Element element in invoice.Elements)
-                {
-                    if (element.Invoice_ID != 0)
-                    {
-                        db.ProductGroups.AddOrUpdate(element.Item.Product.ProductGroup);
-                        element.Item.Product.ProductGroup_ID = element.Item.Product.ProductGroup.ID;
-                        db.Products.AddOrUpdate(element.Item.Product);
-                        element.Item.Product_ID = element.Item.Product.ID;
-                        db.Items.AddOrUpdate(element.Item);
-                        element.Item_ID = element.Item.ID;
-                        db.Elements.AddOrUpdate(element);
-                    }
-                    else
-                    {
-                        db.Items.Remove(db.Items.SingleOrDefault(x => x.ID == element.Item.ID));
-                    }
-                }
-
-                return db.SaveChanges() > 0;
-            }
+            db.Invoices.AddOrUpdate(invoice);
+            db.SaveChanges();
         }
 
-        internal Invoice Read(int id)
+        internal Invoice GetInvoice(int id)
         {
             using (var db = new DatabaseContext())
             {
@@ -62,12 +34,12 @@ namespace InternalApi.DataAccess
                 return db.Invoices
                     .Include(x => x.Sender.Company)
                     .Include(x => x.Receiver.Company)
-                    .Where(x => (selectedCompany == 0 && x.Receiver.Company.Name.Contains(name) ||
-                                selectedCompany == 1 && x.Sender.Company.Name.Contains(name)) &&
-                                (selectedDate == 0 && from <= x.PrescriptionDate && x.PrescriptionDate <= to ||
-                                selectedDate == 1 && from <= x.ReceptionDate && x.ReceptionDate <= to ||
-                                selectedDate == 2 && from <= x.PaymentDate && x.PaymentDate <= to) &&
-                                x.DocNumber.Contains(docNumber))
+                    .Where(x => selectedCompany == 0 && x.Receiver.Company.Name.Contains(name) ||
+                                selectedCompany == 1 && x.Sender.Company.Name.Contains(name))
+                    .Where(x => selectedDate == 0 && from <= x.PrescriptionDate && x.PrescriptionDate <= to ||
+                                 selectedDate == 1 && from <= x.ReceptionDate && x.ReceptionDate <= to ||
+                                 selectedDate == 2 && from <= x.PaymentDate && x.PaymentDate <= to)
+                    .Where(x => x.DocNumber.Contains(docNumber))
                     .Take(numOfRecords)
                     .ToList();
             }

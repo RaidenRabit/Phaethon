@@ -23,9 +23,12 @@ namespace Core.Model
         [DataMember]
         [DisplayName("Representative name")]
         public string Name { get; set; }
-        
+
         [DataMember]
+        [ForeignKey("Company_ID")]
         public virtual Company Company { get; set; }
+        public int? Company_ID { get; set; }
+
         public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }

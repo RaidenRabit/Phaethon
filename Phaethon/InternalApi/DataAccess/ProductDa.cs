@@ -9,6 +9,12 @@ namespace InternalApi.DataAccess
 {
     internal class ProductDa
     {
+        internal void CreateOrUpdate(DatabaseContext db, Product product)
+        {
+            db.Products.AddOrUpdate(product);
+            db.SaveChanges();
+        }
+
         internal Product GetProduct(int barcode)
         {
             using (var db = new DatabaseContext())

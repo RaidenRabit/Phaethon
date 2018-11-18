@@ -18,18 +18,18 @@ namespace InternalApi.Controllers
             _invoiceManagement = new InvoiceManagement();
         }
         
-        [Route("Create")]
+        [Route("CreateOrUpdate")]
         [HttpPost]
-        public HttpResponseMessage Create([FromBody] Invoice invoice)
+        public HttpResponseMessage CreateOrUpdate([FromBody] Invoice invoice)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Create(invoice));
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.CreateOrUpdate(invoice));
         }
 
-        [Route("Read")]
+        [Route("GetInvoice")]
         [HttpGet]
-        public HttpResponseMessage Read(int id)
+        public HttpResponseMessage GetInvoice(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Read(id));
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoice(id));
         }
 
         [Route("GetInvoices")]
