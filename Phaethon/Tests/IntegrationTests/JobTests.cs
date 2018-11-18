@@ -126,7 +126,7 @@ namespace Tests.IntegrationTests
 
 
         [Test]
-        public async Task ReadJob_ReadAll_ListOfJobs()
+        public async Task ReadJob_ReadAllEmptyFilter_ListOfJobs()
         {
             //Setup
             InitializeData();
@@ -136,13 +136,34 @@ namespace Tests.IntegrationTests
             _jobDa.InsertOrUpdate(_job);
 
             //Act
-            var result = await _client.GetAsync("Job/ReadAll");
+            var result = await _client.GetAsync("Job/ReadAll?numOfRecords=&jobId=&jobName=&from=&to=&jobStatus=&dateOption=&customerName=&description=");
             string json = await result.Content.ReadAsStringAsync();
             List<Job> jobs = JsonConvert.DeserializeObject<List<Job>>(json);
 
             //Assert
             Assert.IsTrue(result.IsSuccessStatusCode);
-            Assert.IsTrue(jobs.Count >= 2);
+            Assert.IsTrue(jobs.Count == 0);
+
+        }
+
+        [Test]
+        public async Task ReadJob_ReadAllFullFilter_ListOfJobs()
+        {
+            //Setup
+            InitializeData();
+            JobDa _jobDa = new JobDa();
+            _jobDa.InsertOrUpdate(_job);
+            _job.ID = 0;
+            _jobDa.InsertOrUpdate(_job);
+
+            //Act
+            var result = await _client.GetAsync("Job/ReadAll?&numOfRecords=10&jobId=&jobName=&from=01/01/2001&to=16/11/2018&jobStatus=undefined&dateOption=0&customerName=&description=");
+            string json = await result.Content.ReadAsStringAsync();
+            List<Job> jobs = JsonConvert.DeserializeObject<List<Job>>(json);
+
+            //Assert
+            Assert.IsTrue(result.IsSuccessStatusCode);
+            Assert.IsTrue(jobs.Count >= 2, $"{jobs.Count}");
 
         }
         #endregion

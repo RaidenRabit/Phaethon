@@ -6,20 +6,20 @@
     <div class="row">
         <div class="col-sm-12">
                 <div class="card" style="height: 130px; height: auto;">
-                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">Job search</div>
+                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">Job search <div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10" /></div></div>
                     <div id="jobSearch" class="card-body collapse show" style="padding-left: 20px;">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-info active">
-                                            <input type="radio" name="jobStatus" value="1" checked> Unassigned
+                                        <label class="btn btn-info">
+                                            <input type="checkbox" name="jobStatus" value="1"> Unassigned
                                         </label>
                                         <label class="btn btn-info">
-                                            <input type="radio" name="jobStatus" value="2"> In progress
+                                            <input type="checkbox" name="jobStatus" value="2"> In progress
                                         </label>
                                         <label class="btn btn-info">
-                                            <input type="radio" name="jobStatus" value="3"> Completed
+                                            <input type="checkbox" name="jobStatus" value="3"> Completed
                                         </label>
                                     </div>
                                     <datalist id="jobs"></datalist>
@@ -54,6 +54,12 @@
                                     <input id="customerName" type="text" class="form-control" list="customers" placeholder="Customer Name" />
                                 </div>
                             </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input id="description" type="text" class="form-control" list="jobs" placeholder="Job Description" />
+                                </div>
+                            </div>
                         </div>
                     </div>
             </div>
@@ -62,12 +68,37 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;">Jobs<div style="float: right">@Html.ActionLink("New job", "Edit", new { id = 0 })</div></div>
-
+                <div class="card-header" style="clear: both;">Jobs <div style="float: right">@Html.ActionLink("New job", "Edit", new { id = 0 })</div></div>
                 <div class="card-body" style="padding-left: 20px;">
-                    <table id="jobTable" class="table table-hover table-striped">
-                        <thead>
 
+                    <table id="jobTable" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.JobName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StartedTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FinishedTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Cost)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.JobStatus)
+                                </th>
+                                <th>
+                                    Customer Name
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                            </tr>
                         </thead>
 
                         <tbody>

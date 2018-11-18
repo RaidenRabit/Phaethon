@@ -21,12 +21,16 @@ namespace WebClient.Controllers
         }
 
         // GET: Job
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var result = await _client.GetAsync("ReadAll");
-            string json = await result.Content.ReadAsStringAsync();
-            List<Job> jobs = JsonConvert.DeserializeObject<List<Job>>(json);
-            return View(jobs);
+            return View();
+        }
+
+        [HttpGet]
+        [Route("PlsWork")]
+        public async Task<HttpResponseMessage> PlsWork(int? numOfRecords, int? jobId, string jobName, string from, string to, int? jobStatus, int? dateOption, string customerName, string description)
+        {
+            return await _client.GetAsync("ReadAll"+Request.Url.Query);
         }
 
         [HttpGet]
