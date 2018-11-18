@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Globalization;
 using System.Linq;
 using Core.Model;
 
@@ -39,28 +40,24 @@ namespace InternalApi.DataAccess
         {
             using (var db = new DatabaseContext())
             {
-                var query = db.Jobs
+                DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var fromTime);
+                DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var toTime);
+                toTime = toTime.AddDays(1);
+                return db.Jobs
                     .Include(x => x.Customer)
                     .Include(x => x.Customer.Address)
                     .Where(x => (jobId == 0 || x.ID == jobId) &&
                                 x.JobName.Contains(jobName) &&
                                 (x.Customer.GivenName + x.Customer.FamilyName).Contains(customerName) &&
                                 x.Description.Contains(description) &&
-                                (jobStatus == 0 || (int)x.JobStatus == jobStatus)
+                                (jobStatus == 0 || (int)x.JobStatus == jobStatus) &&
+                                ((dateOption == 0 && fromTime <= x.StartedTime && x.StartedTime < toTime) ||
+                                 (dateOption == 1 && fromTime <= x.FinishedTime && x.FinishedTime < toTime))
                     )
-                    .Take(numOfRecords);
+                    .Take(numOfRecords)
+                    .ToList();
 
-                if (!string.IsNullOrEmpty(from) && !string.IsNullOrEmpty(to))
-                {
-                    DateTime.TryParse(from, out var fromTime);
-                    DateTime.TryParse(to, out var toTime);
-                    query = query.Where(x => (dateOption == 0 && fromTime <= x.StartedTime && x.StartedTime <= toTime ||
-                                              dateOption == 1 && fromTime <= x.FinishedTime && x.FinishedTime <= toTime)
-                    );
 
-                }
-
-                return query.ToList();
             }
         }
     }
