@@ -32,7 +32,7 @@ namespace WebClient.Controllers
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = id.ToString();
-            var result = await _client.GetAsync("Read?" + parameters);
+            var result = await _client.GetAsync("GetInvoice?" + parameters);
             string json = result.Content.ReadAsStringAsync().Result;
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(json);
             return View(invoice);
@@ -41,7 +41,7 @@ namespace WebClient.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(Invoice invoice)
         {
-            var result = await _client.PostAsJsonAsync("Create", invoice);
+            var result = await _client.PostAsJsonAsync("CreateOrUpdate", invoice);
             if (HttpStatusCode.OK == result.StatusCode)
             {
                 return RedirectToAction("Edit");
