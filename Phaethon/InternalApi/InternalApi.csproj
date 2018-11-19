@@ -93,6 +93,7 @@
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductGroupController.cs" />
+    <Compile Include="Controllers\TaxGroupController.cs" />
     <Compile Include="DataAccess\CompanyDa.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
     <Compile Include="DataAccess\ElementDa.cs" />
@@ -101,14 +102,17 @@
     <Compile Include="DataAccess\ProductDa.cs" />
     <Compile Include="DataAccess\ProductGroupDa.cs" />
     <Compile Include="DataAccess\RepresentativeDa.cs" />
+    <Compile Include="DataAccess\TaxGroupDa.cs" />
     <Compile Include="DataManagement\CompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IProductGroupManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IProductManagement.cs" />
+    <Compile Include="DataManagement\IDataManagement\ITaxGroupManagement.cs" />
     <Compile Include="DataManagement\InvoiceManagement.cs" />
     <Compile Include="DataManagement\ProductGroupManagement.cs" />
     <Compile Include="DataManagement\ProductManagement.cs" />
+    <Compile Include="DataManagement\TaxGroupManagement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

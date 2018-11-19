@@ -16,6 +16,7 @@ namespace InternalApi.DataAccess
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<Item> Items { get; set; }
-        public DbSet<Representative> Representatives { get; set; } = null;
+        public DbSet<TaxGroup> TaxGroups { get; set; }
+        public DbSet<Representative> Representatives { get; set; }
     }
 }

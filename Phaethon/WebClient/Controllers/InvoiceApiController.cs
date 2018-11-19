@@ -34,5 +34,6 @@ namespace WebClient.Controllers
             parameters["docNumber"] = docNumber;
             return await _client.GetAsync("GetInvoices?" + parameters);
         }
+        
     }
 }

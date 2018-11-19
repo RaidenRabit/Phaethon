@@ -29,23 +29,24 @@ namespace Core.Model
         [DisplayName("Document number")]
         public string DocNumber { get; set; }
 
-        [DataType(DataType.DateTime), Required]
+        [Required]
+        [DataType(DataType.DateTime)]
         [DataMember]
         [DisplayName("Prescription date")]
         public DateTime PrescriptionDate { get; set; }
 
-        [DataType(DataType.DateTime), Required]
+        [DataType(DataType.DateTime)]
         [DataMember]
         [DisplayName("Reception date")]
+        [DefaultValue(null)]
         public DateTime ReceptionDate { get; set; }
 
-        [DataType(DataType.DateTime), Required]
+        [DataType(DataType.DateTime)]
         [DataMember]
         [DisplayName("Payment date")]
+        [DefaultValue(null)]
         public DateTime PaymentDate { get; set; }
-
-
-
+        
         [DataMember]
         [ForeignKey("Sender_ID")]
         public virtual Representative Sender { get; set; }

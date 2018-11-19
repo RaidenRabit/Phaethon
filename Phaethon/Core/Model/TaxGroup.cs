@@ -12,7 +12,7 @@ namespace Core.Model
 {
     [Serializable]
     [DataContract]
-    public class Representative
+    public class TaxGroup
     {
         [Key]
         [Required]
@@ -21,15 +21,17 @@ namespace Core.Model
 
         [Required]
         [DataMember]
-        [DisplayName("Representative name")]
-        [StringLength(100)]
+        [DisplayName("Tax group")]
+        [StringLength(50)]
+        [Index(IsUnique = true)]
         public string Name { get; set; }
 
+        [Required]
         [DataMember]
-        [ForeignKey("Company_ID")]
-        public virtual Company Company { get; set; }
-        public int? Company_ID { get; set; }
+        [DisplayName("Tax")]
+        [Range(0, 100)]
+        public int Tax { get; set; }
         
-        public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
     }
 }
