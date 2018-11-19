@@ -15,21 +15,24 @@ namespace Core.Model
     public class ProductGroup
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         [DataMember]
         public int ID { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Product group name")]
+        [DisplayName("Product group")]
+        [StringLength(50)]
+        [Index(IsUnique = true)]
         public string Name { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Product group tax")]
-        public int Tax { get; set; }
-        
+        [DisplayName("Product group margin")]
+        [Range(0, 100)]
+        public int Margin { get; set; }
+
+        [DataMember]
         public virtual ICollection<Product> Products { get; set; }
     }
 }

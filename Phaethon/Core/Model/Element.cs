@@ -11,14 +11,13 @@ namespace Core.Model
 {
     public class Element
     {
-
         [Key, ForeignKey("Invoice"), Column(Order = 0)]
         public int Invoice_ID { get; set; }
         [Key, ForeignKey("Item"), Column(Order = 1)]
         public int Item_ID { get; set; }
 
+        [DataMember]
         public virtual Invoice Invoice { get; set; }
-
         [DataMember]
         public virtual Item Item { get; set; }
     }

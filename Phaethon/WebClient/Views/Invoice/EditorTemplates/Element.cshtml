@@ -1,16 +1,17 @@
 ﻿@model Core.Model.Element
 
 <tr>
-    @Html.HiddenFor(model => model.Invoice_ID)
+    @Html.HiddenFor(model => model.Invoice_ID, new { htmlAttributes = new { @required = "required" } })
     @Html.HiddenFor(model => model.Item.ID)
     @Html.HiddenFor(model => model.Item.Product.ID)
-    @Html.HiddenFor(model => model.Item.Product.ProductGroup.ID)
+    @Html.HiddenFor(model => model.Item.Product.ProductGroup_ID, new { htmlAttributes = new { @required = "required" } })
+    @Html.HiddenFor(model => model.Item.IncomingTaxGroup_ID, new { htmlAttributes = new {  @required = "required" } })
+    <td>@Html.EditorFor(model => model.Item.SerNumber, new { htmlAttributes = new { @class = "form-control" } })</td>
     <td>@Html.EditorFor(model => model.Item.Product.Name, new { htmlAttributes = new { @class = "form-control", @required = "required" } })</td>
     <td>@Html.EditorFor(model => model.Item.Product.Barcode, new { htmlAttributes = new { @class = "form-control", @required = "required" } })</td>
-    <td>@Html.EditorFor(model => model.Item.SerNumber, new { htmlAttributes = new { @class = "form-control" } })</td>
-    <td>@Html.EditorFor(model => model.Item.Product.ProductGroup.Name, new { htmlAttributes = new { @class = "form-control", @list = "ProductGroups", @required = "required" } })</td>
-    <td>@Html.EditorFor(model => model.Item.Price, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number", @min = "0", @step = "0.01", @value = "0" } })</td>
-    <td>@Html.EditorFor(model => model.Item.Product.ProductGroup.Tax, new { htmlAttributes = new { @class = "form-control", @required = "required", @max = "100", @min = "0" } })</td>
     <td><input type="number" class="form-control" readonly /></td>
+    <td>@Html.EditorFor(model => model.Item.IncomingTaxGroup.Name, new { htmlAttributes = new { @class = "form-control", @list = "TaxGroups", @required = "required" } })</td>
+    <td>@Html.EditorFor(model => model.Item.IncomingPrice, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number", @min = "0", @step = "0.01", @value = "0" } })</td>
+    <td>@Html.EditorFor(model => model.Item.Product.ProductGroup.Name, new { htmlAttributes = new { @class = "form-control", @list = "ProductGroups", @required = "required" } })</td>
     <td><input type="button" class="btn btn-danger btn-block" value="Delete" title="This button removes item, action can be canceled by clicking button again."></td>
 </tr>

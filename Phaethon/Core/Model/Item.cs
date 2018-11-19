@@ -21,23 +21,41 @@ namespace Core.Model
         
         [DataMember]
         [DisplayName("Serial number")]
+        [StringLength(50)]
+        [DefaultValue(null)]
         public string SerNumber { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Price")]
-        public decimal Price { get; set; }
+        [DisplayName("Incoming price")]
+        public decimal IncomingPrice { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("In stock")]
-        public bool InStock { get; set; }
+        [DisplayName("Outgoing price")]
+        public decimal OutgoingPrice { get; set; }
+
+        [Required]
+        [DataMember]
+        [DisplayName("Discount")]
+        public int Discount { get; set; }
 
         [DataMember]
         [ForeignKey("Product_ID")]
         public virtual Product Product { get; set; }
         public int? Product_ID { get; set; }
 
+        [DataMember]
+        [ForeignKey("IncomingTaxGroup_ID")]
+        public virtual TaxGroup IncomingTaxGroup { get; set; }
+        public int? IncomingTaxGroup_ID { get; set; }
+
+        [DataMember]
+        [ForeignKey("OutgoingTaxGroup_ID")]
+        public virtual TaxGroup OutgoingTaxGroup { get; set; }
+        public int? OutgoingTaxGroup_ID { get; set; }
+
+        [DataMember]
         public virtual ICollection<Invoice> Elements { get; set; }
     }
 }
