@@ -19,7 +19,10 @@ namespace InternalApi.DataManagement
 
         public Product GetProduct(int barcode)
         {
-            return _productDa.GetProduct(barcode);
+            using (var db = new DatabaseContext())
+            {
+                return _productDa.GetProduct(db, barcode);
+            }
         }
     }
 }

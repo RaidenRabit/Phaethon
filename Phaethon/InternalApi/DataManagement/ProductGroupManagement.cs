@@ -19,7 +19,10 @@ namespace InternalApi.DataManagement
 
         public List<ProductGroup> GetProductGroups()
         {
-            return _productGroupDa.GetProductGroups();
+            using (var db = new DatabaseContext())
+            {
+                return _productGroupDa.GetProductGroups(db);
+            }
         }
     }
 }

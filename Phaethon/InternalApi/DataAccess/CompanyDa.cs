@@ -14,22 +14,16 @@ namespace InternalApi.DataAccess
             db.SaveChanges();
         }
 
-        internal List<Company> GetCompanies()
+        internal List<Company> GetCompanies(DatabaseContext db)
         {
-            using (var db = new DatabaseContext())
-            {
-                return db.Companies.ToList();
-            }
+            return db.Companies.ToList();
         }
 
-        internal Company GetCompany(int id)
+        internal Company GetCompany(DatabaseContext db, int id)
         {
-            using (var db = new DatabaseContext())
-            {
-                return db.Companies
-                    .Include(x => x.Representatives)
-                    .SingleOrDefault(x => x.ID == id);
-            }
+            return db.Companies
+                .Include(x => x.Representatives)
+                .SingleOrDefault(x => x.ID == id);
         }
     }
 }
