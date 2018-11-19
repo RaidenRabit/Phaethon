@@ -15,15 +15,12 @@ namespace InternalApi.DataAccess
             db.SaveChanges();
         }
 
-        internal Product GetProduct(int barcode)
+        internal Product GetProduct(DatabaseContext db, int barcode)
         {
-            using (var db = new DatabaseContext())
-            {
-                return db.Products
-                    .Include(x => x.ProductGroup)
-                    .Include(x => x.Items)
-                    .SingleOrDefault(x => x.Barcode == barcode);
-            }
+            return db.Products
+                .Include(x => x.ProductGroup)
+                .Include(x => x.Items)
+                .SingleOrDefault(x => x.Barcode == barcode);
         }
     }
 }

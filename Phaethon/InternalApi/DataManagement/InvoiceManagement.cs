@@ -17,7 +17,7 @@ namespace InternalApi.DataManagement
             _invoiceDa = new InvoiceDa();
         }
 
-        bool IInvoiceManagement.CreateOrUpdate(Invoice invoice)
+        public bool CreateOrUpdate(Invoice invoice)
         {
             //company
             CompanyDa companyDa = new CompanyDa();
@@ -85,19 +85,28 @@ namespace InternalApi.DataManagement
             }
         }
 
-        Invoice IInvoiceManagement.GetInvoice(int id)
+        public Invoice GetInvoice(int id)
         {
-            return _invoiceDa.GetInvoice(id);
+            using (var db = new DatabaseContext())
+            {
+                return _invoiceDa.GetInvoice(db, id);
+            }
         }
 
-        List<Invoice> IInvoiceManagement.GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to, string docNumber)
+        public List<Invoice> GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to, string docNumber)
         {
-            return _invoiceDa.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, from, to, docNumber);
+            using (var db = new DatabaseContext())
+            {
+                return _invoiceDa.GetInvoices(db, numOfRecords, selectedCompany, name, selectedDate, from, to, docNumber);
+            }
         }
 
-        bool IInvoiceManagement.Delete(int id)
+        public bool Delete(int id)
         {
-            return _invoiceDa.Delete(id);
+            using (var db = new DatabaseContext())
+            {
+                return _invoiceDa.Delete(db, id);
+            }
         }
     }
 }

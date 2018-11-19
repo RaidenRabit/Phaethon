@@ -15,12 +15,9 @@ namespace InternalApi.DataAccess
             db.SaveChanges();
         }
 
-        internal List<ProductGroup> GetProductGroups()
+        internal List<ProductGroup> GetProductGroups(DatabaseContext db)
         {
-            using (var db = new DatabaseContext())
-            {
-                return db.ProductGroups.ToList();
-            }
+            return db.ProductGroups.ToList();
         }
     }
 }
