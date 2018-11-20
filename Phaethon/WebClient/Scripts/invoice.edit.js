@@ -76,7 +76,7 @@ function products() {
             rowValue = parseInt($('#itemTable tbody tr:last').find('input').attr("name").split('[')[1].split(']')[0]) + 1;
         }
         $("#itemTable tbody").append("<tr>" +
-            "<input data-val='true' data-val-number='The field Invoice_ID must be a number.' data-val-required='The Invoice_ID field is required.' id='Elements_" + rowValue + "__Invoice_ID' name='Elements[" + rowValue + "].Invoice.ID' type='hidden' value='" + $("#ID").val() + "'>" +
+            "<input data-val='true' data-val-number='The field Invoice_ID must be a number.' data-val-required='The Invoice_ID field is required.' id='Elements_" + rowValue + "__Invoice_ID' name='Elements[" + rowValue + "].Invoice_ID' type='hidden' value='" + $("#ID").val() + "'>" +
             "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item.ID' type='hidden' value='0'>" +
             "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ID' name='Elements[" + rowValue + "].Item.Product.ID' type='hidden' value='0'>" +
             "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_ID' name='Elements[" + rowValue + "].Item.Product.ProductGroup.ID' required='required' type='hidden'>" +
@@ -161,8 +161,7 @@ function addActionToItem(rowValue) {
         }
     });
 
-
-    //do work here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //Price without tax changed
     $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Name").closest("tr").find("[name='Price']").change(function () {
         var procent = $("#TaxGroups option[value='" + $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_Name").val() + "']").attr('label') / 100;
         var val = parseFloat($(this).val());
@@ -170,6 +169,7 @@ function addActionToItem(rowValue) {
         $("#Elements_" + rowValue + "__Item_IncomingPrice").val(price.toFixed(2));
     });
 
+    //Incoming price changed
     $("#Elements_" + rowValue + "__Item_IncomingPrice").change(function () {
         var procent = parseFloat($("#TaxGroups option[value='" + $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_Name").val() + "']").attr('label')) / 100 + 1;
         var val = parseFloat($(this).val());
