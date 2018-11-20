@@ -84,11 +84,11 @@ function products() {
             "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Serial number field is required.' id='Elements_" + rowValue + "__Item_SerNumber' name='Elements[" + rowValue + "].Item.SerNumber' type='text'></td>" +
             "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text'></td>" +
             "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number'></td>" +
-            "<td><input type='number' class='form-control' readonly></td>" +
+            "<td><input class='form-control' name='Price' required='required' step='0.01' type='number'></td>" +
             "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The Tax group name field is required.' data-val-required='The Tax group tax field is required.' id='Elements_" + rowValue + "__Item_IncomingTaxGroup_Name' name='Elements[" + rowValue + "].Item.IncomingTaxGroup.Name' list='TaxGroups' required='required' type='text'></td>" +
             "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field IncomingPrice must be a number.' data-val-required='The IncomingPrice field is required.' id='Elements_" + rowValue + "__Item_IncomingPrice' min='0' name='Elements[" + rowValue + "].Item.IncomingPrice' required='required' step='0.01' type='number'></td>" +
             "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product group name field is required.' id='Elements_" + rowValue + "__Item_Product_ProductGroup_Name' name='Elements[" + rowValue + "].Item.Product.ProductGroup.Name' list='ProductGroups' required='required' type='text'></td>" +
-            "<td><input type='button' class='btn btn-danger btn-block' value='Delete' title='This button removes item, action cant be canceled.'></td>" +
+            "<td><input type='button' class='btn btn-block' value='Delete' title='This button removes item, action cant be canceled.'></td>" +
             "</tr>");
 
         //search for product by barcode
@@ -110,7 +110,8 @@ function addActionToItem(rowValue) {
             success: function (data) {
                 if (data !== null) {
                     if (data.Items.length != 0) {
-                        $("#Elements_" + rowValue + "__Item_IncomingPrice").val(data.Items[0].Price);
+                        $("#Elements_" + rowValue + "__Item_IncomingPrice").val(data.Items[0].IncomingPrice);
+                        $("#Elements_" + rowValue + "__Item_IncomingPrice").change();
                     }
                     $("#Elements_" + rowValue + "__Item_Product_Name").val(data.Name);
                     $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
@@ -146,13 +147,34 @@ function addActionToItem(rowValue) {
     //delete button clicked 
     $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Name").closest("tr").find(":input[type='button']").click(function () {
         var row = $(this).closest("tr");
-        if ($("#Elements_" + rowValue + "__Invoice_ID").val() == -1) {
-            $("#Elements_" + rowValue + "__Invoice_ID").val($("#ID").val());
-            row.css("background-color", "");
-        } else {
-            $("#Elements_" + rowValue + "__Invoice_ID").val(-1);
-            row.css("background-color", "#ffcccc");
+        if ($("#Elements_" + rowValue + "__Item_ID").val() == 0) {
+            row.remove();
         }
+        else {
+            if ($("#Elements_" + rowValue + "__Invoice_ID").val() == -1) {
+                $("#Elements_" + rowValue + "__Invoice_ID").val($("#ID").val());
+                $(this).removeClass("btn-danger");
+            } else {
+                $("#Elements_" + rowValue + "__Invoice_ID").val(-1);
+                $(this).addClass("btn-danger");
+            }
+        }
+    });
+
+
+    //do work here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    $("#Elements_" + rowValue + "__Item_Product_ProductGroup_Name").closest("tr").find("[name='Price']").change(function () {
+        var procent = $("#TaxGroups option[value='" + $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_Name").val() + "']").attr('label') / 100;
+        var val = parseFloat($(this).val());
+        var price = val + val * procent;
+        $("#Elements_" + rowValue + "__Item_IncomingPrice").val(price.toFixed(2));
+    });
+
+    $("#Elements_" + rowValue + "__Item_IncomingPrice").change(function () {
+        var procent = parseFloat($("#TaxGroups option[value='" + $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_Name").val() + "']").attr('label')) / 100 + 1;
+        var val = parseFloat($(this).val());
+        var price = val / procent;
+        $(this).closest("tr").find("[name='Price']").val(price.toFixed(2));
     });
 }
 
