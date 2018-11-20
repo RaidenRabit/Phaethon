@@ -48,8 +48,7 @@ Barcode INT</panel_attributes>
 ID INT PRIMARY KEY,
 Name VARCHAR,
 Tax INT
-red
-bg=red</panel_attributes>
+red</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -213,8 +212,7 @@ Item_ID INT FOREIGN KEY PRIMARY KEY</panel_attributes>
 ID INT PRIMARY KEY,
 Name VARCHAR,
 Margin INT
-red
-bg=red</panel_attributes>
+red</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -238,19 +236,5 @@ bg=red</panel_attributes>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;70.0;10.0;70.0;80.0;140.0;80.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1100</x>
-      <y>400</y>
-      <w>110</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>Red means
-cant be edited
-(in invoice)
-</panel_attributes>
-    <additional_attributes/>
   </element>
 </diagram>

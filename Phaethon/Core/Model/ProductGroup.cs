@@ -31,8 +31,7 @@ namespace Core.Model
         [DisplayName("Product group margin")]
         [Range(0, 100)]
         public int Margin { get; set; }
-
-        [DataMember]
+        
         public virtual ICollection<Product> Products { get; set; }
     }
 }
