@@ -31,7 +31,5 @@ namespace Core.Model
         [DisplayName("Tax")]
         [Range(0, 100)]
         public int Tax { get; set; }
-        
-        public virtual ICollection<Item> Items { get; set; }
     }
 }

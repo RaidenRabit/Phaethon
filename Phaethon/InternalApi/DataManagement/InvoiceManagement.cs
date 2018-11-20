@@ -48,34 +48,35 @@ namespace InternalApi.DataManagement
                         representativeDa.CreateOrUpdate(db, invoice.Sender);
                         invoice.Sender_ID = invoice.Sender.ID;
                         invoice.Sender = null;
+                        List<Element> elements = invoice.Elements == null ? new List<Element>() : invoice.Elements.ToList();
+                        invoice.Elements = null;
                         _invoiceDa.CreateOrUpdate(db, invoice);
-
-                        if(invoice.Elements != null)
-                        { 
-                            foreach (Element element in invoice.Elements)
+                        
+                        foreach (Element element in elements)
+                        {
+                            if (element.Invoice_ID != -1)
                             {
-                                if (element.Invoice_ID != -1)
+                                //productGroupDa.CreateOrUpdate(db, element.Item.Product.ProductGroup);
+                                element.Item.Product.ProductGroup_ID = element.Item.Product.ProductGroup.ID;
+                                element.Item.Product.ProductGroup = null;
+                                productDa.CreateOrUpdate(db, element.Item.Product);
+                                element.Item.Product_ID = element.Item.Product.ID;
+                                element.Item.Product = null;
+                                //taxGroupDa.CreateOrUpdate(db, element.Item.IncomingTaxGroup);
+                                element.Item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup.ID;
+                                element.Item.IncomingTaxGroup = null;
+                                itemDa.CreateOrUpdate(db, element.Item);
+                                element.Invoice_ID = invoice.ID;
+                                element.Invoice = null;
+                                element.Item_ID = element.Item.ID;
+                                element.Item = null;
+                                elementDa.CreateOrUpdate(db, element);
+                            }
+                            else
+                            {
+                                if (element.Item.ID != 0)
                                 {
-                                    //productGroupDa.CreateOrUpdate(db, element.Item.Product.ProductGroup);
-                                    //element.Item.Product.ProductGroup_ID = element.Item.Product.ProductGroup.ID;
-                                    element.Item.Product.ProductGroup = null;
-                                    productDa.CreateOrUpdate(db, element.Item.Product);
-                                    element.Item.Product_ID = element.Item.Product.ID;
-                                    element.Item.Product = null;
-                                    //taxGroupDa.CreateOrUpdate(db, element.Item.IncomingTaxGroup);
-                                    //element.Item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup.ID;
-                                    element.Item.IncomingTaxGroup = null;
-                                    itemDa.CreateOrUpdate(db, element.Item);
-                                    element.Item_ID = element.Item.ID;
-                                    element.Item = null;
-                                    elementDa.CreateOrUpdate(db, element);
-                                }
-                                else
-                                {
-                                    if (element.Item.ID != 0)
-                                    {
-                                        itemDa.Delete(db, element.Item.ID);
-                                    }
+                                    itemDa.Delete(db, element.Item.ID);
                                 }
                             }
                         }

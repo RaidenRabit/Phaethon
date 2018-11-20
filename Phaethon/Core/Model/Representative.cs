@@ -29,7 +29,5 @@ namespace Core.Model
         [ForeignKey("Company_ID")]
         public virtual Company Company { get; set; }
         public int? Company_ID { get; set; }
-        
-        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }
