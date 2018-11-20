@@ -6,7 +6,7 @@
     var price = val / procent;
 }
 <tr>
-    @Html.HiddenFor(model => model.Invoice.ID, new { htmlAttributes = new { @required = "required" } })
+    @Html.HiddenFor(model => model.Invoice_ID, new { htmlAttributes = new { @required = "required" } })
     @Html.HiddenFor(model => model.Item.ID)
     @Html.HiddenFor(model => model.Item.Product.ID)
     @Html.HiddenFor(model => model.Item.Product.ProductGroup.ID, new { htmlAttributes = new { @required = "required" } })

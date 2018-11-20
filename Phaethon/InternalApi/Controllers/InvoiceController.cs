@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -40,7 +41,7 @@ namespace InternalApi.Controllers
             if (from == null) from = "";
             if (to == null) to = "";
             if (docNumber == null) docNumber = "";
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, DateTime.Parse(from), DateTime.Parse(to).AddDays(1), docNumber));
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, DateTime.ParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture), DateTime.ParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture), docNumber));
         }
 
         [Route("Delete")]

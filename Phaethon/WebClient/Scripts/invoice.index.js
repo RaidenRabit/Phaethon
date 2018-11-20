@@ -67,7 +67,7 @@ function GetInvoices()
                     "<td>" + data[i].Receiver.Company.Name + "</td>" +
                     "<td>" +
                     "<a href='/Invoice/Edit/" + data[i].ID + "'>Details</a> |" +
-                    "<a data-ajax='true' data-ajax-method='POST' data-ajax-success='window.location.reload()' href='/Invoice/Delete/1" + data[i].ID + "'>Delete</a>" +
+                    "<a data-ajax='true' data-ajax-method='POST' data-ajax-success='window.location.reload()' href='/Invoice/Delete/" + data[i].ID + "'>Delete</a>" +
                     "</td>" +
                     "</tr>";
             }
