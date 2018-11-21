@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\ElementController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductGroupController.cs" />
@@ -104,7 +105,9 @@
     <Compile Include="DataAccess\RepresentativeDa.cs" />
     <Compile Include="DataAccess\TaxGroupDa.cs" />
     <Compile Include="DataManagement\CompanyManagement.cs" />
+    <Compile Include="DataManagement\ElementManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
+    <Compile Include="DataManagement\IDataManagement\IElementManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IProductGroupManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IProductManagement.cs" />
