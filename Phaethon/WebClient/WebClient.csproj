@@ -151,6 +151,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CompanyApiController.cs" />
+    <Compile Include="Controllers\ElementApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceApiController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />

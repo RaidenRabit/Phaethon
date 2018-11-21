@@ -20,8 +20,6 @@ namespace InternalApi.DataAccess
             return db.Invoices
                 .Include(x => x.Receiver.Company)
                 .Include(x => x.Sender.Company)
-                .Include(x => x.Elements.Select(r => r.Item.Product.ProductGroup))
-                .Include(x => x.Elements.Select(r => r.Item.IncomingTaxGroup))
                 .SingleOrDefault(x => x.ID == id);
         }
 
