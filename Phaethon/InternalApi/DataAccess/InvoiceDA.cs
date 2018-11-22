@@ -34,6 +34,7 @@ namespace InternalApi.DataAccess
                              selectedDate == 1 && from <= x.ReceptionDate && x.ReceptionDate <= to ||
                              selectedDate == 2 && from <= x.PaymentDate && x.PaymentDate <= to)
                 .Where(x => x.DocNumber.Contains(docNumber))
+                .OrderByDescending(x => x.ID)
                 .Take(numOfRecords)
                 .ToList();
         }

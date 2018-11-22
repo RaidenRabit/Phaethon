@@ -117,7 +117,7 @@ function products() {
                 for (var i = 0; i < data.length; i++) {
                     $("#itemTable tbody").append(addNewElement(i, data[i].Item.ID, data[i].Item.Product.ID, data[i].Item.Product.ProductGroup.ID, data[i].Item.IncomingTaxGroup.ID, data[i].Item.SerNumber, data[i].Item.Product.Name, data[i].Item.Product.Barcode, data[i].Item.IncomingPrice));
                     ItemChange(i);
-                    $("#Elements_" + i + "__ProductGroup").find("option[data-id=" + data[i].Item.Product.ID + "]").attr("selected", "selected");
+                    $("#Elements_" + i + "__ProductGroup").find("option[data-id=" + data[i].Item.Product.ProductGroup.ID + "]").attr("selected", "selected");
                     $("#Elements_" + i + "__ProductGroup").change();
                     $("#Elements_" + i + "__IncomingTaxGroup").find("option[data-id='" + data[i].Item.IncomingTaxGroup.ID + "']").attr("selected", "selected");
                     $("#Elements_" + i + "__IncomingTaxGroup").change();

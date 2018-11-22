@@ -21,15 +21,11 @@
             <th>
                 Price
             </th>
-            <th>
-                <label id="TaxGroupLabel">
-                    @Html.DisplayNameFor(model => item.IncomingTaxGroup.Name)
-                </label>
+            <th id="TaxGroupLabel">
+                 @Html.DisplayNameFor(model => item.IncomingTaxGroup.Name)
             </th>
-            <th>
-                <label id="ProductGroupLabel">
-                    @Html.DisplayNameFor(model => item.Product.ProductGroup.Name)
-                </label>
+            <th id="ProductGroupLabel">
+                 @Html.DisplayNameFor(model => item.Product.ProductGroup.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => item.IncomingPrice)
