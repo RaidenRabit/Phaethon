@@ -36,7 +36,7 @@ function dialogs() {
     });
 
     $("#TaxGroupLabel").click(function () {
-        $("#dialog").dialog({ title: "Tax group", buttons: { "Save": function () { $("#taxGroupForm").submit(); } } });
+        $("#dialog").dialog({ title: "Tax group", buttons: { "Save": function () { taxGroupForm(); } } });
         $.ajax({
             type: "GET",
             url: "http://localhost:49873/TaxGroup/Create",
@@ -44,33 +44,13 @@ function dialogs() {
             dataType: "html",
             success: function (data) {
                 $("#dialog").html(data);
-                $("#taxGroupForm").submit(function (event) {
-                    event.preventDefault();
-                    $.ajax({
-                        type: "POST",
-                        url: "http://localhost:49873/TaxGroup/Create",
-                        data: $("#taxGroupForm").serialize(),
-                        success: function () {
-                            $("#dialog").html("");
-                            $("#dialog").dialog("close");
-                            $.when(getTaxGroups()).done(function () {
-                                $("#itemTable tbody tr").each(function () {
-                                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
-                                    $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
-                                    $("#Elements_" + rowValue + "__IncomingTaxGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_ID").val() + "']").attr("selected", "selected");
-                                    $("#Elements_" + rowValue + "__IncomingTaxGroup").change();
-                                });
-                            });
-                        }
-                    });
-                });
                 $("#dialog").dialog("open");
             }
         });
     });
 
     $("#ProductGroupLabel").click(function () {
-        $("#dialog").dialog({ title: "Product group", buttons: { "Save": function () { $("#productGroupForm").submit(); } } });
+        $("#dialog").dialog({ title: "Product group", buttons: { "Save": function () { productGroupForm(); } } });
         $.ajax({
             type: "GET",
             url: "http://localhost:49873/ProductGroup/Create",
@@ -78,29 +58,50 @@ function dialogs() {
             dataType: "html",
             success: function (data) {
                 $("#dialog").html(data);
-                $("#productGroupForm").submit(function (event) {
-                    event.preventDefault();
-                    $.ajax({
-                        type: "POST",
-                        url: "http://localhost:49873/ProductGroup/Create",
-                        data: $("#productGroupForm").serialize(),
-                        success: function () {
-                            $("#dialog").html("");
-                            $("#dialog").dialog("close");
-                            $.when(getProductGroups()).done(function () {
-                                $("#itemTable tbody tr").each(function () {
-                                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
-                                    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
-                                    $("#Elements_" + rowValue + "__ProductGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val() + "']").attr("selected", "selected");
-                                    $("#Elements_" + rowValue + "__ProductGroup").change();
-                                });
-                            });
-                        }
-                    });
-                });
                 $("#dialog").dialog("open");
             }
         });
+    });
+}
+
+//make different
+function productGroupForm() {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:49873/ProductGroup/Create",
+        data: $("#productGroupForm").serialize(),
+        success: function () {
+            $("#dialog").html("");
+            $("#dialog").dialog("close");
+            $.when(getProductGroups()).done(function () {
+                $("#itemTable tbody tr").each(function () {
+                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+                    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
+                    $("#Elements_" + rowValue + "__ProductGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val() + "']").attr("selected", "selected");
+                    $("#Elements_" + rowValue + "__ProductGroup").change();
+                });
+            });
+        }
+    });
+}
+
+function taxGroupForm() {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:49873/TaxGroup/Create",
+        data: $("#taxGroupForm").serialize(),
+        success: function () {
+            $("#dialog").html("");
+            $("#dialog").dialog("close");
+            $.when(getTaxGroups()).done(function () {
+                $("#itemTable tbody tr").each(function () {
+                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+                    $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
+                    $("#Elements_" + rowValue + "__IncomingTaxGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_ID").val() + "']").attr("selected", "selected");
+                    $("#Elements_" + rowValue + "__IncomingTaxGroup").change();
+                });
+            });
+        }
     });
 }
 
@@ -147,6 +148,8 @@ function products() {
 function ItemChange(rowValue) {
     $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
     $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
+    $("#Elements_" + rowValue + "__IncomingTaxGroup").selectpicker();
+    $("#Elements_" + rowValue + "__ProductGroup").selectpicker();
 
     //allows only int values in last row
     onlyNumbers("#itemTable tbody tr:last ");
@@ -378,8 +381,9 @@ function getProductGroups() {
             var htmlText = "";
             for (var i = 0; i < data.length; i++) {
                 htmlText += "<option value='" + data[i].Margin + "' " +
-                    "data-ID='" + data[i].ID + "'" +
-                    "label = '" + data[i].Name + " " + data[i].Margin + "%'/>";
+                    "data-ID='" + data[i].ID + "'>" +
+                    data[i].Name + " " + data[i].Margin + "%" +
+                    "</option>";
             }
             ProductGroups = htmlText;
         },
@@ -399,8 +403,9 @@ function getTaxGroups() {
             var htmlText = "";
             for (var i = 0; i < data.length; i++) {
                 htmlText += "<option value='" + data[i].Tax + "' " +
-                    "data-ID='" + data[i].ID + "'" +
-                    "label = '" + data[i].Name + " " + data[i].Tax + "%'/>";
+                    "data-ID='" + data[i].ID + "'>" +
+                    data[i].Name + " " + data[i].Tax + "%" +
+                    "</option>";
             }
             TaxGroups = htmlText;
         },
@@ -421,8 +426,8 @@ function addNewElement(rowValue, itemId, productId, productGroupId, taxGroupId, 
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value='" + productName + "'></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number' value='" + barcode + "'></td>" +
         "<td><input class='form-control' id='Elements_" + rowValue + "__Price' name='Price' required='required' step='0.01' type='number'></td>" +
-        "<td><select class='form-control' id='Elements_" + rowValue + "__IncomingTaxGroup'/></td>" +
-        "<td><select class='form-control' id='Elements_" + rowValue + "__ProductGroup'/></td>" +
+        "<td width='100'><select class='selectpicker' id='Elements_" + rowValue + "__IncomingTaxGroup' data-live-search='true' data-width='fit'></select></td>" +
+        "<td width='100'><select class='selectpicker' id='Elements_" + rowValue + "__ProductGroup' data-live-search='true' data-width='fit'></select></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field IncomingPrice must be a number.' data-val-required='The IncomingPrice field is required.' id='Elements_" + rowValue + "__Item_IncomingPrice' min='0' name='Elements[" + rowValue + "].Item.IncomingPrice' required='required' step='0.01' type='number' value='" + incomingPrice + "'></td>" +
         "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='Delete' title='This button removes item, action cant be canceled.'></td>" +
         "</tr>";

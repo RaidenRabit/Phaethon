@@ -32,13 +32,16 @@ namespace WebClient
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Scripts/umd/popper.js",
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap-select.js",
                       "~/Scripts/respond.js"));
             #endregion
 
             #region StyleBundles
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-select.css",
                       "~/Content/themes/base/jquery-ui.min.css",
                       "~/Content/site.css"));
 
@@ -48,3 +51,6 @@ namespace WebClient
         }
     }
 }
+//"~/Content/bootstrap-select.css",
+//"~/Scripts/umd/popper.js",
+//"~/Scripts/bootstrap-select.js",
