@@ -8,11 +8,13 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Newtonsoft.Json;
 
 namespace ExternalApi.Controllers
 {
-    [RoutePrefix("Invoice")]
+    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
+    [RoutePrefix("Api/Invoice")]
     public class InvoiceController : ApiController
     {
         private readonly HttpClient _client;

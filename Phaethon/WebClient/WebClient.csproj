@@ -150,14 +150,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CompanyApiController.cs" />
-    <Compile Include="Controllers\ElementApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InvoiceApiController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
-    <Compile Include="Controllers\ProductApiController.cs" />
-    <Compile Include="Controllers\ProductGroupApiController.cs" />
-    <Compile Include="Controllers\TaxGroupApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

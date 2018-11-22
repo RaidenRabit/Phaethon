@@ -6,10 +6,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ExternalApi.Controllers
 {
-    [RoutePrefix("Company")]
+    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
+    [RoutePrefix("Api/Company")]
     public class CompanyController : ApiController
     {
         private readonly HttpClient _client;

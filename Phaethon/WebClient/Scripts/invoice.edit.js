@@ -3,8 +3,11 @@ var receiverElement = "Receiver";
 
 var ProductGroups;
 var TaxGroups;
+var transport;
 
 $(function () {//on code load
+    transport = Number($("#Transport").val());
+
     CompanyChange(receiverElement);
     CompanyChange(senderElement);
     
@@ -22,6 +25,10 @@ $(function () {//on code load
     });
 
     products();
+    
+    $("#Transport").change(function () {
+        TotalAmount();
+    });
 });
 
 //action listeners
@@ -30,7 +37,7 @@ function products() {
         //gets all Items in invoice
         $.ajax({
             type: "GET",
-            url: "/Api/Element/GetInvoiceElements?id=" + $("#ID").val(),
+            url: "http://localhost:64010/Api/Element/GetInvoiceElements?id=" + $("#ID").val(),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -75,7 +82,7 @@ function ItemChange(rowValue) {
     $("#Elements_" + rowValue + "__Item_Product_Barcode").change(function () {
         $.ajax({
             type: "GET",
-            url: "/Api/Product/GetProduct?barcode=" + $(this).val(),
+            url: "http://localhost:64010/Api/Product/GetProduct?barcode=" + $(this).val(),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -147,7 +154,7 @@ function CompanyChange(element) {
     //gets all companies
     $.ajax({
         type: "GET",
-        url: "/Api/Company/GetCompanies",
+        url: "http://localhost:64010/Api/Company/GetCompanies",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -202,7 +209,7 @@ function CompanyChange(element) {
         if (option.length !== 0) {
             $.ajax({
                 type: "GET",
-                url: "/Api/Company/GetCompany?id=" + option.data("id"),
+                url: "http://localhost:64010/Api/Company/GetCompany?id=" + option.data("id"),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(data) {
@@ -286,7 +293,7 @@ function RepresentativeChange(element) {
 function getProductGroups() {
     return $.ajax({
         type: "GET",
-        url: "/Api/ProductGroup/GetProductGroups",
+        url: "http://localhost:64010/Api/ProductGroup/GetProductGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -307,7 +314,7 @@ function getProductGroups() {
 function getTaxGroups() {
     return $.ajax({
         type: "GET",
-        url: "/Api/TaxGroup/GetTaxGroups",
+        url: "http://localhost:64010/Api/TaxGroup/GetTaxGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -348,7 +355,7 @@ function TotalAmount() {
     $("#itemTable tbody tr").each(function () {
         amount = amount + Number($("#Elements_" + $(this).find("input").attr("name").split("[")[1].split("]")[0] + "__Item_IncomingPrice").val());
     });
-    $("#TotalAmount").val(amount);
+    $("#TotalAmount").val(amount + Number($("#Transport").val()) - transport);
 }
 
 function onlyNumbers(path) {
