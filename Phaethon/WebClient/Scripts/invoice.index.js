@@ -14,7 +14,7 @@
     //gets existing companies
     $.ajax({
         type: "GET",
-        url: "/Api/Company/GetCompanies",
+        url: "http://localhost:64010/Api/Company/GetCompanies",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -42,7 +42,7 @@ function GetInvoices()
 {
     $.ajax({
         type: "GET",
-        url: "/Api/Invoice/GetInvoices" +
+        url: "http://localhost:64010/Api/Invoice/GetInvoices" +
             "?numOfRecords=" + $("#numOfRecords").val() +
             "&selectedCompany=" + $('input[name=companyOption]:checked').val() +
             "&name=" + $("#companyName").val() +

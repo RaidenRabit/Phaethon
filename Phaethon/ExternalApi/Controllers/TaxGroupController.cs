@@ -5,10 +5,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ExternalApi.Controllers
 {
-    [RoutePrefix("TaxGroup")]
+    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
+    [RoutePrefix("Api/TaxGroup")]
     public class TaxGroupController : ApiController
     {
         private readonly HttpClient _client;

@@ -5,10 +5,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ExternalApi.Controllers
 {
-    [RoutePrefix("ProductGroup")]
+    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
+    [RoutePrefix("Api/ProductGroup")]
     public class ProductGroupController : ApiController
     {
         private readonly HttpClient _client;
