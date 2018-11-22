@@ -6,11 +6,6 @@ var TaxGroups;
 var transport;
 
 $(function () {//on code load
-    $("#dialog").dialog({
-        autoOpen: false,
-        modal: true
-    });
-
     transport = Number($("#Transport").val());
 
     CompanyChange(receiverElement);
@@ -31,14 +26,17 @@ $(function () {//on code load
 
     products();
     
-    $("#Transport").change(function () {
-        TotalAmount();
-    });
+    dialogs();
 });
 
 function dialogs() {
+    $("#dialog").dialog({
+        autoOpen: false,
+        modal: true
+    });
+
     $("#TaxGroupLabel").click(function () {
-        $("#dialog").dialog({ title: "Tax group", buttons: { "Save": function () { $("#ProductGroupForm").submit(); } } });
+        $("#dialog").dialog({ title: "Tax group", buttons: { "Save": function () { $("#taxGroupForm").submit(); } } });
         $.ajax({
             type: "GET",
             url: "http://localhost:49873/TaxGroup/Create",
@@ -55,11 +53,46 @@ function dialogs() {
                         success: function () {
                             $("#dialog").html("");
                             $("#dialog").dialog("close");
-                            $.when(getTaxGroups()).done(function (a) {
+                            $.when(getTaxGroups()).done(function () {
                                 $("#itemTable tbody tr").each(function () {
-                                    $("#Elements_" + $(this).find("input").attr("name").split("[")[1].split("]")[0] + "__IncomingTaxGroup").html(TaxGroups);
-                                    $("#Elements_" + i + "__IncomingTaxGroup").find("option[data-id='" + data[i].Item.IncomingTaxGroup.ID + "']").attr("selected", "selected");
-                                    $("#Elements_" + i + "__IncomingTaxGroup").change();
+                                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+                                    $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
+                                    $("#Elements_" + rowValue + "__IncomingTaxGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_ID").val() + "']").attr("selected", "selected");
+                                    $("#Elements_" + rowValue + "__IncomingTaxGroup").change();
+                                });
+                            });
+                        }
+                    });
+                });
+                $("#dialog").dialog("open");
+            }
+        });
+    });
+
+    $("#ProductGroupLabel").click(function () {
+        $("#dialog").dialog({ title: "Product group", buttons: { "Save": function () { $("#productGroupForm").submit(); } } });
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:49873/ProductGroup/Create",
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (data) {
+                $("#dialog").html(data);
+                $("#productGroupForm").submit(function (event) {
+                    event.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:49873/ProductGroup/Create",
+                        data: $("#productGroupForm").serialize(),
+                        success: function () {
+                            $("#dialog").html("");
+                            $("#dialog").dialog("close");
+                            $.when(getProductGroups()).done(function () {
+                                $("#itemTable tbody tr").each(function () {
+                                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+                                    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
+                                    $("#Elements_" + rowValue + "__ProductGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val() + "']").attr("selected", "selected");
+                                    $("#Elements_" + rowValue + "__ProductGroup").change();
                                 });
                             });
                         }
@@ -208,6 +241,11 @@ function CompanyChange(element) {
         error: function () {
             $("#companies").html("");
         }
+    });
+
+    //if transport cost changes
+    $("#Transport").change(function () {
+        TotalAmount();
     });
 
     //sets info to create new company

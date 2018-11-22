@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 
@@ -14,6 +15,13 @@ namespace InternalApi.Controllers
         public ProductGroupController()
         {
             _productGroupManagement = new ProductGroupManagement();
+        }
+
+        [Route("Create")]
+        [HttpPost]
+        public HttpResponseMessage Create(ProductGroup productGroup)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _productGroupManagement.Create(productGroup));
         }
 
         [Route("GetProductGroups")]
