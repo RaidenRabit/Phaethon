@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Core.Model;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 
 namespace WebClient.Controllers
@@ -29,10 +31,28 @@ namespace WebClient.Controllers
 
         [HttpGet]
         [Route("GetJobs")]
-        public async Task<string> GetJobs(int? numOfRecords, int? jobId, string jobName, int? jobStatus, string customerName, string description)
+        public async Task<string> GetJobs(int? numOfRecords, int? jobId, string jobName, int? jobStatus, string customerName, string description, string dateOption, string from, string to)
         {
-            var a = await _client.GetAsync("ReadAll?" + Request.Url.Query);
-            return await a.Content.ReadAsStringAsync();
+            DateTime fromDateTime = DateTime.Now, toDateTime = DateTime.Now;
+            int dateOp = 0;
+            if(!from.IsNullOrWhiteSpace())
+                DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out fromDateTime);
+            if(!to.IsNullOrWhiteSpace())
+                DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out toDateTime);
+            if (!dateOption.IsNullOrWhiteSpace())
+                Int32.TryParse(dateOption, out dateOp);
+
+            JobQueryFilter jobFilter = new JobQueryFilter { CustomerName = customerName, DateOption = dateOp, Description = description, From = fromDateTime, To = toDateTime };
+
+            if(numOfRecords != null)
+                    jobFilter.NumOfRecords = (int)numOfRecords;
+            if (jobId != null)
+                jobFilter.JobId = (int)jobId;
+            jobFilter.JobName = jobName;
+            
+            var response = await _client.PostAsJsonAsync("ReadAll", jobFilter);
+            var a = await response.Content.ReadAsStringAsync();
+            return await response.Content.ReadAsStringAsync();
         }
 
         [HttpGet]
