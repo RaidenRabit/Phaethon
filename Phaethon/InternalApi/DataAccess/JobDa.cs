@@ -36,13 +36,10 @@ namespace InternalApi.DataAccess
             }
         }
 
-        public List<Job> ReadAll(string jobName, string from, string to, int dateOption, string customerName, int jobStatus, int numOfRecords, int jobId, string description)
+        public List<Job> ReadAll(string jobName, string customerName, int jobStatus, int numOfRecords, int jobId, string description, int dateOption, DateTime from, DateTime to)
         {
             using (var db = new DatabaseContext())
             {
-                DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var fromTime);
-                DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var toTime);
-                toTime = toTime.AddDays(1);
                 return db.Jobs
                     .Include(x => x.Customer)
                     .Include(x => x.Customer.Address)
@@ -50,9 +47,7 @@ namespace InternalApi.DataAccess
                                 x.JobName.Contains(jobName) &&
                                 (x.Customer.GivenName + x.Customer.FamilyName).Contains(customerName) &&
                                 x.Description.Contains(description) &&
-                                (jobStatus == 0 || (int)x.JobStatus == jobStatus) &&
-                                ((dateOption == 0 && fromTime <= x.StartedTime && x.StartedTime < toTime) ||
-                                 (dateOption == 1 && fromTime <= x.FinishedTime && x.FinishedTime < toTime))
+                                (jobStatus == 0 || (int)x.JobStatus == jobStatus)
                     )
                     .Take(numOfRecords)
                     .ToList();

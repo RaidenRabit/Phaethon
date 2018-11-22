@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -18,6 +18,7 @@ namespace WebClient.Controllers
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri("http://localhost:64010/Job/");
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         // GET: Job
@@ -27,35 +28,43 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        [Route("PlsWork")]
-        public async Task<HttpResponseMessage> PlsWork(int? numOfRecords, int? jobId, string jobName, string from, string to, int? jobStatus, int? dateOption, string customerName, string description)
+        [Route("GetJobs")]
+        public async Task<string> GetJobs(int? numOfRecords, int? jobId, string jobName, int? jobStatus, string customerName, string description)
         {
-            return await _client.GetAsync("ReadAll"+Request.Url.Query);
+            var a = await _client.GetAsync("ReadAll?" + Request.Url.Query);
+            return await a.Content.ReadAsStringAsync();
         }
 
         [HttpGet]
-        public async Task<ActionResult> Edit(int id)
+        [Route("EditJob")]
+        public ActionResult EditJob(List<Job> data)
         {
-            var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["id"] = id.ToString();
-            var result = await _client.GetAsync("Read?" + parameters);
-            string json = await result.Content.ReadAsStringAsync();
-            Job job = JsonConvert.DeserializeObject<Job>(json);
-            return View(job);
+            return PartialView("_editJob", data[0]);
+        }
+
+    [HttpGet]
+    [Route("ReadJob")]
+        public async Task<ActionResult> ReadJob(string id)
+        {
+            Job job;
+            if (!string.IsNullOrEmpty(id) && !id.Equals("0"))
+            {
+                var parameters = HttpUtility.ParseQueryString(string.Empty);
+                parameters["id"] = id;
+                var result = await _client.GetAsync("Read?" + parameters);
+                string json = await result.Content.ReadAsStringAsync();
+                job = JsonConvert.DeserializeObject<Job>(json);
+            }
+            else
+                job = new Job {ID = 0};
+            return PartialView("_editJob", job);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(Job job)
+        [Route("PostJob")]
+        public async Task PostJob(Job job)
         {
-            var result = await _client.PostAsJsonAsync("InsertOrUpdate", job);
-            if (HttpStatusCode.OK == result.StatusCode)
-            {
-                return View();
-            }
-            else
-            {
-                return View("Error");
-            }
+            await _client.PostAsJsonAsync("InsertOrUpdate", job);
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Core.Model;
+using Newtonsoft.Json;
 
 namespace ExternalApi.Controllers
 {
@@ -38,19 +40,18 @@ namespace ExternalApi.Controllers
             {
                 Port = _client.BaseAddress.Port
             };
-            return await _client.PostAsync(request.ToString(), Request.Content);
+            return await _client.GetAsync(request.ToString());
         }
 
         [Route("ReadAll")]
         [HttpGet]
-        public async Task<HttpResponseMessage> ReadAll(int? numOfRecords = 10, int? jobId = 0, string jobName = "", string from = "", string to = "", int? jobStatus = 0, int? dateOption = 0, string customerName = "", string description ="")
+        public async Task<HttpResponseMessage> ReadAll(int? numOfRecords = 10, int? jobId = 0, string jobName = "", int? jobStatus = 0, string customerName = "", string description ="", string dateOption = "", string from = "", string to = "")
         {
             UriBuilder request = new UriBuilder(Request.RequestUri)
             {
                 Port = _client.BaseAddress.Port
             };
-            var a = request.ToString();
-            return await _client.GetAsync(a);
+            return await _client.GetAsync(request.ToString()); ;
         }
     }
 }
