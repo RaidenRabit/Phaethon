@@ -27,7 +27,7 @@ namespace Core.Model
 
         [Required]
         [DataMember]
-        [DisplayName("Incoming price")]
+        [DisplayName("Price with tax")]
         public decimal IncomingPrice { get; set; }
 
         [Required]

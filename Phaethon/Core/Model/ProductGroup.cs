@@ -21,7 +21,7 @@ namespace Core.Model
 
         [Required]
         [DataMember]
-        [DisplayName("Product group")]
+        [DisplayName("Product")]
         [StringLength(50)]
         [Index(IsUnique = true)]
         public string Name { get; set; }
