@@ -36,20 +36,23 @@ namespace InternalApi.DataAccess
             }
         }
 
-        public List<Job> ReadAll(string jobName, string customerName, int jobStatus, int numOfRecords, int jobId, string description, int dateOption, DateTime from, DateTime to)
+        public List<Job> ReadAll(JobQueryFilter jobQueryFilter)
         {
+            jobQueryFilter.To = jobQueryFilter.To.AddDays(1);
             using (var db = new DatabaseContext())
             {
                 return db.Jobs
                     .Include(x => x.Customer)
                     .Include(x => x.Customer.Address)
-                    .Where(x => (jobId == 0 || x.ID == jobId) &&
-                                x.JobName.Contains(jobName) &&
-                                (x.Customer.GivenName + x.Customer.FamilyName).Contains(customerName) &&
-                                x.Description.Contains(description) &&
-                                (jobStatus == 0 || (int)x.JobStatus == jobStatus)
+                    .Where(x => (jobQueryFilter.JobId == 0 || x.ID == jobQueryFilter.JobId) &&
+                                x.JobName.Contains(jobQueryFilter.JobName) &&
+                                (x.Customer.GivenName + x.Customer.FamilyName).Contains(jobQueryFilter.CustomerName) &&
+                                x.Description.Contains(jobQueryFilter.Description) &&
+                                (jobQueryFilter.JobStatus == 0 || (int)x.JobStatus == jobQueryFilter.JobStatus)
                     )
-                    .Take(numOfRecords)
+                    .Where(x => (jobQueryFilter.DateOption == 0 && jobQueryFilter.From <= x.StartedTime && x.StartedTime < jobQueryFilter.To) ||
+                                (jobQueryFilter.DateOption == 1 && jobQueryFilter.From <= x.FinishedTime && x.FinishedTime < jobQueryFilter.To))
+                    .Take(jobQueryFilter.NumOfRecords)
                     .ToList();
 
 

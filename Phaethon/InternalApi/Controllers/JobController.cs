@@ -53,12 +53,14 @@ namespace InternalApi.Controllers
         }
 
         [Route("ReadAll")]
-        [HttpGet]
-        public HttpResponseMessage ReadAll(int? numOfRecords, int? jobId, string jobName, int? jobStatus, string customerName, string description, string dateOption, string from, string to)
+        [HttpPost]
+        public async Task<HttpResponseMessage> ReadAll()
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll(numOfRecords ?? 10, jobId??0, jobName?? "", jobStatus??0, customerName??"", description??"", dateOption??"", from??"", to??""));
+                var json = await Request.Content.ReadAsStringAsync();
+                JobQueryFilter jobQueryFilter = JsonConvert.DeserializeObject<JobQueryFilter>(json);
+                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll(jobQueryFilter));
             }
             catch (Exception e)
             {
