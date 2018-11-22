@@ -9,10 +9,10 @@ namespace InternalApi.DataAccess
 {
     internal class TaxGroupDa
     {
-        internal void CreateOrUpdate(DatabaseContext db, TaxGroup taxGroup)
+        internal bool Create(DatabaseContext db, TaxGroup taxGroup)
         {
-            db.TaxGroups.AddOrUpdate(taxGroup);
-            db.SaveChanges();
+            db.TaxGroups.Add(taxGroup);
+            return db.SaveChanges() > 0;
         }
 
         internal List<TaxGroup> GetTaxGroups(DatabaseContext db)

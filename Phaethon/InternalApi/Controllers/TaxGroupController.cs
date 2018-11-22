@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 
@@ -17,6 +18,13 @@ namespace InternalApi.Controllers
         public TaxGroupController()
         {
             _taxGroupManagement = new TaxGroupManagement();
+        }
+
+        [Route("Create")]
+        [HttpPost]
+        public HttpResponseMessage Create([FromBody] TaxGroup taxGroup)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _taxGroupManagement.Create(taxGroup));
         }
 
         [Route("GetTaxGroups")]
