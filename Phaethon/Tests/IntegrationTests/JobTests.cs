@@ -126,7 +126,7 @@ namespace Tests.IntegrationTests
 
 
         [Test]
-        public async Task ReadJob_ReadAllEmptyFilter_ListOfJobs()
+        public async Task ReadJob_ReadAllEmptyFilter_ListOfAllJobs()
         {
             //Setup
             InitializeData();
@@ -136,13 +136,13 @@ namespace Tests.IntegrationTests
             _jobDa.InsertOrUpdate(_job);
 
             //Act
-            var result = await _client.GetAsync("Job/ReadAll?numOfRecords=&jobId=&jobName=&from=&to=&jobStatus=&dateOption=&customerName=&description=");
+            var result = await _client.GetAsync("Job/ReadAll?numOfRecords=&jobId=&jobName=&jobStatus=&customerName=&description=");
             string json = await result.Content.ReadAsStringAsync();
             List<Job> jobs = JsonConvert.DeserializeObject<List<Job>>(json);
 
             //Assert
             Assert.IsTrue(result.IsSuccessStatusCode);
-            Assert.IsTrue(jobs.Count == 0);
+            Assert.IsTrue(jobs.Count > 0);
 
         }
 

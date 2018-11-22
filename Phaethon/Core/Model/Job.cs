@@ -36,12 +36,10 @@ namespace Core.Model
 
         [DataMember]
         [DisplayName("Started Time")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartedTime { get; set; }
 
         [DataMember]
         [DisplayName("Finished Time")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FinishedTime { get; set; }
 
         [DataMember]

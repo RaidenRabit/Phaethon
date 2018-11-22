@@ -54,12 +54,11 @@ namespace InternalApi.Controllers
 
         [Route("ReadAll")]
         [HttpGet]
-        public HttpResponseMessage ReadAll(int? numOfRecords, int? jobId, string jobName, string from, string to, int? jobStatus, int? dateOption, string customerName, string description)
+        public HttpResponseMessage ReadAll(int? numOfRecords, int? jobId, string jobName, int? jobStatus, string customerName, string description, string dateOption, string from, string to)
         {
             try
             {
-                var a = Request.RequestUri.ToString();
-                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll(numOfRecords ?? 10, jobId??0, jobName?? "", from??"", to??"", jobStatus??0, dateOption??0, customerName??"", description??""));
+                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll(numOfRecords ?? 10, jobId??0, jobName?? "", jobStatus??0, customerName??"", description??"", dateOption??"", from??"", to??""));
             }
             catch (Exception e)
             {

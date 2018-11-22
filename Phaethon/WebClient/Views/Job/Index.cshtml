@@ -2,75 +2,81 @@
 @Styles.Render("~/Content/Daterangepicker")
 @{ViewBag.Title = "Index";}
 
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+
 <div class="card-body" style="padding-left: 20px;">
     <div class="row">
         <div class="col-sm-12">
-                <div class="card" style="height: 130px; height: auto;">
-                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">Job search <div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10" /></div></div>
-                    <div id="jobSearch" class="card-body collapse show" style="padding-left: 20px;">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-info">
-                                            <input type="checkbox" name="jobStatus" value="1"> Unassigned
-                                        </label>
-                                        <label class="btn btn-info">
-                                            <input type="checkbox" name="jobStatus" value="2"> In progress
-                                        </label>
-                                        <label class="btn btn-info">
-                                            <input type="checkbox" name="jobStatus" value="3"> Completed
-                                        </label>
-                                    </div>
-                                    <datalist id="jobs"></datalist>
-                                    
+            <div class="card" style="height: 130px; height: auto;">
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">Job search <div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10" /></div></div>
+                <div id="jobSearch" class="card-body collapse show" style="padding-left: 20px;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-info">
+                                        <input type="checkbox" name="jobStatus" value="1"> Unassigned
+                                    </label>
+                                    <label class="btn btn-info">
+                                        <input type="checkbox" name="jobStatus" value="2"> In progress
+                                    </label>
+                                    <label class="btn btn-info">
+                                        <input type="checkbox" name="jobStatus" value="3"> Completed
+                                    </label>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <input id="jobName" type="text" class="form-control" list="jobs" placeholder="Job Name" />
-                                </div>
+                                <datalist id="jobs"></datalist>
 
-                                <div class="form-group">
-                                    <input id="jobId" type="text" class="form-control" placeholder="Job Id" />
+                            </div>
+
+                            <div class="form-group">
+                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="Job Name" />
+                            </div>
+
+                            <div class="form-group">
+                                <input id="jobId" type="text" class="form-control" placeholder="Job Id" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-info active">
+                                        <input type="radio" name="dateOption" value="0" checked> @Html.DisplayNameFor(model => model.StartedTime)
+                                    </label>
+                                    <label class="btn btn-info">
+                                        <input type="radio" name="dateOption" value="1"> @Html.DisplayNameFor(model => model.FinishedTime)
+                                    </label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-info active">
-                                            <input type="radio" name="dateOption" value="0" checked> @Html.DisplayNameFor(model => model.StartedTime)
-                                        </label>
-                                        <label class="btn btn-info">
-                                            <input type="radio" name="dateOption" value="1"> @Html.DisplayNameFor(model => model.FinishedTime)
-                                        </label>
-                                    </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <input id="dateRange" type="datetime" class="datepicker form-control" placeholder="Date Range" />
-                                </div>
-                                    
-                                <div class="form-group">
-                                    <input id="customerName" type="text" class="form-control" list="customers" placeholder="Customer Name" />
-                                </div>
+                            <div class="form-group">
+                                <input id="dateRange" type="datetime" class="datepicker form-control" placeholder="Date Range" />
                             </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input id="description" type="text" class="form-control" list="jobs" placeholder="Job Description" />
-                                </div>
+
+                            <div class="form-group">
+                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="Customer Name" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input id="description" type="text" class="form-control" list="jobs" placeholder="Job Description" />
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
+    <div id="dialog" style="display: none"></div>
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;">Jobs <div style="float: right">@Html.ActionLink("New job", "Edit", new { id = 0 })</div></div>
+                <div class="card-header" style="clear: both;">Jobs <div style="float: right"><Button class="btn" id="NewJob">New Job</Button></div></div>
                 <div class="card-body" style="padding-left: 20px;">
-
                     <table id="jobTable" class="table table-striped">
                         <thead>
                             <tr>
@@ -101,22 +107,11 @@
                             </tr>
                         </thead>
 
-                        <tbody>
-                            @if (Model != null)
-                            {
-                                foreach (var item in Model)
-                                {
-                                    <tr>
-                                        @{ Html.RenderPartial("_editJob", item); }
-                                    </tr>
-                                }
-                            }
-                        </tbody>
+                        <tbody><tr></tr></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @Scripts.Render("~/bundles/Job")
