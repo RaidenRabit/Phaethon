@@ -17,6 +17,14 @@ namespace InternalApi.DataManagement
             _taxGroupDa = new TaxGroupDa();
         }
 
+        public bool Create(TaxGroup taxGroup)
+        {
+            using (var db = new DatabaseContext())
+            {
+                return _taxGroupDa.Create(db, taxGroup);
+            }
+        }
+
         public List<TaxGroup> GetTaxGroups()
         {
             using (var db = new DatabaseContext())

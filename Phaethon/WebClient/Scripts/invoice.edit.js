@@ -6,6 +6,11 @@ var TaxGroups;
 var transport;
 
 $(function () {//on code load
+    $("#dialog").dialog({
+        autoOpen: false,
+        modal: true
+    });
+
     transport = Number($("#Transport").val());
 
     CompanyChange(receiverElement);
@@ -30,6 +35,41 @@ $(function () {//on code load
         TotalAmount();
     });
 });
+
+function dialogs() {
+    $("#TaxGroupLabel").click(function () {
+        $("#dialog").dialog({ title: "Tax group", buttons: { "Save": function () { $("#ProductGroupForm").submit(); } } });
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:49873/TaxGroup/Create",
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (data) {
+                $("#dialog").html(data);
+                $("#taxGroupForm").submit(function (event) {
+                    event.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:49873/TaxGroup/Create",
+                        data: $("#taxGroupForm").serialize(),
+                        success: function () {
+                            $("#dialog").html("");
+                            $("#dialog").dialog("close");
+                            $.when(getTaxGroups()).done(function (a) {
+                                $("#itemTable tbody tr").each(function () {
+                                    $("#Elements_" + $(this).find("input").attr("name").split("[")[1].split("]")[0] + "__IncomingTaxGroup").html(TaxGroups);
+                                    $("#Elements_" + i + "__IncomingTaxGroup").find("option[data-id='" + data[i].Item.IncomingTaxGroup.ID + "']").attr("selected", "selected");
+                                    $("#Elements_" + i + "__IncomingTaxGroup").change();
+                                });
+                            });
+                        }
+                    });
+                });
+                $("#dialog").dialog("open");
+            }
+        });
+    });
+}
 
 //action listeners
 function products() {
@@ -72,8 +112,8 @@ function products() {
 }
 
 function ItemChange(rowValue) {
-    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
     $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
+    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
 
     //allows only int values in last row
     onlyNumbers("#itemTable tbody tr:last ");

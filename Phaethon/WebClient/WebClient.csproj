@@ -152,6 +152,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\TaxGroupController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -298,6 +299,7 @@
     <Content Include="Views\Invoice\_editInvoice.cshtml" />
     <Content Include="Views\Invoice\_editItems.cshtml" />
     <Content Include="Views\Invoice\EditorTemplates\Element.cshtml" />
+    <Content Include="Views\TaxGroup\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

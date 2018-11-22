@@ -1,6 +1,9 @@
 ﻿@using Core.Model
 @model Core.Model.Invoice
 
+<div id="dialog" style="display: none">
+</div>
+
 <table id="itemTable" class="table table-hover">
     <thead>
     @{
@@ -19,10 +22,14 @@
                 Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => item.IncomingTaxGroup.Name)
+                <label id="TaxGroupLabel">
+                    @Html.DisplayNameFor(model => item.IncomingTaxGroup.Name)
+                </label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => item.Product.ProductGroup.Name)
+                <label id="ProductGroupLabel">
+                    @Html.DisplayNameFor(model => item.Product.ProductGroup.Name)
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => item.IncomingPrice)
