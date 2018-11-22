@@ -1,9 +1,9 @@
-﻿@model Core.Model.TaxGroup
+﻿@model Core.Model.ProductGroup
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "taxGroupForm"})) 
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "productGroupForm" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="row">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -15,10 +15,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Tax, htmlAttributes: new { @class = "col-form-label col-md-4" })
+            @Html.LabelFor(model => model.Margin, htmlAttributes: new { @class = "col-form-label col-md-4" })
             <div class="col-md-8">
-                @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Margin, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Margin, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>

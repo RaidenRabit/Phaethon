@@ -17,6 +17,14 @@ namespace InternalApi.DataManagement
             _productGroupDa = new ProductGroupDa();
         }
 
+        public bool Create(ProductGroup productGroup)
+        {
+            using (var db = new DatabaseContext())
+            {
+                return _productGroupDa.Create(db, productGroup);
+            }
+        }
+
         public List<ProductGroup> GetProductGroups()
         {
             using (var db = new DatabaseContext())

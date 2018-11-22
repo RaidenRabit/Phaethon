@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Core.Model;
 
 namespace ExternalApi.Controllers
 {
@@ -19,6 +20,13 @@ namespace ExternalApi.Controllers
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri("http://localhost:64007/ProductGroup/");
+        }
+
+        [Route("Create")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> Create([FromBody] ProductGroup productGroup)
+        {
+            return await _client.PostAsJsonAsync("Create", productGroup);
         }
 
         [Route("GetProductGroups")]
