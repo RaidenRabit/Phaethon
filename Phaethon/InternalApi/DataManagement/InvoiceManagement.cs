@@ -45,6 +45,16 @@ namespace InternalApi.DataManagement
                         invoice.Sender = null;
                         List<Element> elements = invoice.Elements == null ? new List<Element>() : invoice.Elements.ToList();
                         invoice.Elements = null;
+
+                        decimal total = elements.Sum(item => item.Item.IncomingPrice);
+                        decimal added = invoice.Transport;
+                        Invoice dbInvoice = _invoiceDa.GetInvoice(db, invoice.ID);
+                        if (dbInvoice != null)
+                        {
+                            added = added - dbInvoice.Transport;
+                        }
+                        added = added / total;
+
                         _invoiceDa.CreateOrUpdate(db, invoice);
                         
                         foreach (Element element in elements)
@@ -58,6 +68,7 @@ namespace InternalApi.DataManagement
                                 element.Item.Product = null;
                                 element.Item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup.ID;
                                 element.Item.IncomingTaxGroup = null;
+                                element.Item.IncomingPrice = element.Item.IncomingPrice * added + element.Item.IncomingPrice;
                                 itemDa.CreateOrUpdate(db, element.Item);
                                 element.Invoice_ID = invoice.ID;
                                 element.Invoice = null;
