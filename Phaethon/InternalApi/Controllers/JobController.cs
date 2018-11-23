@@ -58,6 +58,10 @@ namespace InternalApi.Controllers
         {
             try
             {
+                if (Request.Content == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll(new JobQueryFilter()));
+                }
                 var json = await Request.Content.ReadAsStringAsync();
                 JobQueryFilter jobQueryFilter = JsonConvert.DeserializeObject<JobQueryFilter>(json);
                 return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll(jobQueryFilter));

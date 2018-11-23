@@ -54,8 +54,16 @@ namespace InternalApi.DataAccess
                                 (jobQueryFilter.DateOption == 1 && jobQueryFilter.From <= x.FinishedTime && x.FinishedTime < jobQueryFilter.To))
                     .Take(jobQueryFilter.NumOfRecords)
                     .ToList();
+            }
+        }
 
-
+        public DateTime GetEarliserEntry()
+        {
+            using (var db = new DatabaseContext())
+            {
+                return db.Jobs
+                    .OrderBy(c => c.StartedTime)
+                    .FirstOrDefault().StartedTime;
             }
         }
     }

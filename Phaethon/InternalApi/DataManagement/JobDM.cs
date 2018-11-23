@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Core.Model;
 using InternalApi.DataAccess;
 using InternalApi.DataManagement.IDataManagement;
@@ -34,6 +35,21 @@ namespace InternalApi.DataManagement
 
         public List<Job> ReadAll(JobQueryFilter jobQueryFilter)
         {
+            if (jobQueryFilter.CustomerName == null)
+                jobQueryFilter.CustomerName = "";
+            if (jobQueryFilter.JobName == null)
+                jobQueryFilter.JobName = "";
+            if (jobQueryFilter.Description == null)
+                jobQueryFilter.Description = "";
+            if (jobQueryFilter.NumOfRecords <= 0)
+                jobQueryFilter.NumOfRecords = 10;
+            var earliest = _jobDa.GetEarliserEntry();
+            if (jobQueryFilter.DateOption == 0 || (jobQueryFilter.From == jobQueryFilter.To && jobQueryFilter.From < earliest))
+            {
+                jobQueryFilter.From = earliest;
+                jobQueryFilter.To = DateTime.Today.AddDays(1);
+            }
+
             return _jobDa.ReadAll(jobQueryFilter);
         }
     }
