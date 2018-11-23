@@ -3,20 +3,25 @@ var receiverElement = "Receiver";
 
 var ProductGroups;
 var TaxGroups;
-var transport;
+var transport;//saves already saved transport cost for calculations
 
-$(function () {//on code load
+//on code load
+$(function () {
+    //sets initial transport cost, to know what was added
     transport = Number($("#Transport").val());
 
+    //sets action listener to company
     CompanyChange(receiverElement);
     CompanyChange(senderElement);
-    
+
+    //sets action listener to representative
     RepresentativeChange(receiverElement);
     RepresentativeChange(senderElement);
 
-    //allows only int values
+    //allows only int values for all fields filled in right now
     onlyNumbers("");
 
+    //initializes datepicker
     $(".date-picker").datepicker({
         changeMonth: true,
         changeYear: true,
@@ -24,19 +29,45 @@ $(function () {//on code load
         dateFormat: "dd-M-yy"
     });
 
+    //Adds action listener to element table header and foot
+    elementTableChange();
+
+    //fills in products in table body
     products();
-    
-    dialogs();
 });
 
-function dialogs() {
-    $("#dialog").dialog({
-        autoOpen: false,
-        modal: true
+function products() {
+    //gets getProductGroups and getTaxGroups, than adds all Items in invoice to table
+    $.when(getProductGroups(), getTaxGroups()).done(function () {
+        getInvoiceItems();
+    });
+}
+
+function elementTableChange() {
+    //adds new item row to table
+    $("#newItemRow").click(function () {
+        var rowValue;
+        if ($("#itemTable tbody tr").length == 0) {
+            rowValue = 0;
+        } else {
+            rowValue = parseInt($("#itemTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
+        }
+        $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, 0, 0, "", "", "", 0));
+
+        //search for product by barcode
+        ItemChange(rowValue);
+        $("#Elements_" + rowValue + "__ProductGroup").change();
+        $("#Elements_" + rowValue + "__IncomingTaxGroup").change();
     });
 
-    $("#TaxGroupLabel").click(function () {
-        $("#dialog").dialog({ title: "Tax group", buttons: { "Save": function () { taxGroupForm(); } } });
+    //if transport cost changes
+    $("#Transport").change(function () {
+        totalAmount();
+    });
+
+    //on tax group label click will open dialog
+    $("#taxGroupLabel").click(function () {
+        $("#dialog").dialog({ title: "Tax group", autoOpen: false, modal: true, buttons: { "Save": function () { taxGroupForm(); } } });
         $.ajax({
             type: "GET",
             url: "http://localhost:49873/TaxGroup/Create",
@@ -49,8 +80,9 @@ function dialogs() {
         });
     });
 
-    $("#ProductGroupLabel").click(function () {
-        $("#dialog").dialog({ title: "Product group", buttons: { "Save": function () { productGroupForm(); } } });
+    //on product group label click will open dialog
+    $("#productGroupLabel").click(function () {
+        $("#dialog").dialog({ title: "Product group", autoOpen: false, modal: true, buttons: { "Save": function () { productGroupForm(); } } });
         $.ajax({
             type: "GET",
             url: "http://localhost:49873/ProductGroup/Create",
@@ -64,119 +96,12 @@ function dialogs() {
     });
 }
 
-//make different
-function productGroupForm() {
-    $.ajax({
-        type: "POST",
-        url: "http://localhost:49873/ProductGroup/Create",
-        data: $("#productGroupForm").serialize(),
-        success: function () {
-            $("#dialog").html("");
-            $("#dialog").dialog("close");
-            $.when(getProductGroups()).done(function () {
-                $("#itemTable tbody tr").each(function () {
-                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
-                    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
-                    $("#Elements_" + rowValue + "__ProductGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val() + "']").attr("selected", "selected");
-                    $("#Elements_" + rowValue + "__ProductGroup").change();
-                });
-            });
-        }
-    });
-}
-
-function taxGroupForm() {
-    $.ajax({
-        type: "POST",
-        url: "http://localhost:49873/TaxGroup/Create",
-        data: $("#taxGroupForm").serialize(),
-        success: function () {
-            $("#dialog").html("");
-            $("#dialog").dialog("close");
-            $.when(getTaxGroups()).done(function () {
-                $("#itemTable tbody tr").each(function () {
-                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
-                    $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
-                    $("#Elements_" + rowValue + "__IncomingTaxGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_ID").val() + "']").attr("selected", "selected");
-                    $("#Elements_" + rowValue + "__IncomingTaxGroup").change();
-                });
-            });
-        }
-    });
-}
-
-//action listeners
-function products() {
-    $.when(getProductGroups(), getTaxGroups()).done(function (a1, a2) {
-        //gets all Items in invoice
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:64010/Api/Element/GetInvoiceElements?id=" + $("#ID").val(),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    $("#itemTable tbody").append(addNewElement(i, data[i].Item.ID, data[i].Item.Product.ID, data[i].Item.Product.ProductGroup.ID, data[i].Item.IncomingTaxGroup.ID, data[i].Item.SerNumber, data[i].Item.Product.Name, data[i].Item.Product.Barcode, data[i].Item.IncomingPrice));
-                    ItemChange(i);
-                    $("#Elements_" + i + "__ProductGroup").find("option[data-id=" + data[i].Item.Product.ProductGroup.ID + "]").attr("selected", "selected");
-                    $("#Elements_" + i + "__ProductGroup").change();
-                    $("#Elements_" + i + "__IncomingTaxGroup").find("option[data-id='" + data[i].Item.IncomingTaxGroup.ID + "']").attr("selected", "selected");
-                    $("#Elements_" + i + "__IncomingTaxGroup").change();
-                }
-                TotalAmount();
-            }
-        });
-
-        //adds new item row to table
-        $("#newItemRow").click(function () {
-            var rowValue;
-            if ($("#itemTable tbody tr").length == 0) {
-                rowValue = 0;
-            } else {
-                rowValue = parseInt($("#itemTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
-            }
-            $("#itemTable tbody").append(addNewElement(rowValue, 0, null, null, null, "", "", null, 0));
-
-            //search for product by barcode
-            ItemChange(rowValue);
-            $("#Elements_" + rowValue + "__ProductGroup").change();
-            $("#Elements_" + rowValue + "__IncomingTaxGroup").change();
-        });
-    });
-}
-
 function ItemChange(rowValue) {
-    $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
-    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
-    $("#Elements_" + rowValue + "__IncomingTaxGroup").selectpicker();
-    $("#Elements_" + rowValue + "__ProductGroup").selectpicker();
-
-    //allows only int values in last row
-    onlyNumbers("#itemTable tbody tr:last ");
+    elementSetUp(rowValue);
 
     //on barcode change get corresponding info in database for product, product group and item
     $("#Elements_" + rowValue + "__Item_Product_Barcode").change(function () {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:64010/Api/Product/GetProduct?barcode=" + $(this).val(),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                if (data !== null) {
-                    if (data.Items.length != 0) {
-                        $("#Elements_" + rowValue + "__Item_IncomingPrice").val(data.Items[0].IncomingPrice);
-                        $("#Elements_" + rowValue + "__Item_IncomingPrice").change();
-                    }
-                    $("#Elements_" + rowValue + "__Item_Product_Name").val(data.Name);
-                    $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
-
-                    $("#Elements_" + rowValue + "__ProductGroup option[data-id='" + data.ProductGroup.ID + "']").attr("selected", "selected");
-                    $("#Elements_" + rowValue + "__ProductGroup").change();
-                } else {
-                    $("#Elements_" + rowValue + "__Item_Product_ID").val(0);
-                }
-            }
-        });
+        getProduct(rowValue, this);
     });
 
     //changes product group
@@ -196,7 +121,7 @@ function ItemChange(rowValue) {
         var val = parseFloat($(this).val());
         var price = val + val * procent;
         $("#Elements_" + rowValue + "__Item_IncomingPrice").val(price.toFixed(2));
-        TotalAmount();
+        totalAmount();
     });
 
     //Incoming price changed
@@ -205,7 +130,7 @@ function ItemChange(rowValue) {
         var val = parseFloat($(this).val());
         var price = val / procent;
         $("#Elements_" + rowValue + "__Price").val(price.toFixed(2));
-        TotalAmount();
+        totalAmount();
     });
 
     //delete button clicked 
@@ -228,28 +153,7 @@ function ItemChange(rowValue) {
 
 function CompanyChange(element) {
     //gets all companies
-    $.ajax({
-        type: "GET",
-        url: "http://localhost:64010/Api/Company/GetCompanies",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            var htmlText = "";
-            for (var i = 0; i < data.length; i++) {
-                htmlText += "<option value='" + data[i].Name + "' " +
-                    "data-ID='" + data[i].ID + "'/>";
-            }
-            $("#companies").html(htmlText);
-        },
-        error: function () {
-            $("#companies").html("");
-        }
-    });
-
-    //if transport cost changes
-    $("#Transport").change(function () {
-        TotalAmount();
-    });
+    getCompanies();
 
     //sets info to create new company
     $("#reset" + element).click(function () {
@@ -370,7 +274,7 @@ function RepresentativeChange(element) {
     });
 }
 
-//methods
+//Gets info
 function getProductGroups() {
     return $.ajax({
         type: "GET",
@@ -415,6 +319,143 @@ function getTaxGroups() {
     });
 }
 
+function getCompanies() {
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:64010/Api/Company/GetCompanies",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            var htmlText = "";
+            for (var i = 0; i < data.length; i++) {
+                htmlText += "<option value='" + data[i].Name + "' " +
+                    "data-ID='" + data[i].ID + "'/>";
+            }
+            $("#companies").html(htmlText);
+        },
+        error: function () {
+            $("#companies").html("");
+        }
+    });
+}
+
+function getProduct(rowValue, obj) {
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:64010/Api/Product/GetProduct?barcode=" + $(obj).val(),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            if (data !== null) {
+                if (data.Items.length != 0) {
+                    $("#Elements_" + rowValue + "__Item_IncomingPrice").val(data.Items[0].IncomingPrice);
+                    $("#Elements_" + rowValue + "__Item_IncomingPrice").change();
+                }
+                $("#Elements_" + rowValue + "__Item_Product_Name").val(data.Name);
+                $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
+
+                $("#Elements_" + rowValue + "__ProductGroup option[data-id='" + data.ProductGroup.ID + "']").attr("selected", "selected");
+                $("#Elements_" + rowValue + "__ProductGroup").change();
+            } else {
+                $("#Elements_" + rowValue + "__Item_Product_ID").val(0);
+            }
+        }
+    });
+}
+
+function getInvoiceItems() {
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:64010/Api/Element/GetInvoiceElements?id=" + $("#ID").val(),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                $("#itemTable tbody").append(addNewElement(i, data[i].Item.ID, data[i].Item.Product.ID, data[i].Item.Product.ProductGroup.ID, data[i].Item.IncomingTaxGroup.ID, data[i].Item.SerNumber, data[i].Item.Product.Name, data[i].Item.Product.Barcode, data[i].Item.IncomingPrice));
+                ItemChange(i);
+                $("#Elements_" + i + "__ProductGroup").find("option[data-id=" + data[i].Item.Product.ProductGroup.ID + "]").attr("selected", "selected");
+                $("#Elements_" + i + "__ProductGroup").change();
+                $("#Elements_" + i + "__IncomingTaxGroup").find("option[data-id='" + data[i].Item.IncomingTaxGroup.ID + "']").attr("selected", "selected");
+                $("#Elements_" + i + "__IncomingTaxGroup").change();
+            }
+            totalAmount();
+        }
+    });
+}
+
+//posts info
+function productGroupForm() {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:49873/ProductGroup/Create",
+        data: $("#productGroupForm").serialize(),
+        success: function () {
+            $("#dialog").html("");
+            $("#dialog").dialog("close");
+            $.when(getProductGroups()).done(function () {
+                $("#itemTable tbody tr").each(function () {
+                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+                    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
+                    $("#Elements_" + rowValue + "__ProductGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val() + "']").attr("selected", "selected");
+                    $("#Elements_" + rowValue + "__ProductGroup").change();
+                });
+            });
+        }
+    });
+}
+
+function taxGroupForm() {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:49873/TaxGroup/Create",
+        data: $("#taxGroupForm").serialize(),
+        success: function () {
+            $("#dialog").html("");
+            $("#dialog").dialog("close");
+            $.when(getTaxGroups()).done(function () {
+                $("#itemTable tbody tr").each(function () {
+                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+                    $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
+                    $("#Elements_" + rowValue + "__IncomingTaxGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_ID").val() + "']").attr("selected", "selected");
+                    $("#Elements_" + rowValue + "__IncomingTaxGroup").change();
+                });
+            });
+        }
+    });
+}
+
+//methods
+function elementSetUp(rowValue) {
+    $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
+    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
+    $("#Elements_" + rowValue + "__IncomingTaxGroup").selectpicker();
+    $("#Elements_" + rowValue + "__ProductGroup").selectpicker();
+
+    //allows only int values in last row
+    onlyNumbers("#itemTable tbody tr:last ");
+}
+
+function totalAmount() {
+    var amount = Number(0);
+    $("#itemTable tbody tr").each(function () {
+        amount = amount + Number($("#Elements_" + $(this).find("input").attr("name").split("[")[1].split("]")[0] + "__Item_IncomingPrice").val());
+    });
+    $("#totalAmount").val(amount + Number($("#Transport").val()) - transport);
+}
+
+function onlyNumbers(path) {
+    //on keypress checks if value is correct
+    $(path + ":input[type='number']").keydown(function (e) {
+        if (!((e.keyCode > 95 && e.keyCode < 106)
+            || (e.keyCode > 47 && e.keyCode < 58)
+            || e.keyCode == 8)) {
+            return false;
+        }
+        return true;
+    });
+}
+
+//table row info
 function addNewElement(rowValue, itemId, productId, productGroupId, taxGroupId, serNumber, productName, barcode, incomingPrice) {
     return "<tr>" +
         "<input data-val='true' data-val-number='The field Invoice_ID must be a number.' data-val-required='The Invoice_ID field is required.' id='Elements_" + rowValue + "__Invoice_ID' name='Elements[" + rowValue + "].Invoice_ID' type='hidden' value='" + $("#ID").val() + "'>" +
@@ -431,24 +472,4 @@ function addNewElement(rowValue, itemId, productId, productGroupId, taxGroupId, 
         "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field IncomingPrice must be a number.' data-val-required='The IncomingPrice field is required.' id='Elements_" + rowValue + "__Item_IncomingPrice' min='0' name='Elements[" + rowValue + "].Item.IncomingPrice' required='required' step='0.01' type='number' value='" + incomingPrice + "'></td>" +
         "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='Delete' title='This button removes item, action cant be canceled.'></td>" +
         "</tr>";
-}
-
-function TotalAmount() {
-    var amount = Number(0);
-    $("#itemTable tbody tr").each(function () {
-        amount = amount + Number($("#Elements_" + $(this).find("input").attr("name").split("[")[1].split("]")[0] + "__Item_IncomingPrice").val());
-    });
-    $("#TotalAmount").val(amount + Number($("#Transport").val()) - transport);
-}
-
-function onlyNumbers(path) {
-    //on keypress checks if value is correct
-    $(path + ":input[type='number']").keydown(function (e) {
-        if (!((e.keyCode > 95 && e.keyCode < 106)
-            || (e.keyCode > 47 && e.keyCode < 58)
-            || e.keyCode == 8)) {
-            return false;
-        }
-        return true;
-    });
 }

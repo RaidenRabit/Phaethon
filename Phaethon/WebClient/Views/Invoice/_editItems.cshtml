@@ -21,10 +21,10 @@
             <th>
                 Price
             </th>
-            <th id="TaxGroupLabel">
+            <th id="taxGroupLabel">
                  @Html.DisplayNameFor(model => item.IncomingTaxGroup.Name)
             </th>
-            <th id="ProductGroupLabel">
+            <th id="productGroupLabel">
                  @Html.DisplayNameFor(model => item.Product.ProductGroup.Name)
             </th>
             <th>
@@ -42,7 +42,7 @@
         <tr>
             <td colspan="6"></td>
             <td>
-                <input type="number" step='0.01' id="TotalAmount" class="form-control" readonly/>
+                <input type="number" step='0.01' id="totalAmount" class="form-control" readonly/>
             </td>
             <td colspan="6">
                 <input type="button" id="newItemRow" class="btn btn-success" value="Add new item"/>
