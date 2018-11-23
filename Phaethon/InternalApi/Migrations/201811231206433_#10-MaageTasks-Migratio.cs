@@ -3,10 +3,22 @@ namespace InternalApi.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Intitial : DbMigration
+    public partial class _10MaageTasksMigratio : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Addresses",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        City = c.String(),
+                        Street = c.String(),
+                        Number = c.String(),
+                        Extra = c.String(),
+                    })
+                .PrimaryKey(t => t.ID);
+            
             CreateTable(
                 "dbo.Companies",
                 c => new
@@ -107,10 +119,44 @@ namespace InternalApi.Migrations
                     })
                 .PrimaryKey(t => t.ID);
             
+            CreateTable(
+                "dbo.Customers",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Address_ID = c.Int(),
+                        GivenName = c.String(),
+                        FamilyName = c.String(),
+                        Phone = c.String(),
+                        Email = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Addresses", t => t.Address_ID)
+                .Index(t => t.Address_ID);
+            
+            CreateTable(
+                "dbo.Jobs",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Customer_ID = c.Int(),
+                        JobStatus = c.Int(nullable: false),
+                        JobName = c.String(),
+                        StartedTime = c.DateTime(nullable: false),
+                        FinishedTime = c.DateTime(nullable: false),
+                        Cost = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Description = c.String(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Customers", t => t.Customer_ID)
+                .Index(t => t.Customer_ID);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Jobs", "Customer_ID", "dbo.Customers");
+            DropForeignKey("dbo.Customers", "Address_ID", "dbo.Addresses");
             DropForeignKey("dbo.Invoices", "Representative_ID", "dbo.Representatives");
             DropForeignKey("dbo.Invoices", "Sender_ID", "dbo.Representatives");
             DropForeignKey("dbo.Invoices", "Receiver_ID", "dbo.Representatives");
@@ -120,6 +166,8 @@ namespace InternalApi.Migrations
             DropForeignKey("dbo.Invoices", "Item_ID", "dbo.Items");
             DropForeignKey("dbo.Elements", "Invoice_ID", "dbo.Invoices");
             DropForeignKey("dbo.Representatives", "Company_ID", "dbo.Companies");
+            DropIndex("dbo.Jobs", new[] { "Customer_ID" });
+            DropIndex("dbo.Customers", new[] { "Address_ID" });
             DropIndex("dbo.Products", new[] { "ProductGroup_ID" });
             DropIndex("dbo.Items", new[] { "Product_ID" });
             DropIndex("dbo.Elements", new[] { "Item_ID" });
@@ -129,6 +177,8 @@ namespace InternalApi.Migrations
             DropIndex("dbo.Invoices", new[] { "Receiver_ID" });
             DropIndex("dbo.Invoices", new[] { "Item_ID" });
             DropIndex("dbo.Representatives", new[] { "Company_ID" });
+            DropTable("dbo.Jobs");
+            DropTable("dbo.Customers");
             DropTable("dbo.ProductGroups");
             DropTable("dbo.Products");
             DropTable("dbo.Items");
@@ -136,6 +186,7 @@ namespace InternalApi.Migrations
             DropTable("dbo.Invoices");
             DropTable("dbo.Representatives");
             DropTable("dbo.Companies");
+            DropTable("dbo.Addresses");
         }
     }
 }
