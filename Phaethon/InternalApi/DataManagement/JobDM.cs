@@ -43,7 +43,7 @@ namespace InternalApi.DataManagement
                 jobQueryFilter.Description = "";
             if (jobQueryFilter.NumOfRecords <= 0)
                 jobQueryFilter.NumOfRecords = 10;
-            var earliest = _jobDa.GetEarliserEntry();
+            var earliest = _jobDa.GetEarliestEntry();
             if (jobQueryFilter.DateOption == 0 || (jobQueryFilter.From == jobQueryFilter.To && jobQueryFilter.From < earliest))
             {
                 jobQueryFilter.From = earliest;

@@ -57,7 +57,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        public DateTime GetEarliserEntry()
+        public DateTime GetEarliestEntry()
         {
             using (var db = new DatabaseContext())
             {
