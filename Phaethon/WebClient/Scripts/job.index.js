@@ -97,9 +97,6 @@ function Edit() {
             $("#dialog").html("");
             $("#dialog").dialog("close");
             GetJobs();
-        },
-        error: function (response) {
-            alert(response.responseText);
         }
     });
 };
@@ -130,12 +127,6 @@ function ReadJob(obj) {
         success: function (response) {
             dialog.html(response);
             dialog.dialog("open");
-        },
-        failure: function (response) {
-            alert(response.responseText);
-        },
-        error: function (response) {
-            alert(response.responseText);
         }
     });
 };
@@ -166,12 +157,6 @@ function NewJob() {
         success: function (response) {
             dialog.html(response);
             dialog.dialog("open");
-        },
-        failure: function (response) {
-            alert(response.responseText);
-        },
-        error: function (response) {
-            alert(response.responseText);
         }
     });
 };
