@@ -105,9 +105,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811211032347_asdf.cs" />
-    <Compile Include="Migrations\201811211032347_asdf.Designer.cs">
-      <DependentUpon>201811211032347_asdf.cs</DependentUpon>
+    <Compile Include="Migrations\201811231206433_#10-MaageTasks-Migratio.cs" />
+    <Compile Include="Migrations\201811231206433_#10-MaageTasks-Migratio.Designer.cs">
+      <DependentUpon>201811231206433_#10-MaageTasks-Migratio.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,8 +132,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811211032347_asdf.resx">
-      <DependentUpon>201811211032347_asdf.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811231206433_#10-MaageTasks-Migratio.resx">
+      <DependentUpon>201811231206433_#10-MaageTasks-Migratio.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

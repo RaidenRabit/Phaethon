@@ -3,7 +3,7 @@ namespace InternalApi.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class asdf : DbMigration
+    public partial class _10MaageTasksMigratio : DbMigration
     {
         public override void Up()
         {

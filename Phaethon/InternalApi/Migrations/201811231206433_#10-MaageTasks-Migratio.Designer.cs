@@ -7,13 +7,13 @@ namespace InternalApi.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class asdf : IMigrationMetadata
+    public sealed partial class _10MaageTasksMigratio : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(asdf));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_10MaageTasksMigratio));
         
         string IMigrationMetadata.Id
         {
-            get { return "201811211032347_asdf"; }
+            get { return "201811231206433_#10-MaageTasks-Migratio"; }
         }
         
         string IMigrationMetadata.Source
