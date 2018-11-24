@@ -48,11 +48,13 @@ namespace Core.Model
         [DataMember]
         [ForeignKey("IncomingTaxGroup_ID")]
         public virtual TaxGroup IncomingTaxGroup { get; set; }
+        [DataMember]
         public int? IncomingTaxGroup_ID { get; set; }
 
         [DataMember]
         [ForeignKey("OutgoingTaxGroup_ID")]
         public virtual TaxGroup OutgoingTaxGroup { get; set; }
+        [DataMember]
         public int? OutgoingTaxGroup_ID { get; set; }
 
         [DataMember]

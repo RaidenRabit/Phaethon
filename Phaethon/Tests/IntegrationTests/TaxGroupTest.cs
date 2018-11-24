@@ -21,7 +21,7 @@ namespace Tests.IntegrationTests
             _client.BaseAddress = new Uri("http://localhost:64007/");
         }
 
-        private static TaxGroup GetTaxGroupSeed()
+        internal static TaxGroup GetTaxGroupSeed()
         {
             TaxGroup taxGroup = new TaxGroup
             {
@@ -37,8 +37,32 @@ namespace Tests.IntegrationTests
         {
             //Setup
             TaxGroup taxGroup = GetTaxGroupSeed();
+            var response = await _client.GetAsync("TaxGroup/GetTaxGroups");
+            List<TaxGroup> taxGroups = JsonConvert.DeserializeObject<List<TaxGroup>>(await response.Content.ReadAsStringAsync());
+            while (taxGroups.Exists(x => x.Name == taxGroup.Name))
+            {
+                taxGroup.Name = taxGroup.Name + "X";
+            }
             string json = JsonConvert.SerializeObject(taxGroup);
             var content = new StringContent(json);
+
+            //Act
+            response = await _client.PostAsync("TaxGroup/Create", content);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(deserializedResponse);
+        }
+
+        [Test]
+        public async Task Create_ExistingTaxGroupObject_IsSuccessStatusCodeAndResponseFalse()
+        {
+            //Setup
+            TaxGroup taxGroup = GetTaxGroupSeed();
+            string json = JsonConvert.SerializeObject(taxGroup);
+            var content = new StringContent(json);
+            await _client.PostAsync("TaxGroup/Create", content);
 
             //Act
             var response = await _client.PostAsync("TaxGroup/Create", content);
@@ -46,7 +70,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsFalse(deserializedResponse);
         }
 
         [Test]
@@ -72,6 +96,10 @@ namespace Tests.IntegrationTests
         public async Task GetTaxGroups_MethodCalled_IsSuccessStatusCodeAndTaxGroupsReturned()
         {
             //Setup
+            TaxGroup taxGroup = GetTaxGroupSeed();
+            string json = JsonConvert.SerializeObject(taxGroup);
+            var content = new StringContent(json);
+            await _client.PostAsync("TaxGroup/Create", content);
 
             //Act
             var response = await _client.GetAsync("TaxGroup/GetTaxGroups");
@@ -79,7 +107,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(null, taxGroups);
+            Assert.AreNotEqual(0, taxGroups.Count);
         }
         #endregion
     }

@@ -27,32 +27,27 @@ namespace Tests.IntegrationTests
         public async Task GetProduct_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
+            Element element = await new ElementTest().GetElement();
+            if (element == null)
+            {
+                Invoice invoice = InvoiceTest.GetInvoiceSeed();
+                string json = JsonConvert.SerializeObject(invoice);
+                var content = new StringContent(json);
+                await _client.PostAsync("Invoice/CreateOrUpdate", content);
+                element = await new ElementTest().GetElement();
+            }
             var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["numOfRecords"] = 1.ToString();
-            parameters["selectedCompany"] = 0.ToString();
-            parameters["name"] = "";
-            parameters["selectedDate"] = 0.ToString();
-            parameters["from"] = new DateTime(2000, 1, 11).ToString("dd/MM/yyyy");
-            parameters["to"] = DateTime.Now.ToString("dd/MM/yyyy");
-            parameters["docNumber"] = "";
-            var response = await _client.GetAsync("Invoice/GetInvoices?" + parameters);
-            List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(await response.Content.ReadAsStringAsync());
-            parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["id"] = invoices[0].ID.ToString();
-            response = await _client.GetAsync("Element/GetInvoiceElements?" + parameters);
-            List<Element> elements = JsonConvert.DeserializeObject<List<Element>>(await response.Content.ReadAsStringAsync());
-            parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["barcode"] = elements[0].Item.Product.Barcode.ToString();
+            parameters["barcode"] = element.Item.Product.Barcode.ToString();
 
             //Act
-            response = await _client.GetAsync("Product/GetProduct?" + parameters);
+            var response = await _client.GetAsync("Product/GetProduct?" + parameters);
             Product product = JsonConvert.DeserializeObject<Product>(await response.Content.ReadAsStringAsync());
             
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, product.ID == elements[0].Item.Product.ID &&
-                                  product.Barcode.Equals(elements[0].Item.Product.Barcode) &&
-                                  product.Name.Equals(elements[0].Item.Product.Name));//check if object received is the same
+            Assert.AreEqual(true, product.ID == element.Item.Product.ID &&
+                                  product.Barcode.Equals(element.Item.Product.Barcode) &&
+                                  product.Name.Equals(element.Item.Product.Name));//check if object received is the same
         }
 
         [Test]

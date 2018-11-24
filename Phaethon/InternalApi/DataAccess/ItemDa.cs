@@ -15,9 +15,14 @@ namespace InternalApi.DataAccess
             db.SaveChanges();
         }
 
-        internal void Delete(DatabaseContext db, int id)
+        internal Item GetItem(DatabaseContext db, int id)
         {
-            db.Items.Remove(db.Items.SingleOrDefault(x => x.ID == id));
+            return db.Items.SingleOrDefault(x => x.ID == id);
+        }
+
+        internal void Delete(DatabaseContext db, Item item)
+        {
+            db.Items.Remove(item);
             db.SaveChanges();
         }
     }

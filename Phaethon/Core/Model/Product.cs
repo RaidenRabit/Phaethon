@@ -35,6 +35,7 @@ namespace Core.Model
         [DataMember]
         [ForeignKey("ProductGroup_ID")]
         public virtual ProductGroup ProductGroup { get; set; }
+        [DataMember]
         public int? ProductGroup_ID { get; set; }
 
         [DataMember]

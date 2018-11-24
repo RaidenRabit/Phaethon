@@ -63,26 +63,23 @@ namespace InternalApi.DataManagement
                         {
                             if (element.Invoice_ID != -1)
                             {
-                                element.Item.Product.ProductGroup_ID = element.Item.Product.ProductGroup.ID;
-                                element.Item.Product.ProductGroup = null;
                                 productDa.CreateOrUpdate(db, element.Item.Product);
                                 element.Item.Product_ID = element.Item.Product.ID;
                                 element.Item.Product = null;
-                                element.Item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup.ID;
-                                element.Item.IncomingTaxGroup = null;
                                 element.Item.IncomingPrice = element.Item.IncomingPrice * added + element.Item.IncomingPrice;
                                 itemDa.CreateOrUpdate(db, element.Item);
-                                element.Invoice_ID = invoice.ID;
-                                element.Invoice = null;
                                 element.Item_ID = element.Item.ID;
                                 element.Item = null;
+                                element.Invoice_ID = invoice.ID;
+                                element.Invoice = null;
                                 elementDa.CreateOrUpdate(db, element);
                             }
                             else
                             {
                                 if (element.Item.ID != 0)
                                 {
-                                    itemDa.Delete(db, element.Item.ID);
+                                    Item item = itemDa.GetItem(db, element.Item.ID);
+                                    itemDa.Delete(db, item);
                                 }
                             }
                         }
@@ -90,7 +87,7 @@ namespace InternalApi.DataManagement
                         dbTransaction.Commit();
                         return true;
                     }
-                    catch
+                    catch(Exception e)
                     {
                         dbTransaction.Rollback();
                         return false;

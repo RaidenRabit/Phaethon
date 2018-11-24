@@ -21,11 +21,15 @@ namespace InternalApi.DataManagement
         {
             using (var db = new DatabaseContext())
             {
-                if (taxGroup == null)
+                try
+                {
+                    _taxGroupDa.Create(db, taxGroup);
+                    return true;
+                }
+                catch
                 {
                     return false;
                 }
-                return _taxGroupDa.Create(db, taxGroup);
             }
         }
 

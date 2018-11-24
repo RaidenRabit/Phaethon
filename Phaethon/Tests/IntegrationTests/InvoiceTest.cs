@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
+using Tests.IntegrationTests;
 
 namespace Tests.IntegrationTests
 {
@@ -21,7 +22,7 @@ namespace Tests.IntegrationTests
             _client.BaseAddress = new Uri("http://localhost:64007/");
         }
 
-        private static Invoice GetInvoiceSeed()
+        internal static Invoice GetInvoiceSeed()
         {
             Company receiverCompany = new Company
             {
@@ -56,24 +57,44 @@ namespace Tests.IntegrationTests
             Invoice invoice = new Invoice
             {
                 DocNumber = "136381022",
-                PaymentDate = DateTime.Now,
-                PrescriptionDate = DateTime.Now,
-                ReceptionDate = DateTime.Now,
+                PaymentDate = new DateTime(2010, 1, 1),
+                PrescriptionDate = new DateTime(2010, 1, 1),
+                ReceptionDate = new DateTime(2010, 1, 1),
                 Receiver = receiver,
                 Sender = sender,
                 Transport = 5,
-                Elements = new List<Element>()
+                Elements = new ElementTest().GetElementsSeed().Result
             };
 
             return invoice;
         }
-
+        
+        //update
+        //with items
         #region CreateOrUpdate
+        [Test]
+        public async Task CreateOrUpdate_NewInvoiceObject_IsSuccessStatusCodeAndResponseTrue()
+        {
+            //Setup
+            Invoice invoice = GetInvoiceSeed();
+            string json = JsonConvert.SerializeObject(invoice);
+            var content = new StringContent(json);
+
+            //Act
+            var response = await _client.PostAsync("Invoice/CreateOrUpdate", content);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(deserializedResponse);
+        }
+
         [Test]
         public async Task CreateOrUpdate_NewInvoiceObjectNoElements_IsSuccessStatusCodeAndResponseTrue()
         {
             //Setup
             Invoice invoice = GetInvoiceSeed();
+            invoice.Elements = null;
             string json = JsonConvert.SerializeObject(invoice);
             var content = new StringContent(json);
 

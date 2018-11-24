@@ -22,12 +22,12 @@ namespace Tests.IntegrationTests
             _client.BaseAddress = new Uri("http://localhost:64007/");
         }
 
-        private static ProductGroup GetProductGroupSeed()
+        internal static ProductGroup GetProductGroupSeed()
         {
             ProductGroup productGroup = new ProductGroup
             {
                 Margin = 99,
-                Name = "test"
+                Name = "Test"
             };
             return productGroup;
         }
@@ -38,8 +38,32 @@ namespace Tests.IntegrationTests
         {
             //Setup
             ProductGroup productGroup = GetProductGroupSeed();
+            var response = await _client.GetAsync("ProductGroup/GetProductGroups");
+            List<ProductGroup> productGroups = JsonConvert.DeserializeObject<List<ProductGroup>>(await response.Content.ReadAsStringAsync());
+            while (productGroups.Exists(x => x.Name == productGroup.Name))
+            {
+                productGroup.Name = productGroup.Name + "X";
+            }
             string json = JsonConvert.SerializeObject(productGroup);
             var content = new StringContent(json);
+
+            //Act
+            response = await _client.PostAsync("ProductGroup/Create", content);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(deserializedResponse);
+        }
+
+        [Test]
+        public async Task Create_ExistingProductGroupObject_IsSuccessStatusCodeAndResponseFalse()
+        {
+            //Setup
+            ProductGroup productGroup = GetProductGroupSeed();
+            string json = JsonConvert.SerializeObject(productGroup);
+            var content = new StringContent(json);
+            await _client.PostAsync("ProductGroup/Create", content);
 
             //Act
             var response = await _client.PostAsync("ProductGroup/Create", content);
@@ -47,7 +71,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsFalse(deserializedResponse);
         }
 
         [Test]
@@ -73,6 +97,10 @@ namespace Tests.IntegrationTests
         public async Task GetProductGroups_MethodCalled_IsSuccessStatusCodeAndProductGroupsReturned()
         {
             //Setup
+            ProductGroup productGroup = GetProductGroupSeed();
+            string json = JsonConvert.SerializeObject(productGroup);
+            var content = new StringContent(json);
+            await _client.PostAsync("ProductGroup/Create", content);
 
             //Act
             var response = await _client.GetAsync("ProductGroup/GetProductGroups");
@@ -80,7 +108,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(null, productGroups);
+            Assert.AreNotEqual(0, productGroups.Count);
         }
         #endregion
     }

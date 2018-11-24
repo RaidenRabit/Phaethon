@@ -9,10 +9,10 @@ namespace InternalApi.DataAccess
 {
     internal class ProductGroupDa
     {
-        internal bool Create(DatabaseContext db, ProductGroup productGroup)
+        internal void Create(DatabaseContext db, ProductGroup productGroup)
         {
             db.ProductGroups.Add(productGroup);
-            return db.SaveChanges() > 0;
+            db.SaveChanges();
         }
 
         internal List<ProductGroup> GetProductGroups(DatabaseContext db)
