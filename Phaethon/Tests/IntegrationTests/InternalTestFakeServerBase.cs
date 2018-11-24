@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -30,6 +31,7 @@ namespace Tests.IntegrationTests
             _server = new HttpServer(config);
             _client = new HttpClient(_server);
             _client.BaseAddress = new Uri("http://localhost:64007/");
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         }
 

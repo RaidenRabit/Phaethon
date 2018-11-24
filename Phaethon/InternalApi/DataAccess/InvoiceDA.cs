@@ -39,9 +39,9 @@ namespace InternalApi.DataAccess
                 .ToList();
         }
 
-        internal bool Delete(DatabaseContext db, int id)
+        internal bool Delete(DatabaseContext db, Invoice invoice)
         {
-            db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == id));
+            db.Invoices.Remove(invoice);
             return db.SaveChanges() > 0;
         }
     }

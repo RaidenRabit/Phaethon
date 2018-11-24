@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using InternalApi.DataAccess;
 using InternalApi.DataManagement.IDataManagement;
 
@@ -53,7 +52,10 @@ namespace InternalApi.DataManagement
                         {
                             added = added - dbInvoice.Transport;
                         }
-                        added = added / total;
+                        if (total != 0)
+                        {
+                            added = added / total;
+                        }
 
                         _invoiceDa.CreateOrUpdate(db, invoice);
                         
@@ -117,7 +119,12 @@ namespace InternalApi.DataManagement
         {
             using (var db = new DatabaseContext())
             {
-                return _invoiceDa.Delete(db, id);
+                Invoice invoice = _invoiceDa.GetInvoice(db, id);
+                if (invoice == null)
+                {
+                    return false;
+                }
+                return _invoiceDa.Delete(db, invoice);
             }
         }
     }

@@ -2,10 +2,12 @@
 using System.Globalization;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
+using Newtonsoft.Json;
 
 namespace InternalApi.Controllers
 {
@@ -21,8 +23,10 @@ namespace InternalApi.Controllers
         
         [Route("CreateOrUpdate")]
         [HttpPost]
-        public HttpResponseMessage CreateOrUpdate([FromBody] Invoice invoice)
+        public async Task<HttpResponseMessage> CreateOrUpdate()
         {
+            var requestContent = await Request.Content.ReadAsStringAsync();
+            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(requestContent);
             return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.CreateOrUpdate(invoice));
         }
 
@@ -37,17 +41,20 @@ namespace InternalApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, string from, string to, string docNumber)
         {
+            DateTime fromDateTime = new DateTime(2000, 1, 11), toDateTime = DateTime.Now;
             if (name == null) name = "";
-            if (from == null) from = "";
-            if (to == null) to = "";
+            DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out fromDateTime);
+            DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out toDateTime);
             if (docNumber == null) docNumber = "";
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, DateTime.ParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture), DateTime.ParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture), docNumber));
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, fromDateTime, toDateTime, docNumber));
         }
 
         [Route("Delete")]
         [HttpPost]
-        public HttpResponseMessage Delete([FromBody] int id)
+        public async Task<HttpResponseMessage> Delete()
         {
+            var requestContent = await Request.Content.ReadAsStringAsync();
+            int id = JsonConvert.DeserializeObject<int>(requestContent);
             return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Delete(id));
         }
     }

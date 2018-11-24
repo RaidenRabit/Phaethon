@@ -21,6 +21,10 @@ namespace InternalApi.DataManagement
         {
             using (var db = new DatabaseContext())
             {
+                if (productGroup == null)
+                {
+                    return false;
+                }
                 return _productGroupDa.Create(db, productGroup);
             }
         }

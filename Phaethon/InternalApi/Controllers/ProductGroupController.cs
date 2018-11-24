@@ -1,9 +1,11 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
+using Newtonsoft.Json;
 
 namespace InternalApi.Controllers
 {
@@ -19,8 +21,10 @@ namespace InternalApi.Controllers
 
         [Route("Create")]
         [HttpPost]
-        public HttpResponseMessage Create(ProductGroup productGroup)
+        public async Task<HttpResponseMessage> Create()
         {
+            var requestContent = await Request.Content.ReadAsStringAsync();
+            ProductGroup productGroup = JsonConvert.DeserializeObject<ProductGroup>(requestContent);
             return Request.CreateResponse(HttpStatusCode.OK, _productGroupManagement.Create(productGroup));
         }
 

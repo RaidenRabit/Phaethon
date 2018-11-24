@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
+using Newtonsoft.Json;
 
 namespace InternalApi.Controllers
 {
@@ -22,8 +24,10 @@ namespace InternalApi.Controllers
 
         [Route("Create")]
         [HttpPost]
-        public HttpResponseMessage Create([FromBody] TaxGroup taxGroup)
+        public async Task<HttpResponseMessage> Create()
         {
+            var requestContent = await Request.Content.ReadAsStringAsync();
+            TaxGroup taxGroup = JsonConvert.DeserializeObject<TaxGroup>(requestContent);
             return Request.CreateResponse(HttpStatusCode.OK, _taxGroupManagement.Create(taxGroup));
         }
 
