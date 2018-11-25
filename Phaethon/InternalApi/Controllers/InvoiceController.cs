@@ -41,7 +41,7 @@ namespace InternalApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, string from, string to, string docNumber)
         {
-            DateTime fromDateTime = new DateTime(2000, 1, 11), toDateTime = DateTime.Now;
+            DateTime fromDateTime = new DateTime(2000, 1, 1), toDateTime = DateTime.Now;
             if (name == null) name = "";
             DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out fromDateTime);
             DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out toDateTime);
