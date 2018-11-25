@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Core.Model;
+using InternalApi.DataAccess;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -22,22 +23,55 @@ namespace Tests.IntegrationTests
             _client.BaseAddress = new Uri("http://localhost:64007/");
         }
 
+        internal static Product GetProductSeed()
+        {
+            ProductGroup productGroup = ProductGroupTest.GetProductGroupSeed();
+            if (productGroup.ID == 0)
+            {
+                using (var db = new DatabaseContext())
+                {
+                    ProductGroupDa productGroupDa = new ProductGroupDa();
+                    productGroupDa.Create(db, productGroup);
+                }
+            }
+
+            Product product = new Product
+            {
+                Barcode = 0,
+                Name = "Test",
+                ProductGroup_ID = productGroup.ID
+            };
+
+            using (var db = new DatabaseContext())
+            {
+                ProductDa productDa = new ProductDa();
+                Product oldProduct = productDa.GetProducts(db).SingleOrDefault(x => x.Barcode == product.Barcode || x.Name.Equals(product.Name));
+                if (oldProduct != null)
+                {
+                    product = oldProduct;
+                }
+            }
+
+            return product;
+        }
+
         #region GetProduct
         [Test]
         public async Task GetProduct_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
-            Element element = await new ElementTest().GetElement();
-            if (element == null)
+            Product testProduct = GetProductSeed();
+            if (testProduct.ID == 0)
             {
-                Invoice invoice = InvoiceTest.GetInvoiceSeed();
-                string json = JsonConvert.SerializeObject(invoice);
-                var content = new StringContent(json);
-                await _client.PostAsync("Invoice/CreateOrUpdate", content);
-                element = await new ElementTest().GetElement();
+                using (var db = new DatabaseContext())
+                {
+                    ProductDa productDa = new ProductDa();
+                    productDa.CreateOrUpdate(db, testProduct);
+                }
             }
+
             var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["barcode"] = element.Item.Product.Barcode.ToString();
+            parameters["barcode"] = testProduct.Barcode.ToString();
 
             //Act
             var response = await _client.GetAsync("Product/GetProduct?" + parameters);
@@ -45,9 +79,9 @@ namespace Tests.IntegrationTests
             
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, product.ID == element.Item.Product.ID &&
-                                  product.Barcode.Equals(element.Item.Product.Barcode) &&
-                                  product.Name.Equals(element.Item.Product.Name));//check if object received is the same
+            Assert.AreEqual(true, product.ID == testProduct.ID &&
+                                  product.Barcode.Equals(testProduct.Barcode) &&
+                                  product.Name.Equals(testProduct.Name));
         }
 
         [Test]

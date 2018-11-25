@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Core.Model;
+using InternalApi.DataAccess;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -29,26 +30,43 @@ namespace Tests.IntegrationTests
                 Margin = 99,
                 Name = "Test"
             };
+
+            using (var db = new DatabaseContext())
+            {
+                ProductGroupDa productGroupDa = new ProductGroupDa();
+                ProductGroup oldProductGroup = productGroupDa.GetProductGroups(db).SingleOrDefault(x => x.Name.Equals(productGroup.Name));
+                if (oldProductGroup != null)
+                {
+                    productGroup = oldProductGroup;
+                }
+            }
+
             return productGroup;
         }
 
+        //cascade delete
         #region Create
         [Test]
         public async Task Create_NewProductGroupObject_IsSuccessStatusCodeAndResponseTrue()
         {
             //Setup
             ProductGroup productGroup = GetProductGroupSeed();
-            var response = await _client.GetAsync("ProductGroup/GetProductGroups");
-            List<ProductGroup> productGroups = JsonConvert.DeserializeObject<List<ProductGroup>>(await response.Content.ReadAsStringAsync());
-            while (productGroups.Exists(x => x.Name == productGroup.Name))
+            if (productGroup.ID != 0)
             {
-                productGroup.Name = productGroup.Name + "X";
+                using (var db = new DatabaseContext())
+                {
+                    ProductGroupDa productGroupDa = new ProductGroupDa();
+                    db.ProductGroups.Attach(productGroup);
+                    db.Items.RemoveRange(db.Items.Where(x => x.Product.ProductGroup_ID == productGroup.ID));
+                    db.Products.RemoveRange(db.Products.Where(x => x.ProductGroup_ID == productGroup.ID));
+                    productGroupDa.Delete(db, productGroup);
+                }
             }
             string json = JsonConvert.SerializeObject(productGroup);
             var content = new StringContent(json);
 
             //Act
-            response = await _client.PostAsync("ProductGroup/Create", content);
+            var response = await _client.PostAsync("ProductGroup/Create", content);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -61,9 +79,23 @@ namespace Tests.IntegrationTests
         {
             //Setup
             ProductGroup productGroup = GetProductGroupSeed();
+            if (productGroup.ID != 0)
+            {
+                using (var db = new DatabaseContext())
+                {
+                    try
+                    {
+                        ProductGroupDa productGroupDa = new ProductGroupDa();
+                        productGroupDa.Create(db, productGroup);
+                    }
+                    catch
+                    {
+                        // ignored
+                    }
+                }
+            }
             string json = JsonConvert.SerializeObject(productGroup);
             var content = new StringContent(json);
-            await _client.PostAsync("ProductGroup/Create", content);
 
             //Act
             var response = await _client.PostAsync("ProductGroup/Create", content);
@@ -98,9 +130,21 @@ namespace Tests.IntegrationTests
         {
             //Setup
             ProductGroup productGroup = GetProductGroupSeed();
-            string json = JsonConvert.SerializeObject(productGroup);
-            var content = new StringContent(json);
-            await _client.PostAsync("ProductGroup/Create", content);
+            if (productGroup.ID != 0)
+            {
+                try
+                {
+                    using (var db = new DatabaseContext())
+                    {
+                        ProductGroupDa productGroupDa = new ProductGroupDa();
+                        productGroupDa.Create(db, productGroup);
+                    }
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
 
             //Act
             var response = await _client.GetAsync("ProductGroup/GetProductGroups");

@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using Core.Model;
+using InternalApi.DataAccess;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -26,23 +27,26 @@ namespace Tests.IntegrationTests
         public async Task GetCompany_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
-            var response = await _client.GetAsync("Company/GetCompanies");
-            List<Company> companies = JsonConvert.DeserializeObject<List<Company>>(await response.Content.ReadAsStringAsync());
+            Invoice invoice = InvoiceTest.GetInvoiceSeed();
+            if (invoice.ID == 0)
+            {
+                invoice = InvoiceTest.CreateInvoice(invoice);
+            }
             var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["id"] = companies[0].ID.ToString();
+            parameters["id"] = invoice.Sender.Company.ID.ToString();
 
             //Act
-            response = await _client.GetAsync("Company/GetCompany?" + parameters);
+            var response = await _client.GetAsync("Company/GetCompany?" + parameters);
             Company company = JsonConvert.DeserializeObject<Company>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, company.ID == companies[0].ID &&
-                                  company.Address.Equals(companies[0].Address) &&
-                                  company.BankNumber.Equals(companies[0].BankNumber) &&
-                                  company.Location.Equals(companies[0].Location) &&
-                                  company.Name.Equals(companies[0].Name) &&
-                                  company.RegNumber.Equals(companies[0].RegNumber));//check if object received is the same
+            Assert.AreEqual(true, company.ID == invoice.Sender.Company.ID &&
+                                  company.Address.Equals(invoice.Sender.Company.Address) &&
+                                  company.BankNumber.Equals(invoice.Sender.Company.BankNumber) &&
+                                  company.Location.Equals(invoice.Sender.Company.Location) &&
+                                  company.Name.Equals(invoice.Sender.Company.Name) &&
+                                  company.RegNumber.Equals(invoice.Sender.Company.RegNumber));//check if object received is the same
         }
 
         [Test]

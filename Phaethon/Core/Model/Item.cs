@@ -56,8 +56,5 @@ namespace Core.Model
         public virtual TaxGroup OutgoingTaxGroup { get; set; }
         [DataMember]
         public int? OutgoingTaxGroup_ID { get; set; }
-
-        [DataMember]
-        public virtual ICollection<Element> Elements { get; set; }
     }
 }

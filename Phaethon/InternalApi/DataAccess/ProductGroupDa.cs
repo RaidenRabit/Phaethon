@@ -7,17 +7,23 @@ using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    internal class ProductGroupDa
+    public class ProductGroupDa
     {
-        internal void Create(DatabaseContext db, ProductGroup productGroup)
+        public void Create(DatabaseContext db, ProductGroup productGroup)
         {
             db.ProductGroups.Add(productGroup);
             db.SaveChanges();
         }
 
-        internal List<ProductGroup> GetProductGroups(DatabaseContext db)
+        public List<ProductGroup> GetProductGroups(DatabaseContext db)
         {
             return db.ProductGroups.ToList();
+        }
+
+        public bool Delete(DatabaseContext db, ProductGroup productGroup)
+        {
+            db.ProductGroups.Remove(productGroup);
+            return db.SaveChanges() > 0;
         }
     }
 }

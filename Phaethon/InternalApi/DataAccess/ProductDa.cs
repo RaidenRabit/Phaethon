@@ -7,20 +7,28 @@ using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    internal class ProductDa
+    public class ProductDa
     {
-        internal void CreateOrUpdate(DatabaseContext db, Product product)
+        public void CreateOrUpdate(DatabaseContext db, Product product)
         {
             db.Products.AddOrUpdate(product);
             db.SaveChanges();
         }
 
-        internal Product GetProduct(DatabaseContext db, int barcode)
+        public Product GetProduct(DatabaseContext db, int barcode)
         {
             return db.Products
                 .Include(x => x.ProductGroup)
                 .Include(x => x.Items)
                 .SingleOrDefault(x => x.Barcode == barcode);
+        }
+
+        public List<Product> GetProducts(DatabaseContext db)
+        {
+            return db.Products
+                .Include(x => x.ProductGroup)
+                .Include(x => x.Items)
+                .ToList();
         }
     }
 }

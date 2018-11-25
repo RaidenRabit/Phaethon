@@ -7,17 +7,23 @@ using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    internal class TaxGroupDa
+    public class TaxGroupDa
     {
-        internal void Create(DatabaseContext db, TaxGroup taxGroup)
+        public void Create(DatabaseContext db, TaxGroup taxGroup)
         {
             db.TaxGroups.Add(taxGroup);
             db.SaveChanges();
         }
 
-        internal List<TaxGroup> GetTaxGroups(DatabaseContext db)
+        public List<TaxGroup> GetTaxGroups(DatabaseContext db)
         {
             return db.TaxGroups.ToList();
+        }
+
+        public bool Delete(DatabaseContext db, TaxGroup taxGroup)
+        {
+            db.TaxGroups.Remove(taxGroup);
+            return db.SaveChanges() > 0;
         }
     }
 }

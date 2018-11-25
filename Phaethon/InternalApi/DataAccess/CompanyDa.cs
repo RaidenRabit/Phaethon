@@ -6,20 +6,20 @@ using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    internal class CompanyDa
+    public class CompanyDa
     {
-        internal void CreateOrUpdate(DatabaseContext db, Company company)
+        public void CreateOrUpdate(DatabaseContext db, Company company)
         {
             db.Companies.AddOrUpdate(company);
             db.SaveChanges();
         }
 
-        internal List<Company> GetCompanies(DatabaseContext db)
+        public List<Company> GetCompanies(DatabaseContext db)
         {
             return db.Companies.ToList();
         }
 
-        internal Company GetCompany(DatabaseContext db, int id)
+        public Company GetCompany(DatabaseContext db, int id)
         {
             return db.Companies
                 .Include(x => x.Representatives)
