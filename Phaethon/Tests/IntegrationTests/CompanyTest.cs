@@ -11,17 +11,8 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class CompanyTest
+    public class CompanyTest: InternalTestFakeServerBase
     {
-        //InternalTestFakeServerBase
-        private static HttpClient _client;
-
-        public CompanyTest()
-        {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/");
-        }
-
         #region GetCompany
         [Test]
         public async Task GetCompany_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()

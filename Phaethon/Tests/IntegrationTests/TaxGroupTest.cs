@@ -12,17 +12,8 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class TaxGroupTest
+    public class TaxGroupTest: InternalTestFakeServerBase
     {
-        //InternalTestFakeServerBase
-        private static HttpClient _client;
-
-        public TaxGroupTest()
-        {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/");
-        }
-        
         #region Create
         [Test]
         public async Task Create_NewTaxGroupObject_IsSuccessStatusCodeAndResponseTrue()

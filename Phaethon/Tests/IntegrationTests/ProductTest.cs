@@ -12,17 +12,8 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class ProductTest
+    public class ProductTest: InternalTestFakeServerBase
     {
-        //InternalTestFakeServerBase
-        private static HttpClient _client;
-
-        public ProductTest()
-        {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/");
-        }
-        
         #region GetProduct
         [Test]
         public async Task GetProduct_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()

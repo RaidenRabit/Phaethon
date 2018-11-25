@@ -11,17 +11,8 @@ using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class ElementTest
+    public class ElementTest: InternalTestFakeServerBase
     {
-        //InternalTestFakeServerBase
-        private static HttpClient _client;
-
-        public ElementTest()
-        {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/");
-        }
-
         #region GetInvoiceElements
         [Test]
         public async Task GetInvoiceElements_MethodCalled_IsSuccessStatusCodeAndElementsReturned()

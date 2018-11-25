@@ -11,17 +11,8 @@ using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class InvoiceTest
+    public class InvoiceTest: InternalTestFakeServerBase
     {
-        //InternalTestFakeServerBase
-        private static HttpClient _client;
-
-        public InvoiceTest()
-        {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/");
-        }
-
         internal static Element GetElementSeed()
         {
             #region Tax group
