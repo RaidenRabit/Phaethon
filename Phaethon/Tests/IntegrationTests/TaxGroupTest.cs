@@ -10,16 +10,8 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class TaxGroupTest
+    public class TaxGroupTest : InternalTestFakeServerBase
     {
-        //InternalTestFakeServerBase
-        private static HttpClient _client;
-
-        public TaxGroupTest()
-        {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/");
-        }
 
         internal static TaxGroup GetTaxGroupSeed()
         {
@@ -37,17 +29,9 @@ namespace Tests.IntegrationTests
         {
             //Setup
             TaxGroup taxGroup = GetTaxGroupSeed();
-            var response = await _client.GetAsync("TaxGroup/GetTaxGroups");
-            List<TaxGroup> taxGroups = JsonConvert.DeserializeObject<List<TaxGroup>>(await response.Content.ReadAsStringAsync());
-            while (taxGroups.Exists(x => x.Name == taxGroup.Name))
-            {
-                taxGroup.Name = taxGroup.Name + "X";
-            }
-            string json = JsonConvert.SerializeObject(taxGroup);
-            var content = new StringContent(json);
 
             //Act
-            response = await _client.PostAsync("TaxGroup/Create", content);
+            var response = await _client.PostAsJsonAsync("TaxGroup/Create", taxGroup);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
