@@ -19,11 +19,5 @@ namespace InternalApi.DataAccess
         {
             return db.TaxGroups.ToList();
         }
-
-        public bool Delete(DatabaseContext db, TaxGroup taxGroup)
-        {
-            db.TaxGroups.Remove(taxGroup);
-            return db.SaveChanges() > 0;
-        }
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using Core.Model;
 using InternalApi.DataAccess;
 using Newtonsoft.Json;
@@ -28,11 +25,9 @@ namespace Tests.IntegrationTests
                 db.ProductGroups.Remove(productGroup);
                 db.SaveChanges();
             }
-            string json = JsonConvert.SerializeObject(productGroup);
-            var content = new StringContent(json);
 
             //Act
-            var response = await _client.PostAsync("ProductGroup/Create", content);
+            var response = await _client.PostAsJsonAsync("ProductGroup/Create", productGroup);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -45,11 +40,9 @@ namespace Tests.IntegrationTests
         {
             //Setup
             ProductGroup productGroup = InvoiceTest.GetElementSeed().Item.Product.ProductGroup;
-            string json = JsonConvert.SerializeObject(productGroup);
-            var content = new StringContent(json);
 
             //Act
-            var response = await _client.PostAsync("ProductGroup/Create", content);
+            var response = await _client.PostAsJsonAsync("ProductGroup/Create", productGroup);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -62,11 +55,9 @@ namespace Tests.IntegrationTests
         {
             //Setup
             ProductGroup productGroup = null;
-            string json = JsonConvert.SerializeObject(productGroup);
-            var content = new StringContent(json);
 
             //Act
-            var response = await _client.PostAsync("ProductGroup/Create", content);
+            var response = await _client.PostAsJsonAsync("ProductGroup/Create", productGroup);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using Core.Model;
-using InternalApi.DataAccess;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -16,7 +10,7 @@ namespace Tests.IntegrationTests
     {
         #region GetProduct
         [Test]
-        public async Task GetProduct_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
+        public async Task GetProduct_CorrectBarcode_IsSuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
             Product testProduct = InvoiceTest.GetElementSeed().Item.Product;
@@ -35,7 +29,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task GetProduct_WrongID_IsSuccessStatusCodeAndNullObjectReturned()
+        public async Task GetProduct_WrongBarcode_IsSuccessStatusCodeAndNullObjectReturned()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);

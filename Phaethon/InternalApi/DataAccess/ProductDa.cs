@@ -22,13 +22,5 @@ namespace InternalApi.DataAccess
                 .Include(x => x.Items)
                 .SingleOrDefault(x => x.Barcode == barcode);
         }
-
-        public List<Product> GetProducts(DatabaseContext db)
-        {
-            return db.Products
-                .Include(x => x.ProductGroup)
-                .Include(x => x.Items)
-                .ToList();
-        }
     }
 }

@@ -19,11 +19,5 @@ namespace InternalApi.DataAccess
         {
             return db.ProductGroups.ToList();
         }
-
-        public bool Delete(DatabaseContext db, ProductGroup productGroup)
-        {
-            db.ProductGroups.Remove(productGroup);
-            return db.SaveChanges() > 0;
-        }
     }
 }

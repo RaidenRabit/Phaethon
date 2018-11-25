@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using Core.Model;
-using InternalApi.DataAccess;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

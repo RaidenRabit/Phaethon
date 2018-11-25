@@ -23,7 +23,6 @@ namespace Core.Model
         [DataMember]
         [DisplayName("Product name")]
         [StringLength(100)]
-        [Index(IsUnique = true)]
         public string Name { get; set; }
 
         [Required]
@@ -37,7 +36,8 @@ namespace Core.Model
         public virtual ProductGroup ProductGroup { get; set; }
         [DataMember]
         public int? ProductGroup_ID { get; set; }
-        
+
+        [DataMember]
         public virtual ICollection<Item> Items { get; set; }
     }
 }

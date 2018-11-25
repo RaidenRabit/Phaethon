@@ -69,7 +69,7 @@ namespace Tests.IntegrationTests
 
             using (var db = new DatabaseContext())
             {
-                Product oldProduct = db.Products.SingleOrDefault(x => x.Barcode == product.Barcode || x.Name.Equals(product.Name));
+                Product oldProduct = db.Products.SingleOrDefault(x => x.Barcode == product.Barcode);
                 if (oldProduct != null)
                 {
                     product = oldProduct;
@@ -89,7 +89,10 @@ namespace Tests.IntegrationTests
             {
                 Discount = 99,
                 IncomingPrice = 100,
-                SerNumber = "0"
+                SerNumber = "0",
+                IncomingTaxGroup_ID = taxGroup.ID,
+                OutgoingTaxGroup_ID = taxGroup.ID,
+                Product_ID = product.ID
             };
 
             using (var db = new DatabaseContext())
@@ -107,11 +110,8 @@ namespace Tests.IntegrationTests
             }
 
             item.IncomingTaxGroup = taxGroup;
-            item.IncomingTaxGroup_ID = taxGroup.ID;
             item.OutgoingTaxGroup = taxGroup;
-            item.OutgoingTaxGroup_ID = taxGroup.ID;
             item.Product = product;
-            item.Product_ID = product.ID;
             #endregion
             
             #region Company
@@ -142,7 +142,8 @@ namespace Tests.IntegrationTests
             #region Representative
             Representative representative = new Representative
             {
-                Name = "Test"
+                Name = "Test",
+                Company_ID = company.ID
             };
 
             using (var db = new DatabaseContext())
@@ -169,7 +170,9 @@ namespace Tests.IntegrationTests
                 PaymentDate = new DateTime(2010, 1, 1),
                 PrescriptionDate = new DateTime(2010, 1, 1),
                 ReceptionDate = new DateTime(2010, 1, 1),
-                Transport = 10
+                Transport = 10,
+                Sender_ID = representative.ID,
+                Receiver_ID = representative.ID
             };
 
             using (var db = new DatabaseContext())
@@ -187,9 +190,7 @@ namespace Tests.IntegrationTests
             }
 
             invoice.Sender = representative;
-            invoice.Sender_ID = representative.ID;
             invoice.Receiver = representative;
-            invoice.Receiver_ID = representative.ID;
             #endregion
 
             #region Element
@@ -220,7 +221,6 @@ namespace Tests.IntegrationTests
             return element;
         }
         
-        //update
         #region CreateOrUpdate
         [Test]
         public async Task CreateOrUpdate_NewInvoiceObject_IsSuccessStatusCodeAndResponseTrue()
@@ -235,16 +235,45 @@ namespace Tests.IntegrationTests
                 db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == invoice.ID));
                 db.SaveChanges();
             }
-            string json = JsonConvert.SerializeObject(invoice);
-            var content = new StringContent(json);
 
             //Act
-            var response = await _client.PostAsync("Invoice/CreateOrUpdate", content);
+            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
             Assert.IsTrue(deserializedResponse);
+        }
+
+        [Test]
+        public async Task CreateOrUpdate_UpdateInvoiceObject_IsSuccessStatusCodeAndResponseTrue()
+        {
+            //Setup
+            Element element = GetElementSeed();
+            Invoice invoice = element.Invoice;
+            element.Invoice = null;
+            invoice.Transport = 99;
+            invoice.Elements = new List<Element>() { element };
+
+            //Act
+            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            Invoice dbInvoice = null;
+            using (var db = new DatabaseContext())
+            {
+                dbInvoice = db.Invoices.SingleOrDefault(x => x.ID == invoice.ID);
+            }
+
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(deserializedResponse);
+            Assert.AreEqual(true, invoice.ID == dbInvoice.ID &&
+                                  invoice.DocNumber.Equals(dbInvoice.DocNumber) &&
+                                  invoice.PaymentDate.Equals(dbInvoice.PaymentDate) &&
+                                  invoice.ReceptionDate.Equals(dbInvoice.ReceptionDate) &&
+                                  invoice.PrescriptionDate.Equals(dbInvoice.PrescriptionDate) &&
+                                  invoice.Transport == dbInvoice.Transport);//check if object received is the same
         }
 
         [Test]
@@ -259,28 +288,53 @@ namespace Tests.IntegrationTests
                 db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == invoice.ID));
                 db.SaveChanges();
             }
-            string json = JsonConvert.SerializeObject(invoice);
-            var content = new StringContent(json);
 
             //Act
-            var response = await _client.PostAsync("Invoice/CreateOrUpdate", content);
+            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
             Assert.IsTrue(deserializedResponse);
         }
-        
+
+        [Test]
+        public async Task CreateOrUpdate_UpdateInvoiceObjectNoElements_IsSuccessStatusCodeAndResponseTrue()
+        {
+            //Setup
+            Element element = GetElementSeed();
+            Invoice invoice = element.Invoice;
+            invoice.Transport = 99;
+            element.Invoice = null;
+
+            //Act
+            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            Invoice dbInvoice = null;
+            using (var db = new DatabaseContext())
+            {
+                dbInvoice = db.Invoices.SingleOrDefault(x => x.ID == invoice.ID);
+            }
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(deserializedResponse);
+            Assert.AreEqual(true, invoice.ID == dbInvoice.ID &&
+                                  invoice.DocNumber.Equals(dbInvoice.DocNumber) &&
+                                  invoice.PaymentDate.Equals(dbInvoice.PaymentDate) &&
+                                  invoice.ReceptionDate.Equals(dbInvoice.ReceptionDate) &&
+                                  invoice.PrescriptionDate.Equals(dbInvoice.PrescriptionDate) &&
+                                  invoice.Transport == dbInvoice.Transport);//check if object received is the same
+        }
+
         [Test]
         public async Task CreateOrUpdate_InvoiceObjectNull_IsSuccessStatusCodeAndResponseFalse()
         {
             //Setup
             Invoice invoice = null;
-            string json = JsonConvert.SerializeObject(invoice);
-            var content = new StringContent(json);
 
             //Act
-            var response = await _client.PostAsync("Invoice/CreateOrUpdate", content);
+            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -340,7 +394,7 @@ namespace Tests.IntegrationTests
             parameters["selectedCompany"] = 0.ToString();
             parameters["name"] = "";
             parameters["selectedDate"] = 0.ToString();
-            parameters["from"] = new DateTime(2000, 1, 11).ToString("dd/MM/yyyy");
+            parameters["from"] = new DateTime(2000, 1, 1).ToString("dd/MM/yyyy");
             parameters["to"] = DateTime.Now.ToString("dd/MM/yyyy");
             parameters["docNumber"] = "";
 
@@ -350,7 +404,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(null, invoices);
+            Assert.AreNotEqual(0, invoices.Count);
         }
         #endregion
 
@@ -360,13 +414,11 @@ namespace Tests.IntegrationTests
         {
             //Setup
             Element element = GetElementSeed();
-            Invoice oldInvoice = element.Invoice;
-            int id = oldInvoice.ID;
-            string json = JsonConvert.SerializeObject(id);
-            var content = new StringContent(json);
+            Invoice invoice = element.Invoice;
+            int id = invoice.ID;
 
             //Act
-            var response = await _client.PostAsync("Invoice/Delete", content);
+            var response = await _client.PostAsJsonAsync("Invoice/Delete", id);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -379,11 +431,9 @@ namespace Tests.IntegrationTests
         {
             //Setup
             int id = 0;
-            string json = JsonConvert.SerializeObject(id);
-            var content = new StringContent(json);
 
             //Act
-            var response = await _client.PostAsync("Invoice/Delete", content);
+            var response = await _client.PostAsJsonAsync("Invoice/Delete", id);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
