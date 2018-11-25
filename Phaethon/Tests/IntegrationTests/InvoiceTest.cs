@@ -22,119 +22,211 @@ namespace Tests.IntegrationTests
             _client.BaseAddress = new Uri("http://localhost:64007/");
         }
 
-        internal static Invoice GetInvoiceSeed()
+        internal static Element GetElementSeed()
         {
-            Company receiverCompany = new Company
+            #region Tax group
+            TaxGroup taxGroup = new TaxGroup
             {
-                Location = "Nibevej 2344 location",
-                Name = "shufle",
-                RegNumber = "54555556",
-                Address = "Nibevej 2344 Address",
-                BankNumber = "DK34745624547"
-            };
-
-            Representative receiver = new Representative
-            {
-                Name = "Kabola",
-                Company = receiverCompany
-            };
-
-            Company senderCompany = new Company
-            {
-                Location = "Wallstreet location",
-                Name = "Pop-top-spain",
-                RegNumber = "1233333",
-                Address = "Wallstreet Address",
-                BankNumber = "DK3477777777"
-            };
-
-            Representative sender = new Representative
-            {
-                Name = "Kasper",
-                Company = senderCompany
-            };
-
-            Invoice invoice = new Invoice
-            {
-                DocNumber = "136381022",
-                PaymentDate = new DateTime(2010, 1, 1),
-                PrescriptionDate = new DateTime(2010, 1, 1),
-                ReceptionDate = new DateTime(2010, 1, 1),
-                Receiver = receiver,
-                Sender = sender,
-                Transport = 5,
-                Elements = ElementTest.GetElementsSeed()
+                Name = "Test",
+                Tax = 99
             };
 
             using (var db = new DatabaseContext())
             {
-                InvoiceDa invoiceDa = new InvoiceDa();
-                Invoice oldInvoice = invoiceDa.GetInvoices(db, 1000, 0, "", 0, new DateTime(2000, 1, 1), DateTime.Now, "").SingleOrDefault(x => x.DocNumber.Equals(invoice.DocNumber));
+                TaxGroup oldTaxGroup = db.TaxGroups.SingleOrDefault(x => x.Name.Equals(taxGroup.Name));
+                if (oldTaxGroup != null)
+                {
+                    taxGroup = oldTaxGroup;
+                }
+                else
+                {
+                    db.TaxGroups.Add(taxGroup);
+                    db.SaveChanges();
+                }
+            }
+            #endregion
+
+            #region Product group
+            ProductGroup productGroup = new ProductGroup
+            {
+                Margin = 99,
+                Name = "Test"
+            };
+
+            using (var db = new DatabaseContext())
+            {
+                ProductGroup oldProductGroup = db.ProductGroups.SingleOrDefault(x => x.Name.Equals(productGroup.Name));
+                if (oldProductGroup != null)
+                {
+                    productGroup = oldProductGroup;
+                }
+                else
+                {
+                    db.ProductGroups.Add(productGroup);
+                    db.SaveChanges();
+                }
+            }
+            #endregion
+
+            #region Product
+            Product product = new Product
+            {
+                Barcode = 0,
+                Name = "Test",
+                ProductGroup_ID = productGroup.ID
+            };
+
+            using (var db = new DatabaseContext())
+            {
+                Product oldProduct = db.Products.SingleOrDefault(x => x.Barcode == product.Barcode || x.Name.Equals(product.Name));
+                if (oldProduct != null)
+                {
+                    product = oldProduct;
+                }
+                else
+                {
+                    db.Products.Add(product);
+                    db.SaveChanges();
+                }
+            }
+
+            product.ProductGroup = productGroup;
+            #endregion
+
+            #region Item
+            Item item = new Item
+            {
+                Discount = 99,
+                IncomingPrice = 100,
+                SerNumber = "0"
+            };
+
+            using (var db = new DatabaseContext())
+            {
+                Item oldItem = db.Items.SingleOrDefault(x => x.SerNumber.Equals(item.SerNumber));
+                if (oldItem != null)
+                {
+                    item = oldItem;
+                }
+                else
+                {
+                    db.Items.Add(item);
+                    db.SaveChanges();
+                }
+            }
+
+            item.IncomingTaxGroup = taxGroup;
+            item.IncomingTaxGroup_ID = taxGroup.ID;
+            item.OutgoingTaxGroup = taxGroup;
+            item.OutgoingTaxGroup_ID = taxGroup.ID;
+            item.Product = product;
+            item.Product_ID = product.ID;
+            #endregion
+            
+            #region Company
+            Company company = new Company
+            {
+                Location = "Test location",
+                Name = "Test",
+                RegNumber = "0",
+                Address = "Test address",
+                BankNumber = "0"
+            };
+
+            using (var db = new DatabaseContext())
+            {
+                Company oldCompany = db.Companies.SingleOrDefault(x => x.Name.Equals(company.Name));
+                if (oldCompany != null)
+                {
+                    company = oldCompany;
+                }
+                else
+                {
+                    db.Companies.Add(company);
+                    db.SaveChanges();
+                }
+            }
+            #endregion
+
+            #region Representative
+            Representative representative = new Representative
+            {
+                Name = "Test"
+            };
+
+            using (var db = new DatabaseContext())
+            {
+                Representative oldRepresentative = db.Representatives.SingleOrDefault(x => x.Name.Equals(company.Name));
+                if (oldRepresentative != null)
+                {
+                    representative = oldRepresentative;
+                }
+                else
+                {
+                    db.Representatives.Add(representative);
+                    db.SaveChanges();
+                }
+            }
+
+            representative.Company = company;
+            #endregion
+
+            #region Invoice
+            Invoice invoice = new Invoice
+            {
+                DocNumber = "0",
+                PaymentDate = new DateTime(2010, 1, 1),
+                PrescriptionDate = new DateTime(2010, 1, 1),
+                ReceptionDate = new DateTime(2010, 1, 1),
+                Transport = 10
+            };
+
+            using (var db = new DatabaseContext())
+            {
+                Invoice oldInvoice = db.Invoices.SingleOrDefault(x => x.DocNumber.Equals(invoice.DocNumber));
                 if (oldInvoice != null)
                 {
                     invoice = oldInvoice;
                 }
+                else
+                {
+                    db.Invoices.Add(invoice);
+                    db.SaveChanges();
+                }
             }
 
-            return invoice;
-        }
+            invoice.Sender = representative;
+            invoice.Sender_ID = representative.ID;
+            invoice.Receiver = representative;
+            invoice.Receiver_ID = representative.ID;
+            #endregion
 
-        internal static Invoice CreateInvoice(Invoice invoice)
-        {
-            CompanyDa companyDa = new CompanyDa();
-            RepresentativeDa representativeDa = new RepresentativeDa();
-            ProductDa productDa = new ProductDa();
-            ItemDa itemDa = new ItemDa();
-            ElementDa elementDa = new ElementDa();
-            InvoiceDa invoiceDa = new InvoiceDa();
+            #region Element
+            Element element = new Element
+            {
+                Item_ID = item.ID,
+                Invoice_ID = invoice.ID
+            };
 
             using (var db = new DatabaseContext())
             {
-                companyDa.CreateOrUpdate(db, invoice.Receiver.Company);
-                invoice.Receiver.Company_ID = invoice.Receiver.Company.ID;
-                invoice.Receiver.Company = null;
-                companyDa.CreateOrUpdate(db, invoice.Sender.Company);
-                invoice.Sender.Company_ID = invoice.Sender.Company.ID;
-                invoice.Sender.Company = null;
-                representativeDa.CreateOrUpdate(db, invoice.Receiver);
-                invoice.Receiver_ID = invoice.Receiver.ID;
-                invoice.Receiver = null;
-                representativeDa.CreateOrUpdate(db, invoice.Sender);
-                invoice.Sender_ID = invoice.Sender.ID;
-                invoice.Sender = null;
-                List<Element> elements = invoice.Elements == null ? new List<Element>() : invoice.Elements.ToList();
-                invoice.Elements = null;
-
-                decimal total = elements.Sum(item => item.Item.IncomingPrice);
-                decimal added = invoice.Transport;
-                Invoice dbInvoice = invoiceDa.GetInvoice(db, invoice.ID);
-                if (dbInvoice != null)
+                Element oldElement = db.Elements.SingleOrDefault(x => x.Invoice_ID == invoice.ID && x.Item_ID == item.ID);
+                if (oldElement != null)
                 {
-                    added = added - dbInvoice.Transport;
+                    element = oldElement;
                 }
-                if (total != 0)
+                else
                 {
-                    added = added / total;
+                    db.Elements.Add(element);
+                    db.SaveChanges();
                 }
-
-                invoiceDa.CreateOrUpdate(db, invoice);
-
-                foreach (Element element in elements)
-                {
-                    productDa.CreateOrUpdate(db, element.Item.Product);
-                    element.Item.Product_ID = element.Item.Product.ID;
-                    element.Item.Product = null;
-                    element.Item.IncomingPrice = element.Item.IncomingPrice * added + element.Item.IncomingPrice;
-                    itemDa.CreateOrUpdate(db, element.Item);
-                    element.Item_ID = element.Item.ID;
-                    element.Item = null;
-                    element.Invoice_ID = invoice.ID;
-                    element.Invoice = null;
-                    elementDa.CreateOrUpdate(db, element);
-                }
-
-                return invoice;
             }
+
+            element.Invoice = invoice;
+            element.Item = item;
+            #endregion
+
+            return element;
         }
         
         //update
@@ -143,18 +235,15 @@ namespace Tests.IntegrationTests
         public async Task CreateOrUpdate_NewInvoiceObject_IsSuccessStatusCodeAndResponseTrue()
         {
             //Setup
-            Invoice invoice = GetInvoiceSeed();
-            if (invoice.ID != 0)
+            Element element = GetElementSeed();
+            Invoice invoice = element.Invoice;
+            element.Invoice = null;
+            invoice.Elements = new List<Element>() {element};
+            using (var db = new DatabaseContext())
             {
-                using (var db = new DatabaseContext())
-                {
-                    InvoiceDa invoiceDa = new InvoiceDa();
-                    db.Invoices.Attach(invoice);
-                    invoiceDa.Delete(db, invoice);
-                    invoice = GetInvoiceSeed();
-                }
+                db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == invoice.ID));
+                db.SaveChanges();
             }
-
             string json = JsonConvert.SerializeObject(invoice);
             var content = new StringContent(json);
 
@@ -171,17 +260,13 @@ namespace Tests.IntegrationTests
         public async Task CreateOrUpdate_NewInvoiceObjectNoElements_IsSuccessStatusCodeAndResponseTrue()
         {
             //Setup
-            Invoice invoice = GetInvoiceSeed();
-            invoice.Elements = null;
-            if (invoice.ID != 0)
+            Element element = GetElementSeed();
+            Invoice invoice = element.Invoice;
+            element.Invoice = null;
+            using (var db = new DatabaseContext())
             {
-                using (var db = new DatabaseContext())
-                {
-                    InvoiceDa invoiceDa = new InvoiceDa();
-                    db.Invoices.Attach(invoice);
-                    invoiceDa.Delete(db, invoice);
-                    invoice = GetInvoiceSeed();
-                }
+                db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == invoice.ID));
+                db.SaveChanges();
             }
             string json = JsonConvert.SerializeObject(invoice);
             var content = new StringContent(json);
@@ -218,11 +303,8 @@ namespace Tests.IntegrationTests
         public async Task GetInvoice_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
-            Invoice oldInvoice = GetInvoiceSeed();
-            if (oldInvoice.ID == 0)
-            {
-                oldInvoice = CreateInvoice(oldInvoice);
-            }
+            Element element = GetElementSeed();
+            Invoice oldInvoice = element.Invoice;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = oldInvoice.ID.ToString();
 
@@ -286,15 +368,8 @@ namespace Tests.IntegrationTests
         public async Task Delete_CorrectID_IsSuccessStatusCodeAndInvoiceDeleted()
         {
             //Setup
-            Invoice oldInvoice = GetInvoiceSeed();
-            if (oldInvoice.ID == 0)
-            {
-                using (var db = new DatabaseContext())
-                {
-                    InvoiceDa invoiceDa = new InvoiceDa();
-                    invoiceDa.CreateOrUpdate(db, oldInvoice);
-                }
-            }
+            Element element = GetElementSeed();
+            Invoice oldInvoice = element.Invoice;
             int id = oldInvoice.ID;
             string json = JsonConvert.SerializeObject(id);
             var content = new StringContent(json);

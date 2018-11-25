@@ -22,43 +22,19 @@ namespace Tests.IntegrationTests
             _client = new HttpClient();
             _client.BaseAddress = new Uri("http://localhost:64007/");
         }
-
-        internal static TaxGroup GetTaxGroupSeed()
-        {
-            TaxGroup taxGroup = new TaxGroup
-            {
-                Name = "Test",
-                Tax = 99
-            };
-
-            using (var db = new DatabaseContext())
-            {
-                TaxGroupDa taxGroupDa = new TaxGroupDa();
-                TaxGroup oldTaxGroup = taxGroupDa.GetTaxGroups(db).SingleOrDefault(x => x.Name.Equals(taxGroup.Name));
-                if (oldTaxGroup != null)
-                {
-                    taxGroup = oldTaxGroup;
-                }
-            }
-
-            return taxGroup;
-        }
-        //needs cascade delete
+        
         #region Create
         [Test]
         public async Task Create_NewTaxGroupObject_IsSuccessStatusCodeAndResponseTrue()
         {
             //Setup
-            TaxGroup taxGroup = GetTaxGroupSeed();
-            if (taxGroup.ID != 0)
+            TaxGroup taxGroup = InvoiceTest.GetElementSeed().Item.IncomingTaxGroup;
+            using (var db = new DatabaseContext())
             {
-                using (var db = new DatabaseContext())
-                {
-                    TaxGroupDa taxGroupDa = new TaxGroupDa();
-                    db.TaxGroups.Attach(taxGroup);
-                    db.Items.RemoveRange(db.Items.Where(x => x.IncomingTaxGroup_ID == taxGroup.ID || x.OutgoingTaxGroup_ID == taxGroup.ID));
-                    taxGroupDa.Delete(db, taxGroup);
-                }
+                db.TaxGroups.Attach(taxGroup);
+                db.Items.RemoveRange(db.Items.Where(x => x.IncomingTaxGroup_ID == taxGroup.ID || x.OutgoingTaxGroup_ID == taxGroup.ID));
+                db.TaxGroups.Remove(taxGroup);
+                db.SaveChanges();
             }
             string json = JsonConvert.SerializeObject(taxGroup);
             var content = new StringContent(json);
@@ -76,22 +52,7 @@ namespace Tests.IntegrationTests
         public async Task Create_ExistingTaxGroupObject_IsSuccessStatusCodeAndResponseFalse()
         {
             //Setup
-            TaxGroup taxGroup = GetTaxGroupSeed();
-            if (taxGroup.ID == 0)
-            {
-                try
-                {
-                    using (var db = new DatabaseContext())
-                    {
-                        TaxGroupDa taxGroupDa = new TaxGroupDa();
-                        taxGroupDa.Create(db, taxGroup);
-                    }
-                }
-                catch
-                {
-                    // ignored
-                }
-            }
+            TaxGroup taxGroup = InvoiceTest.GetElementSeed().Item.IncomingTaxGroup;
             string json = JsonConvert.SerializeObject(taxGroup);
             var content = new StringContent(json);
 
@@ -127,19 +88,7 @@ namespace Tests.IntegrationTests
         public async Task GetTaxGroups_MethodCalled_IsSuccessStatusCodeAndTaxGroupsReturned()
         {
             //Setup
-            TaxGroup taxGroup = GetTaxGroupSeed();
-            using (var db = new DatabaseContext())
-            {
-                try
-                {
-                    TaxGroupDa taxGroupDa = new TaxGroupDa();
-                    taxGroupDa.Create(db, taxGroup);
-                }
-                catch
-                {
-                    // ignored
-                }
-            }
+            InvoiceTest.GetElementSeed();
 
             //Act
             var response = await _client.GetAsync("TaxGroup/GetTaxGroups");

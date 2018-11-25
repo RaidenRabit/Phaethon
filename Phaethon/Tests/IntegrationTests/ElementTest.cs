@@ -22,53 +22,13 @@ namespace Tests.IntegrationTests
             _client.BaseAddress = new Uri("http://localhost:64007/");
         }
 
-        internal static List<Element> GetElementsSeed()
-        {
-            TaxGroup taxGroup = TaxGroupTest.GetTaxGroupSeed();
-            if (taxGroup.ID == 0)
-            {
-                using (var db = new DatabaseContext())
-                {
-                    TaxGroupDa taxGroupDa = new TaxGroupDa();
-                    taxGroupDa.Create(db, taxGroup);
-                }
-            }
-
-            Product product = ProductTest.GetProductSeed();
-
-            Item item = new Item
-            {
-                Discount = 99,
-                IncomingPrice = 100,
-                IncomingTaxGroup_ID = taxGroup.ID,
-                Product = product,
-                SerNumber = "1233"
-            };
-
-            Element element = new Element
-            {
-                Item = item
-            };
-
-            List<Element> elements = new List<Element>
-            {
-                element
-            };
-
-            return elements;
-        }
-
         #region GetInvoiceElements
         [Test]
         public async Task GetInvoiceElements_MethodCalled_IsSuccessStatusCodeAndElementsReturned()
         {
             //Setup
-            Invoice invoice = InvoiceTest.GetInvoiceSeed();
-            if (invoice.ID == 0 || invoice.Elements == null)
-            {
-                invoice.Elements = GetElementsSeed();
-                invoice = InvoiceTest.CreateInvoice(invoice);
-            }
+            Element element = InvoiceTest.GetElementSeed();
+            Invoice invoice = element.Invoice;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = invoice.ID.ToString();
 

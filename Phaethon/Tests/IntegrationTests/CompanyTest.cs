@@ -27,11 +27,8 @@ namespace Tests.IntegrationTests
         public async Task GetCompany_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
-            Invoice invoice = InvoiceTest.GetInvoiceSeed();
-            if (invoice.ID == 0)
-            {
-                invoice = InvoiceTest.CreateInvoice(invoice);
-            }
+            Element element = InvoiceTest.GetElementSeed();
+            Invoice invoice = element.Invoice;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = invoice.Sender.Company.ID.ToString();
 

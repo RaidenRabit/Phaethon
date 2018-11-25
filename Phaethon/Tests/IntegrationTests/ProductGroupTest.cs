@@ -22,45 +22,20 @@ namespace Tests.IntegrationTests
             _client = new HttpClient();
             _client.BaseAddress = new Uri("http://localhost:64007/");
         }
-
-        internal static ProductGroup GetProductGroupSeed()
-        {
-            ProductGroup productGroup = new ProductGroup
-            {
-                Margin = 99,
-                Name = "Test"
-            };
-
-            using (var db = new DatabaseContext())
-            {
-                ProductGroupDa productGroupDa = new ProductGroupDa();
-                ProductGroup oldProductGroup = productGroupDa.GetProductGroups(db).SingleOrDefault(x => x.Name.Equals(productGroup.Name));
-                if (oldProductGroup != null)
-                {
-                    productGroup = oldProductGroup;
-                }
-            }
-
-            return productGroup;
-        }
-
-        //cascade delete
+        
         #region Create
         [Test]
         public async Task Create_NewProductGroupObject_IsSuccessStatusCodeAndResponseTrue()
         {
             //Setup
-            ProductGroup productGroup = GetProductGroupSeed();
-            if (productGroup.ID != 0)
+            ProductGroup productGroup = InvoiceTest.GetElementSeed().Item.Product.ProductGroup;
+            using (var db = new DatabaseContext())
             {
-                using (var db = new DatabaseContext())
-                {
-                    ProductGroupDa productGroupDa = new ProductGroupDa();
-                    db.ProductGroups.Attach(productGroup);
-                    db.Items.RemoveRange(db.Items.Where(x => x.Product.ProductGroup_ID == productGroup.ID));
-                    db.Products.RemoveRange(db.Products.Where(x => x.ProductGroup_ID == productGroup.ID));
-                    productGroupDa.Delete(db, productGroup);
-                }
+                db.ProductGroups.Attach(productGroup);
+                db.Items.RemoveRange(db.Items.Where(x => x.Product.ProductGroup_ID == productGroup.ID));
+                db.Products.RemoveRange(db.Products.Where(x => x.ProductGroup_ID == productGroup.ID));
+                db.ProductGroups.Remove(productGroup);
+                db.SaveChanges();
             }
             string json = JsonConvert.SerializeObject(productGroup);
             var content = new StringContent(json);
@@ -78,22 +53,7 @@ namespace Tests.IntegrationTests
         public async Task Create_ExistingProductGroupObject_IsSuccessStatusCodeAndResponseFalse()
         {
             //Setup
-            ProductGroup productGroup = GetProductGroupSeed();
-            if (productGroup.ID != 0)
-            {
-                using (var db = new DatabaseContext())
-                {
-                    try
-                    {
-                        ProductGroupDa productGroupDa = new ProductGroupDa();
-                        productGroupDa.Create(db, productGroup);
-                    }
-                    catch
-                    {
-                        // ignored
-                    }
-                }
-            }
+            ProductGroup productGroup = InvoiceTest.GetElementSeed().Item.Product.ProductGroup;
             string json = JsonConvert.SerializeObject(productGroup);
             var content = new StringContent(json);
 
@@ -129,22 +89,7 @@ namespace Tests.IntegrationTests
         public async Task GetProductGroups_MethodCalled_IsSuccessStatusCodeAndProductGroupsReturned()
         {
             //Setup
-            ProductGroup productGroup = GetProductGroupSeed();
-            if (productGroup.ID != 0)
-            {
-                try
-                {
-                    using (var db = new DatabaseContext())
-                    {
-                        ProductGroupDa productGroupDa = new ProductGroupDa();
-                        productGroupDa.Create(db, productGroup);
-                    }
-                }
-                catch
-                {
-                    // ignored
-                }
-            }
+            InvoiceTest.GetElementSeed();
 
             //Act
             var response = await _client.GetAsync("ProductGroup/GetProductGroups");
