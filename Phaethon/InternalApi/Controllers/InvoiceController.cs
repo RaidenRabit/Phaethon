@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
@@ -11,7 +12,8 @@ using Newtonsoft.Json;
 
 namespace InternalApi.Controllers
 {
-    [RoutePrefix("Invoice")]
+    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
+    [RoutePrefix("Api/Invoice")]
     public class InvoiceController: ApiController
     {
         private readonly IInvoiceManagement _invoiceManagement;

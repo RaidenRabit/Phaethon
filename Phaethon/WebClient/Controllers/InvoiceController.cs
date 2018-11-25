@@ -18,7 +18,7 @@ namespace WebClient.Controllers
         public InvoiceController()
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64010/Api/Invoice/");
+            _client.BaseAddress = new Uri("http://localhost:64007/Api/Invoice/");
         }
 
         [HttpGet]

@@ -18,7 +18,7 @@ namespace WebClient.Controllers
         public TaxGroupController()
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64010/Api/TaxGroup/");
+            _client.BaseAddress = new Uri("http://localhost:64007/Api/TaxGroup/");
         }
 
         [HttpGet]

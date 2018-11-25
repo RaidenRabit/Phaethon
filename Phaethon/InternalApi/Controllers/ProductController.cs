@@ -4,12 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.Controllers
 {
-    [RoutePrefix("Product")]
+    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
+    [RoutePrefix("Api/Product")]
     public class ProductController : ApiController
     {
         private readonly IProductManagement _productManagement = null;

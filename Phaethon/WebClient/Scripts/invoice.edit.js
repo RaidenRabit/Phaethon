@@ -192,55 +192,7 @@ function CompanyChange(element) {
     $("#" + element + "_Company_Name").change(function () {
         var option = $("#companies option[value='" + $(this).val() + "']");
         if (option.length !== 0) {
-            $.ajax({
-                type: "GET",
-                url: "http://localhost:64010/Api/Company/GetCompany?id=" + option.data("id"),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(data) {
-                    $("#" + element + "_Company_ID").val(data.ID);
-                    $("#" + element + "_Company_Name").val(data.Name);
-                    $("#" + element + "_Company_BankNumber").val(data.BankNumber);
-                    $("#" + element + "_Company_RegNumber").val(data.RegNumber);
-                    $("#" + element + "_Company_Address").val(data.Address);
-                    $("#" + element + "_Company_Location").val(data.Location);
-                    var htmlText = "";
-                    for (var i = 0; i < data.Representatives.length; i++) {
-                        htmlText += "<option value='" +
-                            data.Representatives[i].Name +
-                            "'" +
-                            "data-ID='" +
-                            data.Representatives[i].ID +
-                            "'/>";
-                    }
-                    $("#" + element + "Representatives").html(htmlText);
-                    option = $("#" +
-                        element +
-                        "Representatives option[data-id='" +
-                        $("#" + element + "_ID").val() +
-                        "']");
-                    if (option.length === 0) {
-                        option = $("#" + element + "Representatives option");
-                        $("#" + element + "_Name").val(option.val());
-                        $("#" + element + "_ID").val(option.data("id"));
-                    }
-                    
-                    $("#" + element + "_Company_ID").change();
-                },
-                error: function() {
-                    $("#" + element + "_ID").val(0);
-                    $("#" + element + "_Name").val("");
-                    $("#" + element + "_Company_ID").val(0);
-                    $("#" + element + "_Company_Name").val("");
-                    $("#" + element + "_Company_BankNumber").val("");
-                    $("#" + element + "_Company_RegNumber").val("");
-                    $("#" + element + "_Company_Address").val("");
-                    $("#" + element + "_Company_Location").val("");
-                    $("#" + element + "Representatives").html("");
-
-                    $("#" + element + "_Company_ID").change();
-                }
-            });
+            getCompany(option);
         } else {
             $("#" + element + "_ID").val(0);
             $("#" + element + "_Company_ID").val(0);
@@ -278,7 +230,7 @@ function RepresentativeChange(element) {
 function getProductGroups() {
     return $.ajax({
         type: "GET",
-        url: "http://localhost:64010/Api/ProductGroup/GetProductGroups",
+        url: "http://localhost:64007/Api/ProductGroup/GetProductGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -300,7 +252,7 @@ function getProductGroups() {
 function getTaxGroups() {
     return $.ajax({
         type: "GET",
-        url: "http://localhost:64010/Api/TaxGroup/GetTaxGroups",
+        url: "http://localhost:64007/Api/TaxGroup/GetTaxGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -322,7 +274,7 @@ function getTaxGroups() {
 function getCompanies() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:64010/Api/Company/GetCompanies",
+        url: "http://localhost:64007/Api/Company/GetCompanies",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -342,7 +294,7 @@ function getCompanies() {
 function getProduct(rowValue, obj) {
     $.ajax({
         type: "GET",
-        url: "http://localhost:64010/Api/Product/GetProduct?barcode=" + $(obj).val(),
+        url: "http://localhost:64007/Api/Product/GetProduct?barcode=" + $(obj).val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -366,7 +318,7 @@ function getProduct(rowValue, obj) {
 function getInvoiceItems() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:64010/Api/Element/GetInvoiceElements?id=" + $("#ID").val(),
+        url: "http://localhost:64007/Api/Element/GetInvoiceElements?id=" + $("#ID").val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -383,11 +335,63 @@ function getInvoiceItems() {
     });
 }
 
+function getCompany(option) {
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:64007/Api/Company/GetCompany?id=" + option.data("id"),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $("#" + element + "_Company_ID").val(data.ID);
+            $("#" + element + "_Company_Name").val(data.Name);
+            $("#" + element + "_Company_BankNumber").val(data.BankNumber);
+            $("#" + element + "_Company_RegNumber").val(data.RegNumber);
+            $("#" + element + "_Company_Address").val(data.Address);
+            $("#" + element + "_Company_Location").val(data.Location);
+            var htmlText = "";
+            for (var i = 0; i < data.Representatives.length; i++) {
+                htmlText += "<option value='" +
+                    data.Representatives[i].Name +
+                    "'" +
+                    "data-ID='" +
+                    data.Representatives[i].ID +
+                    "'/>";
+            }
+            $("#" + element + "Representatives").html(htmlText);
+            option = $("#" +
+                element +
+                "Representatives option[data-id='" +
+                $("#" + element + "_ID").val() +
+                "']");
+            if (option.length === 0) {
+                option = $("#" + element + "Representatives option");
+                $("#" + element + "_Name").val(option.val());
+                $("#" + element + "_ID").val(option.data("id"));
+            }
+
+            $("#" + element + "_Company_ID").change();
+        },
+        error: function () {
+            $("#" + element + "_ID").val(0);
+            $("#" + element + "_Name").val("");
+            $("#" + element + "_Company_ID").val(0);
+            $("#" + element + "_Company_Name").val("");
+            $("#" + element + "_Company_BankNumber").val("");
+            $("#" + element + "_Company_RegNumber").val("");
+            $("#" + element + "_Company_Address").val("");
+            $("#" + element + "_Company_Location").val("");
+            $("#" + element + "Representatives").html("");
+
+            $("#" + element + "_Company_ID").change();
+        }
+    });
+}
+
 //posts info
 function productGroupForm() {
     $.ajax({
         type: "POST",
-        url: "http://localhost:49873/ProductGroup/Create",
+        url: "/ProductGroup/Create",
         data: $("#productGroupForm").serialize(),
         success: function () {
             $("#dialog").html("");
@@ -407,7 +411,7 @@ function productGroupForm() {
 function taxGroupForm() {
     $.ajax({
         type: "POST",
-        url: "http://localhost:49873/TaxGroup/Create",
+        url: "/TaxGroup/Create",
         data: $("#taxGroupForm").serialize(),
         success: function () {
             $("#dialog").html("");
