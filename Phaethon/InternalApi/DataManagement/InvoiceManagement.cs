@@ -46,15 +46,15 @@ namespace InternalApi.DataManagement
                         invoice.Elements = null;
 
                         decimal total = elements.Sum(item => item.Item.IncomingPrice);
-                        decimal added = invoice.Transport;
+                        decimal transport = invoice.Transport;
                         Invoice dbInvoice = _invoiceDa.GetInvoice(db, invoice.ID);
                         if (dbInvoice != null)
                         {
-                            added = added - dbInvoice.Transport;
+                            transport = transport - dbInvoice.Transport;
                         }
                         if (total != 0)
                         {
-                            added = added / total;
+                            transport = transport / total;
                         }
 
                         _invoiceDa.CreateOrUpdate(db, invoice);
@@ -66,7 +66,7 @@ namespace InternalApi.DataManagement
                                 productDa.CreateOrUpdate(db, element.Item.Product);
                                 element.Item.Product_ID = element.Item.Product.ID;
                                 element.Item.Product = null;
-                                element.Item.IncomingPrice = element.Item.IncomingPrice * added + element.Item.IncomingPrice;
+                                element.Item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
                                 itemDa.CreateOrUpdate(db, element.Item);
                                 element.Item_ID = element.Item.ID;
                                 element.Item = null;

@@ -9,7 +9,7 @@ var transport;//saves already saved transport cost for calculations
 //Pn code load
 $(function () {
     //sets initial transport cost, to know what was added
-    transport = Number($("#Transport").val());
+    transport = parseFloat($("#Transport").val());
 
     //sets action listener to company
     CompanyChange(receiverElement);
@@ -171,7 +171,7 @@ function CompanyChange(element) {
     $("#" + element + "_Company_Name").change(function () {
         var option = $("#companies option[value='" + $(this).val() + "']");
         if (option.length !== 0) {
-            getCompany(option);
+            getCompany(element, option);
         } else {
             $("#" + element + "_ID").val(0);
             $("#" + element + "_Company_ID").val(0);
@@ -287,9 +287,8 @@ function getProduct(rowValue, obj) {
                 }
                 $("#Elements_" + rowValue + "__Item_Product_Name").val(data.Name);
                 $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
-
-                $("#Elements_" + rowValue + "__ProductGroup option[data-id='" + data.ProductGroup.ID + "']").attr("selected", "selected");
-                $("#Elements_" + rowValue + "__ProductGroup").change();
+                $("#Elements_" + rowValue + "__ProductGroup").val(data.ProductGroup.ID);
+                $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val(data.ProductGroup.ID);
             } else {
                 $("#Elements_" + rowValue + "__Item_Product_ID").val(0);
             }
@@ -310,17 +309,15 @@ function getInvoiceItems() {
             for (var i = 0; i < data.length; i++) {
                 $("#itemTable tbody").append(addNewElement(i, data[i].Item.ID, data[i].Item.Product.ID, data[i].Item.Product.ProductGroup.ID, data[i].Item.IncomingTaxGroup.ID, data[i].Item.SerNumber, data[i].Item.Product.Name, data[i].Item.Product.Barcode, data[i].Item.IncomingPrice));
                 ItemChange(i);
-                $("#Elements_" + i + "__ProductGroup").find("option[data-id=" + data[i].Item.Product.ProductGroup.ID + "]").attr("selected", "selected");
-                $("#Elements_" + i + "__ProductGroup").change();
-                $("#Elements_" + i + "__IncomingTaxGroup").find("option[data-id='" + data[i].Item.IncomingTaxGroup.ID + "']").attr("selected", "selected");
-                $("#Elements_" + i + "__IncomingTaxGroup").change();
+                $("#Elements_" + i + "__ProductGroup").val(data[i].Item.Product.ProductGroup.ID);
+                $("#Elements_" + i + "__IncomingTaxGroup").val(data[i].Item.IncomingTaxGroup.ID);
             }
             totalAmount();
         }
     });
 }
 
-function getCompany(option) {
+function getCompany(element, option) {
     $.ajax({
         type: "GET",
         url: url + "/Company/GetCompany",
@@ -414,8 +411,7 @@ function taxGroupForm() {
                 $("#itemTable tbody tr").each(function () {
                     var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
                     $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
-                    $("#Elements_" + rowValue + "__IncomingTaxGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_ID").val() + "']").attr("selected", "selected");
-                    $("#Elements_" + rowValue + "__IncomingTaxGroup").change();
+                    $("#Elements_" + rowValue + "__IncomingTaxGroup").val($("#Elements_" + rowValue + "__Item_IncomingTaxGroup_ID").val());
                 });
             });
         }
@@ -434,8 +430,7 @@ function productGroupForm() {
                 $("#itemTable tbody tr").each(function () {
                     var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
                     $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
-                    $("#Elements_" + rowValue + "__ProductGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val() + "']").attr("selected", "selected");
-                    $("#Elements_" + rowValue + "__ProductGroup").change();
+                    $("#Elements_" + rowValue + "__ProductGroup").val($("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val());
                 });
             });
         }
@@ -452,11 +447,11 @@ function elementSetUp(rowValue) {
 }
 
 function totalAmount() {
-    var amount = Number(0);
+    var amount = parseFloat(0);
     $("#itemTable tbody tr").each(function () {
-        amount = amount + Number($("#Elements_" + $(this).find("input").attr("name").split("[")[1].split("]")[0] + "__Item_IncomingPrice").val());
+        amount = amount + parseFloat($("#Elements_" + $(this).find("input").attr("name").split("[")[1].split("]")[0] + "__Item_IncomingPrice").val());
     });
-    $("#totalAmount").val(amount + Number($("#Transport").val()) - transport);
+    $("#totalAmount").val(parseFloat(amount + parseFloat($("#Transport").val()) - transport).toFixed(2));
 }
 
 function onlyNumbers(path) {
