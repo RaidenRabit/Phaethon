@@ -273,7 +273,10 @@ function getCompanies() {
 function getProduct(rowValue, obj) {
     $.ajax({
         type: "GET",
-        url: url + "/Product/GetProduct?barcode=" + $(obj).val(),
+        url: url + "/Product/GetProduct",
+        data: {
+            barcode: $(obj).val()
+        },
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -297,7 +300,10 @@ function getProduct(rowValue, obj) {
 function getInvoiceItems() {
     $.ajax({
         type: "GET",
-        url: url + "/Element/GetInvoiceElements?id=" + $("#ID").val(),
+        url: url + "/Element/GetInvoiceElements",
+        data: {
+            id: $("#ID").val()
+        },
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -317,7 +323,10 @@ function getInvoiceItems() {
 function getCompany(option) {
     $.ajax({
         type: "GET",
-        url: url + "/Company/GetCompany?id=" + option.data("id"),
+        url: url + "/Company/GetCompany",
+        data: {
+            id: option.data("id")
+        },
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {

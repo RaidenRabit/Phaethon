@@ -16,7 +16,7 @@ $(function () {
     //gets existing companies
     $.ajax({
         type: "GET",
-        url: "http://localhost:64007/Api/Company/GetCompanies",
+        url: "http://localhost:64007/Company/GetCompanies",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -44,14 +44,16 @@ function GetInvoices()
 {
     $.ajax({
         type: "GET",
-        url: url + "/Invoice/GetInvoices" +
-            "?numOfRecords=" + $("#numOfRecords").val() +
-            "&selectedCompany=" + $('input[name=companyOption]:checked').val() +
-            "&name=" + $("#companyName").val() +
-            "&selectedDate=" + $('input[name=dateOption]:checked').val() +
-            "&from=" + $("#dateRange").data('daterangepicker').startDate.format('DD/MM/YYYY') +
-            "&to=" + $("#dateRange").data('daterangepicker').endDate.format('DD/MM/YYYY') +
-            "&docNumber=" + $("#docNumber").val(),
+        url: url + "/Invoice/GetInvoices",
+        data: {
+            numOfRecords: $("#numOfRecords").val(),
+            selectedCompany: $('input[name=companyOption]:checked').val(),
+            name: $("#companyName").val(),
+            selectedDate: $('input[name=dateOption]:checked').val(),
+            from: $("#dateRange").data('daterangepicker').startDate.format('DD/MM/YYYY'),
+            to: $("#dateRange").data('daterangepicker').endDate.format('DD/MM/YYYY'),
+            docNumber: $("#docNumber").val()
+        },
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
