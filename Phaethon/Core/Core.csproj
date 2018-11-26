@@ -71,7 +71,6 @@
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Element.cs" />
     <Compile Include="Model\JobQueryFilter.cs" />
-    <Compile Include="Model\JobStatus_enum.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductGroup.cs" />
     <Compile Include="Model\Representative.cs" />
