@@ -27,6 +27,15 @@
     }); 
 });
 
+$(document).bind({
+    ajaxStart: function () {
+        $(".modal").show();
+    },
+    ajaxStop: function () {
+        $(".modal").hide();
+    }
+});
+
 //gets invoices
 function GetJobs() {
     $.ajax({
@@ -80,7 +89,7 @@ function GetJobs() {
                             "</td>" +
                             "</tr>";
                     }
-                    $("#jobTable tbody").html(htmlText);
+            $("#jobTable tbody").html(htmlText);
                 },
         error: function () {
             $("#jobsList").html(error.message);

@@ -169,6 +169,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Resource Include="Resources\fidget_spinner.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -251,6 +252,7 @@
     <Content Include="Views\Invoice\Edit.cshtml" />
     <Content Include="Views\Job\Index.cshtml" />
     <Content Include="Views\Job\_editJob.cshtml" />
+    <Content Include="Views\Shared\FidgetSpinnerLoading.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

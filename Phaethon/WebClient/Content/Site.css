@@ -21,3 +21,59 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*fidget spinner css*/
+@keyframes spinner {
+    100% {
+        transform: rotate(3600deg);
+    }
+}
+
+.loading-container {
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    top: 50vh;
+    transform: translateY(-50%);
+}
+
+.spinner {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background: url('../Resources/fidget_spinner.png') center center;
+    background-size: contain;
+    transform-origin: 50% 50%;
+    animation: spinner 3s infinite alternate ease-in-out;
+    opacity: 1;
+}
+.spinner-center {
+    display: inline-block;
+    position: absolute;
+    margin-left: -100px;
+    width: 100px;
+    height: 100px;
+    background: url('http://i.imgur.com/u0BC2ZR.png') center center;
+    background-size: contain;
+    content: '';
+}
+
+.loading-text {
+    position: relative;
+    z-index: 1;
+    font-size: 1.5rem;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    margin-left: 0.5em;
+}
+.modal
+{
+    position: fixed;
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: Black;
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+}
