@@ -19,7 +19,7 @@ namespace WebClient.Controllers
         public JobController()
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64010/Job/");
+            _client.BaseAddress = new Uri("http://localhost:64007/Job/");
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
