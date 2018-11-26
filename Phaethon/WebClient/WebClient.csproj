@@ -253,7 +253,6 @@
     <Content Include="Views\Invoice\Edit.cshtml" />
     <Content Include="Views\Job\Index.cshtml" />
     <Content Include="Views\Job\_editJob.cshtml" />
-    <Content Include="Views\Shared\FidgetSpinnerLoading.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
