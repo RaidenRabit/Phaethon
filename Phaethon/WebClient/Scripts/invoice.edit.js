@@ -297,8 +297,16 @@ function getProduct(rowValue, obj) {
                 }
                 $("#Elements_" + rowValue + "__Item_Product_Name").val(data.Name);
                 $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
-                $("#Elements_" + rowValue + "__ProductGroup").val(data.ProductGroup.ID);
-                $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val(data.ProductGroup.ID);
+
+                var productId = $("#Elements_" + rowValue + "__Item_Product_ID").val();
+                $("#itemTable tbody tr").each(function () {
+                    var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+                    if (productId == $("#Elements_" + row + "__Item_Product_ID").val()) {
+                        var productGroupId = $("#Elements_" + row + "__Item_Product_ProductGroup_ID").val();
+                        $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val(productGroupId);
+                        $("#Elements_" + rowValue + "__ProductGroup").val(productGroupId);
+                    }
+                });
             } else {
                 $("#Elements_" + rowValue + "__Item_Product_ID").val(0);
             }
