@@ -6,7 +6,7 @@ var ProductGroups;
 var TaxGroups;
 var transport;//saves already saved transport cost for calculations
 
-//Pn code load
+//On load
 $(function () {
     //sets initial transport cost, to know what was added
     transport = parseFloat($("#Transport").val());
@@ -85,18 +85,28 @@ function ItemChange(rowValue) {
 
     //changes product group
     $("#Elements_" + rowValue + "__ProductGroup").change(function () {
-        $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val($(this).find("option:selected").data("id"));
+        var productId = $("#Elements_" + rowValue + "__Item_Product_ID").val();
+        var productGroupId = $("#Elements_" + rowValue + "__ProductGroup").val();
+        $("#itemTable tbody tr").each(function () {
+            var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+            if (productId == $("#Elements_" + row + "__Item_Product_ID").val()) {
+                $("#Elements_" + row + "__Item_Product_ProductGroup_ID").val(productGroupId);
+                $("#Elements_" + row + "__ProductGroup").val(productGroupId);
+            }
+        });
     });
     
     //changes tax group
     $("#Elements_" + rowValue + "__IncomingTaxGroup").change(function () {
-        $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_ID").val($(this).find("option:selected").data("id"));
+        var taxGroupId = $("#Elements_" + rowValue + "__IncomingTaxGroup").val();
+        $("#Elements_" + rowValue + "__Item_IncomingTaxGroup_ID").val(taxGroupId);
         $("#Elements_" + rowValue + "__Item_IncomingPrice").change();
     });
     
     //Price without tax changed
     $("#Elements_" + rowValue + "__Price").change(function () {
-        var procent = $(this).closest("tr").find("option:selected").val() / 100;
+        var option = $("#Elements_" + rowValue + "__IncomingTaxGroup option[value='" + $("#Elements_" + rowValue + "__IncomingTaxGroup").val() + "']");
+        var procent = option.data("tax") / 100;
         var val = parseFloat($(this).val());
         var price = val + val * procent;
         $("#Elements_" + rowValue + "__Item_IncomingPrice").val(price.toFixed(2));
@@ -105,7 +115,8 @@ function ItemChange(rowValue) {
 
     //Incoming price changed
     $("#Elements_" + rowValue + "__Item_IncomingPrice").change(function () {
-        var procent = $(this).closest("tr").find("option:selected").val() / 100 + 1;
+        var option = $("#Elements_" + rowValue + "__IncomingTaxGroup option[value='" + $("#Elements_" + rowValue + "__IncomingTaxGroup").val() + "']");
+        var procent = option.data("tax") / 100 + 1;
         var val = parseFloat($(this).val());
         var price = val / procent;
         $("#Elements_" + rowValue + "__Price").val(price.toFixed(2));
@@ -215,8 +226,7 @@ function getProductGroups() {
         success: function (data) {
             var htmlText = "";
             for (var i = 0; i < data.length; i++) {
-                htmlText += "<option value='" + data[i].Margin + "' " +
-                    "data-ID='" + data[i].ID + "'>" +
+                htmlText += "<option value='" + data[i].ID + "'>" +
                     data[i].Name + " " + data[i].Margin + "%" +
                     "</option>";
             }
@@ -237,8 +247,8 @@ function getTaxGroups() {
         success: function (data) {
             var htmlText = "";
             for (var i = 0; i < data.length; i++) {
-                htmlText += "<option value='" + data[i].Tax + "' " +
-                    "data-ID='" + data[i].ID + "'>" +
+                htmlText += "<option value='" + data[i].ID + "' " +
+                    "data-Tax='" + data[i].Tax + "'>" +
                     data[i].Name + " " + data[i].Tax + "%" +
                     "</option>";
             }
@@ -311,6 +321,7 @@ function getInvoiceItems() {
                 ItemChange(i);
                 $("#Elements_" + i + "__ProductGroup").val(data[i].Item.Product.ProductGroup.ID);
                 $("#Elements_" + i + "__IncomingTaxGroup").val(data[i].Item.IncomingTaxGroup.ID);
+                $("#Elements_" + i + "__IncomingTaxGroup").change();
             }
             totalAmount();
         }
