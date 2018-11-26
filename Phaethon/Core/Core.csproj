@@ -70,7 +70,7 @@
     <Compile Include="Model\Invoice.cs" />
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Element.cs" />
-    <Compile Include="Model\JobQueryFilter.cs" />
+    <Compile Include="Model\Filters\JobQueryFilter.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductGroup.cs" />
     <Compile Include="Model\Representative.cs" />
