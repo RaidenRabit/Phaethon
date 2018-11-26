@@ -11,7 +11,7 @@ using InternalApi.DataManagement.IDataManagement;
 namespace InternalApi.Controllers
 {
     [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
-    [RoutePrefix("Api/Product")]
+    [RoutePrefix("Product")]
     public class ProductController : ApiController
     {
         private readonly IProductManagement _productManagement = null;

@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 namespace InternalApi.Controllers
 {
     [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
-    [RoutePrefix("Api/Invoice")]
+    [RoutePrefix("Invoice")]
     public class InvoiceController: ApiController
     {
         private readonly IInvoiceManagement _invoiceManagement;

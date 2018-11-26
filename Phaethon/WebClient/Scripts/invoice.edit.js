@@ -209,7 +209,7 @@ function RepresentativeChange(element) {
 function getProductGroups() {
     return $.ajax({
         type: "GET",
-        url: url + "/Api/ProductGroup/GetProductGroups",
+        url: url + "/ProductGroup/GetProductGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -231,7 +231,7 @@ function getProductGroups() {
 function getTaxGroups() {
     return $.ajax({
         type: "GET",
-        url: url + "/Api/TaxGroup/GetTaxGroups",
+        url: url + "/TaxGroup/GetTaxGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -253,7 +253,7 @@ function getTaxGroups() {
 function getCompanies() {
     $.ajax({
         type: "GET",
-        url: url + "/Api/Company/GetCompanies",
+        url: url + "/Company/GetCompanies",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -273,7 +273,7 @@ function getCompanies() {
 function getProduct(rowValue, obj) {
     $.ajax({
         type: "GET",
-        url: url + "/Api/Product/GetProduct?barcode=" + $(obj).val(),
+        url: url + "/Product/GetProduct?barcode=" + $(obj).val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -297,7 +297,7 @@ function getProduct(rowValue, obj) {
 function getInvoiceItems() {
     $.ajax({
         type: "GET",
-        url: url + "/Api/Element/GetInvoiceElements?id=" + $("#ID").val(),
+        url: url + "/Element/GetInvoiceElements?id=" + $("#ID").val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -317,7 +317,7 @@ function getInvoiceItems() {
 function getCompany(option) {
     $.ajax({
         type: "GET",
-        url: url + "/Api/Company/GetCompany?id=" + option.data("id"),
+        url: url + "/Company/GetCompany?id=" + option.data("id"),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {

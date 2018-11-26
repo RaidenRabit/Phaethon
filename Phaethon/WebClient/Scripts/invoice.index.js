@@ -44,7 +44,7 @@ function GetInvoices()
 {
     $.ajax({
         type: "GET",
-        url: url + "/Api/Invoice/GetInvoices" +
+        url: url + "/Invoice/GetInvoices" +
             "?numOfRecords=" + $("#numOfRecords").val() +
             "&selectedCompany=" + $('input[name=companyOption]:checked').val() +
             "&name=" + $("#companyName").val() +

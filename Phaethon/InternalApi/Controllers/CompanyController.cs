@@ -8,7 +8,7 @@ using InternalApi.DataManagement.IDataManagement;
 namespace InternalApi.Controllers
 {
     [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
-    [RoutePrefix("Api/Company")]
+    [RoutePrefix("Company")]
     public class CompanyController: ApiController
     {
         private readonly ICompanyManagement _companyManagement = null;

@@ -16,7 +16,7 @@ namespace WebClient.Controllers
         public ProductGroupController()
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/Api/ProductGroup/");
+            _client.BaseAddress = new Uri("http://localhost:64007/ProductGroup/");
         }
 
         [HttpGet]

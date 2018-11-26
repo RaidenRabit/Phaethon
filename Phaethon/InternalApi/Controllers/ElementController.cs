@@ -11,7 +11,7 @@ using InternalApi.DataManagement.IDataManagement;
 namespace InternalApi.Controllers
 {
     [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
-    [RoutePrefix("Api/Element")]
+    [RoutePrefix("Element")]
     public class ElementController : ApiController
     {
         private readonly IElementManagement _elementManagement = null;
