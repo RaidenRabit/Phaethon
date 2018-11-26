@@ -53,7 +53,7 @@ textarea {
     margin-left: -100px;
     width: 100px;
     height: 100px;
-    background: url('http://i.imgur.com/u0BC2ZR.png') center center;
+    background: url('../Resources/middle_fidget_spinner_part.png') center center;
     background-size: contain;
     content: '';
 }
