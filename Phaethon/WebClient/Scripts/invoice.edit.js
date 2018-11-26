@@ -1,4 +1,5 @@
-﻿var senderElement = "Sender";
+﻿var url = "http://localhost:64007";
+var senderElement = "Sender";
 var receiverElement = "Receiver";
 
 var ProductGroups;
@@ -68,31 +69,13 @@ function elementTableChange() {
     //on tax group label click will open dialog
     $("#taxGroupLabel").click(function () {
         $("#dialog").dialog({ title: "Tax group", autoOpen: false, modal: true, buttons: { "Save": function () { taxGroupForm(); } } });
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:49873/TaxGroup/Create",
-            contentType: "application/json; charset=utf-8",
-            dataType: "html",
-            success: function (data) {
-                $("#dialog").html(data);
-                $("#dialog").dialog("open");
-            }
-        });
+        getTaxGroupForm();
     });
 
     //on product group label click will open dialog
     $("#productGroupLabel").click(function () {
         $("#dialog").dialog({ title: "Product group", autoOpen: false, modal: true, buttons: { "Save": function () { productGroupForm(); } } });
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:49873/ProductGroup/Create",
-            contentType: "application/json; charset=utf-8",
-            dataType: "html",
-            success: function (data) {
-                $("#dialog").html(data);
-                $("#dialog").dialog("open");
-            }
-        });
+        getProductGroupForm();
     });
 }
 
@@ -230,7 +213,7 @@ function RepresentativeChange(element) {
 function getProductGroups() {
     return $.ajax({
         type: "GET",
-        url: "http://localhost:64007/Api/ProductGroup/GetProductGroups",
+        url: url + "/Api/ProductGroup/GetProductGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -252,7 +235,7 @@ function getProductGroups() {
 function getTaxGroups() {
     return $.ajax({
         type: "GET",
-        url: "http://localhost:64007/Api/TaxGroup/GetTaxGroups",
+        url: url + "/Api/TaxGroup/GetTaxGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -274,7 +257,7 @@ function getTaxGroups() {
 function getCompanies() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:64007/Api/Company/GetCompanies",
+        url: url + "/Api/Company/GetCompanies",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -294,7 +277,7 @@ function getCompanies() {
 function getProduct(rowValue, obj) {
     $.ajax({
         type: "GET",
-        url: "http://localhost:64007/Api/Product/GetProduct?barcode=" + $(obj).val(),
+        url: url + "/Api/Product/GetProduct?barcode=" + $(obj).val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -318,7 +301,7 @@ function getProduct(rowValue, obj) {
 function getInvoiceItems() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:64007/Api/Element/GetInvoiceElements?id=" + $("#ID").val(),
+        url: url + "/Api/Element/GetInvoiceElements?id=" + $("#ID").val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -338,7 +321,7 @@ function getInvoiceItems() {
 function getCompany(option) {
     $.ajax({
         type: "GET",
-        url: "http://localhost:64007/Api/Company/GetCompany?id=" + option.data("id"),
+        url: url + "/Api/Company/GetCompany?id=" + option.data("id"),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -383,6 +366,32 @@ function getCompany(option) {
             $("#" + element + "Representatives").html("");
 
             $("#" + element + "_Company_ID").change();
+        }
+    });
+}
+
+function getTaxGroupForm() {
+    $.ajax({
+        type: "GET",
+        url: "/TaxGroup/Create",
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (data) {
+            $("#dialog").html(data);
+            $("#dialog").dialog("open");
+        }
+    });
+}
+
+function getProductGroupForm() {
+    $.ajax({
+        type: "GET",
+        url: "/ProductGroup/Create",
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (data) {
+            $("#dialog").html(data);
+            $("#dialog").dialog("open");
         }
     });
 }
@@ -432,8 +441,6 @@ function taxGroupForm() {
 function elementSetUp(rowValue) {
     $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
     $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
-    $("#Elements_" + rowValue + "__IncomingTaxGroup").selectpicker();
-    $("#Elements_" + rowValue + "__ProductGroup").selectpicker();
 
     //allows only int values in last row
     onlyNumbers("#itemTable tbody tr:last ");
@@ -471,8 +478,8 @@ function addNewElement(rowValue, itemId, productId, productGroupId, taxGroupId, 
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value='" + productName + "'></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number' value='" + barcode + "'></td>" +
         "<td><input class='form-control' id='Elements_" + rowValue + "__Price' name='Price' required='required' step='0.01' type='number'></td>" +
-        "<td width='100'><select class='selectpicker' id='Elements_" + rowValue + "__IncomingTaxGroup' data-live-search='true' data-width='fit'></select></td>" +
-        "<td width='100'><select class='selectpicker' id='Elements_" + rowValue + "__ProductGroup' data-live-search='true' data-width='fit'></select></td>" +
+        "<td><select class='form-control' id='Elements_" + rowValue + "__IncomingTaxGroup'></select></td>" +
+        "<td><select class='form-control' id='Elements_" + rowValue + "__ProductGroup'></select></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field IncomingPrice must be a number.' data-val-required='The IncomingPrice field is required.' id='Elements_" + rowValue + "__Item_IncomingPrice' min='0' name='Elements[" + rowValue + "].Item.IncomingPrice' required='required' step='0.01' type='number' value='" + incomingPrice + "'></td>" +
         "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='Delete' title='This button removes item, action cant be canceled.'></td>" +
         "</tr>";

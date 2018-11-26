@@ -24,12 +24,11 @@ namespace WebClient.Controllers
         {
             return PartialView();
         }
-
+        
         [HttpPost]
-        public async Task<ActionResult> Create(ProductGroup productGroup)
+        public async Task<HttpResponseMessage> Create(ProductGroup productGroup)
         {
-            await _client.PostAsJsonAsync("Create", productGroup);
-            return RedirectToAction("Create");
+            return await _client.PostAsJsonAsync("Create", productGroup);
         }
     }
 }

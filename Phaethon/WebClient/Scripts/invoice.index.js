@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿var url = "http://localhost:64007";
+
+$(function () {
     //creates date range picker
     $('.daterange').daterangepicker({
         "showDropdowns": true,
@@ -42,7 +44,7 @@ function GetInvoices()
 {
     $.ajax({
         type: "GET",
-        url: "http://localhost:64007/Api/Invoice/GetInvoices" +
+        url: url + "/Api/Invoice/GetInvoices" +
             "?numOfRecords=" + $("#numOfRecords").val() +
             "&selectedCompany=" + $('input[name=companyOption]:checked').val() +
             "&name=" + $("#companyName").val() +

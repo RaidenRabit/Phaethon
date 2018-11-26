@@ -28,10 +28,9 @@ namespace WebClient.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(TaxGroup taxGroup)
+        public async Task<HttpResponseMessage> Create(TaxGroup taxGroup)
         {
-            await _client.PostAsJsonAsync("Create", taxGroup);
-            return RedirectToAction("Create");
+            return await _client.PostAsJsonAsync("Create", taxGroup);
         }
     }
 }
