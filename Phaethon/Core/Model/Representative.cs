@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,10 +21,13 @@ namespace Core.Model
 
         [Required]
         [DataMember]
+        [DisplayName("Representative name")]
+        [StringLength(100)]
         public string Name { get; set; }
-        
+
         [DataMember]
+        [ForeignKey("Company_ID")]
         public virtual Company Company { get; set; }
-        public virtual ICollection<Invoice> Invoices { get; set; }
+        public int? Company_ID { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using InternalApi.DataAccess;
 using InternalApi.DataManagement.IDataManagement;
 
@@ -17,24 +16,113 @@ namespace InternalApi.DataManagement
             _invoiceDa = new InvoiceDa();
         }
 
-        bool IInvoiceManagement.Create(Invoice invoice)
+        public bool CreateOrUpdate(Invoice invoice)
         {
-            return _invoiceDa.Create(invoice);
+            CompanyDa companyDa = new CompanyDa();
+            RepresentativeDa representativeDa = new RepresentativeDa();
+            ProductDa productDa = new ProductDa();
+            ItemDa itemDa = new ItemDa();
+            ElementDa elementDa = new ElementDa();
+
+            using (var db = new DatabaseContext())
+            {
+                using (var dbTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        companyDa.CreateOrUpdate(db, invoice.Receiver.Company);
+                        invoice.Receiver.Company_ID = invoice.Receiver.Company.ID;
+                        invoice.Receiver.Company = null;
+                        companyDa.CreateOrUpdate(db, invoice.Sender.Company);
+                        invoice.Sender.Company_ID = invoice.Sender.Company.ID;
+                        invoice.Sender.Company = null;
+                        representativeDa.CreateOrUpdate(db, invoice.Receiver);
+                        invoice.Receiver_ID = invoice.Receiver.ID;
+                        invoice.Receiver = null;
+                        representativeDa.CreateOrUpdate(db, invoice.Sender);
+                        invoice.Sender_ID = invoice.Sender.ID;
+                        invoice.Sender = null;
+                        List<Element> elements = invoice.Elements == null ? new List<Element>() : invoice.Elements.ToList();
+                        invoice.Elements = null;
+
+                        decimal total = elements.Sum(item => item.Item.IncomingPrice);
+                        decimal added = invoice.Transport;
+                        Invoice dbInvoice = _invoiceDa.GetInvoice(db, invoice.ID);
+                        if (dbInvoice != null)
+                        {
+                            added = added - dbInvoice.Transport;
+                        }
+                        if (total != 0)
+                        {
+                            added = added / total;
+                        }
+
+                        _invoiceDa.CreateOrUpdate(db, invoice);
+                        
+                        foreach (Element element in elements)
+                        {
+                            if (element.Invoice_ID != -1)
+                            {
+                                productDa.CreateOrUpdate(db, element.Item.Product);
+                                element.Item.Product_ID = element.Item.Product.ID;
+                                element.Item.Product = null;
+                                element.Item.IncomingPrice = element.Item.IncomingPrice * added + element.Item.IncomingPrice;
+                                itemDa.CreateOrUpdate(db, element.Item);
+                                element.Item_ID = element.Item.ID;
+                                element.Item = null;
+                                element.Invoice_ID = invoice.ID;
+                                element.Invoice = null;
+                                elementDa.CreateOrUpdate(db, element);
+                            }
+                            else
+                            {
+                                if (element.Item.ID != 0)
+                                {
+                                    Item item = itemDa.GetItem(db, element.Item.ID);
+                                    itemDa.Delete(db, item);
+                                }
+                            }
+                        }
+
+                        dbTransaction.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        dbTransaction.Rollback();
+                        return false;
+                    }
+                }
+            }
         }
 
-        Invoice IInvoiceManagement.Read(int id)
+        public Invoice GetInvoice(int id)
         {
-            return _invoiceDa.Read(id);
+            using (var db = new DatabaseContext())
+            {
+                return _invoiceDa.GetInvoice(db, id);
+            }
         }
 
-        List<Invoice> IInvoiceManagement.GetInvoices()
+        public List<Invoice> GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to, string docNumber)
         {
-            return _invoiceDa.GetInvoices();
+            using (var db = new DatabaseContext())
+            {
+                return _invoiceDa.GetInvoices(db, numOfRecords, selectedCompany, name, selectedDate, from, to, docNumber);
+            }
         }
 
-        bool IInvoiceManagement.Delete(int id)
+        public bool Delete(int id)
         {
-            return _invoiceDa.Delete(id);
+            using (var db = new DatabaseContext())
+            {
+                Invoice invoice = _invoiceDa.GetInvoice(db, id);
+                if (invoice == null)
+                {
+                    return false;
+                }
+                return _invoiceDa.Delete(db, invoice);
+            }
         }
     }
 }

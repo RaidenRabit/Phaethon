@@ -19,12 +19,18 @@ namespace InternalApi.DataManagement
 
         public List<Company> GetCompanies()
         {
-            return _companyDa.GetCompanies();
+            using (var db = new DatabaseContext())
+            {
+                return _companyDa.GetCompanies(db);
+            }
         }
 
-        public Company Read(int id)
+        public Company GetCompany(int id)
         {
-            return _companyDa.Read(id);
+            using (var db = new DatabaseContext())
+            {
+                return _companyDa.GetCompany(db, id);
+            }
         }
     }
 }
