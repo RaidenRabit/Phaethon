@@ -6,7 +6,7 @@ var ProductGroups;
 var TaxGroups;
 var transport;//saves already saved transport cost for calculations
 
-//on code load
+//Pn code load
 $(function () {
     //sets initial transport cost, to know what was added
     transport = Number($("#Transport").val());
@@ -33,17 +33,13 @@ $(function () {
     //Adds action listener to element table header and foot
     elementTableChange();
 
-    //fills in products in table body
-    products();
-});
-
-function products() {
     //gets getProductGroups and getTaxGroups, than adds all Items in invoice to table
     $.when(getProductGroups(), getTaxGroups()).done(function () {
         getInvoiceItems();
     });
-}
+});
 
+//Change listeners
 function elementTableChange() {
     //adds new item row to table
     $("#newItemRow").click(function () {
@@ -396,27 +392,7 @@ function getProductGroupForm() {
     });
 }
 
-//posts info
-function productGroupForm() {
-    $.ajax({
-        type: "POST",
-        url: "/ProductGroup/Create",
-        data: $("#productGroupForm").serialize(),
-        success: function () {
-            $("#dialog").html("");
-            $("#dialog").dialog("close");
-            $.when(getProductGroups()).done(function () {
-                $("#itemTable tbody tr").each(function () {
-                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
-                    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
-                    $("#Elements_" + rowValue + "__ProductGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val() + "']").attr("selected", "selected");
-                    $("#Elements_" + rowValue + "__ProductGroup").change();
-                });
-            });
-        }
-    });
-}
-
+//Posts info
 function taxGroupForm() {
     $.ajax({
         type: "POST",
@@ -437,7 +413,27 @@ function taxGroupForm() {
     });
 }
 
-//methods
+function productGroupForm() {
+    $.ajax({
+        type: "POST",
+        url: "/ProductGroup/Create",
+        data: $("#productGroupForm").serialize(),
+        success: function () {
+            $("#dialog").html("");
+            $("#dialog").dialog("close");
+            $.when(getProductGroups()).done(function () {
+                $("#itemTable tbody tr").each(function () {
+                    var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+                    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
+                    $("#Elements_" + rowValue + "__ProductGroup").find("option[data-id='" + $("#Elements_" + rowValue + "__Item_Product_ProductGroup_ID").val() + "']").attr("selected", "selected");
+                    $("#Elements_" + rowValue + "__ProductGroup").change();
+                });
+            });
+        }
+    });
+}
+
+//Methods
 function elementSetUp(rowValue) {
     $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
     $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
@@ -466,7 +462,7 @@ function onlyNumbers(path) {
     });
 }
 
-//table row info
+//Table row info
 function addNewElement(rowValue, itemId, productId, productGroupId, taxGroupId, serNumber, productName, barcode, incomingPrice) {
     return "<tr>" +
         "<input data-val='true' data-val-number='The field Invoice_ID must be a number.' data-val-required='The Invoice_ID field is required.' id='Elements_" + rowValue + "__Invoice_ID' name='Elements[" + rowValue + "].Invoice_ID' type='hidden' value='" + $("#ID").val() + "'>" +
