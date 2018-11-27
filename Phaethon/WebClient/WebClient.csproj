@@ -153,6 +153,7 @@
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ProductGroupController.cs" />
     <Compile Include="Controllers\TaxGroupController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -315,6 +316,7 @@
     <Content Include="Scripts\i18n\defaults-zh_TW.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\invoice.edit.js" />
+    <Content Include="Scripts\job.index.js" />
     <Content Include="Scripts\invoice.index.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -366,6 +368,8 @@
     <Content Include="Views\Invoice\_editInvoice.cshtml" />
     <Content Include="Views\Invoice\_editItems.cshtml" />
     <Content Include="Views\Invoice\EditorTemplates\Element.cshtml" />
+    <Content Include="Views\Job\Index.cshtml" />
+    <Content Include="Views\Job\_editJob.cshtml" />
     <Content Include="Views\TaxGroup\Create.cshtml" />
     <Content Include="Views\ProductGroup\Create.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
