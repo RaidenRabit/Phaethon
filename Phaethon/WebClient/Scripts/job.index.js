@@ -10,12 +10,11 @@
             format: 'DD/MMM/YYYY'
         }
     });
-    
-    $('#date-picker').daterangepicker({
-        "singleDatePicker": true,
-        "showDropdowns": true,
-        "showWeekNumbers": true,
-        "autoUpdateInput": false
+
+    $('.datepicker').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        minDate: "-99Y",
     });
     GetJobs();
     //on search option change get corresponding invoices
