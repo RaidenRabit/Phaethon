@@ -11,11 +11,6 @@
         }
     });
 
-    $('.datepicker').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        minDate: "-99Y",
-    });
     GetJobs();
     //on search option change get corresponding invoices
     $("#numOfRecords, #jobId, #jobName, #dateRange, input[name=jobStatus], input[name=dateOption], #customerName, #description").change(function () {
@@ -132,11 +127,19 @@ function ReadJob(obj) {
         "&id="+jobId,
         contentType: "application/json; charset=utf-8",
         dataType: "html",
-        success: function (response) {
+        success: function(response) {
             dialog.html(response);
             dialog.dialog("open");
+
+
+            $('.datepicker').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                changeDay: true
+            });
         }
     });
+    
 };
 
 function NewJob() {
