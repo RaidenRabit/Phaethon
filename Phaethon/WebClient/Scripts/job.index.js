@@ -55,8 +55,8 @@ function GetJobs() {
         success: function (data) {
                     var htmlText = "";
                     for (var i = 0; i < data.length; i++) {
-                        var StartedTime = moment(data[i].PrescriptionDate).format('DD-MM-YYYY');
-                        var FinishedTime = moment(data[i].ReceptionDate).format('DD-MM-YYYY');
+                        var StartedTime = moment(data[i].StartedTime).format('DD-MM-YYYY');
+                        var FinishedTime = moment(data[i].FinishedTime).format('DD-MM-YYYY');
                         var CustomerName = data[i].Customer.FamilyName + " " + data[i].Customer.GivenName;
                         statusJob = ["", "Unassigned", "In Progress", "Done"];
                         htmlText += "<tr>" +
