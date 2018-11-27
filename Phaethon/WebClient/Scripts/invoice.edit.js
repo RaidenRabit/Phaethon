@@ -49,7 +49,7 @@ function elementTableChange() {
         } else {
             rowValue = parseInt($("#itemTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
         }
-        $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, "", "", "", 0));
+        $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, 0, "", "", "", 0));
 
         //search for product by barcode
         ItemChange(rowValue);
@@ -127,12 +127,13 @@ function ItemChange(rowValue) {
             row.remove();
         }
         else {
-            if ($("#Elements_" + rowValue + "__Invoice_ID").val() == -1) {
-                $("#Elements_" + rowValue + "__Invoice_ID").val($("#ID").val());
-                $(this).removeClass("btn-danger");
-            } else {
-                $("#Elements_" + rowValue + "__Invoice_ID").val(-1);
+            var obj = $("#Elements_" + rowValue + "__Item_Delete");
+            if (obj.val() == "false") {
+                obj.val("true");
                 $(this).addClass("btn-danger");
+            } else {
+                obj.val("false");
+                $(this).removeClass("btn-danger");
             }
         }
     });
@@ -322,7 +323,7 @@ function getInvoiceItems() {
         dataType: "json",
         success: function (data) {
             for (var i = 0; i < data.length; i++) {
-                $("#itemTable tbody").append(addNewElement(i, data[i].Item.ID, data[i].Item.Product.ID, data[i].Item.SerNumber, data[i].Item.Product.Name, data[i].Item.Product.Barcode, data[i].Item.IncomingPrice));
+                $("#itemTable tbody").append(addNewElement(i, data[i].Item.ID, data[i].Item.Product.ID, data[i].Item.Quantity, data[i].Item.SerNumber, data[i].Item.Product.Name, data[i].Item.Product.Barcode, data[i].Item.IncomingPrice));
                 ItemChange(i);
                 $("#Elements_" + i + "__ProductGroup").val(data[i].Item.Product.ProductGroup.ID);
                 $("#Elements_" + i + "__IncomingTaxGroup").val(data[i].Item.IncomingTaxGroup.ID);
@@ -485,18 +486,19 @@ function onlyNumbers(path) {
 }
 
 //Table row info
-function addNewElement(rowValue, itemId, productId, serNumber, productName, barcode, incomingPrice) {
+function addNewElement(rowValue, itemId, productId, quantity, serNumber, productName, barcode, incomingPrice) {
     return "<tr>" +
-        "<input data-val='true' data-val-number='The field Invoice_ID must be a number.' data-val-required='The Invoice_ID field is required.' id='Elements_" + rowValue + "__Invoice_ID' name='Elements[" + rowValue + "].Invoice_ID' type='hidden' value='" + $("#ID").val() + "'>" +
+        "<input data-val='true' data-val-number='The Delete must be a boolean.' data-val-required='The Delete field is required.' id='Elements_" + rowValue + "__Item_Delete' name='Elements[" + rowValue + "].Item.Delete' type='hidden' value='false'>" +
         "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item.ID' type='hidden' value='" + itemId + "'>" +
         "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ID' name='Elements[" + rowValue + "].Item.Product.ID' type='hidden' value='" + productId + "'>" +
+        "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Quantity field is required.' id='Elements_" + rowValue + "__Item_Quantity' name='Elements[" + rowValue + "].Item.Quantity' type='number' min='0' value='" + quantity + "'></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Serial number field is required.' id='Elements_" + rowValue + "__Item_SerNumber' name='Elements[" + rowValue + "].Item.SerNumber' type='text' value='" + serNumber + "'></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value='" + productName + "'></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number' value='" + barcode + "'></td>" +
         "<td><input class='form-control' id='Elements_" + rowValue + "__Price' name='Price' required='required' step='0.01' type='number'></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__IncomingTaxGroup' name='Elements[" + rowValue + "].Item.IncomingTaxGroup_ID' required='required'></select></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__ProductGroup' name='Elements[" + rowValue + "].Item.Product.ProductGroup_ID' required='required'></select></td>" +
-        "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field IncomingPrice must be a number.' data-val-required='The IncomingPrice field is required.' id='Elements_" + rowValue + "__Item_IncomingPrice' min='0' name='Elements[" + rowValue + "].Item.IncomingPrice' required='required' step='0.01' type='number' value='" + incomingPrice + "'></td>" +
+        "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field IncomingPrice must be a number.' data-val-required='The IncomingPrice field is required.' id='Elements_" + rowValue + "__Item_IncomingPrice' name='Elements[" + rowValue + "].Item.IncomingPrice' required='required' min='0' step='0.01' type='number' value='" + incomingPrice + "'></td>" +
         "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='Delete' title='This button removes item, action cant be canceled.'></td>" +
         "</tr>";
 }

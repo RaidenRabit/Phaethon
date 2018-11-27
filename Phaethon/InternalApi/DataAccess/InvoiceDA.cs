@@ -9,13 +9,13 @@ namespace InternalApi.DataAccess
 {
     public class InvoiceDa
     {
-        public void CreateOrUpdate(DatabaseContext db, Invoice invoice)
+        internal void CreateOrUpdate(DatabaseContext db, Invoice invoice)
         {
             db.Invoices.AddOrUpdate(invoice);
             db.SaveChanges();
         }
 
-        public Invoice GetInvoice(DatabaseContext db, int id)
+        internal Invoice GetInvoice(DatabaseContext db, int id)
         {
             return db.Invoices
                 .Include(x => x.Receiver.Company)
@@ -23,7 +23,7 @@ namespace InternalApi.DataAccess
                 .SingleOrDefault(x => x.ID == id);
         }
 
-        public List<(Invoice invoice, decimal sum)> GetInvoices(DatabaseContext db, int numOfRecords, int selectedCompany, string name, int selectedDate,  DateTime from, DateTime to, string docNumber)
+        internal List<(Invoice invoice, decimal sum)> GetInvoices(DatabaseContext db, int numOfRecords, int selectedCompany, string name, int selectedDate,  DateTime from, DateTime to, string docNumber)
         {
             return db.Invoices
                     .Include(x => x.Sender.Company)
@@ -43,7 +43,7 @@ namespace InternalApi.DataAccess
                     .ToList();
         }
 
-        public bool Delete(DatabaseContext db, Invoice invoice)
+        internal bool Delete(DatabaseContext db, Invoice invoice)
         {
             db.Invoices.Remove(invoice);
             return db.SaveChanges() > 0;

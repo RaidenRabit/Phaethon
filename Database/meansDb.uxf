@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>1180</x>
-      <y>30</y>
+      <y>180</y>
       <w>230</w>
       <h>160</h>
     </coordinates>
@@ -23,7 +23,7 @@ BankNumber VARCHAR</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>830</x>
-      <y>230</y>
+      <y>380</y>
       <w>250</w>
       <h>160</h>
     </coordinates>
@@ -39,7 +39,7 @@ Barcode INT</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>840</x>
-      <y>410</y>
+      <y>560</y>
       <w>230</w>
       <h>160</h>
     </coordinates>
@@ -55,7 +55,7 @@ red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>700</x>
-      <y>370</y>
+      <y>520</y>
       <w>160</w>
       <h>90</h>
     </coordinates>
@@ -66,7 +66,7 @@ red</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>430</x>
-      <y>300</y>
+      <y>450</y>
       <w>280</w>
       <h>160</h>
     </coordinates>
@@ -86,7 +86,7 @@ Discount int</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>700</x>
-      <y>250</y>
+      <y>400</y>
       <w>150</w>
       <h>120</h>
     </coordinates>
@@ -97,7 +97,7 @@ Discount int</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>460</x>
-      <y>30</y>
+      <y>180</y>
       <w>230</w>
       <h>170</h>
     </coordinates>
@@ -118,7 +118,7 @@ PaymentDate DATE
     <id>UMLClass</id>
     <coordinates>
       <x>840</x>
-      <y>30</y>
+      <y>180</y>
       <w>230</w>
       <h>160</h>
     </coordinates>
@@ -133,7 +133,7 @@ Name VARCHAR</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1060</x>
-      <y>50</y>
+      <y>200</y>
       <w>140</w>
       <h>50</h>
     </coordinates>
@@ -144,7 +144,7 @@ Name VARCHAR</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>680</x>
-      <y>50</y>
+      <y>200</y>
       <w>180</w>
       <h>60</h>
     </coordinates>
@@ -155,7 +155,7 @@ Name VARCHAR</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>680</x>
-      <y>50</y>
+      <y>200</y>
       <w>180</w>
       <h>50</h>
     </coordinates>
@@ -166,7 +166,7 @@ Name VARCHAR</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>50</y>
+      <y>200</y>
       <w>310</w>
       <h>160</h>
     </coordinates>
@@ -180,7 +180,7 @@ Item_ID INT FOREIGN KEY PRIMARY KEY</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>300</x>
-      <y>80</y>
+      <y>230</y>
       <w>150</w>
       <h>270</h>
     </coordinates>
@@ -192,7 +192,7 @@ Item_ID INT FOREIGN KEY PRIMARY KEY</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>300</x>
-      <y>50</y>
+      <y>200</y>
       <w>180</w>
       <h>50</h>
     </coordinates>
@@ -203,7 +203,7 @@ Item_ID INT FOREIGN KEY PRIMARY KEY</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1180</x>
-      <y>230</y>
+      <y>380</y>
       <w>230</w>
       <h>160</h>
     </coordinates>
@@ -219,7 +219,7 @@ red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1070</x>
-      <y>250</y>
+      <y>400</y>
       <w>130</w>
       <h>50</h>
     </coordinates>
@@ -230,7 +230,7 @@ red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>700</x>
-      <y>360</y>
+      <y>510</y>
       <w>160</w>
       <h>100</h>
     </coordinates>

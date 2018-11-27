@@ -61,7 +61,12 @@ namespace InternalApi.DataManagement
                         
                         foreach (Element element in elements)
                         {
-                            if (element.Invoice_ID != -1)
+                            if (element.Item.Delete)
+                            {
+                                Item item = itemDa.GetItem(db, element.Item.ID);
+                                itemDa.Delete(db, item);
+                            }
+                            else
                             {
                                 productDa.CreateOrUpdate(db, element.Item.Product);
                                 element.Item.Product_ID = element.Item.Product.ID;
@@ -73,14 +78,6 @@ namespace InternalApi.DataManagement
                                 element.Invoice_ID = invoice.ID;
                                 element.Invoice = null;
                                 elementDa.CreateOrUpdate(db, element);
-                            }
-                            else
-                            {
-                                if (element.Item.ID != 0)
-                                {
-                                    Item item = itemDa.GetItem(db, element.Item.ID);
-                                    itemDa.Delete(db, item);
-                                }
                             }
                         }
 

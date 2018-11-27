@@ -7,20 +7,20 @@ using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    public class ItemDa
+    internal class ItemDa
     {
-        public void CreateOrUpdate(DatabaseContext db, Item item)
+        internal void CreateOrUpdate(DatabaseContext db, Item item)
         {
             db.Items.AddOrUpdate(item);
             db.SaveChanges();
         }
 
-        public Item GetItem(DatabaseContext db, int id)
+        internal Item GetItem(DatabaseContext db, int id)
         {
             return db.Items.SingleOrDefault(x => x.ID == id);
         }
-
-        public void Delete(DatabaseContext db, Item item)
+        
+        internal void Delete(DatabaseContext db, Item item)
         {
             db.Items.Remove(item);
             db.SaveChanges();
