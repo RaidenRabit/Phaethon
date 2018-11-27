@@ -1,12 +1,18 @@
-﻿using System.Net;
+﻿using System;
+using System.Globalization;
+using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
+using Newtonsoft.Json;
 
 namespace InternalApi.Controllers
 {
+    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
     [RoutePrefix("Invoice")]
     public class InvoiceController: ApiController
     {
@@ -17,31 +23,40 @@ namespace InternalApi.Controllers
             _invoiceManagement = new InvoiceManagement();
         }
         
-        [Route("Create")]
+        [Route("CreateOrUpdate")]
         [HttpPost]
-        public HttpResponseMessage Create([FromBody] Invoice invoice)
+        public async Task<HttpResponseMessage> CreateOrUpdate()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Create(invoice));
+            var requestContent = await Request.Content.ReadAsStringAsync();
+            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(requestContent);
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.CreateOrUpdate(invoice));
         }
 
-        [Route("Read")]
+        [Route("GetInvoice")]
         [HttpGet]
-        public HttpResponseMessage Read(int id)
+        public HttpResponseMessage GetInvoice(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Read(id));
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoice(id));
         }
 
         [Route("GetInvoices")]
         [HttpGet]
-        public HttpResponseMessage GetInvoices()
+        public HttpResponseMessage GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, string from, string to, string docNumber)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices());
+            DateTime fromDateTime = new DateTime(2000, 1, 1), toDateTime = DateTime.Now;
+            if (name == null) name = "";
+            DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out fromDateTime);
+            DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out toDateTime);
+            if (docNumber == null) docNumber = "";
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, fromDateTime, toDateTime, docNumber));
         }
 
         [Route("Delete")]
         [HttpPost]
-        public HttpResponseMessage Delete([FromBody] int id)
+        public async Task<HttpResponseMessage> Delete()
         {
+            var requestContent = await Request.Content.ReadAsStringAsync();
+            int id = JsonConvert.DeserializeObject<int>(requestContent);
             return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.Delete(id));
         }
     }

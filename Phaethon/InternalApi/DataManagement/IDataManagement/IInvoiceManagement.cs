@@ -9,11 +9,11 @@ namespace InternalApi.DataManagement.IDataManagement
 {
     internal interface IInvoiceManagement
     {
-        bool Create(Invoice invoice);
+        bool CreateOrUpdate(Invoice invoice);
 
-        Invoice Read(int id);
+        Invoice GetInvoice(int id);
 
-        List<Invoice> GetInvoices();
+        List<Invoice> GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to, string docNumber);
 
         bool Delete(int id);
     }

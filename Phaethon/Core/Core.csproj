@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -64,9 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Decorators\ExceptionFilter.cs" />
-    <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Company.cs" />
-    <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Invoice.cs" />
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Element.cs" />
@@ -74,7 +78,7 @@
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductGroup.cs" />
     <Compile Include="Model\Representative.cs" />
-    <Compile Include="Model\Job.cs" />
+    <Compile Include="Model\TaxGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
