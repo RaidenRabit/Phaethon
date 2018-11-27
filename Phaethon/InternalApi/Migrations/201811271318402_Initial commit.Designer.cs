@@ -7,13 +7,13 @@ namespace InternalApi.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class _10MaageTasksMigratio : IMigrationMetadata
+    public sealed partial class Initialcommit : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_10MaageTasksMigratio));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initialcommit));
         
         string IMigrationMetadata.Id
         {
-            get { return "201811231206433_#10-MaageTasks-Migratio"; }
+            get { return "201811271318402_Initial commit"; }
         }
         
         string IMigrationMetadata.Source
