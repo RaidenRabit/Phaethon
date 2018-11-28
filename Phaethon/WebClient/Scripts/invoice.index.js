@@ -59,19 +59,19 @@ function GetInvoices()
         success: function (data) {
             var htmlText = "";
             for (var i = 0; i < data.length; i++) {
-                var PrescriptionDate = moment(data[i].Item1.PrescriptionDate).format('DD-MM-YYYY');
-                var ReceptionDate = moment(data[i].Item1.ReceptionDate).format('DD-MM-YYYY');
-                var PaymentDate = moment(data[i].Item1.PaymentDate).format('DD-MM-YYYY');
+                var PrescriptionDate = moment(data[i].PrescriptionDate).format('DD-MM-YYYY');
+                var ReceptionDate = moment(data[i].ReceptionDate).format('DD-MM-YYYY');
+                var PaymentDate = moment(data[i].PaymentDate).format('DD-MM-YYYY');
                 htmlText += "<tr>" +
-                    "<td>" + data[i].Item1.DocNumber + "</td>" +
+                    "<td>" + data[i].DocNumber + "</td>" +
                     "<td>" + PrescriptionDate + "</td>" +
                     "<td>" + ReceptionDate + "</td>" +
                     "<td>" + PaymentDate + "</td>" +
-                    "<td>" + data[i].Item1.Sender.Company.Name + "</td>" +
-                    "<td>" + data[i].Item1.Receiver.Company.Name + "</td>" +
-                    "<td>" + data[i].Item2 + "</td>" +
+                    "<td>" + data[i].Sender.Company.Name + "</td>" +
+                    "<td>" + data[i].Receiver.Company.Name + "</td>" +
+                    "<td>" + data[i].Sum + "</td>" +
                     "<td>" +
-                    "<a href='/Invoice/Edit/" + data[i].Item1.ID + "'>Details</a> |" +
+                    "<a href='/Invoice/Edit/" + data[i].ID + "'>Details</a> |" +
                     "<a data-ajax='true' data-ajax-method='POST' data-ajax-success='window.location.reload()' href='/Invoice/Delete/" + data[i].ID + "'>Delete</a>" +
                     "</td>" +
                     "</tr>";

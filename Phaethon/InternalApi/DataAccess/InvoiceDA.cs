@@ -23,7 +23,7 @@ namespace InternalApi.DataAccess
                 .SingleOrDefault(x => x.ID == id);
         }
 
-        internal List<(Invoice invoice, decimal sum)> GetInvoices(DatabaseContext db, int numOfRecords, int selectedCompany, string name, int selectedDate,  DateTime from, DateTime to, string docNumber)
+        internal List<Invoice> GetInvoices(DatabaseContext db, int numOfRecords, int selectedCompany, string name, int selectedDate,  DateTime from, DateTime to, string docNumber)
         {
             return db.Invoices
                     .Include(x => x.Sender.Company)
@@ -38,8 +38,7 @@ namespace InternalApi.DataAccess
                     .Take(numOfRecords)
                     .AsEnumerable()
                     .Select(invoice => new { invoice, Sum = db.Elements.Where(x => x.Invoice_ID == invoice.ID).Sum(x => x.Item.IncomingPrice)})
-                    .AsEnumerable()
-                    .Select(x => (x.invoice, x.Sum))
+                    .Select(x => { x.invoice.Sum = x.Sum; return x.invoice; })
                     .ToList();
         }
 

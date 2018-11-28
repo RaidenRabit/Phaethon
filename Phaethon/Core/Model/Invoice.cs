@@ -59,5 +59,10 @@ namespace Core.Model
 
         [DataMember]
         public virtual ICollection<Element> Elements { get; set; }
+
+        //extra
+        [NotMapped]
+        [DataMember]
+        public decimal Sum { get; set; }
     }
 }

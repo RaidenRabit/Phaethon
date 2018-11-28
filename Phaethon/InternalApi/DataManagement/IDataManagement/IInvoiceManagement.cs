@@ -10,7 +10,7 @@ namespace InternalApi.DataManagement.IDataManagement
 
         Invoice GetInvoice(int id);
 
-        List<(Invoice invoice, decimal sum)> GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to, string docNumber);
+        List<Invoice> GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to, string docNumber);
 
         bool Delete(int id);
     }

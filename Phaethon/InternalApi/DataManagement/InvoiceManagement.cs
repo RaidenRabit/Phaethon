@@ -101,7 +101,7 @@ namespace InternalApi.DataManagement
             }
         }
 
-        public List<(Invoice invoice, decimal sum)> GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to, string docNumber)
+        public List<Invoice> GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to, string docNumber)
         {
             using (var db = new DatabaseContext())
             {
