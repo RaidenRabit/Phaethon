@@ -63,8 +63,8 @@ namespace InternalApi.DataManagement
 
                         foreach (Element element in elements)
                         {
-                            List<int> itemIds = elementDa.GetSameItemIds(db, element.Item.ID);//if more this than quantity remove
-
+                            List<int> itemIds = elementDa.GetSameItemIds(db, element.Item.ID);
+                            //don't remove if item was sold
                             #region Prepare item
                             Item item = new Item
                             {

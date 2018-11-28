@@ -82,7 +82,7 @@ function ItemChange(rowValue) {
     $("#Elements_" + rowValue + "__Item_Product_Barcode").change(function () {
         getProduct(rowValue, this);
     });
-
+    
     //changes product group
     $("#Elements_" + rowValue + "__ProductGroup").change(function () {
         var productId = $("#Elements_" + rowValue + "__Item_Product_ID").val();
@@ -95,11 +95,6 @@ function ItemChange(rowValue) {
         });
     });
     
-    //changes tax group
-    $("#Elements_" + rowValue + "__IncomingTaxGroup").change(function () {
-        $("#Elements_" + rowValue + "__Item_IncomingPrice").change();
-    });
-    
     //Price without tax changed
     $("#Elements_" + rowValue + "__Price").change(function () {
         var option = $("#Elements_" + rowValue + "__IncomingTaxGroup option[value='" + $("#Elements_" + rowValue + "__IncomingTaxGroup").val() + "']");
@@ -110,11 +105,11 @@ function ItemChange(rowValue) {
         totalAmount();
     });
 
-    //Incoming price changed
-    $("#Elements_" + rowValue + "__Item_IncomingPrice").change(function () {
+    //Incoming price, tax or quantity changed
+    $("#Elements_" + rowValue + "__Item_IncomingPrice, #Elements_" + rowValue + "__IncomingTaxGroup, #Elements_" + rowValue + "__Item_Quantity").change(function () {
         var option = $("#Elements_" + rowValue + "__IncomingTaxGroup option[value='" + $("#Elements_" + rowValue + "__IncomingTaxGroup").val() + "']");
         var procent = option.data("tax") / 100 + 1;
-        var val = parseFloat($(this).val());
+        var val = parseFloat($("#Elements_" + rowValue + "__Item_IncomingPrice").val());
         var price = val / procent;
         $("#Elements_" + rowValue + "__Price").val(price.toFixed(2));
         totalAmount();
@@ -467,11 +462,14 @@ function elementSetUp(rowValue) {
 
 function totalAmount() {
     var amount = parseFloat(0);
+    var amountNoTax = parseFloat(0);
     $("#itemTable tbody tr").each(function () {
         var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
         amount = amount + parseFloat($("#Elements_" + row + "__Item_IncomingPrice").val()) * parseFloat($("#Elements_" + row + "__Item_Quantity").val());
+        amountNoTax = amountNoTax + parseFloat($("#Elements_" + row + "__Price").val()) * parseFloat($("#Elements_" + row + "__Item_Quantity").val());
     });
     $("#totalAmount").val(parseFloat(amount + parseFloat($("#Transport").val()) - transport).toFixed(2));
+    $("#totalNoTax").val(amountNoTax.toFixed(2));
 }
 
 function onlyNumbers(path) {
