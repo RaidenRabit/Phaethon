@@ -468,7 +468,8 @@ function elementSetUp(rowValue) {
 function totalAmount() {
     var amount = parseFloat(0);
     $("#itemTable tbody tr").each(function () {
-        amount = amount + parseFloat($("#Elements_" + $(this).find("input").attr("name").split("[")[1].split("]")[0] + "__Item_IncomingPrice").val());
+        var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+        amount = amount + parseFloat($("#Elements_" + row + "__Item_IncomingPrice").val()) * parseFloat($("#Elements_" + row + "__Item_Quantity").val());
     });
     $("#totalAmount").val(parseFloat(amount + parseFloat($("#Transport").val()) - transport).toFixed(2));
 }

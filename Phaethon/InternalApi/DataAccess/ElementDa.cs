@@ -26,7 +26,9 @@ namespace InternalApi.DataAccess
                     new
                     {
                         x.Item.SerNumber,
-                        x.Item.Product_ID
+                        x.Item.IncomingPrice,
+                        x.Item.Product_ID,
+                        x.Item.IncomingTaxGroup_ID
                     })
                 .Select(g => new
                 {
@@ -34,6 +36,22 @@ namespace InternalApi.DataAccess
                     count = g.Count()
                 })
                 .Select(x => { x.element.Item.Quantity = x.count; return x.element; })
+                .ToList();
+        }
+
+        internal List<int> GetSameItemIds(DatabaseContext db, int itemId)
+        {
+            Element element = db.Elements
+                .Include(x => x.Item)
+                .SingleOrDefault(x => x.Item_ID == itemId);
+
+            return db.Elements
+                .Where(x => x.Invoice_ID == element.Invoice_ID &&
+                            x.Item.SerNumber.Equals(element.Item.SerNumber) &&
+                            x.Item.IncomingPrice == element.Item.IncomingPrice &&
+                            x.Item.Product_ID == element.Item.Product_ID &&
+                            x.Item.IncomingTaxGroup_ID == element.Item.IncomingTaxGroup_ID)
+                .Select(x => x.Item_ID)
                 .ToList();
         }
     }

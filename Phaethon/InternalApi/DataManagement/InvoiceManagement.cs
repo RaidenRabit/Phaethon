@@ -16,7 +16,7 @@ namespace InternalApi.DataManagement
             _invoiceDa = new InvoiceDa();
         }
 
-        public bool CreateOrUpdate(Invoice invoice)
+        public bool CreateOrUpdate(Invoice invoice)//made only for incoming
         {
             CompanyDa companyDa = new CompanyDa();
             RepresentativeDa representativeDa = new RepresentativeDa();
@@ -30,6 +30,7 @@ namespace InternalApi.DataManagement
                 {
                     try
                     {
+                        #region Invoice
                         companyDa.CreateOrUpdate(db, invoice.Receiver.Company);
                         invoice.Receiver.Company_ID = invoice.Receiver.Company.ID;
                         invoice.Receiver.Company = null;
@@ -44,7 +45,7 @@ namespace InternalApi.DataManagement
                         invoice.Sender = null;
                         List<Element> elements = invoice.Elements == null ? new List<Element>() : invoice.Elements.ToList();
                         invoice.Elements = null;
-
+                        #region Transport
                         decimal total = elements.Sum(item => item.Item.IncomingPrice);
                         decimal transport = invoice.Transport;
                         Invoice dbInvoice = _invoiceDa.GetInvoice(db, invoice.ID);
@@ -56,35 +57,65 @@ namespace InternalApi.DataManagement
                         {
                             transport = transport / total;
                         }
-
+                        #endregion
                         _invoiceDa.CreateOrUpdate(db, invoice);
-                        
+                        #endregion
+
                         foreach (Element element in elements)
                         {
-                            if (element.Item.Delete)
+                            List<int> itemIds = elementDa.GetSameItemIds(db, element.Item.ID);//if more this than quantity remove
+
+                            #region Prepare item
+                            Item item = new Item
                             {
-                                Item item = itemDa.GetItem(db, element.Item.ID);
-                                itemDa.Delete(db, item);
-                            }
-                            else
+                                Delete = element.Item.Delete,
+                                Quantity = element.Item.Quantity
+                            };
+
+                            if (!item.Delete)
                             {
                                 productDa.CreateOrUpdate(db, element.Item.Product);
-                                element.Item.Product_ID = element.Item.Product.ID;
-                                element.Item.Product = null;
-                                element.Item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
-                                itemDa.CreateOrUpdate(db, element.Item);
-                                element.Item_ID = element.Item.ID;
-                                element.Item = null;
-                                element.Invoice_ID = invoice.ID;
-                                element.Invoice = null;
-                                elementDa.CreateOrUpdate(db, element);
+
+                                item.SerNumber = element.Item.SerNumber;
+                                item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
+                                item.Product_ID = element.Item.Product.ID;
+                                item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
+                            }
+                            #endregion
+
+                            element.Item = null;
+                            element.Invoice = null;
+                            
+                            for (int i = 0; i < item.Quantity; i++)
+                            {
+                                item.ID = itemIds.ElementAtOrDefault(i);
+                                if (item.Delete)
+                                {
+                                    Item deleteItem = itemDa.GetItem(db, item.ID);
+                                    itemDa.Delete(db, deleteItem);
+                                }
+                                else
+                                {
+                                    itemDa.CreateOrUpdate(db, item);
+                                    element.Item_ID = item.ID;
+                                    element.Invoice_ID = invoice.ID;
+                                    elementDa.CreateOrUpdate(db, element);
+                                }
+                            }
+
+                            //removes the removed ones
+                            foreach (int i in itemIds.Skip(item.Quantity))
+                            {
+                                item.ID = i;
+                                Item deleteItem = itemDa.GetItem(db, item.ID);
+                                itemDa.Delete(db, deleteItem);
                             }
                         }
 
                         dbTransaction.Commit();
                         return true;
                     }
-                    catch
+                    catch(Exception e)
                     {
                         dbTransaction.Rollback();
                         return false;
