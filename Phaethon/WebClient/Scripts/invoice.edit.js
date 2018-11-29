@@ -2,12 +2,24 @@
 var senderElement = "Sender";
 var receiverElement = "Receiver";
 
+var invoiceType;
+var incoming;
+
 var ProductGroups;
 var TaxGroups;
 var transport;//saves already saved transport cost for calculations
 
 //On load
 $(function () {
+    //sets if invoice is incoming or outgoing
+    if ($("#Incoming").val() == true) {
+        incoming = true;
+        invoiceType = "Incoming";
+    } else {
+        incoming = false;
+        invoiceType = "Outgoing";
+    }
+
     //sets initial transport cost, to know what was added
     transport = parseFloat($("#Transport").val());
 
@@ -54,7 +66,7 @@ function elementTableChange() {
         //search for product by barcode
         ItemChange(rowValue);
         $("#Elements_" + rowValue + "__ProductGroup").change();
-        $("#Elements_" + rowValue + "__IncomingTaxGroup").change();
+        $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").change();
     });
 
     //if transport cost changes
@@ -97,19 +109,19 @@ function ItemChange(rowValue) {
     
     //Price without tax changed
     $("#Elements_" + rowValue + "__Price").change(function () {
-        var option = $("#Elements_" + rowValue + "__IncomingTaxGroup option[value='" + $("#Elements_" + rowValue + "__IncomingTaxGroup").val() + "']");
+        var option = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup option[value='" + $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val() + "']");
         var procent = option.data("tax") / 100;
         var val = parseFloat($(this).val());
         var price = val + val * procent;
-        $("#Elements_" + rowValue + "__Item_IncomingPrice").val(price.toFixed(2));
+        $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price").val(price.toFixed(2));
         totalAmount();
     });
 
-    //Incoming price, tax or quantity changed
-    $("#Elements_" + rowValue + "__Item_IncomingPrice, #Elements_" + rowValue + "__IncomingTaxGroup, #Elements_" + rowValue + "__Item_Quantity").change(function () {
-        var option = $("#Elements_" + rowValue + "__IncomingTaxGroup option[value='" + $("#Elements_" + rowValue + "__IncomingTaxGroup").val() + "']");
+    //Price, tax or quantity changed
+    $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price, #Elements_" + rowValue + "__" + invoiceType + "TaxGroup, #Elements_" + rowValue + "__Item_Quantity").change(function () {
+        var option = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup option[value='" + $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val() + "']");
         var procent = option.data("tax") / 100 + 1;
-        var val = parseFloat($("#Elements_" + rowValue + "__Item_IncomingPrice").val());
+        var val = parseFloat($("#Elements_" + rowValue + "__Item_" + invoiceType + "Price").val());
         var price = val / procent;
         $("#Elements_" + rowValue + "__Price").val(price.toFixed(2));
         totalAmount();
@@ -286,8 +298,13 @@ function getProduct(rowValue, obj) {
         success: function (data) {
             if (data !== null) {
                 if (data.Items.length != 0) {
-                    $("#Elements_" + rowValue + "__Item_IncomingPrice").val(data.Items[0].IncomingPrice);
-                    $("#Elements_" + rowValue + "__Item_IncomingPrice").change();
+                    var price = $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price");
+                    if (incoming) {
+                        price.val(data.Items[0].IncomingPrice);
+                    } else {
+                        price.val(data.Items[0].OutgoingPrice);
+                    }
+                    $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price").change();
                 }
                 $("#Elements_" + rowValue + "__Item_Product_Name").val(data.Name);
                 $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
@@ -318,11 +335,20 @@ function getInvoiceItems() {
         dataType: "json",
         success: function (data) {
             for (var i = 0; i < data.length; i++) {
-                $("#itemTable tbody").append(addNewElement(i, data[i].Item.ID, data[i].Item.Product.ID, data[i].Item.Quantity, data[i].Item.SerNumber, data[i].Item.Product.Name, data[i].Item.Product.Barcode, data[i].Item.IncomingPrice));
+                var price;
+                var taxGroup;
+                if (incoming) {
+                    price = data[i].Item.IncomingPrice;
+                    taxGroup = data[i].Item.IncomingTaxGroup.ID;
+                } else {
+                    price = data[i].Item.OutgoingPrice;
+                    taxGroup = data[i].Item.OutgoingTaxGroup.ID;
+                }
+                $("#itemTable tbody").append(addNewElement(i, data[i].Item.ID, data[i].Item.Product.ID, data[i].Item.Quantity, data[i].Item.SerNumber, data[i].Item.Product.Name, data[i].Item.Product.Barcode, price));
                 ItemChange(i);
                 $("#Elements_" + i + "__ProductGroup").val(data[i].Item.Product.ProductGroup.ID);
-                $("#Elements_" + i + "__IncomingTaxGroup").val(data[i].Item.IncomingTaxGroup.ID);
-                $("#Elements_" + i + "__Item_IncomingPrice").change();
+                $("#Elements_" + i + "__" + invoiceType + "TaxGroup").val(taxGroup);
+                $("#Elements_" + i + "__Item_" + invoiceType + "Price").change();
             }
             totalAmount();
         }
@@ -442,9 +468,9 @@ function taxGroupForm() {
             $.when(getTaxGroups()).done(function () {
                 $("#itemTable tbody tr").each(function () {
                     var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
-                    var taxGroupId = $("#Elements_" + rowValue + "__IncomingTaxGroup").val();
-                    $("#Elements_" + rowValue + "__IncomingTaxGroup").html(ProductGroups);
-                    $("#Elements_" + rowValue + "__IncomingTaxGroup").val(taxGroupId);
+                    var taxGroupId = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val();
+                    $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").html(ProductGroups);
+                    $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val(taxGroupId);
                 });
             });
         }
@@ -453,7 +479,7 @@ function taxGroupForm() {
 
 //Methods
 function elementSetUp(rowValue) {
-    $("#Elements_" + rowValue + "__IncomingTaxGroup").html(TaxGroups);
+    $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").html(TaxGroups);
     $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
 
     //allows only int values in last row
@@ -465,7 +491,7 @@ function totalAmount() {
     var amountNoTax = parseFloat(0);
     $("#itemTable tbody tr").each(function () {
         var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
-        amount = amount + parseFloat($("#Elements_" + row + "__Item_IncomingPrice").val()) * parseFloat($("#Elements_" + row + "__Item_Quantity").val());
+        amount = amount + parseFloat($("#Elements_" + row + "__Item_" + invoiceType + "Price").val()) * parseFloat($("#Elements_" + row + "__Item_Quantity").val());
         amountNoTax = amountNoTax + parseFloat($("#Elements_" + row + "__Price").val()) * parseFloat($("#Elements_" + row + "__Item_Quantity").val());
     });
     $("#totalAmount").val(parseFloat(amount + parseFloat($("#Transport").val()) - transport).toFixed(2));
@@ -485,7 +511,7 @@ function onlyNumbers(path) {
 }
 
 //Table row info
-function addNewElement(rowValue, itemId, productId, quantity, serNumber, productName, barcode, incomingPrice) {
+function addNewElement(rowValue, itemId, productId, quantity, serNumber, productName, barcode, price) {
     return "<tr>" +
         "<input data-val='true' data-val-number='The Delete must be a boolean.' data-val-required='The Delete field is required.' id='Elements_" + rowValue + "__Item_Delete' name='Elements[" + rowValue + "].Item.Delete' type='hidden' value='false'>" +
         "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item.ID' type='hidden' value='" + itemId + "'>" +
@@ -495,9 +521,9 @@ function addNewElement(rowValue, itemId, productId, quantity, serNumber, product
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value='" + productName + "'></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number' value='" + barcode + "'></td>" +
         "<td><input class='form-control' id='Elements_" + rowValue + "__Price' name='Price' required='required' step='0.01' type='number'></td>" +
-        "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__IncomingTaxGroup' name='Elements[" + rowValue + "].Item.IncomingTaxGroup_ID' required='required'></select></td>" +
+        "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__" + invoiceType + "TaxGroup' name='Elements[" + rowValue + "].Item." + invoiceType + "TaxGroup_ID' required='required'></select></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__ProductGroup' name='Elements[" + rowValue + "].Item.Product.ProductGroup_ID' required='required'></select></td>" +
-        "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field IncomingPrice must be a number.' data-val-required='The IncomingPrice field is required.' id='Elements_" + rowValue + "__Item_IncomingPrice' name='Elements[" + rowValue + "].Item.IncomingPrice' required='required' min='0' step='0.01' type='number' value='" + incomingPrice + "'></td>" +
+        "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field " + invoiceType + "Price must be a number.' data-val-required='The " + invoiceType + "Price field is required.' id='Elements_" + rowValue + "__Item_" + invoiceType + "Price' name='Elements[" + rowValue + "].Item." + invoiceType + "Price' required='required' min='0' step='0.01' type='number' value='" + price + "'></td>" +
         "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='Delete' title='This button removes item, action cant be canceled.'></td>" +
         "</tr>";
 }

@@ -64,5 +64,9 @@ namespace Core.Model
         [NotMapped]
         [DataMember]
         public decimal Sum { get; set; }
+
+        [NotMapped]
+        [DataMember]
+        public bool Incoming { get; set; } = false;
     }
 }

@@ -64,6 +64,7 @@ namespace InternalApi.DataManagement
                         foreach (Element element in elements)
                         {
                             List<int> itemIds = elementDa.GetSameItemIds(db, element.Item.ID);
+                            //check if incoming or outgoing
                             //don't remove if item was sold
                             #region Prepare item
                             Item item = new Item
@@ -115,7 +116,7 @@ namespace InternalApi.DataManagement
                         dbTransaction.Commit();
                         return true;
                     }
-                    catch(Exception e)
+                    catch
                     {
                         dbTransaction.Rollback();
                         return false;
