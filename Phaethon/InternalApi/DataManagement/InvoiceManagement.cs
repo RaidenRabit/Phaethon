@@ -64,7 +64,6 @@ namespace InternalApi.DataManagement
                         foreach (Element element in elements)
                         {
                             List<int> itemIds = elementDa.GetSameItemIds(db, element.Item.ID);
-                            //check if incoming or outgoing
                             //don't remove if item was sold
                             #region Prepare item
                             Item item = new Item
@@ -78,9 +77,20 @@ namespace InternalApi.DataManagement
                                 productDa.CreateOrUpdate(db, element.Item.Product);
 
                                 item.SerNumber = element.Item.SerNumber;
-                                item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
                                 item.Product_ID = element.Item.Product.ID;
-                                item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
+                                if (invoice.Incoming)
+                                {
+                                    item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
+                                    item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
+                                }
+                                else
+                                {
+                                    //doesn't save incoming price and tax group
+                                    item.IncomingPrice = element.Item.IncomingPrice;
+                                    item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
+                                    item.OutgoingPrice = element.Item.OutgoingPrice;
+                                    item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
+                                }
                             }
                             #endregion
 
