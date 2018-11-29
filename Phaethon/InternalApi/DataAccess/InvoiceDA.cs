@@ -37,7 +37,7 @@ namespace InternalApi.DataAccess
                     .OrderByDescending(x => x.ID)
                     .Take(numOfRecords)
                     .AsEnumerable()
-                    .Select(invoice => new { invoice, Sum = db.Elements.Where(x => x.Invoice_ID == invoice.ID).Sum(x => x.Item.IncomingPrice)})
+                    .Select(invoice => new { invoice, Sum = db.Elements.Where(x => x.Invoice_ID == invoice.ID).Select(x => x.Item.IncomingPrice).DefaultIfEmpty(0).Sum(x => x)})
                     .Select(x => { x.invoice.Sum = x.Sum; return x.invoice; })
                     .ToList();
         }
