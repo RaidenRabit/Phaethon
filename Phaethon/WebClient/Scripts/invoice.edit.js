@@ -49,29 +49,22 @@ $(function () {
 function elementTableChange() {
     //adds new item row to table
     $("#newItemRow").click(function () {
+        var rowValue;
+        if ($("#itemTable tbody tr").length == 0) {
+            rowValue = 0;
+        } else {
+            rowValue = parseInt($("#itemTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
+        }
         if (incoming) {
-            var rowValue;
-            if ($("#itemTable tbody tr").length == 0) {
-                rowValue = 0;
-            } else {
-                rowValue = parseInt(
-                        $("#itemTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) +
-                    1;
-            }
-            var read;
-            if (incoming) {
-                read = "";
-            } else {
-                read = "readonly";
-            }
-            $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, read));
+            $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, ""));
             
             ItemChange(rowValue);
             $("#Elements_" + rowValue + "__ProductGroup").change();
             $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").change();
         } else {
             //!! has to be able to add existing item from database
-            $("#dialog").dialog({ title: "Item selection", autoOpen: true, modal: true, buttons: { "Save": function () { } } });
+            //$("#dialog").dialog({ title: "Item selection", autoOpen: true, modal: true, buttons: { "Save": function () { } } });
+            getItem(rowValue, 3);
         }
     });
 
@@ -105,7 +98,7 @@ function ItemChange(rowValue) {
             if (productId == $("#Elements_" + row + "__Item_Product_ID").val()) {
                 $("#Elements_" + row + "__ProductGroup").val(productGroupId);
                 if (!incoming) {
-                    $("#Elements_" + rowValue + "__Price").change();
+                    $("#Elements_" + row + "__Price").change();
                 }
             }
         });
@@ -429,12 +422,12 @@ function getInvoiceItems() {
                 var readonly;
                 if (incoming) {
                     price = data[i].Item.IncomingPrice;
-                    taxGroup = data[i].Item.IncomingTaxGroup.ID;
+                    taxGroup = data[i].Item.IncomingTaxGroup_ID;
                     noTaxPrice = 0;
                     readonly = "";
                 } else {
                     price = data[i].Item.OutgoingPrice;
-                    taxGroup = data[i].Item.OutgoingTaxGroup.ID;
+                    taxGroup = data[i].Item.OutgoingTaxGroup_ID;
                     noTaxPrice = data[i].Item.IncomingPrice;
                     readonly = "readonly";
                 }
@@ -450,7 +443,7 @@ function getInvoiceItems() {
                         noTaxPrice,
                         readonly));
                 ItemChange(i);
-                $("#Elements_" + i + "__ProductGroup").val(data[i].Item.Product.ProductGroup.ID);
+                $("#Elements_" + i + "__ProductGroup").val(data[i].Item.Product.ProductGroup_ID);
                 $("#Elements_" + i + "__" + invoiceType + "TaxGroup").val(taxGroup);
                 if (incoming) {
                     $("#Elements_" + i + "__Item_" + invoiceType + "Price").change();
@@ -458,6 +451,42 @@ function getInvoiceItems() {
                     if (data[i].Item.OutgoingPrice == 0) {
                         $("#Elements_" + i + "__Price").change();
                     }
+                }
+            }
+            totalAmount();
+        }
+    });
+}
+
+function getItem(rowValue, id) {
+    $.ajax({
+        type: "GET",
+        url: url + "/Item/GetItem",
+        data: {
+            id: id
+        },
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $("#itemTable tbody").append(
+                addNewElement(rowValue,
+                    data.ID,
+                    data.Product.ID,
+                    data.Quantity,
+                    data.SerNumber,
+                    data.Product.Name,
+                    data.Product.Barcode,
+                    data.OutgoingPrice,
+                    data.IncomingPrice,
+                    "readonly"));
+            ItemChange(rowValue);
+            $("#Elements_" + rowValue + "__ProductGroup").val(data.Product.ProductGroup_ID);
+            $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val(data.OutgoingTaxGroup_ID);
+            if (incoming) {
+                $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price").change();
+            } else {
+                if (data.OutgoingPrice == 0) {
+                    $("#Elements_" + rowValue + "__Price").change();
                 }
             }
             totalAmount();
@@ -573,7 +602,7 @@ function addNewElement(rowValue, itemId, productId, quantity, serNumber, product
         "<input data-val='true' data-val-number='The Delete must be a boolean.' data-val-required='The Delete field is required.' id='Elements_" + rowValue + "__Item_Delete' name='Elements[" + rowValue + "].Item.Delete' type='hidden' value='false'>" +
         "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item.ID' type='hidden' value='" + itemId + "'>" +
         "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ID' name='Elements[" + rowValue + "].Item.Product.ID' type='hidden' value='" + productId + "'>" +
-        "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Quantity field is required.' id='Elements_" + rowValue + "__Item_Quantity' name='Elements[" + rowValue + "].Item.Quantity' type='number' min='0' value='" + quantity + "'></td>" +
+        "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Quantity field is required.' id='Elements_" + rowValue + "__Item_Quantity' name='Elements[" + rowValue + "].Item.Quantity' type='number' min='0' value='" + quantity + "' " + readonly + "></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Serial number field is required.' id='Elements_" + rowValue + "__Item_SerNumber' name='Elements[" + rowValue + "].Item.SerNumber' type='text' value='" + serNumber + "' " + readonly + "></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value='" + productName + "' " + readonly + "></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number' value='" + barcode + "' " + readonly + "></td>" +

@@ -61,50 +61,127 @@ namespace InternalApi.DataManagement
                         _invoiceDa.CreateOrUpdate(db, invoice);
                         #endregion
 
-                        foreach (Element element in elements)
+                        if (invoice.Incoming)//incoming
                         {
-                            List<int> itemIds = elementDa.GetSameItemIds(db, element.Item.ID);
-
-                            productDa.CreateOrUpdate(db, element.Item.Product);
-                            
-                            for (int i = 0; i < element.Item.Quantity; i++)
+                            foreach (Element element in elements)
                             {
-                                Item item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
-                                if (element.Item.Delete)
+                                List<int> itemIds = elementDa.GetSameItemIdsInInvoice(db, element.Item.ID);
+
+                                productDa.CreateOrUpdate(db, element.Item.Product);
+
+                                for (int i = 0; i < element.Item.Quantity; i++)
                                 {
-                                    itemDa.Delete(db, item);
-                                }
-                                else
-                                {
-                                    item.SerNumber = element.Item.SerNumber;
-                                    item.Product_ID = element.Item.Product.ID;
-                                    if (invoice.Incoming)
+                                    Item item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
+                                    if (element.Item.Delete)
                                     {
-                                        item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
-                                        item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
+                                        itemDa.Delete(db, item);
                                     }
                                     else
                                     {
-                                        item.OutgoingPrice = element.Item.OutgoingPrice * transport + element.Item.OutgoingPrice;
-                                        item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
-                                    }
-                                    //if make outgoing cant create only update!
-                                    itemDa.CreateOrUpdate(db, item);
+                                        item.Product_ID = element.Item.Product.ID;
+                                        item.SerNumber = element.Item.SerNumber;
+                                        item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
+                                        item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
+                                        
+                                        itemDa.CreateOrUpdate(db, item);
 
-                                    Element saveElement = new Element
+                                        Element saveElement = new Element
+                                        {
+                                            Item_ID = item.ID,
+                                            Invoice_ID = invoice.ID
+                                        };
+                                        elementDa.CreateOrUpdate(db, saveElement);
+                                    }
+                                }
+
+                                //removes the removed ones
+                                foreach (int i in itemIds.Skip(element.Item.Quantity))
+                                {
+                                    Item item = itemDa.GetItem(db, i);
+                                    itemDa.Delete(db, item);
+                                }
+                            }
+                        }
+                        else//outgoing
+                        {
+                            foreach (Element element in elements)
+                            {
+                                //GETS ALL items which are simmular to this one
+                                //List<int> itemIds = itemDa.GetSameItemIds(db, element.Item.ID);
+                                
+                                productDa.CreateOrUpdate(db, element.Item.Product);
+
+                                Item item = itemDa.GetItem(db, element.Item.ID);
+                                if (element.Item.Delete)
+                                {
+                                    item.OutgoingPrice = 0;
+                                    item.OutgoingTaxGroup_ID = null;
+                                    itemDa.CreateOrUpdate(db, item);
+                                    Element tempElement = new Element
                                     {
                                         Item_ID = item.ID,
                                         Invoice_ID = invoice.ID
                                     };
-                                    elementDa.CreateOrUpdate(db, saveElement);
+                                    db.Elements.Attach(tempElement);
+                                    if (!elementDa.Delete(db, tempElement))
+                                    {
+                                        throw new Exception();
+                                    }
                                 }
-                            }
+                                else
+                                {
+                                    item.Product_ID = element.Item.Product.ID;
+                                    item.OutgoingPrice = element.Item.OutgoingPrice * transport + element.Item.OutgoingPrice;
+                                    item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
 
-                            //removes the removed ones
-                            foreach (int i in itemIds.Skip(element.Item.Quantity))
-                            {
-                                Item deleteItem = itemDa.GetItem(db, i);
-                                itemDa.Delete(db, deleteItem);
+                                    itemDa.CreateOrUpdate(db, item);
+
+                                    Element tempElement = new Element
+                                    {
+                                        Item_ID = item.ID,
+                                        Invoice_ID = invoice.ID
+                                    };
+                                    elementDa.CreateOrUpdate(db, tempElement);
+                                }
+
+                                //for (int i = 0; i < element.Item.Quantity; i++)
+                                //{
+                                //    Item item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
+                                //    if (element.Item.Delete)
+                                //    {
+                                //        item.OutgoingPrice = 0;
+                                //        item.OutgoingTaxGroup_ID = null;
+                                //        itemDa.CreateOrUpdate(db, item);
+                                //        Element saveElement = elementDa.GetElement(db, invoice.ID, item.ID);
+                                //        elementDa.CreateOrUpdate(db, saveElement);
+                                //    }
+                                //    else
+                                //    {
+                                //        item.Product_ID = element.Item.Product.ID;
+                                //        item.OutgoingPrice = element.Item.OutgoingPrice * transport + element.Item.OutgoingPrice;
+                                //        item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
+
+                                //        itemDa.CreateOrUpdate(db, item);
+
+                                //        Element saveElement = new Element
+                                //        {
+                                //            Item_ID = item.ID,
+                                //            Invoice_ID = invoice.ID
+                                //        };
+                                //        elementDa.CreateOrUpdate(db, saveElement);
+                                //    }
+                                //}
+
+                                //removes the removed ones
+                                //foreach (int id in itemIds.Skip(element.Item.Quantity))
+                                //{
+                                //    Item item = itemDa.GetItem(db, id);
+                                //    item.OutgoingPrice = 0;
+                                //    item.OutgoingTaxGroup_ID = null;
+                                //    itemDa.CreateOrUpdate(db, item);
+                                //    Element saveElement = elementDa.GetElement(db, invoice.ID, item.ID);
+                                //    elementDa.CreateOrUpdate(db, saveElement);
+                                //}
                             }
                         }
 

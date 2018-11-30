@@ -15,11 +15,16 @@ namespace InternalApi.DataAccess
             db.SaveChanges();
         }
 
+        internal bool Delete(DatabaseContext db, Element element)
+        {
+            db.Elements.Remove(element);
+            return db.SaveChanges() > 0;
+        }
+
         internal List<Element> GetInvoiceElements(DatabaseContext db, int id)
         {
             return db.Elements
-                .Include(x => x.Item.Product.ProductGroup)
-                .Include(x => x.Item.IncomingTaxGroup)
+                .Include(x => x.Item.Product)
                 .Where(x => x.Invoice_ID == id)
                 .AsEnumerable()
                 .GroupBy(x =>
@@ -39,7 +44,7 @@ namespace InternalApi.DataAccess
                 .ToList();
         }
 
-        internal List<int> GetSameItemIds(DatabaseContext db, int itemId)
+        internal List<int> GetSameItemIdsInInvoice(DatabaseContext db, int itemId)
         {
             Element element = db.Elements
                 .Include(x => x.Item)

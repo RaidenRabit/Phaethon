@@ -101,6 +101,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductGroupController.cs" />
     <Compile Include="Controllers\TaxGroupController.cs" />
@@ -118,10 +119,12 @@
     <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IElementManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
+    <Compile Include="DataManagement\IDataManagement\IItemManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IProductGroupManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IProductManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\ITaxGroupManagement.cs" />
     <Compile Include="DataManagement\InvoiceManagement.cs" />
+    <Compile Include="DataManagement\ItemManagement.cs" />
     <Compile Include="DataManagement\ProductGroupManagement.cs" />
     <Compile Include="DataManagement\ProductManagement.cs" />
     <Compile Include="DataManagement\TaxGroupManagement.cs" />
