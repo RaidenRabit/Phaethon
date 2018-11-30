@@ -1,6 +1,4 @@
 ﻿var url = "http://localhost:64007";
-var senderElement = "Sender";
-var receiverElement = "Receiver";
 
 var invoiceType;
 var incoming;
@@ -12,7 +10,7 @@ var transport;//saves already saved transport cost for calculations
 //On load
 $(function () {
     //sets if invoice is incoming or outgoing
-    if ($("#Incoming").val() == true) {
+    if ($("#Incoming").val() == "True") {
         incoming = true;
         invoiceType = "Incoming";
     } else {
@@ -24,14 +22,10 @@ $(function () {
     transport = parseFloat($("#Transport").val());
 
     //sets action listener to company
-    CompanyChange(receiverElement);
-    CompanyChange(senderElement);
+    CompanyChange("Receiver");
+    CompanyChange("Sender");
 
-    //sets action listener to representative
-    RepresentativeChange(receiverElement);
-    RepresentativeChange(senderElement);
-
-    //allows only int values for all fields filled in right now
+    //allows only int values for all number fields created in right now
     onlyNumbers("");
 
     //initializes datepicker
@@ -71,14 +65,13 @@ function elementTableChange() {
                 read = "readonly";
             }
             $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, read));
-
-            //search for product by barcode
+            
             ItemChange(rowValue);
             $("#Elements_" + rowValue + "__ProductGroup").change();
             $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").change();
         } else {
-            $("#dialog").dialog({ title: "Item selection", autoOpen: false, modal: true, buttons: { "Save": function () { } } });
-            getProductGroupForm();
+            //!! has to be able to add existing item from database
+            $("#dialog").dialog({ title: "Item selection", autoOpen: true, modal: true, buttons: { "Save": function () { } } });
         }
     });
 
@@ -112,7 +105,7 @@ function ItemChange(rowValue) {
             if (productId == $("#Elements_" + row + "__Item_Product_ID").val()) {
                 $("#Elements_" + row + "__ProductGroup").val(productGroupId);
                 if (!incoming) {
-                    calculateRowValueOutgoing(row);
+                    $("#Elements_" + rowValue + "__Price").change();
                 }
             }
         });
@@ -151,9 +144,11 @@ function ItemChange(rowValue) {
         });
     }
     else {
+        //!! quantity should be added for outgoing
+
         //tax or quantity changed
         $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").change(function () {
-            calculateRowValueOutgoing(rowValue);
+            $("#Elements_" + rowValue + "__Price").change();
         });
 
         //Price, tax or quantity changed
@@ -231,6 +226,9 @@ function CompanyChange(element) {
             $("#" + element + "_Company_ID").change();
         }
     });
+
+    //sets action listener to representative
+    RepresentativeChange(element);
 }
 
 function RepresentativeChange(element) {
@@ -257,6 +255,81 @@ function RepresentativeChange(element) {
 }
 
 //Gets info
+function getCompanies() {
+    $.ajax({
+        type: "GET",
+        url: url + "/Company/GetCompanies",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            var htmlText = "";
+            for (var i = 0; i < data.length; i++) {
+                htmlText += "<option value='" + data[i].Name + "' " +
+                    "data-ID='" + data[i].ID + "'/>";
+            }
+            $("#companies").html(htmlText);
+        },
+        error: function () {
+            $("#companies").html("");
+        }
+    });
+}
+
+function getCompany(element, option) {
+    $.ajax({
+        type: "GET",
+        url: url + "/Company/GetCompany",
+        data: {
+            id: option.data("id")
+        },
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $("#" + element + "_Company_ID").val(data.ID);
+            $("#" + element + "_Company_Name").val(data.Name);
+            $("#" + element + "_Company_BankNumber").val(data.BankNumber);
+            $("#" + element + "_Company_RegNumber").val(data.RegNumber);
+            $("#" + element + "_Company_Address").val(data.Address);
+            $("#" + element + "_Company_Location").val(data.Location);
+            var htmlText = "";
+            for (var i = 0; i < data.Representatives.length; i++) {
+                htmlText += "<option value='" +
+                    data.Representatives[i].Name +
+                    "'" +
+                    "data-ID='" +
+                    data.Representatives[i].ID +
+                    "'/>";
+            }
+            $("#" + element + "Representatives").html(htmlText);
+            option = $("#" +
+                element +
+                "Representatives option[data-id='" +
+                $("#" + element + "_ID").val() +
+                "']");
+            if (option.length === 0) {
+                option = $("#" + element + "Representatives option");
+                $("#" + element + "_Name").val(option.val());
+                $("#" + element + "_ID").val(option.data("id"));
+            }
+
+            $("#" + element + "_Company_ID").change();
+        },
+        error: function () {
+            $("#" + element + "_ID").val(0);
+            $("#" + element + "_Name").val("");
+            $("#" + element + "_Company_ID").val(0);
+            $("#" + element + "_Company_Name").val("");
+            $("#" + element + "_Company_BankNumber").val("");
+            $("#" + element + "_Company_RegNumber").val("");
+            $("#" + element + "_Company_Address").val("");
+            $("#" + element + "_Company_Location").val("");
+            $("#" + element + "Representatives").html("");
+
+            $("#" + element + "_Company_ID").change();
+        }
+    });
+}
+
 function getProductGroups() {
     return $.ajax({
         type: "GET",
@@ -297,26 +370,6 @@ function getTaxGroups() {
         },
         error: function () {
             TaxGroups = "";
-        }
-    });
-}
-
-function getCompanies() {
-    $.ajax({
-        type: "GET",
-        url: url + "/Company/GetCompanies",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            var htmlText = "";
-            for (var i = 0; i < data.length; i++) {
-                htmlText += "<option value='" + data[i].Name + "' " +
-                    "data-ID='" + data[i].ID + "'/>";
-            }
-            $("#companies").html(htmlText);
-        },
-        error: function () {
-            $("#companies").html("");
         }
     });
 }
@@ -412,61 +465,7 @@ function getInvoiceItems() {
     });
 }
 
-function getCompany(element, option) {
-    $.ajax({
-        type: "GET",
-        url: url + "/Company/GetCompany",
-        data: {
-            id: option.data("id")
-        },
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            $("#" + element + "_Company_ID").val(data.ID);
-            $("#" + element + "_Company_Name").val(data.Name);
-            $("#" + element + "_Company_BankNumber").val(data.BankNumber);
-            $("#" + element + "_Company_RegNumber").val(data.RegNumber);
-            $("#" + element + "_Company_Address").val(data.Address);
-            $("#" + element + "_Company_Location").val(data.Location);
-            var htmlText = "";
-            for (var i = 0; i < data.Representatives.length; i++) {
-                htmlText += "<option value='" +
-                    data.Representatives[i].Name +
-                    "'" +
-                    "data-ID='" +
-                    data.Representatives[i].ID +
-                    "'/>";
-            }
-            $("#" + element + "Representatives").html(htmlText);
-            option = $("#" +
-                element +
-                "Representatives option[data-id='" +
-                $("#" + element + "_ID").val() +
-                "']");
-            if (option.length === 0) {
-                option = $("#" + element + "Representatives option");
-                $("#" + element + "_Name").val(option.val());
-                $("#" + element + "_ID").val(option.data("id"));
-            }
-
-            $("#" + element + "_Company_ID").change();
-        },
-        error: function () {
-            $("#" + element + "_ID").val(0);
-            $("#" + element + "_Name").val("");
-            $("#" + element + "_Company_ID").val(0);
-            $("#" + element + "_Company_Name").val("");
-            $("#" + element + "_Company_BankNumber").val("");
-            $("#" + element + "_Company_RegNumber").val("");
-            $("#" + element + "_Company_Address").val("");
-            $("#" + element + "_Company_Location").val("");
-            $("#" + element + "Representatives").html("");
-
-            $("#" + element + "_Company_ID").change();
-        }
-    });
-}
-
+//Get form
 function getTaxGroupForm() {
     $.ajax({
         type: "GET",
@@ -493,7 +492,7 @@ function getProductGroupForm() {
     });
 }
 
-//Posts info
+//Posts form
 function productGroupForm() {
     $.ajax({
         type: "POST",
@@ -535,18 +534,6 @@ function taxGroupForm() {
 }
 
 //Methods
-function calculateRowValueOutgoing(rowValue) {
-    //gets tax in %
-    var tax = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup option[value='" + $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val() + "']").data("tax") / 100;
-    var val = parseFloat($("#Elements_" + rowValue + "__Price").val());
-    //if invoice is outgoing add companies margin
-    val = val + val * ($("#Elements_" + rowValue + "__ProductGroup option[value='" + $("#Elements_" + rowValue + "__ProductGroup").val() + "']").data("margin") / 100);
-    //add tax to item
-    var price = val + val * tax;
-    $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price").val(price.toFixed(2));
-    totalAmount();
-}
-
 function elementSetUp(rowValue) {
     $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").html(TaxGroups);
     $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
@@ -560,8 +547,9 @@ function totalAmount() {
     var amountNoTax = parseFloat(0);
     $("#itemTable tbody tr").each(function () {
         var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
-        amount = amount + parseFloat($("#Elements_" + row + "__Item_" + invoiceType + "Price").val()) * parseFloat($("#Elements_" + row + "__Item_Quantity").val());
-        amountNoTax = amountNoTax + parseFloat($("#Elements_" + row + "__Price").val()) * parseFloat($("#Elements_" + row + "__Item_Quantity").val());
+        var quantity = parseFloat($("#Elements_" + row + "__Item_Quantity").val());
+        amount = amount + parseFloat($("#Elements_" + row + "__Item_" + invoiceType + "Price").val()) * quantity;
+        amountNoTax = amountNoTax + parseFloat($("#Elements_" + row + "__Price").val()) * quantity;
     });
     $("#totalAmount").val(parseFloat(amount + parseFloat($("#Transport").val()) - transport).toFixed(2));
     $("#totalNoTax").val(amountNoTax.toFixed(2));

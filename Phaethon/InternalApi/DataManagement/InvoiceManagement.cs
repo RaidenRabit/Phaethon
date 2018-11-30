@@ -16,7 +16,7 @@ namespace InternalApi.DataManagement
             _invoiceDa = new InvoiceDa();
         }
 
-        public bool CreateOrUpdate(Invoice invoice)//made only for incoming
+        public bool CreateOrUpdate(Invoice invoice)
         {
             CompanyDa companyDa = new CompanyDa();
             RepresentativeDa representativeDa = new RepresentativeDa();
