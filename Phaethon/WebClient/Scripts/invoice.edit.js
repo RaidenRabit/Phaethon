@@ -55,24 +55,31 @@ $(function () {
 function elementTableChange() {
     //adds new item row to table
     $("#newItemRow").click(function () {
-        var rowValue;
-        if ($("#itemTable tbody tr").length == 0) {
-            rowValue = 0;
-        } else {
-            rowValue = parseInt($("#itemTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
-        }
-        var read;
         if (incoming) {
-            read = "";
-        } else {
-            read = "readonly";
-        }
-        $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, read));
+            var rowValue;
+            if ($("#itemTable tbody tr").length == 0) {
+                rowValue = 0;
+            } else {
+                rowValue = parseInt(
+                        $("#itemTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) +
+                    1;
+            }
+            var read;
+            if (incoming) {
+                read = "";
+            } else {
+                read = "readonly";
+            }
+            $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, read));
 
-        //search for product by barcode
-        ItemChange(rowValue);
-        $("#Elements_" + rowValue + "__ProductGroup").change();
-        $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").change();
+            //search for product by barcode
+            ItemChange(rowValue);
+            $("#Elements_" + rowValue + "__ProductGroup").change();
+            $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").change();
+        } else {
+            $("#dialog").dialog({ title: "Item selection", autoOpen: false, modal: true, buttons: { "Save": function () { } } });
+            getProductGroupForm();
+        }
     });
 
     //if transport cost changes
@@ -95,11 +102,6 @@ function elementTableChange() {
 
 function ItemChange(rowValue) {
     elementSetUp(rowValue);
-
-    //on barcode change get corresponding info in database for product, product group and item
-    $("#Elements_" + rowValue + "__Item_Product_Barcode").change(function () {
-        getProduct(rowValue, this);
-    });
     
     //changes product group
     $("#Elements_" + rowValue + "__ProductGroup").change(function () {
@@ -109,6 +111,9 @@ function ItemChange(rowValue) {
             var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
             if (productId == $("#Elements_" + row + "__Item_Product_ID").val()) {
                 $("#Elements_" + row + "__ProductGroup").val(productGroupId);
+                if (!incoming) {
+                    calculateRowValueOutgoing(row);
+                }
             }
         });
     });
@@ -129,6 +134,11 @@ function ItemChange(rowValue) {
     });
 
     if (incoming) {
+        //on barcode change get corresponding info in database for product, product group and item
+        $("#Elements_" + rowValue + "__Item_Product_Barcode").change(function () {
+            getProduct(rowValue, this);
+        });
+
         //Price, tax or quantity changed
         $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price, #Elements_" + rowValue + "__" + invoiceType + "TaxGroup, #Elements_" + rowValue + "__Item_Quantity").change(function () {
             //gets tax in % and than adds 1, so tax can be removed from item
@@ -142,15 +152,12 @@ function ItemChange(rowValue) {
     }
     else {
         //tax or quantity changed
-        $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup, #Elements_" + rowValue + "__ProductGroup").change(function () {
-            //gets tax in %
-            var tax = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup option[value='" + $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val() + "']").data("tax") / 100;
-            var val = parseFloat($("#Elements_" + rowValue + "__Price").val());
-            //if invoice is outgoing add companies margin
-            val = val + val * ($("#Elements_" + rowValue + "__ProductGroup option[value='" + $("#Elements_" + rowValue + "__ProductGroup").val() + "']").data("margin") / 100);
-            //add tax to item
-            var price = val + val * tax;
-            $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price").val(price.toFixed(2));
+        $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").change(function () {
+            calculateRowValueOutgoing(rowValue);
+        });
+
+        //Price, tax or quantity changed
+        $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price").change(function () {
             totalAmount();
         });
     }
@@ -528,6 +535,18 @@ function taxGroupForm() {
 }
 
 //Methods
+function calculateRowValueOutgoing(rowValue) {
+    //gets tax in %
+    var tax = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup option[value='" + $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val() + "']").data("tax") / 100;
+    var val = parseFloat($("#Elements_" + rowValue + "__Price").val());
+    //if invoice is outgoing add companies margin
+    val = val + val * ($("#Elements_" + rowValue + "__ProductGroup option[value='" + $("#Elements_" + rowValue + "__ProductGroup").val() + "']").data("margin") / 100);
+    //add tax to item
+    var price = val + val * tax;
+    $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price").val(price.toFixed(2));
+    totalAmount();
+}
+
 function elementSetUp(rowValue) {
     $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").html(TaxGroups);
     $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
@@ -567,9 +586,9 @@ function addNewElement(rowValue, itemId, productId, quantity, serNumber, product
         "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item.ID' type='hidden' value='" + itemId + "'>" +
         "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_Product_ID' name='Elements[" + rowValue + "].Item.Product.ID' type='hidden' value='" + productId + "'>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Quantity field is required.' id='Elements_" + rowValue + "__Item_Quantity' name='Elements[" + rowValue + "].Item.Quantity' type='number' min='0' value='" + quantity + "'></td>" +
-        "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Serial number field is required.' id='Elements_" + rowValue + "__Item_SerNumber' name='Elements[" + rowValue + "].Item.SerNumber' type='text' value='" + serNumber + "'></td>" +
-        "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value='" + productName + "'></td>" +
-        "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number' value='" + barcode + "'></td>" +
+        "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Serial number field is required.' id='Elements_" + rowValue + "__Item_SerNumber' name='Elements[" + rowValue + "].Item.SerNumber' type='text' value='" + serNumber + "' " + readonly + "></td>" +
+        "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value='" + productName + "' " + readonly + "></td>" +
+        "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number' value='" + barcode + "' " + readonly + "></td>" +
         "<td><input class='form-control' id='Elements_" + rowValue + "__Price' name='Price' required='required' step='0.01' type='number' value='" + noTaxPrice + "' " + readonly + "></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__" + invoiceType + "TaxGroup' name='Elements[" + rowValue + "].Item." + invoiceType + "TaxGroup_ID' required='required'></select></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__ProductGroup' name='Elements[" + rowValue + "].Item.Product.ProductGroup_ID' required='required'></select></td>" +
