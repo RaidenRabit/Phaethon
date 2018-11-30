@@ -45,8 +45,17 @@ namespace InternalApi.DataManagement
                         invoice.Sender = null;
                         List<Element> elements = invoice.Elements == null ? new List<Element>() : invoice.Elements.ToList();
                         invoice.Elements = null;
+
                         #region Transport
-                        decimal total = elements.Sum(item => item.Item.IncomingPrice);
+                        decimal total;
+                        if (invoice.Incoming) //incoming
+                        {
+                            total = elements.Sum(item => item.Item.IncomingPrice);
+                        }
+                        else//outgoing
+                        {
+                            total = elements.Sum(item => item.Item.OutgoingPrice);
+                        }
                         decimal transport = invoice.Transport;
                         Invoice dbInvoice = _invoiceDa.GetInvoice(db, invoice.ID);
                         if (dbInvoice != null)
@@ -85,12 +94,12 @@ namespace InternalApi.DataManagement
                                         
                                         itemDa.CreateOrUpdate(db, item);
 
-                                        Element saveElement = new Element
+                                        Element tempElement = new Element
                                         {
                                             Item_ID = item.ID,
                                             Invoice_ID = invoice.ID
                                         };
-                                        elementDa.CreateOrUpdate(db, saveElement);
+                                        elementDa.CreateOrUpdate(db, tempElement);
                                     }
                                 }
 
@@ -106,9 +115,6 @@ namespace InternalApi.DataManagement
                         {
                             foreach (Element element in elements)
                             {
-                                //GETS ALL items which are simmular to this one
-                                //List<int> itemIds = itemDa.GetSameItemIds(db, element.Item.ID);
-                                
                                 productDa.CreateOrUpdate(db, element.Item.Product);
 
                                 Item item = itemDa.GetItem(db, element.Item.ID);
@@ -143,45 +149,6 @@ namespace InternalApi.DataManagement
                                     };
                                     elementDa.CreateOrUpdate(db, tempElement);
                                 }
-
-                                //for (int i = 0; i < element.Item.Quantity; i++)
-                                //{
-                                //    Item item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
-                                //    if (element.Item.Delete)
-                                //    {
-                                //        item.OutgoingPrice = 0;
-                                //        item.OutgoingTaxGroup_ID = null;
-                                //        itemDa.CreateOrUpdate(db, item);
-                                //        Element saveElement = elementDa.GetElement(db, invoice.ID, item.ID);
-                                //        elementDa.CreateOrUpdate(db, saveElement);
-                                //    }
-                                //    else
-                                //    {
-                                //        item.Product_ID = element.Item.Product.ID;
-                                //        item.OutgoingPrice = element.Item.OutgoingPrice * transport + element.Item.OutgoingPrice;
-                                //        item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
-
-                                //        itemDa.CreateOrUpdate(db, item);
-
-                                //        Element saveElement = new Element
-                                //        {
-                                //            Item_ID = item.ID,
-                                //            Invoice_ID = invoice.ID
-                                //        };
-                                //        elementDa.CreateOrUpdate(db, saveElement);
-                                //    }
-                                //}
-
-                                //removes the removed ones
-                                //foreach (int id in itemIds.Skip(element.Item.Quantity))
-                                //{
-                                //    Item item = itemDa.GetItem(db, id);
-                                //    item.OutgoingPrice = 0;
-                                //    item.OutgoingTaxGroup_ID = null;
-                                //    itemDa.CreateOrUpdate(db, item);
-                                //    Element saveElement = elementDa.GetElement(db, invoice.ID, item.ID);
-                                //    elementDa.CreateOrUpdate(db, saveElement);
-                                //}
                             }
                         }
 
