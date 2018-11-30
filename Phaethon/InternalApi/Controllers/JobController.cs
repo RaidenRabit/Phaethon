@@ -16,10 +16,12 @@ namespace InternalApi.Controllers
     public class JobController : ApiController
     {
         private readonly IJobDm _jobDm;
+        private readonly IEmailSenderDM _emailSenderDm;
 
         public JobController()
         {
             _jobDm = new JobDm();
+            _emailSenderDm = new EmailSenderDM();
         }
         
         [Route("InsertOrUpdate")]
@@ -30,7 +32,21 @@ namespace InternalApi.Controllers
             Job job = JsonConvert.DeserializeObject<Job>(requestContent);
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, _jobDm.Create(job));
+                int response;
+                if (job.ID != 0)
+                {
+                    bool statusChanged = (_jobDm.Read(job.ID.ToString()).JobStatus != JobStatus_enum.Completed) && (job.JobStatus.Equals(JobStatus_enum.Completed));
+
+                    response = _jobDm.Create(job);
+                    if (statusChanged && response != 0)
+                    {
+                        string customerName = job.Customer.GivenName + " " + job.Customer.FamilyName;
+                        _emailSenderDm.SendEmail(job.Customer.Email, customerName, job.JobName, job.Description);
+                    }
+                }
+
+                response = _jobDm.Create(job);
+                return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (DbUpdateException e)
             {

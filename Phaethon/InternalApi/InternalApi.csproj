@@ -115,7 +115,9 @@
     <Compile Include="DataAccess\RepresentativeDa.cs" />
     <Compile Include="DataAccess\TaxGroupDa.cs" />
     <Compile Include="DataManagement\CustomerDM.cs" />
+    <Compile Include="DataManagement\EmailSenderDM.cs" />
     <Compile Include="DataManagement\IDataManagement\ICustomerDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IEmailSenderDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
     <Compile Include="DataManagement\CompanyManagement.cs" />
     <Compile Include="DataManagement\ElementManagement.cs" />
