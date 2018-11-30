@@ -48,6 +48,8 @@ namespace WebClient.Controllers
                     jobFilter.NumOfRecords = (int)numOfRecords;
             if (jobId != null)
                 jobFilter.JobId = (int)jobId;
+            if (jobStatus != null)
+                jobFilter.JobStatus = (int) jobStatus;
             jobFilter.JobName = jobName;
             
             var response = await _client.PostAsJsonAsync("ReadAll", jobFilter);

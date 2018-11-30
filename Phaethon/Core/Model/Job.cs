@@ -60,4 +60,10 @@ namespace Core.Model
                    this.JobStatus.Equals(other.JobStatus);
         }
     }
+    public enum JobStatus_enum
+    {
+        Unassigned = 1,
+        InProgress = 2,
+        Completed = 3,
+    }
 }

@@ -96,20 +96,27 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductGroupController.cs" />
     <Compile Include="Controllers\TaxGroupController.cs" />
     <Compile Include="DataAccess\CompanyDa.cs" />
+    <Compile Include="DataAccess\CustomerDa.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
     <Compile Include="DataAccess\ElementDa.cs" />
     <Compile Include="DataAccess\InvoiceDa.cs" />
     <Compile Include="DataAccess\ItemDa.cs" />
     <Compile Include="DataAccess\ProductDa.cs" />
+    <Compile Include="DataAccess\JobDa.cs" />
     <Compile Include="DataAccess\ProductGroupDa.cs" />
     <Compile Include="DataAccess\RepresentativeDa.cs" />
     <Compile Include="DataAccess\TaxGroupDa.cs" />
+    <Compile Include="DataManagement\CustomerDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\ICustomerDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
     <Compile Include="DataManagement\CompanyManagement.cs" />
     <Compile Include="DataManagement\ElementManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
@@ -120,11 +127,17 @@
     <Compile Include="DataManagement\IDataManagement\ITaxGroupManagement.cs" />
     <Compile Include="DataManagement\InvoiceManagement.cs" />
     <Compile Include="DataManagement\ProductGroupManagement.cs" />
+    <Compile Include="DataManagement\JobDM.cs" />
     <Compile Include="DataManagement\ProductManagement.cs" />
     <Compile Include="DataManagement\TaxGroupManagement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811271318402_Initial commit.cs" />
+    <Compile Include="Migrations\201811271318402_Initial commit.Designer.cs">
+      <DependentUpon>201811271318402_Initial commit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +158,11 @@
       <Project>{2f81d45f-2fd1-442c-b663-d04af5982d28}</Project>
       <Name>Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201811271318402_Initial commit.resx">
+      <DependentUpon>201811271318402_Initial commit.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

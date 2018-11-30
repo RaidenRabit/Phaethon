@@ -48,6 +48,11 @@ namespace WebClient
             bundles.Add(new StyleBundle("~/Content/Daterangepicker").Include(
                       "~/Content/daterangepicker.css"));
             #endregion
+
+            bundles.Add(new ScriptBundle("~/bundles/Job").Include(
+                "~/Scripts/moment.min.js",
+                "~/Scripts/job.index.js",
+                "~/Scripts/daterangepicker.js"));
         }
     }
 }

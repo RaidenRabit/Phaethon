@@ -66,5 +66,15 @@ namespace InternalApi.DataAccess
                     .FirstOrDefault().StartedTime;
             }
         }
+
+        public DateTime GetLatestEntry()
+        {
+            using (var db = new DatabaseContext())
+            {
+                return db.Jobs
+                    .OrderByDescending(c => c.FinishedTime)
+                    .FirstOrDefault().FinishedTime;
+            }
+        }
     }
 }
