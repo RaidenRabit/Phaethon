@@ -3,7 +3,6 @@ var senderElement = "Sender";
 var receiverElement = "Receiver";
 
 var invoiceType;
-var reversedInvoiceType;
 var incoming;
 
 var ProductGroups;
@@ -16,11 +15,9 @@ $(function () {
     if ($("#Incoming").val() == true) {
         incoming = true;
         invoiceType = "Incoming";
-        reversedInvoiceType = "Outgoing";
     } else {
         incoming = false;
         invoiceType = "Outgoing";
-        reversedInvoiceType = "Incoming";
     }
 
     //sets initial transport cost, to know what was added
@@ -70,7 +67,7 @@ function elementTableChange() {
         } else {
             read = "readonly";
         }
-        $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, read, 0, 0));
+        $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, read));
 
         //search for product by barcode
         ItemChange(rowValue);
@@ -370,20 +367,14 @@ function getInvoiceItems() {
                 var taxGroup;
                 var noTaxPrice;
                 var readonly;
-                var saveTaxGroupId;
-                var savePrice;
                 if (incoming) {
                     price = data[i].Item.IncomingPrice;
                     taxGroup = data[i].Item.IncomingTaxGroup.ID;
-                    saveTaxGroupId = data[i].Item.OutgoingTaxGroup.ID;
-                    savePrice = data[i].Item.OutgoingPrice;
                     noTaxPrice = 0;
                     readonly = "";
                 } else {
                     price = data[i].Item.OutgoingPrice;
                     taxGroup = data[i].Item.OutgoingTaxGroup.ID;
-                    saveTaxGroupId = data[i].Item.IncomingTaxGroup.ID;
-                    savePrice = data[i].Item.IncomingPrice;
                     noTaxPrice = data[i].Item.IncomingPrice;
                     readonly = "readonly";
                 }
@@ -397,9 +388,7 @@ function getInvoiceItems() {
                         data[i].Item.Product.Barcode,
                         price,
                         noTaxPrice,
-                        readonly,
-                        saveTaxGroupId,
-                        savePrice));
+                        readonly));
                 ItemChange(i);
                 $("#Elements_" + i + "__ProductGroup").val(data[i].Item.Product.ProductGroup.ID);
                 $("#Elements_" + i + "__" + invoiceType + "TaxGroup").val(taxGroup);
@@ -572,7 +561,7 @@ function onlyNumbers(path) {
 }
 
 //Table row info
-function addNewElement(rowValue, itemId, productId, quantity, serNumber, productName, barcode, price, noTaxPrice, readonly, saveTaxGroupId, savePrice) {
+function addNewElement(rowValue, itemId, productId, quantity, serNumber, productName, barcode, price, noTaxPrice, readonly) {
     return "<tr>" +
         "<input data-val='true' data-val-number='The Delete must be a boolean.' data-val-required='The Delete field is required.' id='Elements_" + rowValue + "__Item_Delete' name='Elements[" + rowValue + "].Item.Delete' type='hidden' value='false'>" +
         "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item.ID' type='hidden' value='" + itemId + "'>" +
@@ -582,11 +571,9 @@ function addNewElement(rowValue, itemId, productId, quantity, serNumber, product
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value='" + productName + "'></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number' value='" + barcode + "'></td>" +
         "<td><input class='form-control' id='Elements_" + rowValue + "__Price' name='Price' required='required' step='0.01' type='number' value='" + noTaxPrice + "' " + readonly + "></td>" +
-        "<td><input data-val='true' name='Elements[" + rowValue + "].Item." + reversedInvoiceType + "TaxGroup_ID' type='hidden' value='" + saveTaxGroupId + "'>" +
-            "<select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__" + invoiceType + "TaxGroup' name='Elements[" + rowValue + "].Item." + invoiceType + "TaxGroup_ID' required='required'></select></td>" +
+        "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__" + invoiceType + "TaxGroup' name='Elements[" + rowValue + "].Item." + invoiceType + "TaxGroup_ID' required='required'></select></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__ProductGroup' name='Elements[" + rowValue + "].Item.Product.ProductGroup_ID' required='required'></select></td>" +
-        "<td><input data-val='true' name='Elements[" + rowValue + "].Item." + reversedInvoiceType + "Price' type='hidden' value='" + savePrice + "'>" +
-            "<input class='form-control text-box single-line' data-val='true' data-val-number='The field " + invoiceType + "Price must be a number.' data-val-required='The " + invoiceType + "Price field is required.' id='Elements_" + rowValue + "__Item_" + invoiceType + "Price' name='Elements[" + rowValue + "].Item." + invoiceType + "Price' required='required' min='0' step='0.01' type='number' value='" + price + "'></td>" +
+        "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field " + invoiceType + "Price must be a number.' data-val-required='The " + invoiceType + "Price field is required.' id='Elements_" + rowValue + "__Item_" + invoiceType + "Price' name='Elements[" + rowValue + "].Item." + invoiceType + "Price' required='required' min='0' step='0.01' type='number' value='" + price + "'></td>" +
         "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='Delete' title='This button removes item, action cant be canceled.'></td>" +
         "</tr>";
 }

@@ -17,7 +17,7 @@ namespace InternalApi.DataAccess
 
         internal Item GetItem(DatabaseContext db, int id)
         {
-            return db.Items.SingleOrDefault(x => x.ID == id);
+            return db.Items.SingleOrDefault(x => x.ID == id) ?? new Item();
         }
         
         internal void Delete(DatabaseContext db, Item item)

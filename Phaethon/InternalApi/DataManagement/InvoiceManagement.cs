@@ -64,61 +64,46 @@ namespace InternalApi.DataManagement
                         foreach (Element element in elements)
                         {
                             List<int> itemIds = elementDa.GetSameItemIds(db, element.Item.ID);
-                            //don't remove if item was sold
-                            #region Prepare item
-                            Item item = new Item
-                            {
-                                Delete = element.Item.Delete,
-                                Quantity = element.Item.Quantity
-                            };
 
-                            if (!item.Delete)
-                            {
-                                productDa.CreateOrUpdate(db, element.Item.Product);
-
-                                item.SerNumber = element.Item.SerNumber;
-                                item.Product_ID = element.Item.Product.ID;
-                                if (invoice.Incoming)
-                                {
-                                    item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
-                                    item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
-                                }
-                                else
-                                {
-                                    //doesn't save incoming price and tax group
-                                    item.IncomingPrice = element.Item.IncomingPrice;
-                                    item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
-                                    item.OutgoingPrice = element.Item.OutgoingPrice;
-                                    item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
-                                }
-                            }
-                            #endregion
-
-                            element.Item = null;
-                            element.Invoice = null;
+                            productDa.CreateOrUpdate(db, element.Item.Product);
                             
-                            for (int i = 0; i < item.Quantity; i++)
+                            for (int i = 0; i < element.Item.Quantity; i++)
                             {
-                                item.ID = itemIds.ElementAtOrDefault(i);
-                                if (item.Delete)
+                                Item item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
+                                if (element.Item.Delete)
                                 {
-                                    Item deleteItem = itemDa.GetItem(db, item.ID);
-                                    itemDa.Delete(db, deleteItem);
+                                    itemDa.Delete(db, item);
                                 }
                                 else
                                 {
+                                    item.SerNumber = element.Item.SerNumber;
+                                    item.Product_ID = element.Item.Product.ID;
+                                    if (invoice.Incoming)
+                                    {
+                                        item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
+                                        item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
+                                    }
+                                    else
+                                    {
+                                        item.OutgoingPrice = element.Item.OutgoingPrice * transport + element.Item.OutgoingPrice;
+                                        item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
+                                    }
+                                    //if make outgoing cant create only update!
                                     itemDa.CreateOrUpdate(db, item);
-                                    element.Item_ID = item.ID;
-                                    element.Invoice_ID = invoice.ID;
-                                    elementDa.CreateOrUpdate(db, element);
+
+                                    Element saveElement = new Element
+                                    {
+                                        Item_ID = item.ID,
+                                        Invoice_ID = invoice.ID
+                                    };
+                                    elementDa.CreateOrUpdate(db, saveElement);
                                 }
                             }
 
                             //removes the removed ones
-                            foreach (int i in itemIds.Skip(item.Quantity))
+                            foreach (int i in itemIds.Skip(element.Item.Quantity))
                             {
-                                item.ID = i;
-                                Item deleteItem = itemDa.GetItem(db, item.ID);
+                                Item deleteItem = itemDa.GetItem(db, i);
                                 itemDa.Delete(db, deleteItem);
                             }
                         }
@@ -126,7 +111,7 @@ namespace InternalApi.DataManagement
                         dbTransaction.Commit();
                         return true;
                     }
-                    catch
+                    catch(Exception e)
                     {
                         dbTransaction.Rollback();
                         return false;
