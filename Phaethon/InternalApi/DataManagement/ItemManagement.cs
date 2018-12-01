@@ -24,5 +24,13 @@ namespace InternalApi.DataManagement
                 return _itemDa.GetItem(db, id);
             }
         }
+
+        public List<Item> GetItems(string serialNumber, string productName, int barcode)
+        {
+            using (var db = new DatabaseContext())
+            {
+                return _itemDa.GetItems(db, serialNumber, productName, barcode);
+            }
+        }
     }
 }

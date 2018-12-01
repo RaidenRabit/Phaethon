@@ -27,5 +27,14 @@ namespace InternalApi.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItem(id));
         }
+
+        [Route("GetItems")]
+        [HttpGet]
+        public HttpResponseMessage GetItems(string serialNumber, string productName, int barcode)
+        {
+            if (serialNumber == null) serialNumber = "";
+            if (productName == null) productName = "";
+            return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItems(serialNumber, productName, barcode));
+        }
     }
 }

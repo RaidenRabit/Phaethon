@@ -10,5 +10,7 @@ namespace InternalApi.DataManagement.IDataManagement
     interface IItemManagement
     {
         Item GetItem(int id);
+
+        List<Item> GetItems(string serialNumber, string productName, int barcode);
     }
 }

@@ -50,21 +50,19 @@ function elementTableChange() {
     //adds new item row to table
     $("#newItemRow").click(function () {
         var rowValue;
-        if ($("#itemTable tbody tr").length == 0) {
+        if ($("#elementTable tbody tr").length == 0) {
             rowValue = 0;
         } else {
-            rowValue = parseInt($("#itemTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
+            rowValue = parseInt($("#elementTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
         }
         if (incoming) {
-            $("#itemTable tbody").append(addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, ""));
+            $("#elementTable tbody").append(addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, ""));
             
             ItemChange(rowValue);
             $("#Elements_" + rowValue + "__ProductGroup").change();
             $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").change();
         } else {
-            //!! has to be able to add existing item from database
-            //$("#dialog").dialog({ title: "Item selection", autoOpen: true, modal: true, buttons: { "Save": function () { } } });
-            getItem(rowValue, 3);
+            getSelectItemForm();
         }
     });
 
@@ -75,13 +73,11 @@ function elementTableChange() {
 
     //on tax group label click will open dialog
     $("#taxGroupLabel").click(function () {
-        $("#dialog").dialog({ title: "Tax group", autoOpen: false, modal: true, buttons: { "Save": function () { taxGroupForm(); } } });
         getTaxGroupForm();
     });
 
     //on product group label click will open dialog
     $("#productGroupLabel").click(function () {
-        $("#dialog").dialog({ title: "Product group", autoOpen: false, modal: true, buttons: { "Save": function () { productGroupForm(); } } });
         getProductGroupForm();
     });
 }
@@ -93,7 +89,7 @@ function ItemChange(rowValue) {
     $("#Elements_" + rowValue + "__ProductGroup").change(function () {
         var productId = $("#Elements_" + rowValue + "__Item_Product_ID").val();
         var productGroupId = $(this).val();
-        $("#itemTable tbody tr").each(function () {
+        $("#elementTable tbody tr").each(function () {
             var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
             if (productId == $("#Elements_" + row + "__Item_Product_ID").val()) {
                 $("#Elements_" + row + "__ProductGroup").val(productGroupId);
@@ -391,7 +387,7 @@ function getProduct(rowValue, obj) {
                 $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
 
                 var productId = $("#Elements_" + rowValue + "__Item_Product_ID").val();
-                $("#itemTable tbody tr").each(function () {
+                $("#elementTable tbody tr").each(function () {
                     var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
                     if (productId == $("#Elements_" + row + "__Item_Product_ID").val()) {
                         var productGroupId = $("#Elements_" + row + "__ProductGroup").val();
@@ -431,7 +427,7 @@ function getInvoiceItems() {
                     noTaxPrice = data[i].Item.IncomingPrice;
                     readonly = "readonly";
                 }
-                $("#itemTable tbody").append(
+                $("#elementTable tbody").append(
                     addNewElement(i,
                         data[i].Item.ID,
                         data[i].Item.Product.ID,
@@ -458,7 +454,14 @@ function getInvoiceItems() {
     });
 }
 
-function getItem(rowValue, id) {
+function getItem(id) {
+    var rowValue;
+    if ($("#elementTable tbody tr").length == 0) {
+        rowValue = 0;
+    } else {
+        rowValue = parseInt($("#elementTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
+    }
+
     $.ajax({
         type: "GET",
         url: url + "/Item/GetItem",
@@ -468,7 +471,7 @@ function getItem(rowValue, id) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            $("#itemTable tbody").append(
+            $("#elementTable tbody").append(
                 addNewElement(rowValue,
                     data.ID,
                     data.Product.ID,
@@ -496,6 +499,7 @@ function getItem(rowValue, id) {
 
 //Get form
 function getTaxGroupForm() {
+    $("#dialog").dialog({ title: "Tax group", autoOpen: false, modal: true, buttons: { "Save": function () { taxGroupForm(); } } });
     $.ajax({
         type: "GET",
         url: "/TaxGroup/Create",
@@ -509,9 +513,25 @@ function getTaxGroupForm() {
 }
 
 function getProductGroupForm() {
+    $("#dialog").dialog({ title: "Product group", autoOpen: false, modal: true, buttons: { "Save": function () { productGroupForm(); } } });
     $.ajax({
         type: "GET",
         url: "/ProductGroup/Create",
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (data) {
+            $("#dialog").html(data);
+            $("#dialog").dialog("open");
+        }
+    });
+}
+
+function getSelectItemForm() {
+    $("#dialog").dialog({
+        title: "Item selection", autoOpen: false, modal: true, height: 500, width: 1000});
+    $.ajax({
+        type: "GET",
+        url: "/Item/Select",
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (data) {
@@ -531,7 +551,7 @@ function productGroupForm() {
             $("#dialog").html("");
             $("#dialog").dialog("close");
             $.when(getProductGroups()).done(function () {
-                $("#itemTable tbody tr").each(function () {
+                $("#elementTable tbody tr").each(function () {
                     var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
                     var productGroupId = $("#Elements_" + rowValue + "__ProductGroup").val();
                     $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
@@ -551,7 +571,7 @@ function taxGroupForm() {
             $("#dialog").html("");
             $("#dialog").dialog("close");
             $.when(getTaxGroups()).done(function () {
-                $("#itemTable tbody tr").each(function () {
+                $("#elementTable tbody tr").each(function () {
                     var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
                     var taxGroupId = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val();
                     $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").html(ProductGroups);
@@ -568,13 +588,13 @@ function elementSetUp(rowValue) {
     $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
 
     //allows only int values in last row
-    onlyNumbers("#itemTable tbody tr:last ");
+    onlyNumbers("#elementTable tbody tr:last ");
 }
 
 function totalAmount() {
     var amount = parseFloat(0);
     var amountNoTax = parseFloat(0);
-    $("#itemTable tbody tr").each(function () {
+    $("#elementTable tbody tr").each(function () {
         var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
         var quantity = parseFloat($("#Elements_" + row + "__Item_Quantity").val());
         amount = amount + parseFloat($("#Elements_" + row + "__Item_" + invoiceType + "Price").val()) * quantity;

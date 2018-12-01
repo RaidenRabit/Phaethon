@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using Core.Model;
@@ -22,6 +23,16 @@ namespace InternalApi.DataAccess
             item.Quantity = 1;
 
             return item;
+        }
+
+        internal List<Item> GetItems(DatabaseContext db, string serialNumber, string productName, int barcode)
+        {
+            return db.Items
+                .Include(x => x.Product)
+                .Where(x => x.SerNumber.Contains(serialNumber))
+                .Where(x => x.Product.Name.Contains(productName))
+                .Where(x => barcode == 0 || x.Product.Barcode == barcode)
+                .ToList();
         }
 
         internal void Delete(DatabaseContext db, Item item)
