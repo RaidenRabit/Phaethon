@@ -455,46 +455,57 @@ function getInvoiceItems() {
 }
 
 function getItem(id) {
-    var rowValue;
-    if ($("#elementTable tbody tr").length == 0) {
-        rowValue = 0;
-    } else {
-        rowValue = parseInt($("#elementTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
-    }
-
-    $.ajax({
-        type: "GET",
-        url: url + "/Item/GetItem",
-        data: {
-            id: id
-        },
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            $("#elementTable tbody").append(
-                addNewElement(rowValue,
-                    data.ID,
-                    data.Product.ID,
-                    data.Quantity,
-                    data.SerNumber,
-                    data.Product.Name,
-                    data.Product.Barcode,
-                    data.OutgoingPrice,
-                    data.IncomingPrice,
-                    "readonly"));
-            ItemChange(rowValue);
-            $("#Elements_" + rowValue + "__ProductGroup").val(data.Product.ProductGroup_ID);
-            $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val(data.OutgoingTaxGroup_ID);
-            if (incoming) {
-                $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price").change();
-            } else {
-                if (data.OutgoingPrice == 0) {
-                    $("#Elements_" + rowValue + "__Price").change();
-                }
-            }
-            totalAmount();
+    var exist = false;
+    $("#elementTable tbody tr").each(function () {
+        var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
+        if ($("#Elements_" + row + "__Item_ID").val() == id) {
+            exist = true;
         }
     });
+
+    if (!exist) {
+        var rowValue;
+        if ($("#elementTable tbody tr").length == 0) {
+            rowValue = 0;
+        } else {
+            rowValue =
+                parseInt($("#elementTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: url + "/Item/GetItem",
+            data: {
+                id: id
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                $("#elementTable tbody").append(
+                    addNewElement(rowValue,
+                        data.ID,
+                        data.Product.ID,
+                        data.Quantity,
+                        data.SerNumber,
+                        data.Product.Name,
+                        data.Product.Barcode,
+                        data.OutgoingPrice,
+                        data.IncomingPrice,
+                        "readonly"));
+                ItemChange(rowValue);
+                $("#Elements_" + rowValue + "__ProductGroup").val(data.Product.ProductGroup_ID);
+                $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val(data.OutgoingTaxGroup_ID);
+                if (incoming) {
+                    $("#Elements_" + rowValue + "__Item_" + invoiceType + "Price").change();
+                } else {
+                    if (data.OutgoingPrice == 0) {
+                        $("#Elements_" + rowValue + "__Price").change();
+                    }
+                }
+                totalAmount();
+            }
+        });
+    }
 }
 
 //Get form
