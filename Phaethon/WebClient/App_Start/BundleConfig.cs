@@ -21,7 +21,8 @@ namespace WebClient
                         "~/Scripts/invoice.index.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/Invoice/Edit").Include(
-                "~/Scripts/invoice.edit.js"));
+                "~/Scripts/invoice.edit_company.js",
+                "~/Scripts/invoice.edit_elements.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/Item/Select").Include(
                 "~/Scripts/item.select.js"));

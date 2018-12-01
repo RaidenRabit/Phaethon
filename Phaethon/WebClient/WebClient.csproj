@@ -318,7 +318,8 @@
     <Content Include="Scripts\i18n\defaults-zh_CN.min.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
-    <Content Include="Scripts\invoice.edit.js" />
+    <Content Include="Scripts\invoice.edit_elements.js" />
+    <Content Include="Scripts\invoice.edit_company.js" />
     <Content Include="Scripts\invoice.index.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\item.select.js" />
