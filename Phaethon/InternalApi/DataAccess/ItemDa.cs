@@ -32,6 +32,8 @@ namespace InternalApi.DataAccess
                 .Where(x => x.SerNumber.Contains(serialNumber))
                 .Where(x => x.Product.Name.Contains(productName))
                 .Where(x => barcode == 0 || x.Product.Barcode == barcode)
+                .Where(x => x.OutgoingPrice == 0)
+                .Where(x => x.OutgoingTaxGroup_ID == null)
                 .ToList();
         }
 
