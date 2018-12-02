@@ -37,6 +37,18 @@ $(function () {
     $("#numOfRecords, #companyName, #dateRange, input[name=companyOption], input[name=dateOption], #docNumber").change(function() {
         GetInvoices();
     });
+
+    $("#newInvoice").click(function () {
+        $("#dialog").dialog({
+            title: "Invoice type",
+            autoOpen: true,
+            modal: true,
+            buttons: {
+                "In coming": function () { window.location.href = "Invoice/Edit/True"; },
+                "Out going": function () { window.location.href = "Invoice/Edit/False"; }
+            }
+        });
+    });
 });
 
 //gets invoices

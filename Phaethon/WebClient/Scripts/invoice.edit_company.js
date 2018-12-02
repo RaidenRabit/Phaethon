@@ -94,6 +94,7 @@ function RepresentativeChange(element) {
     });
 }
 
+//Get info
 function getCompanies() {
     $.ajax({
         type: "GET",

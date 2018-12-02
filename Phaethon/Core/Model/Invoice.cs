@@ -21,6 +21,10 @@ namespace Core.Model
 
         [Required]
         [DataMember]
+        public bool Incoming { get; set; }
+
+        [Required]
+        [DataMember]
         [DisplayName("Transport cost")]
         public decimal Transport { get; set; }
 
@@ -64,9 +68,5 @@ namespace Core.Model
         [NotMapped]
         [DataMember]
         public decimal Sum { get; set; }
-
-        [NotMapped]
-        [DataMember]
-        public bool Incoming { get; set; } = false;
     }
 }

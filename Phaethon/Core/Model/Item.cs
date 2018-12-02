@@ -35,11 +35,6 @@ namespace Core.Model
         [DisplayName("Outgoing price")]
         public decimal OutgoingPrice { get; set; }
 
-        [Required]
-        [DataMember]
-        [DisplayName("Discount")]
-        public int Discount { get; set; }
-
         [DataMember]
         [ForeignKey("Product_ID")]
         public virtual Product Product { get; set; }
