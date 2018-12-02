@@ -51,6 +51,7 @@ function GetJobs() {
                     for (var i = 0; i < data.length; i++) {
                         var StartedTime = moment(data[i].StartedTime).format('DD-MM-YYYY');
                         var FinishedTime = moment(data[i].FinishedTime).format('DD-MM-YYYY');
+                        var NotificationTime = moment(data[i].NotificationTime).format('DD-MM-YYYY HH:mm');
                         var CustomerName = data[i].Customer.FamilyName + " " + data[i].Customer.GivenName;
                         statusJob = ["", "Unassigned", "In Progress", "Done"];
                         htmlText += "<tr>" +
@@ -77,9 +78,21 @@ function GetJobs() {
                             "</td>" +
                             "<td>" +
                             data[i].Description +
-                            "</td>" +
-                            "<td>" +
-                            "<button class=\"btn\"  onclick=\"ReadJob(this)\">"+"Edit"+
+                            "</td>";
+                            
+                        if (data[i].NotificationTime != null) {
+                            htmlText += "<td>" +
+                                "<button class=\"fa fa-envelope\" title = \"Sent at: " +
+                                NotificationTime +
+                                "\" onclick=\"ResendNotification(this)\" style='font-size:36px'></button>" +
+                                "</td>";
+                        } else {
+                            htmlText += "<td> &nbsp; </td>";
+                        }
+
+                        htmlText += "<td>" +
+                            "<button class=\"btn\"  onclick=\"ReadJob(this)\">" +
+                            "Edit" +
                             "</td>" +
                             "</tr>";
                     }
@@ -117,6 +130,20 @@ function ReadJob(obj) {
         }
     });
     
+};
+
+function ResendNotification(obj) {
+    var jobId = $(obj).closest("tr").find('td:nth-child(1)').html();
+    $.ajax({
+        type: "GET",
+        url: "/Job/ResendNotification?" +
+            "&jobId=" + jobId,
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function () {
+            GetJobs();
+        }
+    });
 };
 
 function NewJob() {

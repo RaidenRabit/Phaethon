@@ -3,7 +3,7 @@ namespace InternalApi.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initialcommit : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -157,7 +157,8 @@ namespace InternalApi.Migrations
                         JobStatus = c.Int(nullable: false),
                         JobName = c.String(),
                         StartedTime = c.DateTime(nullable: false),
-                        FinishedTime = c.DateTime(nullable: false),
+                        FinishedTime = c.DateTime(),
+                        NotificationTime = c.DateTime(),
                         Cost = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Description = c.String(),
                     })

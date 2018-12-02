@@ -88,5 +88,17 @@ namespace WebClient.Controllers
         {
             await _client.PostAsJsonAsync("InsertOrUpdate", job);
         }
+
+        [HttpGet]
+        [Route("ResendNotification")]
+        public async Task ResendNotification(string jobId)
+        {
+            if (!string.IsNullOrEmpty(jobId) && !jobId.Equals("0"))
+            {
+                var parameters = HttpUtility.ParseQueryString(string.Empty);
+                parameters["id"] = jobId;
+                await _client.GetAsync("ResendNotification?" + parameters);
+            }
+        }
     }
 }

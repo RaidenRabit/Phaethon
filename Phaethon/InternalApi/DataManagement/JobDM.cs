@@ -46,7 +46,7 @@ namespace InternalApi.DataManagement
             if (jobQueryFilter.From == jobQueryFilter.To && jobQueryFilter.From == new DateTime())
             {
                 jobQueryFilter.From = _jobDa.GetEarliestEntry();
-                jobQueryFilter.To = _jobDa.GetLatestEntry();
+                jobQueryFilter.To = _jobDa.GetLatestEntry()?? DateTime.Now;
             }
 
             return _jobDa.ReadAll(jobQueryFilter);

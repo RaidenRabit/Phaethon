@@ -42,6 +42,7 @@ namespace InternalApi.Controllers
                     {
                         string customerName = job.Customer.GivenName + " " + job.Customer.FamilyName;
                         _emailSenderDm.SendEmail(job.Customer.Email, customerName, job.JobName, job.Description);
+                        job.NotificationTime = DateTime.Now;;
                     }
                 }
 
@@ -86,6 +87,18 @@ namespace InternalApi.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
+        }
+
+        [HttpGet]
+        [Route("ResendNotification")]
+        public HttpResponseMessage ResendNotification(string id)
+        {
+            Job job = _jobDm.Read(id);
+            string customerName = job.Customer.GivenName + " " + job.Customer.FamilyName;
+            _emailSenderDm.SendEmail(job.Customer.Email, customerName, job.JobName, job.Description);
+            job.NotificationTime = DateTime.Now;
+            _jobDm.Create(job);
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }
