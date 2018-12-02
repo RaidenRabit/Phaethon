@@ -41,7 +41,7 @@ function elementTableChange() {
             } else {
                 rowValue = parseInt($("#elementTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
             }
-            addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, "", 0, 0);
+            addNewElement(rowValue, 0, 0, 0, "", "", "", 0, 0, "", 0, 0, "True");
         } else {
             getSelectItemForm();
         }
@@ -129,8 +129,8 @@ function ItemChange(rowValue) {
 
     //delete button clicked 
     $("#Elements_" + rowValue + "__Delete").click(function () {
-        var row = $(this).closest("tr");
-        if ($("#Elements_" + rowValue + "__Item_ID").val() == 0) {
+        if ($(this).data("deletable") == "True") {
+            var row = $(this).closest("tr");
             row.remove();
         }
         else {
@@ -266,7 +266,8 @@ function getInvoiceItems() {
                     noTaxPrice,
                     readonly,
                     data[i].Item.Product.ProductGroup_ID,
-                    taxGroup);
+                    taxGroup,
+                    "False");
             }
             totalAmount();
         }
@@ -311,7 +312,8 @@ function getItem(id) {
                     data.IncomingPrice,
                     "readonly",
                     data.Product.ProductGroup_ID,
-                    data.OutgoingTaxGroup_ID);
+                    data.OutgoingTaxGroup_ID,
+                    "True");
                 totalAmount();
             }
         });
@@ -455,7 +457,7 @@ function onlyNumbers(path) {
     });
 }
 
-function addNewElement(rowValue, itemId, productId, quantity, serNumber, productName, barcode, price, noTaxPrice, readonly, productGroupId, taxGroupId) {
+function addNewElement(rowValue, itemId, productId, quantity, serNumber, productName, barcode, price, noTaxPrice, readonly, productGroupId, taxGroupId, deletable) {
     $("#elementTable tbody").append("<tr>" +
         "<input data-val='true' data-val-number='The Delete must be a boolean.' data-val-required='The Delete field is required.' id='Elements_" + rowValue + "__Item_Delete' name='Elements[" + rowValue + "].Item.Delete' type='hidden' value='false'>" +
         "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item.ID' type='hidden' value='" + itemId + "'>" +
@@ -468,7 +470,7 @@ function addNewElement(rowValue, itemId, productId, quantity, serNumber, product
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__" + invoiceType + "TaxGroup' name='Elements[" + rowValue + "].Item." + invoiceType + "TaxGroup_ID' required='required'></select></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__ProductGroup' name='Elements[" + rowValue + "].Item.Product.ProductGroup_ID' required='required'></select></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field " + invoiceType + "Price must be a number.' data-val-required='The " + invoiceType + "Price field is required.' id='Elements_" + rowValue + "__Item_" + invoiceType + "Price' name='Elements[" + rowValue + "].Item." + invoiceType + "Price' required='required' min='0' step='0.01' type='number' value='" + price + "'></td>" +
-        "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='Delete' title='This button removes item, action cant be canceled.'></td>" +
+        "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='Delete' title='This button removes item, action cant be canceled.' data-deletable='" + deletable + "'></td>" +
         "</tr>");
     ItemChange(rowValue);
     $("#Elements_" + rowValue + "__ProductGroup").val(productGroupId);
