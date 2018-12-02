@@ -40,7 +40,11 @@ namespace Core.Model
 
         [DataMember]
         [DisplayName("Finished Time")]
-        public DateTime FinishedTime { get; set; }
+        public DateTime? FinishedTime { get; set; }
+
+        [DataMember]
+        [DisplayName("Notification Time")]
+        public DateTime? NotificationTime { get; set; }
 
         [DataMember]
         public decimal Cost { get; set; }

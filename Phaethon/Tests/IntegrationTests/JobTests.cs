@@ -276,6 +276,29 @@ namespace Tests.IntegrationTests
             JobDa jobDa = new JobDa();
             int jobId = jobDa.InsertOrUpdate(_job);
             Job job = jobDa.Read(jobId);
+            _job.JobStatus = JobStatus_enum.InProgress;
+
+            //Act
+            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+            Job putJob = jobDa.Read(deserializedResponse);
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(!putJob.Equals(job));
+            Assert.IsTrue(putJob.ID.Equals(job.ID));
+            Assert.IsTrue(putJob.JobStatus.Equals(JobStatus_enum.InProgress));
+        }
+
+        [Test]
+        public async Task PutJob_UpdateJobStatusComplete_JobId()
+        {
+
+            //Set up
+            InitializeData();
+            JobDa jobDa = new JobDa();
+            int jobId = jobDa.InsertOrUpdate(_job);
+            Job job = jobDa.Read(jobId);
             _job.JobStatus = JobStatus_enum.Completed;
 
             //Act

@@ -67,7 +67,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        public DateTime GetLatestEntry()
+        public DateTime? GetLatestEntry()
         {
             using (var db = new DatabaseContext())
             {
