@@ -24,15 +24,12 @@ namespace InternalApi.DataAccess
 
         public User GetUser(DatabaseContext db, int id)
         {
-  
-                return db.Users.SingleOrDefault(x => x.id == id);
+            return db.Users.SingleOrDefault(x => x.id == id);
         }
 
-        public int Login(DatabaseContext db, User user)
+        public User Login(DatabaseContext db, User user)
         {
-
-            return db.Users.Where(x => x.UserName.Equals(user.UserName) && x.Password.Equals(user.Password)).FirstOrDefault().id;
-
+            return db.Users.Where(x => x.UserName.Equals(user.UserName) && x.Password.Equals(user.Password)).FirstOrDefault();
         }
     }
 }
