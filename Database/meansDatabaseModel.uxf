@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1180</x>
-      <y>180</y>
+      <x>1210</x>
+      <y>30</y>
       <w>230</w>
       <h>160</h>
     </coordinates>
@@ -22,8 +22,8 @@ BankNumber VARCHAR</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>830</x>
-      <y>380</y>
+      <x>860</x>
+      <y>230</y>
       <w>250</w>
       <h>160</h>
     </coordinates>
@@ -38,8 +38,8 @@ Barcode INT</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>840</x>
-      <y>560</y>
+      <x>870</x>
+      <y>410</y>
       <w>230</w>
       <h>160</h>
     </coordinates>
@@ -47,15 +47,14 @@ Barcode INT</panel_attributes>
 --
 ID INT PRIMARY KEY,
 Name VARCHAR,
-Tax INT
-red</panel_attributes>
+Tax INT</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>700</x>
-      <y>520</y>
+      <x>730</x>
+      <y>370</y>
       <w>160</w>
       <h>90</h>
     </coordinates>
@@ -65,8 +64,8 @@ red</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>430</x>
-      <y>450</y>
+      <x>460</x>
+      <y>300</y>
       <w>280</w>
       <h>160</h>
     </coordinates>
@@ -78,15 +77,14 @@ IncomingTaxGroup_ID INT FOREIGN KEY,
 OutgoingTaxGroup_ID INT FOREIGN KEY,
 SerNumber VARCHAR,
 IncomingPrice DECIMAL,
-OutgoingPrice DECIMAL,
-Discount int</panel_attributes>
+OutgoingPrice DECIMAL</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>700</x>
-      <y>400</y>
+      <x>730</x>
+      <y>250</y>
       <w>150</w>
       <h>120</h>
     </coordinates>
@@ -96,8 +94,8 @@ Discount int</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>460</x>
-      <y>180</y>
+      <x>490</x>
+      <y>30</y>
       <w>230</w>
       <h>170</h>
     </coordinates>
@@ -106,6 +104,7 @@ Discount int</panel_attributes>
 ID INT PRIMARY KEY,
 Sender_ID INT FOREIGN KEY,
 Receiver_ID INT FOREIGN KEY,
+Incoming BIT,
 Transport DECIMAL,
 DocNumber VARCHAR,
 PrescriptionDate DATE,
@@ -117,8 +116,8 @@ PaymentDate DATE
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>840</x>
-      <y>180</y>
+      <x>870</x>
+      <y>30</y>
       <w>230</w>
       <h>160</h>
     </coordinates>
@@ -132,8 +131,8 @@ Name VARCHAR</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1060</x>
-      <y>200</y>
+      <x>1090</x>
+      <y>50</y>
       <w>140</w>
       <h>50</h>
     </coordinates>
@@ -143,8 +142,8 @@ Name VARCHAR</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>200</y>
+      <x>710</x>
+      <y>50</y>
       <w>180</w>
       <h>60</h>
     </coordinates>
@@ -154,8 +153,8 @@ Name VARCHAR</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>200</y>
+      <x>710</x>
+      <y>50</y>
       <w>180</w>
       <h>50</h>
     </coordinates>
@@ -165,8 +164,8 @@ Name VARCHAR</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>200</y>
+      <x>30</x>
+      <y>50</y>
       <w>310</w>
       <h>160</h>
     </coordinates>
@@ -179,8 +178,8 @@ Item_ID INT FOREIGN KEY PRIMARY KEY</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
-      <y>230</y>
+      <x>330</x>
+      <y>80</y>
       <w>150</w>
       <h>270</h>
     </coordinates>
@@ -191,8 +190,8 @@ Item_ID INT FOREIGN KEY PRIMARY KEY</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
-      <y>200</y>
+      <x>330</x>
+      <y>50</y>
       <w>180</w>
       <h>50</h>
     </coordinates>
@@ -202,8 +201,8 @@ Item_ID INT FOREIGN KEY PRIMARY KEY</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1180</x>
-      <y>380</y>
+      <x>1210</x>
+      <y>230</y>
       <w>230</w>
       <h>160</h>
     </coordinates>
@@ -211,15 +210,14 @@ Item_ID INT FOREIGN KEY PRIMARY KEY</panel_attributes>
 --
 ID INT PRIMARY KEY,
 Name VARCHAR,
-Margin INT
-red</panel_attributes>
+Margin INT</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1070</x>
-      <y>400</y>
+      <x>1100</x>
+      <y>250</y>
       <w>130</w>
       <h>50</h>
     </coordinates>
@@ -229,8 +227,8 @@ red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>700</x>
-      <y>510</y>
+      <x>730</x>
+      <y>360</y>
       <w>160</w>
       <h>100</h>
     </coordinates>
