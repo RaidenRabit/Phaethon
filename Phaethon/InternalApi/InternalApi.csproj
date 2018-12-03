@@ -92,24 +92,23 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataAccess\CompanyDa.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
     <Compile Include="DataAccess\InvoiceDa.cs" />
     <Compile Include="DataAccess\JobDa.cs" />
+    <Compile Include="DataAccess\UserDa.cs" />
     <Compile Include="DataManagement\CompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IUserManagement.cs" />
     <Compile Include="DataManagement\InvoiceManagement.cs" />
     <Compile Include="DataManagement\JobDM.cs" />
+    <Compile Include="DataManagement\UserManagement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811231206433_#10-MaageTasks-Migratio.cs" />
-    <Compile Include="Migrations\201811231206433_#10-MaageTasks-Migratio.Designer.cs">
-      <DependentUpon>201811231206433_#10-MaageTasks-Migratio.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -130,11 +129,6 @@
       <Project>{2f81d45f-2fd1-442c-b663-d04af5982d28}</Project>
       <Name>Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811231206433_#10-MaageTasks-Migratio.resx">
-      <DependentUpon>201811231206433_#10-MaageTasks-Migratio.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
