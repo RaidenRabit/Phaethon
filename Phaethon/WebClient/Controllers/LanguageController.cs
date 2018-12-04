@@ -13,10 +13,6 @@ namespace WebClient.Controllers
     public class LanguageController : Controller
     {
         // GET: Language
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         public void ChangeLanguage(string LanguageAbbreviation)
         {

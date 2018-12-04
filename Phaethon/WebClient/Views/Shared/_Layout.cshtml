@@ -1,5 +1,5 @@
 ﻿@using WebClient.Controllers
-@using a = WebClient;
+@using a = WebClient.Resources.Language_Files.LanguagePack;
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        @Html.ActionLink(a.Resources.Language_Files.LanguagePack.About, "About", "Home", null, htmlAttributes: new { @class = "nav-link" })
+                        @Html.ActionLink(a.About, "About", "Home", null, htmlAttributes: new { @class = "nav-link" })
                     </li>
                     <li class="nav-item">
                         @Html.ActionLink("Contact", "Contact", "Home", null, htmlAttributes: new { @class = "nav-link" })
@@ -32,11 +32,28 @@
                         @Html.ActionLink("Job List", "Index", "Job", null, htmlAttributes: new { @class = "nav-link" })
                     </li>
                 </ul>
-
-                <ul class="navbar-nav">
-                    <li><button id="ChangeLanguageEn">Click For En</button></li>
-                    <li><button id="ChangeLanguageLv">Click For LV</button></li>
-                </ul>
+                <div class="float-lg-right">
+                    <div class="btn-group navbar-collapse"><button aria-expanded="true" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" type="button">@a.SelectLanguage<b class="caret"></b></button>
+                        <ul class="dropdown-menu">
+                            <li style="margin: 10px">
+                                <div class="container" id="ChangeLanguageEn">
+                                    <img src="~/Resources/Images/english-flag.png" style="width: 70px; height: 40px" class="image" alt="@a.English" />
+                                    <div class="overlay">
+                                        <div class="text">@a.English</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="margin: 10px">
+                                <div class="container" id="ChangeLanguageLv">
+                                    <img src="~/Resources/Images/latvian-flag.jpg" style="width: 70px; height: 40px" class="image" alt="@a.Latvian" />
+                                    <div class="overlay">
+                                        <div class="text">@a.Latvian</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>

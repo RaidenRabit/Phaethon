@@ -41,6 +41,7 @@ namespace WebClient
             #region StyleBundles
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/HoverElement.css",
                       "~/Content/bootstrap.min.css",
                       "~/Content/bootstrap-select.css",
                       "~/Content/font-awesome.css",

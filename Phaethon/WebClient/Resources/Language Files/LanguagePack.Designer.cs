@@ -79,6 +79,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invoice List.
         /// </summary>
         public static string InvoiceList {
@@ -93,6 +102,24 @@ namespace WebClient.Resources.Language_Files {
         public static string JobList {
             get {
                 return ResourceManager.GetString("JobList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latvian.
+        /// </summary>
+        public static string Latvian {
+            get {
+                return ResourceManager.GetString("Latvian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Language.
+        /// </summary>
+        public static string SelectLanguage {
+            get {
+                return ResourceManager.GetString("SelectLanguage", resourceCulture);
             }
         }
     }

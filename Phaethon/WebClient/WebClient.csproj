@@ -185,6 +185,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\daterangepicker.css" />
     <Content Include="Content\Img\Means.svg" />
+    <Content Include="Content\HoverElement.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -230,8 +231,9 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Resource Include="Resources\Images\english-flag.png" />
+    <Resource Include="Resources\Images\latvian-flag.jpg" />
     <Content Include="Scripts\changeLanguage.js" />
-    <Content Include="Views\Language\Index.cshtml" />
     <Resource Include="Resources\Images\fidget_spinner.png" />
     <Resource Include="Resources\Images\middle_fidget_spinner_part.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
