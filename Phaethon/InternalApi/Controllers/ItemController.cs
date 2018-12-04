@@ -14,11 +14,11 @@ namespace InternalApi.Controllers
     [RoutePrefix("Item")]
     public class ItemController : ApiController
     {
-        private readonly IItemManagement _itemManagement;
+        private readonly IItemDM _itemManagement;
 
         public ItemController()
         {
-            _itemManagement = new ItemManagement();
+            _itemManagement = new ItemDM();
         }
 
         [Route("GetItem")]

@@ -8,11 +8,11 @@ using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.DataManagement
 {
-    public class TaxGroupManagement: ITaxGroupManagement
+    public class TaxGroupDM: ITaxGroupDM
     {
         private readonly TaxGroupDa _taxGroupDa;
 
-        internal TaxGroupManagement()
+        internal TaxGroupDM()
         {
             _taxGroupDa = new TaxGroupDa();
         }

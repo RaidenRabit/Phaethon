@@ -123,21 +123,21 @@
     <Compile Include="DataManagement\IDataManagement\ICustomerDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IEmailSenderDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
-    <Compile Include="DataManagement\CompanyManagement.cs" />
-    <Compile Include="DataManagement\ElementManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IElementManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IItemManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IProductGroupManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IProductManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\ITaxGroupManagement.cs" />
-    <Compile Include="DataManagement\InvoiceManagement.cs" />
-    <Compile Include="DataManagement\ItemManagement.cs" />
-    <Compile Include="DataManagement\ProductGroupManagement.cs" />
+    <Compile Include="DataManagement\CompanyDM.cs" />
+    <Compile Include="DataManagement\ElementDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\ICompanyDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IElementDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IInvoiceDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IItemDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IProductGroupDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IProductDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\ITaxGroupDM.cs" />
+    <Compile Include="DataManagement\InvoiceDM.cs" />
+    <Compile Include="DataManagement\ItemDM.cs" />
+    <Compile Include="DataManagement\ProductGroupDM.cs" />
     <Compile Include="DataManagement\JobDM.cs" />
-    <Compile Include="DataManagement\ProductManagement.cs" />
-    <Compile Include="DataManagement\TaxGroupManagement.cs" />
+    <Compile Include="DataManagement\ProductDM.cs" />
+    <Compile Include="DataManagement\TaxGroupDM.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -14,11 +14,11 @@ namespace InternalApi.Controllers
     [RoutePrefix("Element")]
     public class ElementController : ApiController
     {
-        private readonly IElementManagement _elementManagement = null;
+        private readonly IElementDM _elementManagement = null;
 
         public ElementController()
         {
-            _elementManagement = new ElementManagement();
+            _elementManagement = new ElementDM();
         }
 
         [Route("GetInvoiceElements")]

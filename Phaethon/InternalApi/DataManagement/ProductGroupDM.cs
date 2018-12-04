@@ -8,11 +8,11 @@ using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.DataManagement
 {
-    public class ProductGroupManagement: IProductGroupManagement
+    public class ProductGroupDM: IProductGroupDM
     {
         private readonly ProductGroupDa _productGroupDa;
 
-        internal ProductGroupManagement()
+        internal ProductGroupDM()
         {
             _productGroupDa = new ProductGroupDa();
         }

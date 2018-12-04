@@ -11,11 +11,11 @@ namespace InternalApi.Controllers
     [RoutePrefix("Company")]
     public class CompanyController: ApiController
     {
-        private readonly ICompanyManagement _companyManagement = null;
+        private readonly ICompanyDM _companyManagement = null;
 
         public CompanyController()
         {
-            _companyManagement = new CompanyManagement();
+            _companyManagement = new CompanyDM();
         }
 
         [Route("GetCompanies")]

@@ -7,7 +7,7 @@ using Core.Model;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
-    interface ITaxGroupManagement
+    interface ITaxGroupDM
     {
         bool Create(TaxGroup taxGroup);
         List<TaxGroup> GetTaxGroups();

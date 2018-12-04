@@ -14,11 +14,11 @@ namespace InternalApi.Controllers
     [RoutePrefix("Product")]
     public class ProductController : ApiController
     {
-        private readonly IProductManagement _productManagement = null;
+        private readonly IProductDM _productManagement = null;
 
         public ProductController()
         {
-            _productManagement = new ProductManagement();
+            _productManagement = new ProductDM();
         }
 
         [Route("GetProduct")]

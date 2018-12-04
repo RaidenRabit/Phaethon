@@ -7,11 +7,11 @@ using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.DataManagement
 {
-    internal class InvoiceManagement: IInvoiceManagement
+    internal class InvoiceDM: IInvoiceDM
     {
         private readonly InvoiceDa _invoiceDa;
 
-        internal InvoiceManagement()
+        internal InvoiceDM()
         {
             _invoiceDa = new InvoiceDa();
         }

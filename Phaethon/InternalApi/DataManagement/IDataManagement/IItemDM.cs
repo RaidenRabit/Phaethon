@@ -7,8 +7,10 @@ using Core.Model;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
-    interface IProductManagement
+    interface IItemDM
     {
-        Product GetProduct(int barcode);
+        Item GetItem(int id);
+
+        List<Item> GetItems(string serialNumber, string productName, int barcode);
     }
 }

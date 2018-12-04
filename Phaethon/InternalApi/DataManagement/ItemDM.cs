@@ -8,11 +8,11 @@ using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.DataManagement
 {
-    internal class ItemManagement: IItemManagement
+    internal class ItemDM: IItemDM
     {
         private readonly ItemDa _itemDa;
 
-        internal ItemManagement()
+        internal ItemDM()
         {
             _itemDa = new ItemDa();
         }

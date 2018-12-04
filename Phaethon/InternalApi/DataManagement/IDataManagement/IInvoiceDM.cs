@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
-    internal interface IInvoiceManagement
+    internal interface IInvoiceDM
     {
         bool CreateOrUpdate(Invoice invoice);
 

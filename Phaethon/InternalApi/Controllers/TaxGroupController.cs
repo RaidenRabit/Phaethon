@@ -14,11 +14,11 @@ namespace InternalApi.Controllers
     [RoutePrefix("TaxGroup")]
     public class TaxGroupController : ApiController
     {
-        private readonly ITaxGroupManagement _taxGroupManagement = null;
+        private readonly ITaxGroupDM _taxGroupManagement = null;
 
         public TaxGroupController()
         {
-            _taxGroupManagement = new TaxGroupManagement();
+            _taxGroupManagement = new TaxGroupDM();
         }
 
         [Route("Create")]

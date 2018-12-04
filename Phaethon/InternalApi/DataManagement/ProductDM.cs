@@ -8,20 +8,20 @@ using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.DataManagement
 {
-    internal class ElementManagement: IElementManagement
+    public class ProductDM: IProductDM
     {
-        private readonly ElementDa _elementDa;
+        private readonly ProductDa _productDa;
 
-        internal ElementManagement()
+        internal ProductDM()
         {
-            _elementDa = new ElementDa();
+            _productDa = new ProductDa();
         }
 
-        public List<Element> GetInvoiceElements(int id)
+        public Product GetProduct(int barcode)
         {
             using (var db = new DatabaseContext())
             {
-                return _elementDa.GetInvoiceElements(db, id);
+                return _productDa.GetProduct(db, barcode);
             }
         }
     }

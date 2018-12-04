@@ -8,11 +8,11 @@ using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.DataManagement
 {
-    internal class CompanyManagement : ICompanyManagement
+    internal class CompanyDM : ICompanyDM
     {
         private readonly CompanyDa _companyDa;
 
-        internal CompanyManagement()
+        internal CompanyDM()
         {
             _companyDa = new CompanyDa();
         }
