@@ -33,7 +33,7 @@ namespace Tests.IntegrationTests
                                   element.Item.OutgoingPrice == item.OutgoingPrice &&
                                   element.Item.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID &&
                                   element.Item.OutgoingTaxGroup_ID == item.OutgoingTaxGroup_ID &&
-                                  element.Item.Product.ID == item.Product_ID &&
+                                  element.Item.Product.ID == item.Product.ID &&
                                   element.Item.Product.Barcode == item.Product.Barcode &&
                                   element.Item.Product.Name.Equals(item.Product.Name) &&
                                   element.Item.Product.ProductGroup_ID == item.Product.ProductGroup_ID);//check if object received is the same
