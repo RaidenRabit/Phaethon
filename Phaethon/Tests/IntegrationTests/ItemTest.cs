@@ -43,7 +43,7 @@ namespace Tests.IntegrationTests
             Assert.AreEqual(element.Item.OutgoingPrice, item.OutgoingPrice);
             Assert.AreEqual(element.Item.IncomingTaxGroup_ID, item.IncomingTaxGroup_ID);
             Assert.AreEqual(element.Item.OutgoingTaxGroup_ID, item.OutgoingTaxGroup_ID);
-            Assert.AreEqual(element.Item.Product.ID, item.Product_ID);
+            Assert.AreEqual(element.Item.Product.ID, item.Product.ID);
             Assert.AreEqual(element.Item.Product.Barcode, item.Product.Barcode);
             Assert.AreEqual(element.Item.Product.Name, item.Product.Name);
             Assert.AreEqual(element.Item.Product.ProductGroup_ID, item.Product.ProductGroup_ID);
@@ -63,7 +63,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsNull(dbItem);//check if object received is the same
+            Assert.AreEqual(null, dbItem);//check if object received is the same
         }
         #endregion
 
