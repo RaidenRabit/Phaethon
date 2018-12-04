@@ -16,11 +16,9 @@ namespace InternalApi.DataAccess
 
         internal Item GetItem(DatabaseContext db, int id)
         {
-            Item item = db.Items
+            return db.Items
                 .Include(x => x.Product)
                 .SingleOrDefault(x => x.ID == id);
-
-            return item;
         }
 
         internal List<Item> GetItems(DatabaseContext db, string serialNumber, string productName, int barcode)

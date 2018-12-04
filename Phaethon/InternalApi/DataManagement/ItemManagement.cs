@@ -22,7 +22,10 @@ namespace InternalApi.DataManagement
             using (var db = new DatabaseContext())
             {
                 Item item = _itemDa.GetItem(db, id);
-                item.Quantity = _itemDa.GetItemNotSoldItem(db, item).Count;
+                if (item != null)
+                {
+                    item.Quantity = _itemDa.GetItemNotSoldItem(db, item).Count;
+                }
                 return item;
             }
         }
