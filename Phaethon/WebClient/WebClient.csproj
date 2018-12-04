@@ -219,8 +219,8 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Resource Include="Resources\fidget_spinner.png" />
-    <Resource Include="Resources\middle_fidget_spinner_part.png" />
+    <Resource Include="Resources\Images\fidget_spinner.png" />
+    <Resource Include="Resources\Images\middle_fidget_spinner_part.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
