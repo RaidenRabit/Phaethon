@@ -47,6 +47,7 @@ namespace Tests.IntegrationTests
             Assert.AreEqual(element.Item.Product.Barcode, item.Product.Barcode);
             Assert.AreEqual(element.Item.Product.Name, item.Product.Name);
             Assert.AreEqual(element.Item.Product.ProductGroup_ID, item.Product.ProductGroup_ID);
+            //
         }
 
         [Test]
