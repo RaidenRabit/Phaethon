@@ -55,6 +55,9 @@ namespace WebClient
                 "~/Scripts/moment.min.js",
                 "~/Scripts/job.index.js",
                 "~/Scripts/daterangepicker.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/changeLanguage").Include(
+                "~/Scripts/changeLanguage.js"));
         }
     }
 }
