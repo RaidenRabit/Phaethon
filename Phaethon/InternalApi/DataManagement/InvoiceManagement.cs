@@ -74,7 +74,8 @@ namespace InternalApi.DataManagement
                         {
                             foreach (Element element in elements)
                             {
-                                List<int> itemIds = elementDa.GetSameItemIdsInInvoice(db, element.Item.ID);
+                                Item item = itemDa.GetItem(db, element.Item.ID);
+                                List<int> itemIds = elementDa.GetSameItemIdsInIncomingInvoice(db, item, invoice.ID);
 
                                 productDa.CreateOrUpdate(db, element.Item.Product);
 
@@ -82,20 +83,30 @@ namespace InternalApi.DataManagement
                                 if (itemIds.Count > element.Item.Quantity)
                                 {
                                     int removedCount = itemIds.Count - element.Item.Quantity;
+                                    List<int> removedItemIds = new List<int>();
                                     foreach (int i in itemIds)
                                     {
-                                        Item item = itemDa.GetItem(db, i);
-                                        if (removedCount < 0 && item.OutgoingPrice == 0 && item.OutgoingTaxGroup_ID == null)
+                                        item = itemDa.GetItem(db, i);
+                                        if (removedCount > 0)
                                         {
-                                            itemDa.Delete(db, item);
-                                            removedCount = removedCount - 1;
+                                            if (item.OutgoingPrice == 0 && item.OutgoingTaxGroup_ID == null)
+                                            {
+                                                itemDa.Delete(db, item);
+                                                removedItemIds.Add(i);
+                                                removedCount = removedCount - 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            break;
                                         }
                                     }
+                                    itemIds = itemIds.Except(removedItemIds).ToList();
                                 }
 
                                 for (int i = 0; i < element.Item.Quantity; i++)
                                 {
-                                    Item item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
+                                    item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
                                     if (element.Item.Delete)
                                     {
                                         //remove if item hasn't been sold yet
@@ -127,37 +138,84 @@ namespace InternalApi.DataManagement
                         {
                             foreach (Element element in elements)
                             {
+                                Item item = itemDa.GetItem(db, element.Item.ID);
+                                List<int> itemIds = elementDa.GetSameItemIdsInOutgoingInvoice(db, item, invoice.ID);
+
                                 productDa.CreateOrUpdate(db, element.Item.Product);
 
-                                Item item = itemDa.GetItem(db, element.Item.ID);
-                                if (element.Item.Delete)
+                                //removes from invoice if count was reduced
+                                if (itemIds.Count > element.Item.Quantity)
                                 {
-                                    //on delete of outgoing make item not sold and removes from invoice
-                                    item.OutgoingPrice = 0;
-                                    item.OutgoingTaxGroup_ID = null;
-                                    itemDa.CreateOrUpdate(db, item);
-                                    Element tempElement = new Element
+                                    int removedCount = itemIds.Count - element.Item.Quantity;
+                                    List<int> removedItemIds = new List<int>();
+                                    foreach (int i in itemIds)
                                     {
-                                        Item_ID = item.ID,
-                                        Invoice_ID = invoice.ID
-                                    };
-                                    db.Elements.Attach(tempElement);
-                                    elementDa.Delete(db, tempElement);
+                                        item = itemDa.GetItem(db, i);
+                                        if (removedCount > 0)
+                                        {
+                                            //on delete of outgoing make item not sold and removes from invoice
+                                            item.OutgoingPrice = 0;
+                                            item.OutgoingTaxGroup_ID = null;
+                                            itemDa.CreateOrUpdate(db, item);
+                                            Element tempElement = new Element
+                                            {
+                                                Item_ID = item.ID,
+                                                Invoice_ID = invoice.ID
+                                            };
+                                            db.Elements.Attach(tempElement);
+                                            elementDa.Delete(db, tempElement);
+                                            removedItemIds.Add(i);
+                                            removedCount = removedCount - 1;
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    itemIds = itemIds.Except(removedItemIds).ToList();
                                 }
-                                else
+
+                                for (int i = 0; i < element.Item.Quantity; i++)
                                 {
-                                    item.Product_ID = element.Item.Product.ID;
-                                    item.OutgoingPrice = element.Item.OutgoingPrice * transport + element.Item.OutgoingPrice;
-                                    item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
-
-                                    itemDa.CreateOrUpdate(db, item);
-
-                                    Element tempElement = new Element
+                                    item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
+                                    if (element.Item.Delete)//on delete of outgoing make item not sold and removes from invoice
                                     {
-                                        Item_ID = item.ID,
-                                        Invoice_ID = invoice.ID
-                                    };
-                                    elementDa.CreateOrUpdate(db, tempElement);
+                                        item.OutgoingPrice = 0;
+                                        item.OutgoingTaxGroup_ID = null;
+                                        itemDa.CreateOrUpdate(db, item);
+                                        Element tempElement = new Element
+                                        {
+                                            Item_ID = item.ID,
+                                            Invoice_ID = invoice.ID
+                                        };
+                                        db.Elements.Attach(tempElement);
+                                        elementDa.Delete(db, tempElement);
+                                    }
+                                    else
+                                    {
+                                        if (item == null)
+                                        {
+                                            item = itemDa.GetItem(db, element.Item.ID);
+                                            item = itemDa.GetItemNotSoldItem(db, item)[0];
+                                        }
+
+                                        if (item != null)
+                                        {
+                                            item.Product_ID = element.Item.Product.ID;
+                                            item.OutgoingPrice =
+                                                element.Item.OutgoingPrice * transport + element.Item.OutgoingPrice;
+                                            item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
+
+                                            itemDa.CreateOrUpdate(db, item);
+
+                                            Element tempElement = new Element
+                                            {
+                                                Item_ID = item.ID,
+                                                Invoice_ID = invoice.ID
+                                            };
+                                            elementDa.CreateOrUpdate(db, tempElement);
+                                        }
+                                    }
                                 }
                             }
                         }

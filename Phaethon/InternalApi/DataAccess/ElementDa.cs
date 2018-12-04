@@ -43,18 +43,28 @@ namespace InternalApi.DataAccess
                 .ToList();
         }
 
-        internal List<int> GetSameItemIdsInInvoice(DatabaseContext db, int itemId)
+        //gets all similar item, ids in incoming invoice
+        internal List<int> GetSameItemIdsInIncomingInvoice(DatabaseContext db, Item item, int invoiceId)
         {
-            Element element = db.Elements
-                .Include(x => x.Item)
-                .SingleOrDefault(x => x.Item_ID == itemId);
-
             return db.Elements
-                .Where(x => x.Invoice_ID == element.Invoice_ID &&
-                            x.Item.SerNumber.Equals(element.Item.SerNumber) &&
-                            x.Item.IncomingPrice == element.Item.IncomingPrice &&
-                            x.Item.Product_ID == element.Item.Product_ID &&
-                            x.Item.IncomingTaxGroup_ID == element.Item.IncomingTaxGroup_ID)
+                .Where(x => x.Invoice_ID == invoiceId &&
+                            x.Item.SerNumber.Equals(item.SerNumber) &&
+                            x.Item.IncomingPrice == item.IncomingPrice &&
+                            x.Item.Product_ID == item.Product_ID &&
+                            x.Item.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID)
+                .Select(x => x.Item_ID)
+                .ToList();
+        }
+
+        //gets all similar item, ids in outgoing invoice
+        internal List<int> GetSameItemIdsInOutgoingInvoice(DatabaseContext db, Item item, int invoiceId)
+        {
+            return db.Elements
+                .Where(x => x.Invoice_ID == invoiceId &&
+                            x.Item.SerNumber.Equals(item.SerNumber) &&
+                            x.Item.OutgoingPrice == item.OutgoingPrice &&
+                            x.Item.Product_ID == item.Product_ID &&
+                            x.Item.OutgoingTaxGroup_ID == item.OutgoingTaxGroup_ID)
                 .Select(x => x.Item_ID)
                 .ToList();
         }

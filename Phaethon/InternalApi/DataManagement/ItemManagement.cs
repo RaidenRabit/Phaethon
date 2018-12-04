@@ -21,7 +21,9 @@ namespace InternalApi.DataManagement
         {
             using (var db = new DatabaseContext())
             {
-                return _itemDa.GetItem(db, id);
+                Item item = _itemDa.GetItem(db, id);
+                item.Quantity = _itemDa.GetItemNotSoldItem(db, item).Count;
+                return item;
             }
         }
 

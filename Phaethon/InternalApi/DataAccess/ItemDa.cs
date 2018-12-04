@@ -20,8 +20,6 @@ namespace InternalApi.DataAccess
                 .Include(x => x.Product)
                 .SingleOrDefault(x => x.ID == id);
 
-            item.Quantity = 1;
-
             return item;
         }
 
@@ -34,6 +32,20 @@ namespace InternalApi.DataAccess
                 .Where(x => barcode == 0 || x.Product.Barcode == barcode)
                 .Where(x => x.OutgoingPrice == 0)
                 .Where(x => x.OutgoingTaxGroup_ID == null)
+                .AsEnumerable()
+                .GroupBy(x =>
+                    new
+                    {
+                        x.SerNumber,
+                        x.IncomingPrice,
+                        x.Product_ID
+                    })
+                .Select(g => new
+                {
+                    item = g.Select(c => c).FirstOrDefault(),
+                    count = g.Count()
+                })
+                .Select(x => { x.item.Quantity = x.count; return x.item; })
                 .ToList();
         }
 
@@ -41,6 +53,18 @@ namespace InternalApi.DataAccess
         {
             db.Items.Remove(item);
             db.SaveChanges();
+        }
+
+        internal List<Item> GetItemNotSoldItem(DatabaseContext db, Item item)
+        {
+            return db.Items
+                .Where(x => x.SerNumber.Equals(item.SerNumber) &&
+                        x.IncomingPrice == item.IncomingPrice &&
+                        x.OutgoingPrice == 0 &&
+                        x.Product_ID == item.Product_ID &&
+                        x.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID &&
+                        x.OutgoingTaxGroup_ID == null)
+                .ToList();
         }
     }
 }

@@ -49,6 +49,7 @@ namespace WebClient.Controllers
         }
 
         [HttpPost]
+        [Route("Invoice/Edit")]
         public async Task<ActionResult> Edit(Invoice invoice)
         {
             var response = await _client.PostAsJsonAsync("CreateOrUpdate", invoice);
