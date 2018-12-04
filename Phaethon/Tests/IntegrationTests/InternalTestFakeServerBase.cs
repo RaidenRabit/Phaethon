@@ -20,7 +20,6 @@ namespace Tests.IntegrationTests
         public void StartServer()
         {
             HttpConfiguration config = new HttpConfiguration();
-
             config.Filters.Add(new Core.Decorators.ExceptionFilter());
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
                 = ReferenceLoopHandling.Ignore;

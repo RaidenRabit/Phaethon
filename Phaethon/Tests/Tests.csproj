@@ -248,6 +248,7 @@
     <Compile Include="IntegrationTests\CompanyTest.cs" />
     <Compile Include="IntegrationTests\ElementTest.cs" />
     <Compile Include="IntegrationTests\InternalTestFakeServerBase.cs" />
+    <Compile Include="IntegrationTests\ItemTest.cs" />
     <Compile Include="IntegrationTests\ProductGroupTest.cs" />
     <Compile Include="IntegrationTests\ProductTest.cs" />
     <Compile Include="IntegrationTests\TaxGroupTest.cs" />

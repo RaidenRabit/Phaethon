@@ -389,6 +389,7 @@ namespace Tests.IntegrationTests
         public async Task GetInvoices_MethodCalled_IsSuccessStatusCodeAndInvoicesReturned()
         {
             //Setup
+            GetElementSeed();
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["numOfRecords"] = 1.ToString();
             parameters["selectedCompany"] = 0.ToString();
