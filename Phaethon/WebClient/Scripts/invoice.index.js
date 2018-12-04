@@ -74,8 +74,15 @@ function GetInvoices()
                 var PrescriptionDate = moment(data[i].PrescriptionDate).format('DD-MM-YYYY');
                 var ReceptionDate = moment(data[i].ReceptionDate).format('DD-MM-YYYY');
                 var PaymentDate = moment(data[i].PaymentDate).format('DD-MM-YYYY');
+                var invoiceType;
+                if (data[i].Incoming == true) {
+                    invoiceType = "In coming";
+                } else {
+                    invoiceType = "Out going";
+                }
                 htmlText += "<tr>" +
                     "<td>" + data[i].DocNumber + "</td>" +
+                    "<td>" + invoiceType + "</td>" +
                     "<td>" + PrescriptionDate + "</td>" +
                     "<td>" + ReceptionDate + "</td>" +
                     "<td>" + PaymentDate + "</td>" +

@@ -58,32 +58,35 @@
                 <div id="invoiceList" class="card-body collapse show" style="padding-left: 20px;">
                     <table id="invoiceTable" class="table">
                         <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DocNumber)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PrescriptionDate)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ReceptionDate)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PaymentDate)
-                            </th>
-                            <th>
-                                Sender @Html.DisplayNameFor(model => model.Sender.Company.Name)
-                            </th>
-                            <th>
-                                Receiver @Html.DisplayNameFor(model => model.Receiver.Company.Name)
-                            </th>
-                            <th>
-                                Sum
-                            </th>
-                            <th>
-                                <input id="numOfRecords" type="number" class="form-control" value="10"/>
-                            </th>
-                        </tr>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DocNumber)
+                                </th>
+                                <th>
+                                    Invoice type
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PrescriptionDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ReceptionDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PaymentDate)
+                                </th>
+                                <th>
+                                    Sender @Html.DisplayNameFor(model => model.Sender.Company.Name)
+                                </th>
+                                <th>
+                                    Receiver @Html.DisplayNameFor(model => model.Receiver.Company.Name)
+                                </th>
+                                <th>
+                                    Sum
+                                </th>
+                                <th>
+                                    <input id="numOfRecords" type="number" class="form-control" value="10" />
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>

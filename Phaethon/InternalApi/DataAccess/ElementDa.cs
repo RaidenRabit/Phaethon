@@ -46,7 +46,7 @@ namespace InternalApi.DataAccess
         //gets all similar item, ids in incoming invoice
         internal List<int> GetSameItemIdsInIncomingInvoice(DatabaseContext db, Item item, int invoiceId)
         {
-            return db.Elements
+            var b = db.Elements
                 .Where(x => x.Invoice_ID == invoiceId &&
                             x.Item.SerNumber.Equals(item.SerNumber) &&
                             x.Item.IncomingPrice == item.IncomingPrice &&
@@ -54,6 +54,7 @@ namespace InternalApi.DataAccess
                             x.Item.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID)
                 .Select(x => x.Item_ID)
                 .ToList();
+            return b;
         }
 
         //gets all similar item, ids in outgoing invoice

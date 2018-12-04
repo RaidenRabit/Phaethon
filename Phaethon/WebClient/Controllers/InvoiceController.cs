@@ -60,7 +60,7 @@ namespace WebClient.Controllers
             }
             else
             {
-                return View("Error");
+                return View();
             }
         }
 

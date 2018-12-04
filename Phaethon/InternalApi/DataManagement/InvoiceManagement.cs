@@ -75,7 +75,11 @@ namespace InternalApi.DataManagement
                             foreach (Element element in elements)
                             {
                                 Item item = itemDa.GetItem(db, element.Item.ID);
-                                List<int> itemIds = elementDa.GetSameItemIdsInIncomingInvoice(db, item, invoice.ID);
+                                List<int> itemIds = new List<int>();
+                                if (item != null)
+                                {
+                                    itemIds = elementDa.GetSameItemIdsInIncomingInvoice(db, item, invoice.ID);
+                                }
 
                                 productDa.CreateOrUpdate(db, element.Item.Product);
 
@@ -110,13 +114,17 @@ namespace InternalApi.DataManagement
                                     if (element.Item.Delete)
                                     {
                                         //remove if item hasn't been sold yet
-                                        if (item.OutgoingPrice == 0 && item.OutgoingTaxGroup_ID == null)
+                                        if (item != null && item.OutgoingPrice == 0 && item.OutgoingTaxGroup_ID == null)
                                         {
                                             itemDa.Delete(db, item);
                                         }
                                     }
                                     else
                                     {
+                                        if (item == null)
+                                        {
+                                            item = new Item();
+                                        }
                                         item.Product_ID = element.Item.Product.ID;
                                         item.SerNumber = element.Item.SerNumber;
                                         item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
@@ -196,7 +204,7 @@ namespace InternalApi.DataManagement
                                         if (item == null)
                                         {
                                             item = itemDa.GetItem(db, element.Item.ID);
-                                            item = itemDa.GetItemNotSoldItem(db, item)[0];
+                                            item = itemDa.GetItemNotSoldItem(db, item).ElementAtOrDefault(0);
                                         }
 
                                         if (item != null)
