@@ -90,7 +90,6 @@ namespace Tests.IntegrationTests
                 IncomingPrice = 100,
                 SerNumber = "0",
                 IncomingTaxGroup_ID = taxGroup.ID,
-                OutgoingTaxGroup_ID = taxGroup.ID,
                 Product_ID = product.ID
             };
 
