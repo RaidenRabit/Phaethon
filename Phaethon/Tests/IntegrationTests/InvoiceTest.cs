@@ -87,7 +87,6 @@ namespace Tests.IntegrationTests
             #region Item
             Item item = new Item
             {
-                Discount = 99,
                 IncomingPrice = 100,
                 SerNumber = "0",
                 IncomingTaxGroup_ID = taxGroup.ID,
@@ -170,6 +169,7 @@ namespace Tests.IntegrationTests
                 PaymentDate = new DateTime(2010, 1, 1),
                 PrescriptionDate = new DateTime(2010, 1, 1),
                 ReceptionDate = new DateTime(2010, 1, 1),
+                Incoming = true,
                 Transport = 10,
                 Sender_ID = representative.ID,
                 Receiver_ID = representative.ID
