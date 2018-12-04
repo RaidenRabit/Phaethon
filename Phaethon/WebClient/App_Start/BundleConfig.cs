@@ -45,13 +45,20 @@ namespace WebClient
             #region StyleBundles
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap.min.css",
                       "~/Content/bootstrap-select.css",
+                      "~/Content/font-awesome.css",
+                      "~/Content/font-awesome.min.css",
                       "~/Content/themes/base/jquery-ui.min.css",
                       "~/Content/site.css"));
-
             bundles.Add(new StyleBundle("~/Content/Daterangepicker").Include(
                       "~/Content/daterangepicker.css"));
             #endregion
+
+            bundles.Add(new ScriptBundle("~/bundles/Job").Include(
+                "~/Scripts/moment.min.js",
+                "~/Scripts/job.index.js",
+                "~/Scripts/daterangepicker.js"));
         }
     }
 }

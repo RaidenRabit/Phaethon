@@ -40,7 +40,11 @@ namespace Core.Model
 
         [DataMember]
         [DisplayName("Finished Time")]
-        public DateTime FinishedTime { get; set; }
+        public DateTime? FinishedTime { get; set; }
+
+        [DataMember]
+        [DisplayName("Notification Time")]
+        public DateTime? NotificationTime { get; set; }
 
         [DataMember]
         public decimal Cost { get; set; }
@@ -59,5 +63,11 @@ namespace Core.Model
                    this.Description.Equals(other.Description) &&
                    this.JobStatus.Equals(other.JobStatus);
         }
+    }
+    public enum JobStatus_enum
+    {
+        Unassigned = 1,
+        InProgress = 2,
+        Completed = 3,
     }
 }

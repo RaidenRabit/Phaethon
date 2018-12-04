@@ -2,11 +2,6 @@
 @Styles.Render("~/Content/Daterangepicker")
 @{ViewBag.Title = "Index";}
 
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
 <div class="card-body" style="padding-left: 20px;">
     <div class="row">
@@ -25,7 +20,7 @@
                                         <input type="checkbox" name="jobStatus" value="2"> In progress
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="3"> Completed
+                                        <input type="checkbox" name="jobStatus" value="3"> Done
                                     </label>
                                 </div>
                                 <datalist id="jobs"></datalist>
@@ -79,38 +74,50 @@
                 <div class="card-body" style="padding-left: 20px;">
                     <table id="jobTable" class="table table-striped">
                         <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.ID)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.JobName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.StartedTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.FinishedTime)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Cost)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.JobStatus)
-                                </th>
-                                <th>
-                                    Customer Name
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Description)
-                                </th>
-                            </tr>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.JobName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StartedTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FinishedTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Cost)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.JobStatus)
+                            </th>
+                            <th>
+                                Customer Name
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                Sent<br>Email
+                            </th>
+                        </tr>
                         </thead>
 
                         <tbody><tr></tr></tbody>
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal" align="center" style="display: none">
+    <div class="h-100 row align-items-center">
+        <div class="col">
+            <div class="spinner"></div>
+            <div class="spinner-center"></div>
+            <div class="loading-text">Loading...</div>
         </div>
     </div>
 </div>

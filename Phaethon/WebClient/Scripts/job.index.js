@@ -10,13 +10,7 @@
             format: 'DD/MMM/YYYY'
         }
     });
-    
-    $('#date-picker').daterangepicker({
-        "singleDatePicker": true,
-        "showDropdowns": true,
-        "showWeekNumbers": true,
-        "autoUpdateInput": false
-    });
+
     GetJobs();
     //on search option change get corresponding invoices
     $("#numOfRecords, #jobId, #jobName, #dateRange, input[name=jobStatus], input[name=dateOption], #customerName, #description").change(function () {
@@ -25,6 +19,15 @@
     $('#NewJob').click(function(){
         NewJob();
     }); 
+});
+
+$(document).bind({
+    ajaxStart: function () {
+        $(".modal").show();
+    },
+    ajaxStop: function () {
+        $(".modal").hide();
+    }
 });
 
 //gets invoices
@@ -46,8 +49,9 @@ function GetJobs() {
         success: function (data) {
                     var htmlText = "";
                     for (var i = 0; i < data.length; i++) {
-                        var StartedTime = moment(data[i].PrescriptionDate).format('DD-MM-YYYY');
-                        var FinishedTime = moment(data[i].ReceptionDate).format('DD-MM-YYYY');
+                        var StartedTime = moment(data[i].StartedTime).format('DD-MM-YYYY');
+                        var FinishedTime = moment(data[i].FinishedTime).format('DD-MM-YYYY');
+                        var NotificationTime = moment(data[i].NotificationTime).format('DD-MM-YYYY HH:mm');
                         var CustomerName = data[i].Customer.FamilyName + " " + data[i].Customer.GivenName;
                         statusJob = ["", "Unassigned", "In Progress", "Done"];
                         htmlText += "<tr>" +
@@ -74,13 +78,25 @@ function GetJobs() {
                             "</td>" +
                             "<td>" +
                             data[i].Description +
-                            "</td>" +
-                            "<td>" +
-                            "<button class=\"btn\"  onclick=\"ReadJob(this)\">"+"Edit"+
+                            "</td>";
+                            
+                        if (data[i].NotificationTime != null) {
+                            htmlText += "<td>" +
+                                "<button class=\"fa fa-envelope\" title = \"Sent at: " +
+                                NotificationTime +
+                                "\" onclick=\"ResendNotification(this)\" style='font-size:36px'></button>" +
+                                "</td>";
+                        } else {
+                            htmlText += "<td> &nbsp; </td>";
+                        }
+
+                        htmlText += "<td>" +
+                            "<button class=\"btn\"  onclick=\"ReadJob(this)\">" +
+                            "Edit" +
                             "</td>" +
                             "</tr>";
                     }
-                    $("#jobTable tbody").html(htmlText);
+            $("#jobTable tbody").html(htmlText);
                 },
         error: function () {
             $("#jobsList").html(error.message);
@@ -102,21 +118,6 @@ function Edit() {
 };
 
 function ReadJob(obj) {
-    var dialog = $("#dialog").dialog({
-        autoOpen: false,
-        modal: true,
-        title: "View Details",
-        width: 1000,
-        buttons: {
-            "Cancel": function() {
-                $(this).dialog("close");
-            },
-            
-            "Save": function () {
-                Edit();
-            }
-        }
-    });
     var jobId = $(obj).closest("tr").find('td:nth-child(1)').html();
     $.ajax({
         type: "GET",
@@ -124,15 +125,41 @@ function ReadJob(obj) {
         "&id="+jobId,
         contentType: "application/json; charset=utf-8",
         dataType: "html",
-        success: function (response) {
-            dialog.html(response);
-            dialog.dialog("open");
+        success: function(response) {
+            InitializeDialog(response);
+        }
+    });
+    
+};
+
+function ResendNotification(obj) {
+    var jobId = $(obj).closest("tr").find('td:nth-child(1)').html();
+    $.ajax({
+        type: "GET",
+        url: "/Job/ResendNotification?" +
+            "&jobId=" + jobId,
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function () {
+            GetJobs();
         }
     });
 };
 
 function NewJob() {
+    $.ajax({
+        type: "GET",
+        url: "/Job/ReadJob?" +
+            "&id=" + 0,
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (response) {
+            InitializeDialog(response);
+        }
+    });
+};
 
+function InitializeDialog(data) {
     var dialog = $("#dialog").dialog({
         autoOpen: false,
         modal: true,
@@ -148,15 +175,13 @@ function NewJob() {
             }
         }
     });
-    $.ajax({
-        type: "GET",
-        url: "/Job/ReadJob?" +
-            "&id=" + 0,
-        contentType: "application/json; charset=utf-8",
-        dataType: "html",
-        success: function (response) {
-            dialog.html(response);
-            dialog.dialog("open");
-        }
+
+    dialog.html(data);
+    dialog.dialog("open");
+
+    $('.datepicker').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        changeDay: true
     });
 };
