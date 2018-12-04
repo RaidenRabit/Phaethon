@@ -14,34 +14,33 @@ namespace Tests.IntegrationTests
     {
         #region GetItem
         [Test]
-        public async Task GetItem_CorrectInvoiceId_IsSuccessStatusCodeAndItemReturned()
+        public async Task GetItem_CorrectItemId_IsSuccessStatusCodeAndItemReturned()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
-            Item item = element.Item;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["id"] = item.ID.ToString();
+            parameters["id"] = element.Item.ID.ToString();
 
             //Act
             var response = await _client.GetAsync("Item/GetItem?" + parameters);
-            Item dbItem = JsonConvert.DeserializeObject<Item>(await response.Content.ReadAsStringAsync());
+            Item item = JsonConvert.DeserializeObject<Item>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, item.ID == dbItem.ID &&
-                                  item.SerNumber.Equals(dbItem.SerNumber) &&
-                                  item.IncomingPrice == dbItem.IncomingPrice &&
-                                  item.OutgoingPrice == dbItem.OutgoingPrice &&
-                                  item.IncomingTaxGroup_ID == dbItem.IncomingTaxGroup_ID &&
-                                  item.OutgoingTaxGroup_ID == dbItem.OutgoingTaxGroup_ID &&
-                                  item.Product.ID == dbItem.Product_ID &&
-                                  item.Product.Barcode == dbItem.Product.Barcode &&
-                                  item.Product.Name.Equals(dbItem.Product.Name) &&
-                                  item.Product.ProductGroup_ID == dbItem.Product.ProductGroup_ID);//check if object received is the same
+            Assert.AreEqual(true, element.Item.ID == item.ID &&
+                                  element.Item.SerNumber.Equals(item.SerNumber) &&
+                                  element.Item.IncomingPrice == item.IncomingPrice &&
+                                  element.Item.OutgoingPrice == item.OutgoingPrice &&
+                                  element.Item.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID &&
+                                  element.Item.OutgoingTaxGroup_ID == item.OutgoingTaxGroup_ID &&
+                                  element.Item.Product.ID == item.Product_ID &&
+                                  element.Item.Product.Barcode == item.Product.Barcode &&
+                                  element.Item.Product.Name.Equals(item.Product.Name) &&
+                                  element.Item.Product.ProductGroup_ID == item.Product.ProductGroup_ID);//check if object received is the same
         }
 
         [Test]
-        public async Task GetItem_WrongInvoiceId_IsSuccessStatusCodeAndNullReturned()
+        public async Task GetItem_WrongItemId_IsSuccessStatusCodeAndNullReturned()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -53,7 +52,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(null, dbItem);//check if object received is the same
+            Assert.IsNull(dbItem);//check if object received is the same
         }
         #endregion
 
@@ -66,7 +65,7 @@ namespace Tests.IntegrationTests
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["serialNumber"] = "";
             parameters["productName"] = "";
-            parameters["barcode"] = "";
+            parameters["barcode"] = 0.ToString();
 
             //Act
             var response = await _client.GetAsync("Item/GetItems?" + parameters);
