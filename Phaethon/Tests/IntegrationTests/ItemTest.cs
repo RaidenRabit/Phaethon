@@ -27,16 +27,26 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, element.Item.ID == item.ID &&
-                                  element.Item.SerNumber.Equals(item.SerNumber) &&
-                                  element.Item.IncomingPrice == item.IncomingPrice &&
-                                  element.Item.OutgoingPrice == item.OutgoingPrice &&
-                                  element.Item.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID &&
-                                  element.Item.OutgoingTaxGroup_ID == item.OutgoingTaxGroup_ID &&
-                                  element.Item.Product.ID == item.Product_ID &&
-                                  element.Item.Product.Barcode == item.Product.Barcode &&
-                                  element.Item.Product.Name.Equals(item.Product.Name) &&
-                                  element.Item.Product.ProductGroup_ID == item.Product.ProductGroup_ID);//check if object received is the same
+            //Assert.AreEqual(true, element.Item.ID == item.ID &&
+            //                      element.Item.SerNumber.Equals(item.SerNumber) &&
+            //                      element.Item.IncomingPrice == item.IncomingPrice &&
+            //                      element.Item.OutgoingPrice == item.OutgoingPrice &&
+            //                      element.Item.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID &&
+            //                      element.Item.OutgoingTaxGroup_ID == item.OutgoingTaxGroup_ID &&
+            //                      element.Item.Product.ID == item.Product_ID &&
+            //                      element.Item.Product.Barcode == item.Product.Barcode &&
+            //                      element.Item.Product.Name.Equals(item.Product.Name) &&
+            //                      element.Item.Product.ProductGroup_ID == item.Product.ProductGroup_ID);//check if object received is the same
+            Assert.AreEqual(element.Item.ID, item.ID);
+            Assert.AreEqual(element.Item.SerNumber, item.SerNumber);
+            Assert.AreEqual(element.Item.IncomingPrice, item.IncomingPrice);
+            Assert.AreEqual(element.Item.OutgoingPrice, item.OutgoingPrice);
+            Assert.AreEqual(element.Item.IncomingTaxGroup_ID, item.IncomingTaxGroup_ID);
+            Assert.AreEqual(element.Item.OutgoingTaxGroup_ID, item.OutgoingTaxGroup_ID);
+            Assert.AreEqual(element.Item.Product.ID, item.Product_ID);
+            Assert.AreEqual(element.Item.Product.Barcode, item.Product.Barcode);
+            Assert.AreEqual(element.Item.Product.Name, item.Product.Name);
+            Assert.AreEqual(element.Item.Product.ProductGroup_ID, item.Product.ProductGroup_ID);
         }
 
         [Test]

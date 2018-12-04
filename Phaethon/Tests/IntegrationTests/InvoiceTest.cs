@@ -109,7 +109,6 @@ namespace Tests.IntegrationTests
             }
 
             item.IncomingTaxGroup = taxGroup;
-            item.OutgoingTaxGroup = taxGroup;
             item.Product = product;
             #endregion
             
