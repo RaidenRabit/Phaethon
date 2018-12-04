@@ -1,7 +1,7 @@
 ﻿@model Core.Model.Invoice
 @{ViewBag.Title = "Edit";}
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit","Invoice"))
 {
     @Html.AntiForgeryToken()
     <div class="card-body" style="padding-left: 20px;">

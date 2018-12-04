@@ -78,12 +78,31 @@ namespace InternalApi.DataManagement
 
                                 productDa.CreateOrUpdate(db, element.Item.Product);
 
+                                //removes from database if count was reduced and when item wasn't sold yet
+                                if (itemIds.Count > element.Item.Quantity)
+                                {
+                                    int removedCount = itemIds.Count - element.Item.Quantity;
+                                    foreach (int i in itemIds)
+                                    {
+                                        Item item = itemDa.GetItem(db, i);
+                                        if (removedCount < 0 && item.OutgoingPrice == 0 && item.OutgoingTaxGroup_ID == null)
+                                        {
+                                            itemDa.Delete(db, item);
+                                            removedCount = removedCount - 1;
+                                        }
+                                    }
+                                }
+
                                 for (int i = 0; i < element.Item.Quantity; i++)
                                 {
                                     Item item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
                                     if (element.Item.Delete)
                                     {
-                                        itemDa.Delete(db, item);
+                                        //remove if item hasn't been sold yet
+                                        if (item.OutgoingPrice == 0 && item.OutgoingTaxGroup_ID == null)
+                                        {
+                                            itemDa.Delete(db, item);
+                                        }
                                     }
                                     else
                                     {
@@ -102,13 +121,6 @@ namespace InternalApi.DataManagement
                                         elementDa.CreateOrUpdate(db, tempElement);
                                     }
                                 }
-
-                                //removes the removed ones
-                                foreach (int i in itemIds.Skip(element.Item.Quantity))
-                                {
-                                    Item item = itemDa.GetItem(db, i);
-                                    itemDa.Delete(db, item);
-                                }
                             }
                         }
                         else//outgoing
@@ -120,6 +132,7 @@ namespace InternalApi.DataManagement
                                 Item item = itemDa.GetItem(db, element.Item.ID);
                                 if (element.Item.Delete)
                                 {
+                                    //on delete of outgoing make item not sold and removes from invoice
                                     item.OutgoingPrice = 0;
                                     item.OutgoingTaxGroup_ID = null;
                                     itemDa.CreateOrUpdate(db, item);
@@ -129,10 +142,7 @@ namespace InternalApi.DataManagement
                                         Invoice_ID = invoice.ID
                                     };
                                     db.Elements.Attach(tempElement);
-                                    if (!elementDa.Delete(db, tempElement))
-                                    {
-                                        throw new Exception();
-                                    }
+                                    elementDa.Delete(db, tempElement);
                                 }
                                 else
                                 {
