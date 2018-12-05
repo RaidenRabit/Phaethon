@@ -204,7 +204,7 @@
     <value>Šī poga noņem objektu, darbību var atcelt, vēlreiz nospiežot pogu.</value>
   </data>
   <data name="DocumentNumberPlaceholder" xml:space="preserve">
-    <value>dokumenta numurs</value>
+    <value>Dokumenta numurs</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>Angļu</value>
@@ -365,7 +365,34 @@
   <data name="Jobs" xml:space="preserve">
     <value>Darbi</value>
   </data>
+  <data name="AddressDetails" xml:space="preserve">
+    <value>Adreses Detaļas</value>
+  </data>
+  <data name="AddressStreetPlaceholder" xml:space="preserve">
+    <value>Iela</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Atcelt</value>
+  </data>
+  <data name="CustomerDetails" xml:space="preserve">
+    <value>Klientu informācija</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Mainīt</value>
+  </data>
+  <data name="Incoming" xml:space="preserve">
+    <value>Ienākošais</value>
+  </data>
+  <data name="ItemSelection" xml:space="preserve">
+    <value>Preces atlasīšana</value>
+  </data>
+  <data name="Outgoing" xml:space="preserve">
+    <value>Izejošais</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Izvēlieties</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>Pārskatīt detaļas</value>
   </data>
 </root>

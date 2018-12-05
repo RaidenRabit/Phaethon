@@ -365,7 +365,34 @@
   <data name="Jobs" xml:space="preserve">
     <value>Jobs</value>
   </data>
+  <data name="AddressDetails" xml:space="preserve">
+    <value>Address Details</value>
+  </data>
+  <data name="AddressStreetPlaceholder" xml:space="preserve">
+    <value>Street</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CustomerDetails" xml:space="preserve">
+    <value>Customer Details</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="Incoming" xml:space="preserve">
+    <value>Incoming</value>
+  </data>
+  <data name="ItemSelection" xml:space="preserve">
+    <value>Item Selection</value>
+  </data>
+  <data name="Outgoing" xml:space="preserve">
+    <value>Outgoing</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>View Details</value>
   </data>
 </root>

@@ -106,6 +106,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address Details.
+        /// </summary>
+        public static string AddressDetails {
+            get {
+                return ResourceManager.GetString("AddressDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extra Information.
         /// </summary>
         public static string AddressExtraPlaceholder {
@@ -129,6 +138,24 @@ namespace WebClient.Resources.Language_Files {
         public static string AddressNumberPlaceholder {
             get {
                 return ResourceManager.GetString("AddressNumberPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Street.
+        /// </summary>
+        public static string AddressStreetPlaceholder {
+            get {
+                return ResourceManager.GetString("AddressStreetPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -250,6 +277,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Details.
+        /// </summary>
+        public static string CustomerDetails {
+            get {
+                return ResourceManager.GetString("CustomerDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string CustomerEmailPlaceholder {
@@ -367,6 +403,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incoming.
+        /// </summary>
+        public static string Incoming {
+            get {
+                return ResourceManager.GetString("Incoming", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invoice Info.
         /// </summary>
         public static string InvoiceInfoLabel {
@@ -435,6 +480,15 @@ namespace WebClient.Resources.Language_Files {
         public static string ItemSearch {
             get {
                 return ResourceManager.GetString("ItemSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Selection.
+        /// </summary>
+        public static string ItemSelection {
+            get {
+                return ResourceManager.GetString("ItemSelection", resourceCulture);
             }
         }
         
@@ -592,6 +646,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Outgoing.
+        /// </summary>
+        public static string Outgoing {
+            get {
+                return ResourceManager.GetString("Outgoing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment Date.
         /// </summary>
         public static string PaymentDateLabel {
@@ -718,6 +781,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Language.
         /// </summary>
         public static string SelectLanguage {
@@ -795,6 +867,15 @@ namespace WebClient.Resources.Language_Files {
         public static string TransportCostLabel {
             get {
                 return ResourceManager.GetString("TransportCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Details.
+        /// </summary>
+        public static string ViewDetails {
+            get {
+                return ResourceManager.GetString("ViewDetails", resourceCulture);
             }
         }
         

@@ -7,7 +7,10 @@
 <div class="card-body" style="padding-left: 20px;">
     
     <script>
-         var languagePack = "@LanguagePack.Edit";
+        var editLabel = "@LanguagePack.Edit";
+        var viewDetails = "@LanguagePack.ViewDetails";
+        var cancel = "@LanguagePack.Cancel";
+        var save = "@LanguagePack.Save";
      </script>
     <div class="row">
         <div class="col-sm-12">
@@ -77,7 +80,7 @@
             <div class="card" style="height: 130px; height: auto;">
                 <div class="card-header" style="clear: both;">@LanguagePack.Jobs
                     <div style="float: right"><Button class="btn" id="NewJob">@LanguagePack.NewJob</Button></div></div>
-                <div class="card-body" style="padding-left: 20px;">
+                <div class="card-body" style="padding-left: 20px; overflow: inherit">
                     <table id="jobTable" class="table table-striped">
                         <thead>
                         <tr>
@@ -107,6 +110,8 @@
                             </th>
                             <th>
                                 @LanguagePack.NotificationStatus
+                            </th>
+                            <th>
                             </th>
                         </tr>
                         </thead>

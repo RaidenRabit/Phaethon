@@ -26,8 +26,8 @@
             autoOpen: true,
             modal: true,
             buttons: {
-                "In coming": function () { window.location.href = "Invoice/Edit/True"; },
-                "Out going": function () { window.location.href = "Invoice/Edit/False"; }
+                incoming: function () { window.location.href = "Invoice/Edit/True"; },
+                outgoing: function () { window.location.href = "Invoice/Edit/False"; }
             }
         });
     });
@@ -78,9 +78,9 @@ function GetInvoices()
                 var PaymentDate = moment(data[i].PaymentDate).format('DD-MM-YYYY');
                 var invoiceType;
                 if (data[i].Incoming == true) {
-                    invoiceType = "In coming";
+                    invoiceType = incoming;
                 } else {
-                    invoiceType = "Out going";
+                    invoiceType = outgoing;
                 }
                 htmlText += "<tr>" +
                     "<td>" + data[i].DocNumber + "</td>" +
@@ -93,7 +93,7 @@ function GetInvoices()
                     "<td>" + data[i].Sum + "</td>" +
                     "<td>" +
                     "<a href='/Invoice/Edit/" + data[i].ID + "'>Details</a> |" +
-                    "<a data-ajax='true' data-ajax-method='POST' data-ajax-success='window.location.reload()' href='/Invoice/Delete/" + data[i].ID + "'>Delete</a>" +
+                    "<a data-ajax='true' data-ajax-method='POST' data-ajax-success='window.location.reload()' href='/Invoice/Delete/" + data[i].ID + "'>" + deleteLabel + "</a>" +
                     "</td>" +
                     "</tr>";
             }

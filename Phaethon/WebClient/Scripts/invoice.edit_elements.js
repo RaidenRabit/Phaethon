@@ -321,10 +321,10 @@ function getItem(id) {
 //Get form
 function getTaxGroupForm() {
     $("#dialog").dialog({
-        title: "Tax group",
+        title: taxGroup,
         autoOpen: false,
         modal: true,
-        buttons: { "Save": function () { taxGroupForm(); } }
+        buttons: { Save: function () { taxGroupForm(); } }
     });
 
     $.ajax({
@@ -341,10 +341,10 @@ function getTaxGroupForm() {
 
 function getProductGroupForm() {
     $("#dialog").dialog({
-        title: "Product group",
+        title: productGroup,
         autoOpen: false,
         modal: true,
-        buttons: { "Save": function () { productGroupForm(); } }
+        buttons: { Save: function () { productGroupForm(); } }
     });
 
     $.ajax({
@@ -361,7 +361,7 @@ function getProductGroupForm() {
 
 function getSelectItemForm() {
     $("#dialog").dialog({
-        title: "Item selection",
+        title: itemSelection,
         autoOpen: false,
         modal: true,
         height: 500,
@@ -468,7 +468,7 @@ function addNewElement(rowValue, itemId, productId, quantity, serNumber, product
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__" + invoiceType + "TaxGroup' name='Elements[" + rowValue + "].Item." + invoiceType + "TaxGroup_ID' required='required'></select></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__ProductGroup' name='Elements[" + rowValue + "].Item.Product.ProductGroup_ID' required='required'></select></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field " + invoiceType + "Price must be a number.' data-val-required='The " + invoiceType + "Price field is required.' id='Elements_" + rowValue + "__Item_" + invoiceType + "Price' name='Elements[" + rowValue + "].Item." + invoiceType + "Price' required='required' min='0' step='0.01' type='number' value='" + price + "'></td>" +
-        "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='Delete' title='This button removes item, action cant be canceled.' data-deletable='" + deletable + "'></td>" +
+        "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='" + deleteLabel + "' title='" + deleteTitle+"' data-deletable='" + deletable + "'></td>" +
         "</tr>");
     ItemChange(rowValue);
     $("#Elements_" + rowValue + "__ProductGroup").val(productGroupId);

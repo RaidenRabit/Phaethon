@@ -83,7 +83,7 @@ function GetJobs() {
 
                         htmlText += "<td>" +
                             "<button class=\"btn\"  onclick=\"ReadJob(this)\">" +
-                            languagePack +
+                            editLabel +
                             "</td>" +
                             "</tr>";
                     }
@@ -154,14 +154,14 @@ function InitializeDialog(data) {
     var dialog = $("#dialog").dialog({
         autoOpen: false,
         modal: true,
-        title: "View Details",
+        title: viewDetails,
         width: 1000,
         buttons: {
-            "Cancel": function () {
+            cancel : function () {
                 $(this).dialog("close");
             },
 
-            "Save": function () {
+            save : function () {
                 Edit();
             }
         }
