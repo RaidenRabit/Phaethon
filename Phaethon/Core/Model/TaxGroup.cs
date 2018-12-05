@@ -21,14 +21,12 @@ namespace Core.Model
 
         [Required]
         [DataMember]
-        [DisplayName("Tax group")]
         [StringLength(50)]
         [Index(IsUnique = true)]
         public string Name { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Tax")]
         [Range(0, 100)]
         public int Tax { get; set; }
     }

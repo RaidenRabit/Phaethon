@@ -21,29 +21,28 @@ namespace Core.Model
 
         [Required]
         [DataMember]
-        [DisplayName("Transport cost")]
+        public bool Incoming { get; set; }
+
+        [Required]
+        [DataMember]
         public decimal Transport { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Document number")]
         public string DocNumber { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
         [DataMember]
-        [DisplayName("Prescription date")]
         public DateTime PrescriptionDate { get; set; }
 
         [DataType(DataType.DateTime)]
         [DataMember]
-        [DisplayName("Reception date")]
         [DefaultValue(null)]
         public DateTime ReceptionDate { get; set; }
 
         [DataType(DataType.DateTime)]
         [DataMember]
-        [DisplayName("Payment date")]
         [DefaultValue(null)]
         public DateTime PaymentDate { get; set; }
         
@@ -59,5 +58,10 @@ namespace Core.Model
 
         [DataMember]
         public virtual ICollection<Element> Elements { get; set; }
+
+        //extra
+        [NotMapped]
+        [DataMember]
+        public decimal Sum { get; set; }
     }
 }

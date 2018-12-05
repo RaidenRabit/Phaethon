@@ -7,8 +7,9 @@ using Core.Model;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
-    interface IProductManagement
+    interface ITaxGroupDM
     {
-        Product GetProduct(int barcode);
+        bool Create(TaxGroup taxGroup);
+        List<TaxGroup> GetTaxGroups();
     }
 }

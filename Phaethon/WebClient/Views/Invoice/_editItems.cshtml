@@ -2,12 +2,12 @@
 @model Core.Model.Invoice
 @using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
-<div id="dialog" style="display: none">
-</div>
-
-<table id="itemTable" class="table table-hover">
+<table id="elementTable" class="table table-hover">
     <thead>
         <tr>
+            <th>
+                @LanguagePack.QuantityLabel
+            </th>
             <th>
                 @LanguagePack.SerialNumberLabel
             </th>
@@ -20,10 +20,10 @@
             <th>
                 @LanguagePack.ProductPrice
             </th>
-            <th id="taxGroupLabel">
+            <th id="taxGroupLabel" class="text-primary">
                 @LanguagePack.TaxGroupLabel
             </th>
-            <th id="productGroupLabel">
+            <th id="productGroupLabel" class="text-primary">
                 @LanguagePack.ProductGroupNameLabel
             </th>
             <th>
@@ -37,11 +37,15 @@
     <tbody></tbody>
     <tfoot>
         <tr>
-            <td colspan="6"></td>
+            <td colspan="4"></td>
             <td>
-                <input type="number" step='0.01' id="totalAmount" class="form-control" readonly />
+                <input type="number" id="totalNoTax" class="form-control" readonly />
             </td>
-            <td colspan="6">
+            <td colspan="2"></td>
+            <td>
+                <input type="number" id="totalAmount" class="form-control" readonly />
+            </td>
+            <td>
                 <input type="button" id="newItemRow" class="btn btn-success" value="@LanguagePack.NewItemButton" />
             </td>
         </tr>

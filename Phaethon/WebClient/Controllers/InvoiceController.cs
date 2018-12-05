@@ -28,6 +28,7 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
+        [Route("Invoice/Edit/{id:int}")]
         public async Task<ActionResult> Edit(int id)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -38,17 +39,28 @@ namespace WebClient.Controllers
             return View(invoice);
         }
 
+        [HttpGet]
+        [Route("Invoice/Edit/{incoming:bool}")]
+        public ActionResult Edit(bool incoming)
+        {
+            Invoice invoice = new Invoice();
+            invoice.Incoming = incoming;
+            return View(invoice);
+        }
+
         [HttpPost]
+        [Route("Invoice/Edit")]
         public async Task<ActionResult> Edit(Invoice invoice)
         {
-            var result = await _client.PostAsJsonAsync("CreateOrUpdate", invoice);
-            if (HttpStatusCode.OK == result.StatusCode)
+            var response = await _client.PostAsJsonAsync("CreateOrUpdate", invoice);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
             {
-                return RedirectToAction("Edit");
+                return RedirectToAction("Index");
             }
             else
             {
-                return View("Error");
+                return View();
             }
         }
 

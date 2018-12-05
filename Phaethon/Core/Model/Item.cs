@@ -20,25 +20,17 @@ namespace Core.Model
         public int ID { get; set; }
         
         [DataMember]
-        [DisplayName("Serial number")]
         [StringLength(50)]
         [DefaultValue(null)]
         public string SerNumber { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Price with tax")]
         public decimal IncomingPrice { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Outgoing price")]
         public decimal OutgoingPrice { get; set; }
-
-        [Required]
-        [DataMember]
-        [DisplayName("Discount")]
-        public int Discount { get; set; }
 
         [DataMember]
         [ForeignKey("Product_ID")]
@@ -56,5 +48,14 @@ namespace Core.Model
         public virtual TaxGroup OutgoingTaxGroup { get; set; }
         [DataMember]
         public int? OutgoingTaxGroup_ID { get; set; }
+
+        //extra
+        [NotMapped]
+        [DataMember]
+        public int Quantity { get; set; }
+
+        [NotMapped]
+        [DataMember]
+        public bool Delete { get; set; }
     }
 }

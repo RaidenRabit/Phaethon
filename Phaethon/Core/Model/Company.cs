@@ -21,30 +21,25 @@ namespace Core.Model
 
         [Required]
         [DataMember]
-        [DisplayName("Company name")]
         [StringLength(100)]
         public string Name { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Registration Number")]
         [StringLength(100)]
         public string RegNumber { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Location")]
         [StringLength(100)]
         public string Location { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Address")]
         [StringLength(100)]
         public string Address { get; set; }
         
         [DataMember]
-        [DisplayName("Bank number")]
         [StringLength(100)]
         public string BankNumber { get; set; }
         

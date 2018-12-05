@@ -7,9 +7,8 @@ using Core.Model;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
-    interface IProductGroupManagement
+    interface IProductDM
     {
-        bool Create(ProductGroup productGroup);
-        List<ProductGroup> GetProductGroups();
+        Product GetProduct(int barcode);
     }
 }

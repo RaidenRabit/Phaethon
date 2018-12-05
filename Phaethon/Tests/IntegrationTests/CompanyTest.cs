@@ -9,6 +9,16 @@ namespace Tests.IntegrationTests
 {
     public class CompanyTest: InternalTestFakeServerBase
     {
+        private bool AreCompaniesEqual(Company firstCompany, Company secondCompany)
+        {
+            return firstCompany.ID == secondCompany.ID &&
+                   firstCompany.Address.Equals(secondCompany.Address) &&
+                   firstCompany.BankNumber.Equals(secondCompany.BankNumber) &&
+                   firstCompany.Location.Equals(secondCompany.Location) &&
+                   firstCompany.Name.Equals(secondCompany.Name) &&
+                   firstCompany.RegNumber.Equals(secondCompany.RegNumber);
+        }
+
         #region GetCompany
         [Test]
         public async Task GetCompany_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
@@ -25,12 +35,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, company.ID == invoice.Sender.Company.ID &&
-                                  company.Address.Equals(invoice.Sender.Company.Address) &&
-                                  company.BankNumber.Equals(invoice.Sender.Company.BankNumber) &&
-                                  company.Location.Equals(invoice.Sender.Company.Location) &&
-                                  company.Name.Equals(invoice.Sender.Company.Name) &&
-                                  company.RegNumber.Equals(invoice.Sender.Company.RegNumber));//check if object received is the same
+            Assert.AreEqual(true, AreCompaniesEqual(company, invoice.Sender.Company));//check if object received is the same
         }
 
         [Test]

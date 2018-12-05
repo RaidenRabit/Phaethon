@@ -3,6 +3,7 @@
 
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 @Html.HiddenFor(model => model.ID)
+@Html.HiddenFor(model => model.Incoming)
 
 <div class="form-group">
     <div class="col-form-label col-md-4">@LanguagePack.DocumentNumberPlaceholder</div>

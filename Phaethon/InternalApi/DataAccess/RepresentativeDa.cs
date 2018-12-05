@@ -7,9 +7,9 @@ using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    public class RepresentativeDa
+    internal class RepresentativeDa
     {
-        public void CreateOrUpdate(DatabaseContext db, Representative representative)
+        internal void CreateOrUpdate(DatabaseContext db, Representative representative)
         {
             db.Representatives.AddOrUpdate(representative);
             db.SaveChanges();

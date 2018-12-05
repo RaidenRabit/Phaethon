@@ -13,6 +13,16 @@ namespace Tests.IntegrationTests
 {
     public class InvoiceTest: InternalTestFakeServerBase
     {
+        private bool AreInvoicesEqual(Invoice firstInvoice, Invoice secondInvoice)
+        {
+            return firstInvoice.ID == secondInvoice.ID &&
+                   firstInvoice.DocNumber.Equals(secondInvoice.DocNumber) &&
+                   firstInvoice.PaymentDate.Equals(secondInvoice.PaymentDate) &&
+                   firstInvoice.ReceptionDate.Equals(secondInvoice.ReceptionDate) &&
+                   firstInvoice.PrescriptionDate.Equals(secondInvoice.PrescriptionDate) &&
+                   firstInvoice.Transport == secondInvoice.Transport;
+        }
+
         internal static Element GetElementSeed()
         {
             #region Tax group
@@ -87,11 +97,9 @@ namespace Tests.IntegrationTests
             #region Item
             Item item = new Item
             {
-                Discount = 99,
                 IncomingPrice = 100,
                 SerNumber = "0",
                 IncomingTaxGroup_ID = taxGroup.ID,
-                OutgoingTaxGroup_ID = taxGroup.ID,
                 Product_ID = product.ID
             };
 
@@ -110,7 +118,6 @@ namespace Tests.IntegrationTests
             }
 
             item.IncomingTaxGroup = taxGroup;
-            item.OutgoingTaxGroup = taxGroup;
             item.Product = product;
             #endregion
             
@@ -170,6 +177,7 @@ namespace Tests.IntegrationTests
                 PaymentDate = new DateTime(2010, 1, 1),
                 PrescriptionDate = new DateTime(2010, 1, 1),
                 ReceptionDate = new DateTime(2010, 1, 1),
+                Incoming = true,
                 Transport = 10,
                 Sender_ID = representative.ID,
                 Receiver_ID = representative.ID
@@ -268,12 +276,7 @@ namespace Tests.IntegrationTests
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
             Assert.IsTrue(deserializedResponse);
-            Assert.AreEqual(true, invoice.ID == dbInvoice.ID &&
-                                  invoice.DocNumber.Equals(dbInvoice.DocNumber) &&
-                                  invoice.PaymentDate.Equals(dbInvoice.PaymentDate) &&
-                                  invoice.ReceptionDate.Equals(dbInvoice.ReceptionDate) &&
-                                  invoice.PrescriptionDate.Equals(dbInvoice.PrescriptionDate) &&
-                                  invoice.Transport == dbInvoice.Transport);//check if object received is the same
+            Assert.AreEqual(true, AreInvoicesEqual(invoice, dbInvoice));//check if object received is the same
         }
 
         [Test]
@@ -319,12 +322,7 @@ namespace Tests.IntegrationTests
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
             Assert.IsTrue(deserializedResponse);
-            Assert.AreEqual(true, invoice.ID == dbInvoice.ID &&
-                                  invoice.DocNumber.Equals(dbInvoice.DocNumber) &&
-                                  invoice.PaymentDate.Equals(dbInvoice.PaymentDate) &&
-                                  invoice.ReceptionDate.Equals(dbInvoice.ReceptionDate) &&
-                                  invoice.PrescriptionDate.Equals(dbInvoice.PrescriptionDate) &&
-                                  invoice.Transport == dbInvoice.Transport);//check if object received is the same
+            Assert.AreEqual(true, AreInvoicesEqual(invoice, dbInvoice));//check if object received is the same
         }
 
         [Test]
@@ -359,12 +357,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, invoice.ID == oldInvoice.ID &&
-                                  invoice.DocNumber.Equals(oldInvoice.DocNumber) &&
-                                  invoice.PaymentDate.Equals(oldInvoice.PaymentDate) &&
-                                  invoice.ReceptionDate.Equals(oldInvoice.ReceptionDate) &&
-                                  invoice.PrescriptionDate.Equals(oldInvoice.PrescriptionDate) &&
-                                  invoice.Transport == oldInvoice.Transport);//check if object received is the same
+            Assert.AreEqual(true, AreInvoicesEqual(oldInvoice, invoice));//check if object received is the same
         }
 
         [Test]
@@ -389,6 +382,7 @@ namespace Tests.IntegrationTests
         public async Task GetInvoices_MethodCalled_IsSuccessStatusCodeAndInvoicesReturned()
         {
             //Setup
+            GetElementSeed();
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["numOfRecords"] = 1.ToString();
             parameters["selectedCompany"] = 0.ToString();

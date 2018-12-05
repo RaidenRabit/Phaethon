@@ -1,13 +1,10 @@
 ﻿using Core.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
-    internal interface IInvoiceManagement
+    internal interface IInvoiceDM
     {
         bool CreateOrUpdate(Invoice invoice);
 

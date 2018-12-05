@@ -16,11 +16,11 @@ namespace InternalApi.Controllers
     [RoutePrefix("Invoice")]
     public class InvoiceController: ApiController
     {
-        private readonly IInvoiceManagement _invoiceManagement;
+        private readonly IInvoiceDM _invoiceManagement;
 
         public InvoiceController()
         {
-            _invoiceManagement = new InvoiceManagement();
+            _invoiceManagement = new InvoiceDM();
         }
         
         [Route("CreateOrUpdate")]

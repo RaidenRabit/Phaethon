@@ -21,7 +21,11 @@ namespace WebClient
                         "~/Scripts/invoice.index.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/Invoice/Edit").Include(
-                "~/Scripts/invoice.edit.js"));
+                "~/Scripts/invoice.edit_company.js",
+                "~/Scripts/invoice.edit_elements.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Item/Select").Include(
+                "~/Scripts/item.select.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -48,6 +52,7 @@ namespace WebClient
                       "~/Content/font-awesome.min.css",
                       "~/Content/themes/base/jquery-ui.min.css",
                       "~/Content/site.css"));
+
             bundles.Add(new StyleBundle("~/Content/Daterangepicker").Include(
                       "~/Content/daterangepicker.css"));
             #endregion

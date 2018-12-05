@@ -7,15 +7,15 @@ using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    public class TaxGroupDa
+    internal class TaxGroupDa
     {
-        public void Create(DatabaseContext db, TaxGroup taxGroup)
+        internal void Create(DatabaseContext db, TaxGroup taxGroup)
         {
             db.TaxGroups.Add(taxGroup);
             db.SaveChanges();
         }
 
-        public List<TaxGroup> GetTaxGroups(DatabaseContext db)
+        internal List<TaxGroup> GetTaxGroups(DatabaseContext db)
         {
             return db.TaxGroups.ToList();
         }

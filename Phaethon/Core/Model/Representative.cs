@@ -21,7 +21,6 @@ namespace Core.Model
 
         [Required]
         [DataMember]
-        [DisplayName("Representative name")]
         [StringLength(100)]
         public string Name { get; set; }
 

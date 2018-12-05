@@ -22,15 +22,13 @@ namespace WebClient.Controllers
             _client.BaseAddress = new Uri("http://localhost:64007/Job/");
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
-        // GET: Job
+        
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
-        [Route("GetJobs")]
         public async Task<string> GetJobs(int? numOfRecords, int? jobId, string jobName, int? jobStatus, string customerName, string description, string dateOption, string from, string to)
         {
             DateTime fromDateTime = DateTime.Now, toDateTime = DateTime.Now;
@@ -53,19 +51,16 @@ namespace WebClient.Controllers
             jobFilter.JobName = jobName;
             
             var response = await _client.PostAsJsonAsync("ReadAll", jobFilter);
-            var a = await response.Content.ReadAsStringAsync();
             return await response.Content.ReadAsStringAsync();
         }
 
         [HttpGet]
-        [Route("EditJob")]
         public ActionResult EditJob(List<Job> data)
         {
             return PartialView("_editJob", data[0]);
         }
 
-    [HttpGet]
-    [Route("ReadJob")]
+        [HttpGet]
         public async Task<ActionResult> ReadJob(string id)
         {
             Job job;
@@ -83,14 +78,12 @@ namespace WebClient.Controllers
         }
 
         [HttpPost]
-        [Route("PostJob")]
         public async Task PostJob(Job job)
         {
             await _client.PostAsJsonAsync("InsertOrUpdate", job);
         }
 
         [HttpGet]
-        [Route("ResendNotification")]
         public async Task ResendNotification(string jobId)
         {
             if (!string.IsNullOrEmpty(jobId) && !jobId.Equals("0"))

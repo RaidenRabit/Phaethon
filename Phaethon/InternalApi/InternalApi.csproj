@@ -60,6 +60,9 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.6\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -100,6 +103,7 @@
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductGroupController.cs" />
     <Compile Include="Controllers\TaxGroupController.cs" />
@@ -119,31 +123,24 @@
     <Compile Include="DataManagement\IDataManagement\ICustomerDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IEmailSenderDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
-    <Compile Include="DataManagement\CompanyManagement.cs" />
-    <Compile Include="DataManagement\ElementManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IElementManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IProductGroupManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IProductManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\ITaxGroupManagement.cs" />
-    <Compile Include="DataManagement\InvoiceManagement.cs" />
-    <Compile Include="DataManagement\ProductGroupManagement.cs" />
+    <Compile Include="DataManagement\CompanyDM.cs" />
+    <Compile Include="DataManagement\ElementDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\ICompanyDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IElementDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IInvoiceDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IItemDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IProductGroupDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IProductDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\ITaxGroupDM.cs" />
+    <Compile Include="DataManagement\InvoiceDM.cs" />
+    <Compile Include="DataManagement\ItemDM.cs" />
+    <Compile Include="DataManagement\ProductGroupDM.cs" />
     <Compile Include="DataManagement\JobDM.cs" />
-    <Compile Include="DataManagement\ProductManagement.cs" />
-    <Compile Include="DataManagement\TaxGroupManagement.cs" />
+    <Compile Include="DataManagement\ProductDM.cs" />
+    <Compile Include="DataManagement\TaxGroupDM.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201812021133435_Initial.cs" />
-    <Compile Include="Migrations\201812021133435_Initial.Designer.cs">
-      <DependentUpon>201812021133435_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201812050952594_removed DispalyNames from job and customer tables.cs" />
-    <Compile Include="Migrations\201812050952594_removed DispalyNames from job and customer tables.Designer.cs">
-      <DependentUpon>201812050952594_removed DispalyNames from job and customer tables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -164,14 +161,6 @@
       <Project>{2f81d45f-2fd1-442c-b663-d04af5982d28}</Project>
       <Name>Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201812021133435_Initial.resx">
-      <DependentUpon>201812021133435_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812050952594_removed DispalyNames from job and customer tables.resx">
-      <DependentUpon>201812050952594_removed DispalyNames from job and customer tables.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

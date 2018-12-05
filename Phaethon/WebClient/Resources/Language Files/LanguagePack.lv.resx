@@ -126,6 +126,38 @@
   <data name="AboutPageText" xml:space="preserve">
     <value>Use this area to provide additional information.</value>
   </data>
+  <data name="ActionLabel" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="AddressCityPlaceholder" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="AddressExtraPlaceholder" xml:space="preserve">
+    <value>Extra Information</value>
+  </data>
+  <data name="AddressIDPlaceholder" xml:space="preserve">
+    <value>Address ID</value>
+  </data>
+  <data name="AddressNumberPlaceholder" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="CompaniesPlaceholder" xml:space="preserve">
+    <value>Companies</value>
+  </data>
+  <data name="CompanyAddressLabel" xml:space="preserve">
+    <value>Address</value>
+    <comment>Might be a good idea to make the Company Address use the Address table in db</comment>
+  </data>
+  <data name="CompanyBankNumberLabel" xml:space="preserve">
+    <value>Bank Number</value>
+  </data>
+  <data name="CompanyLocationLabel" xml:space="preserve">
+    <value>Location</value>
+    <comment>What's this location about?</comment>
+  </data>
+  <data name="CompanyRegistrationNumberLabel" xml:space="preserve">
+    <value>Registration Number</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
@@ -147,67 +179,11 @@
   <data name="ContactPageSupportEmail" xml:space="preserve">
     <value>1062012@ucn.dk</value>
   </data>
-  <data name="CompanyBankNumberLabel" xml:space="preserve">
-    <value>Bank Number</value>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
   </data>
-  <data name="CompanyLocationLabel" xml:space="preserve">
-    <value>Location</value>
-    <comment>What's this location about?</comment>
-  </data>
-  <data name="CompanyRegistrationNumberLabel" xml:space="preserve">
-    <value>Registration Number</value>
-  </data>
-  <data name="RepresentativeNameLabel" xml:space="preserve">
-    <value>Representative Name</value>
-  </data>
-  <data name="NewCompanyButton" xml:space="preserve">
-    <value>New Company</value>
-  </data>
-  <data name="CompanyAddressLabel" xml:space="preserve">
-    <value>Address</value>
-    <comment>Might be a good idea to make the Company Address use the Address table in db</comment>
-  </data>
-  <data name="TransportCostLabel" xml:space="preserve">
-    <value>Transport Cost</value>
-  </data>
-  <data name="ActionLabel" xml:space="preserve">
-    <value>Action</value>
-  </data>
-  <data name="ItemIncomingPriceLabel" xml:space="preserve">
-    <value>Price With Tax</value>
-  </data>
-  <data name="NewItemButton" xml:space="preserve">
-    <value>Add New Item</value>
-  </data>
-  <data name="ProductBarcodeLabel" xml:space="preserve">
-    <value>Product Barcode</value>
-  </data>
-  <data name="ProductGroupNameLabel" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="ProductNameLabel" xml:space="preserve">
-    <value>Product Name</value>
-  </data>
-  <data name="ProductPrice" xml:space="preserve">
-    <value>Product Price</value>
-  </data>
-  <data name="SerialNumberLabel" xml:space="preserve">
-    <value>Serial Number</value>
-  </data>
-  <data name="TaxGroupLabel" xml:space="preserve">
-    <value>Tax Group</value>
-  </data>
-  <data name="AddressCityPlaceholder" xml:space="preserve">
-    <value>City</value>
-  </data>
-  <data name="AddressExtraPlaceholder" xml:space="preserve">
-    <value>Extra Information</value>
-  </data>
-  <data name="AddressIDPlaceholder" xml:space="preserve">
-    <value>Address ID</value>
-  </data>
-  <data name="AddressNumberPlaceholder" xml:space="preserve">
-    <value>Number</value>
+  <data name="CustomerEmailPlaceholder" xml:space="preserve">
+    <value>Email</value>
   </data>
   <data name="CustomerFamilyNamePlaceholder" xml:space="preserve">
     <value>Family Name</value>
@@ -218,17 +194,8 @@
   <data name="CustomerIdPlaceholder" xml:space="preserve">
     <value>Customer ID</value>
   </data>
-  <data name="JobDetails" xml:space="preserve">
-    <value>Job Details</value>
-  </data>
-  <data name="CustomerEmailPlaceholder" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="InvoiceInfoLabel" xml:space="preserve">
-    <value>Invoice Info</value>
-  </data>
-  <data name="ProductsLabel" xml:space="preserve">
-    <value>Products</value>
+  <data name="CustomerNamePlaceHolder" xml:space="preserve">
+    <value>Customer Name</value>
   </data>
   <data name="DeleteButton" xml:space="preserve">
     <value>Delete</value>
@@ -236,56 +203,65 @@
   <data name="DeleteButtonTitle" xml:space="preserve">
     <value>This button removes item, action can be canceled by clicking button again.</value>
   </data>
-  <data name="English" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="CompaniesPlaceholder" xml:space="preserve">
-    <value>Companies</value>
-  </data>
   <data name="DocumentNumberPlaceholder" xml:space="preserve">
     <value>Document Number</value>
   </data>
-  <data name="NewInvoiceButton" xml:space="preserve">
-    <value>New Invoice</value>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
   </data>
-  <data name="PaymentDateLabel" xml:space="preserve">
-    <value>Payment Date</value>
+  <data name="ErrorPageText" xml:space="preserve">
+    <value>An error occurred while processing your request.</value>
   </data>
-  <data name="PrescriptionDateLabel" xml:space="preserve">
-    <value>Prescription Date</value>
-  </data>
-  <data name="ReceiverCompanyLabel" xml:space="preserve">
-    <value>Receiver Company</value>
-  </data>
-  <data name="ReceptionDateLabel" xml:space="preserve">
-    <value>Reception Date</value>
-  </data>
-  <data name="SenderCompanyLabel" xml:space="preserve">
-    <value>Sender Company</value>
-  </data>
-  <data name="InvoiceList" xml:space="preserve">
-    <value>Invoice List</value>
-  </data>
-  <data name="JobList" xml:space="preserve">
-    <value>Job List</value>
-  </data>
-  <data name="JobSearchCardTitle" xml:space="preserve">
-    <value>Job search</value>
-  </data>
-  <data name="CustomerNamePlaceHolder" xml:space="preserve">
-    <value>Customer Name</value>
+  <data name="ErrorPageTitle" xml:space="preserve">
+    <value>Error.</value>
   </data>
   <data name="FinishedTimePlaceHolder" xml:space="preserve">
     <value>Finished Time</value>
   </data>
+  <data name="InvoiceInfoLabel" xml:space="preserve">
+    <value>Invoice Info</value>
+  </data>
+  <data name="InvoiceList" xml:space="preserve">
+    <value>Invoice List</value>
+  </data>
+  <data name="Invoices" xml:space="preserve">
+    <value>Invoices</value>
+  </data>
+  <data name="InvoiceSearch" xml:space="preserve">
+    <value>Search for invoice</value>
+  </data>
+  <data name="InvoiceType" xml:space="preserve">
+    <value>Invoice type</value>
+  </data>
+  <data name="ItemIncomingPriceLabel" xml:space="preserve">
+    <value>Price With Tax</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Items</value>
+  </data>
+  <data name="ItemSearch" xml:space="preserve">
+    <value>Item search</value>
+  </data>
   <data name="JobDescriptionPlaceHolder" xml:space="preserve">
     <value>Job Description</value>
+  </data>
+  <data name="JobDetails" xml:space="preserve">
+    <value>Job Details</value>
   </data>
   <data name="JobIdPlaceHolder" xml:space="preserve">
     <value>Job Id</value>
   </data>
+  <data name="JobList" xml:space="preserve">
+    <value>Job List</value>
+  </data>
   <data name="JobNamePlaceHolder" xml:space="preserve">
     <value>Job Name</value>
+  </data>
+  <data name="JobSearchCardTitle" xml:space="preserve">
+    <value>Job search</value>
+  </data>
+  <data name="JobStatus" xml:space="preserve">
+    <value>Job Status</value>
   </data>
   <data name="JobStatusDone" xml:space="preserve">
     <value>Done</value>
@@ -296,40 +272,94 @@
   <data name="JobStatusUnassigned" xml:space="preserve">
     <value>Unassigned</value>
   </data>
-  <data name="StartedTimePlaceHolder" xml:space="preserve">
-    <value>Started Time</value>
-  </data>
-  <data name="Cost" xml:space="preserve">
-    <value>Cost</value>
-  </data>
-  <data name="NotificationStatus" xml:space="preserve">
-    <value>Notification Status</value>
-  </data>
-  <data name="JobStatus" xml:space="preserve">
-    <value>Job Status</value>
-  </data>
   <data name="Latvian" xml:space="preserve">
     <value>Latvian</value>
+  </data>
+  <data name="NewCompanyButton" xml:space="preserve">
+    <value>New Company</value>
+  </data>
+  <data name="NewInvoiceButton" xml:space="preserve">
+    <value>New Invoice</value>
+  </data>
+  <data name="NewItemButton" xml:space="preserve">
+    <value>Add New Item</value>
   </data>
   <data name="NewJob" xml:space="preserve">
     <value>Create new job</value>
   </data>
+  <data name="NotificationStatus" xml:space="preserve">
+    <value>Notification Status</value>
+  </data>
+  <data name="PaymentDateLabel" xml:space="preserve">
+    <value>Payment Date</value>
+  </data>
+  <data name="PrescriptionDateLabel" xml:space="preserve">
+    <value>Prescription Date</value>
+  </data>
+  <data name="ProductBarcodeLabel" xml:space="preserve">
+    <value>Product Barcode</value>
+  </data>
   <data name="ProductGroupMarginLabel" xml:space="preserve">
     <value>Product Group Margin</value>
+  </data>
+  <data name="ProductGroupNameLabel" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Product Name</value>
+  </data>
+  <data name="ProductPrice" xml:space="preserve">
+    <value>Product Price</value>
+  </data>
+  <data name="ProductsLabel" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="QuantityLabel" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="ReceiverCompanyLabel" xml:space="preserve">
+    <value>Receiver Company</value>
+  </data>
+  <data name="ReceivingCompany" xml:space="preserve">
+    <value>Receiving company</value>
+  </data>
+  <data name="ReceptionDateLabel" xml:space="preserve">
+    <value>Reception Date</value>
+  </data>
+  <data name="RepresentativeNameLabel" xml:space="preserve">
+    <value>Representative Name</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Select Language</value>
   </data>
+  <data name="SenderCompanyLabel" xml:space="preserve">
+    <value>Sender Company</value>
+  </data>
+  <data name="SendingCompany" xml:space="preserve">
+    <value>Sending company</value>
+  </data>
+  <data name="SerialNumberLabel" xml:space="preserve">
+    <value>Serial Number</value>
+  </data>
+  <data name="StartedTimePlaceHolder" xml:space="preserve">
+    <value>Started Time</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Sum</value>
+  </data>
+  <data name="TaxGroupLabel" xml:space="preserve">
+    <value>Tax Group</value>
+  </data>
   <data name="TaxLabel" xml:space="preserve">
     <value>Tax</value>
   </data>
+  <data name="TransportCostLabel" xml:space="preserve">
+    <value>Transport Cost</value>
+  </data>
   <data name="YourContectPage" xml:space="preserve">
     <value>Your contact page.</value>
-  </data>
-  <data name="ErrorPageText" xml:space="preserve">
-    <value>An error occurred while processing your request.</value>
-  </data>
-  <data name="ErrorPageTitle" xml:space="preserve">
-    <value>Error.</value>
   </data>
 </root>

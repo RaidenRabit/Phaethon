@@ -14,11 +14,11 @@ namespace InternalApi.Controllers
     [RoutePrefix("ProductGroup")]
     public class ProductGroupController: ApiController
     {
-        private readonly IProductGroupManagement _productGroupManagement = null;
+        private readonly IProductGroupDM _productGroupManagement = null;
 
         public ProductGroupController()
         {
-            _productGroupManagement = new ProductGroupManagement();
+            _productGroupManagement = new ProductGroupDM();
         }
 
         [Route("Create")]

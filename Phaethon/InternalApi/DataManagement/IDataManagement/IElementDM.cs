@@ -7,10 +7,8 @@ using Core.Model;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
-    internal interface ICompanyManagement
+    interface IElementDM
     {
-        List<Company> GetCompanies();
-
-        Company GetCompany(int id);
+        List<Element> GetInvoiceElements(int id);
     }
 }
