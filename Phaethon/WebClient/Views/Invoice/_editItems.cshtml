@@ -1,43 +1,40 @@
 ﻿@using Core.Model
 @model Core.Model.Invoice
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
 <table id="elementTable" class="table table-hover">
     <thead>
-    @{
-        Item item = new Item();
         <tr>
             <th>
                 @Html.DisplayNameFor(model => item.Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => item.SerNumber)
+                @LanguagePack.SerialNumberLabel
             </th>
             <th>
-                @Html.DisplayNameFor(model => item.Product.Name)
+                @LanguagePack.ProductNameLabel
             </th>
             <th>
-                @Html.DisplayNameFor(model => item.Product.Barcode)
+                @LanguagePack.ProductBarcodeLabel
             </th>
             <th>
-                Price
+                @LanguagePack.ProductPrice
             </th>
             <th id="taxGroupLabel" class="text-primary">
-                Tax
+                @LanguagePack.TaxGroupLabel
             </th>
             <th id="productGroupLabel" class="text-primary">
-                @Html.DisplayNameFor(model => item.Product.ProductGroup.Name)
+                @LanguagePack.ProductGroupNameLabel
             </th>
             <th>
-                Final price
+                @LanguagePack.ItemIncomingPriceLabel
             </th>
             <th>
-                Action
+                @LanguagePack.ActionLabel
             </th>
         </tr>
-    }
     </thead>
-    <tbody>
-    </tbody>
+    <tbody></tbody>
     <tfoot>
         <tr>
             <td colspan="4"></td>
@@ -49,7 +46,7 @@
                 <input type="number" id="totalAmount" class="form-control" readonly />
             </td>
             <td>
-                <input type="button" id="newItemRow" class="btn btn-success" value="Add new item" />
+                <input type="button" id="newItemRow" class="btn btn-success" value="@LanguagePack.NewItemButton" />
             </td>
         </tr>
     </tfoot>
