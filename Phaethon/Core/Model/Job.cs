@@ -27,23 +27,18 @@ namespace Core.Model
         public int? Customer_ID { get; set; }
 
         [DataMember]
-        [DisplayName("Job Status")]
         public JobStatus_enum JobStatus { get; set; }
 
         [DataMember]
-        [DisplayName("Job Name")]
         public string JobName { get; set; }
 
         [DataMember]
-        [DisplayName("Started Time")]
         public DateTime StartedTime { get; set; }
 
         [DataMember]
-        [DisplayName("Finished Time")]
         public DateTime? FinishedTime { get; set; }
 
         [DataMember]
-        [DisplayName("Notification Time")]
         public DateTime? NotificationTime { get; set; }
 
         [DataMember]

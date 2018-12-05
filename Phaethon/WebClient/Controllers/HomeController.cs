@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using a = WebClient.Resources.Language_Files.LanguagePack;
 
 namespace WebClient.Controllers
 {
@@ -15,14 +16,14 @@ namespace WebClient.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = a.AboutPageDescriptionText;
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = a.YourContectPage;
 
             return View();
         }

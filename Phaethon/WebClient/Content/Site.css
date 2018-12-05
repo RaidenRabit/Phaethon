@@ -42,7 +42,7 @@ textarea {
     display: inline-block;
     width: 100px;
     height: 100px;
-    background: url('../Resources/fidget_spinner.png') center center;
+    background: url('../Resources/Images/fidget_spinner.png') center center;
     background-size: contain;
     transform-origin: 50% 50%;
     animation: spinner 3s infinite alternate ease-in-out;
@@ -54,7 +54,7 @@ textarea {
     margin-left: -100px;
     width: 100px;
     height: 100px;
-    background: url('../Resources/middle_fidget_spinner_part.png') center center;
+    background: url('../Resources/Images/middle_fidget_spinner_part.png') center center;
     background-size: contain;
     content: '';
 }
