@@ -19,7 +19,7 @@
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressUseClassicPipelineMode>true</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -139,6 +139,10 @@
     <Compile Include="Migrations\201812021133435_Initial.Designer.cs">
       <DependentUpon>201812021133435_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812050952594_removed DispalyNames from job and customer tables.cs" />
+    <Compile Include="Migrations\201812050952594_removed DispalyNames from job and customer tables.Designer.cs">
+      <DependentUpon>201812050952594_removed DispalyNames from job and customer tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -164,6 +168,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201812021133435_Initial.resx">
       <DependentUpon>201812021133435_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812050952594_removed DispalyNames from job and customer tables.resx">
+      <DependentUpon>201812050952594_removed DispalyNames from job and customer tables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
