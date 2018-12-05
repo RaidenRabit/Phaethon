@@ -1,6 +1,4 @@
-﻿var url = "http://localhost:64007";
-
-var invoiceType;
+﻿var invoiceType;
 var incoming;
 
 var ProductGroups;
@@ -150,7 +148,7 @@ function ItemChange(rowValue) {
 function getProductGroups() {
     return $.ajax({
         type: "GET",
-        url: url + "/ProductGroup/GetProductGroups",
+        url: "/Api/ProductGroup/GetProductGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -172,7 +170,7 @@ function getProductGroups() {
 function getTaxGroups() {
     return $.ajax({
         type: "GET",
-        url: url + "/TaxGroup/GetTaxGroups",
+        url: "/Api/TaxGroup/GetTaxGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -194,7 +192,7 @@ function getTaxGroups() {
 function getProduct(rowValue, barcode) {
     $.ajax({
         type: "GET",
-        url: url + "/Product/GetProduct",
+        url: "/Api/Product/GetProduct",
         data: {
             barcode: barcode
         },
@@ -232,7 +230,7 @@ function getProduct(rowValue, barcode) {
 function getInvoiceItems() {
     $.ajax({
         type: "GET",
-        url: url + "/Element/GetInvoiceElements",
+        url: "/Api/Element/GetInvoiceElements",
         data: {
             id: $("#ID").val()
         },
@@ -294,7 +292,7 @@ function getItem(id) {
 
         $.ajax({
             type: "GET",
-            url: url + "/Item/GetItem",
+            url: "/Api/Item/GetItem",
             data: {
                 id: id
             },

@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 
 namespace InternalApi.Controllers
 {
-    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
     [RoutePrefix("ProductGroup")]
     public class ProductGroupController: ApiController
     {

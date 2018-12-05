@@ -1,6 +1,4 @@
-﻿var url = "http://localhost:64007";
-
-$(function () {
+﻿$(function () {
     //creates date range picker
     $('.daterange').daterangepicker({
         "showDropdowns": true,
@@ -39,7 +37,7 @@ $(function () {
 function GetCompanies() {
     $.ajax({
         type: "GET",
-        url: url + "/Company/GetCompanies",
+        url: "Api/Company/GetCompanies",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -60,7 +58,7 @@ function GetInvoices()
 {
     $.ajax({
         type: "GET",
-        url: url + "/Invoice/GetInvoices",
+        url: "Api/Invoice/GetInvoices",
         data: {
             numOfRecords: $("#numOfRecords").val(),
             selectedCompany: $('input[name=companyOption]:checked').val(),

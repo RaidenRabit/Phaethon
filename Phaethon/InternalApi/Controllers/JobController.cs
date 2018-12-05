@@ -89,8 +89,8 @@ namespace InternalApi.Controllers
             }
         }
 
-        [HttpGet]
         [Route("ResendNotification")]
+        [HttpGet]
         public HttpResponseMessage ResendNotification(string id)
         {
             Job job = _jobDm.Read(id);
