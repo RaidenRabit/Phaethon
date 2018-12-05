@@ -10,6 +10,7 @@ namespace WebClient
         {
             #region ScriptBundles
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/loadingAnimation.js",
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-{version}.min.js",
                         "~/Scripts/jquery-ui-1.12.1.min.js",
