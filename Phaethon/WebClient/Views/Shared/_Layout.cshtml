@@ -57,13 +57,24 @@
             </div>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Phaethon</p>
-        </footer>
+<div class="container body-content">
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Phaethon</p>
+    </footer>
+</div>
+
+@* element for the loading animation *@
+<div class="modal" align="center" style="display: none">
+    <div class="h-100 row align-items-center">
+        <div class="col">
+            <div class="spinner"></div>
+            <div class="spinner-center"></div>
+            <div class="loading-text">Loading...</div>
+        </div>
     </div>
+</div>
 
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/changeLanguage")
