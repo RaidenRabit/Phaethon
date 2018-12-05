@@ -1,5 +1,5 @@
 ﻿@model Core.Model.Invoice
-@Styles.Render("~/Content/Daterangepicker")
+@Styles.Render("~/Content/dateRangePicker")
 @{ViewBag.Title = "Index";}
 @using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
@@ -31,7 +31,7 @@
                             </label>
                         </div>
 
-                        <input id="dateRange" type="datetime" class="daterange form-control"/>
+                        <input id="dateRange" type="datetime" class="daterange form-control" />
                     </div>
 
                     <div class="form-group">
@@ -58,42 +58,43 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceList">@LanguagePack.Invoices
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceList">
+                    @LanguagePack.Invoices
                     <div style="float: right"><Input type="button" id="newInvoice" class="btn btn-success" value="@LanguagePack.NewInvoiceButton"></div>
                 </div>
 
                 <div id="invoiceList" class="card-body collapse show" style="padding-left: 20px;">
                     <table id="invoiceTable" class="table">
                         <thead>
-                        <tr>
-                            <th>
-                                @LanguagePack.DocumentNumberPlaceholder
-                            </th>
-                            <th>
-                                @LanguagePack.InvoiceType
-                            </th>
-                            <th>
-                                @LanguagePack.PrescriptionDateLabel
-                            </th>
-                            <th>
-                                @LanguagePack.ReceiverCompanyLabel
-                            </th>
-                            <th>
-                                @LanguagePack.PaymentDateLabel
-                            </th>
-                            <th>
-                                @LanguagePack.SenderCompanyLabel
-                            </th>
-                            <th>
-                                @LanguagePack.ReceiverCompanyLabel
-                            </th>
-                            <th>
-                                @LanguagePack.Sum
-                            </th>
-                            <th>
-                                <input id="numOfRecords" type="number" class="form-control" value="10"/>
-                            </th>
-                        </tr>
+                            <tr>
+                                <th>
+                                    @LanguagePack.DocumentNumberPlaceholder
+                                </th>
+                                <th>
+                                    @LanguagePack.InvoiceType
+                                </th>
+                                <th>
+                                    @LanguagePack.PrescriptionDateLabel
+                                </th>
+                                <th>
+                                    @LanguagePack.ReceiverCompanyLabel
+                                </th>
+                                <th>
+                                    @LanguagePack.PaymentDateLabel
+                                </th>
+                                <th>
+                                    @LanguagePack.SenderCompanyLabel
+                                </th>
+                                <th>
+                                    @LanguagePack.ReceiverCompanyLabel
+                                </th>
+                                <th>
+                                    @LanguagePack.Sum
+                                </th>
+                                <th>
+                                    <input id="numOfRecords" type="number" class="form-control" value="10" />
+                                </th>
+                            </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -104,3 +105,4 @@
 </div>
 
 @Scripts.Render("~/bundles/Invoice")
+@Scripts.Render("~/bundles/dateRangePicker")
