@@ -395,4 +395,7 @@
   <data name="ViewDetails" xml:space="preserve">
     <value>View Details</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
 </root>
