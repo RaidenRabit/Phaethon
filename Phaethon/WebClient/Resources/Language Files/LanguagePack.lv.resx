@@ -118,54 +118,54 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>About</value>
+    <value>Par mums</value>
   </data>
   <data name="AboutPageDescriptionText" xml:space="preserve">
-    <value>Your application description page.</value>
+    <value>Jūsu lapas apraksts.</value>
   </data>
   <data name="AboutPageText" xml:space="preserve">
-    <value>Use this area to provide additional information.</value>
+    <value>Izmantojiet šo apgabalu, lai sniegtu papildu informāciju.</value>
   </data>
   <data name="ActionLabel" xml:space="preserve">
-    <value>Action</value>
+    <value>Darbība</value>
   </data>
   <data name="AddressCityPlaceholder" xml:space="preserve">
-    <value>City</value>
+    <value>Pilsēta</value>
   </data>
   <data name="AddressExtraPlaceholder" xml:space="preserve">
-    <value>Extra Information</value>
+    <value>Papildus informācija</value>
   </data>
   <data name="AddressIDPlaceholder" xml:space="preserve">
-    <value>Address ID</value>
+    <value>Adreses ID</value>
   </data>
   <data name="AddressNumberPlaceholder" xml:space="preserve">
-    <value>Number</value>
+    <value>Adreses numurs</value>
   </data>
   <data name="CompaniesPlaceholder" xml:space="preserve">
-    <value>Companies</value>
+    <value>Kompānijas</value>
   </data>
   <data name="CompanyAddressLabel" xml:space="preserve">
-    <value>Address</value>
+    <value>Adrese</value>
     <comment>Might be a good idea to make the Company Address use the Address table in db</comment>
   </data>
   <data name="CompanyBankNumberLabel" xml:space="preserve">
-    <value>Bank Number</value>
+    <value>Bankas numurs</value>
   </data>
   <data name="CompanyLocationLabel" xml:space="preserve">
-    <value>Location</value>
+    <value>Atrašanās vieta</value>
     <comment>What's this location about?</comment>
   </data>
   <data name="CompanyRegistrationNumberLabel" xml:space="preserve">
-    <value>Registration Number</value>
+    <value>Reģistrācijas numurs</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value>Contact</value>
+    <value>Kontakti</value>
   </data>
   <data name="ContactPageCityAndCountry" xml:space="preserve">
     <value>Aalborg, Denmark</value>
   </data>
   <data name="ContactPagePhone" xml:space="preserve">
-    <value>Phone</value>
+    <value>Tālrunis</value>
   </data>
   <data name="ContactPagePhoneNumber" xml:space="preserve">
     <value>+45 50 22 77 79</value>
@@ -174,192 +174,192 @@
     <value>Sofiendalsvej 60</value>
   </data>
   <data name="ContactPageSupport" xml:space="preserve">
-    <value>Support</value>
+    <value>Atbalsts</value>
   </data>
   <data name="ContactPageSupportEmail" xml:space="preserve">
     <value>1062012@ucn.dk</value>
   </data>
   <data name="Cost" xml:space="preserve">
-    <value>Cost</value>
+    <value>Izmaksas</value>
   </data>
   <data name="CustomerEmailPlaceholder" xml:space="preserve">
-    <value>Email</value>
+    <value>E-pasts</value>
   </data>
   <data name="CustomerFamilyNamePlaceholder" xml:space="preserve">
-    <value>Family Name</value>
+    <value>Uzvārds</value>
   </data>
   <data name="CustomerGivenNamePlaceholder" xml:space="preserve">
-    <value>Given Name</value>
+    <value>Vārds</value>
   </data>
   <data name="CustomerIdPlaceholder" xml:space="preserve">
-    <value>Customer ID</value>
+    <value>Klienta ID</value>
   </data>
   <data name="CustomerNamePlaceHolder" xml:space="preserve">
-    <value>Customer Name</value>
+    <value>Klienta vārds</value>
   </data>
   <data name="DeleteButton" xml:space="preserve">
-    <value>Delete</value>
+    <value>Dzēst</value>
   </data>
   <data name="DeleteButtonTitle" xml:space="preserve">
-    <value>This button removes item, action can be canceled by clicking button again.</value>
+    <value>Šī poga noņem objektu, darbību var atcelt, vēlreiz nospiežot pogu.</value>
   </data>
   <data name="DocumentNumberPlaceholder" xml:space="preserve">
-    <value>Document Number</value>
+    <value>dokumenta numurs</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>English</value>
+    <value>Angļu</value>
   </data>
   <data name="ErrorPageText" xml:space="preserve">
-    <value>An error occurred while processing your request.</value>
+    <value>Apstrādājot jūsu pieprasījumu, radās kļūda.</value>
   </data>
   <data name="ErrorPageTitle" xml:space="preserve">
-    <value>Error.</value>
+    <value>Kļūda.</value>
   </data>
   <data name="FinishedTimePlaceHolder" xml:space="preserve">
-    <value>Finished Time</value>
+    <value>Pabeigšanas laiks</value>
   </data>
   <data name="InvoiceInfoLabel" xml:space="preserve">
-    <value>Invoice Info</value>
+    <value>Rekvizītu informācija</value>
   </data>
   <data name="InvoiceList" xml:space="preserve">
-    <value>Invoice List</value>
+    <value>Rekvizītu saraksts</value>
   </data>
   <data name="Invoices" xml:space="preserve">
-    <value>Invoices</value>
+    <value>Rekvizīti</value>
   </data>
   <data name="InvoiceSearch" xml:space="preserve">
-    <value>Search for invoice</value>
+    <value>Maklēt rekvizītu</value>
   </data>
   <data name="InvoiceType" xml:space="preserve">
-    <value>Invoice type</value>
+    <value>Rekvizīta tips</value>
   </data>
   <data name="ItemIncomingPriceLabel" xml:space="preserve">
-    <value>Price With Tax</value>
+    <value>Cena ar nodokli</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value>Items</value>
+    <value>Prece</value>
   </data>
   <data name="ItemSearch" xml:space="preserve">
-    <value>Item search</value>
+    <value>Preces meklēšana</value>
   </data>
   <data name="JobDescriptionPlaceHolder" xml:space="preserve">
-    <value>Job Description</value>
+    <value>Darba informācija</value>
   </data>
   <data name="JobDetails" xml:space="preserve">
-    <value>Job Details</value>
+    <value>Darba detaļas</value>
   </data>
   <data name="JobIdPlaceHolder" xml:space="preserve">
-    <value>Job Id</value>
+    <value>Darba ID</value>
   </data>
   <data name="JobList" xml:space="preserve">
-    <value>Job List</value>
+    <value>Darbu saraksts</value>
   </data>
   <data name="JobNamePlaceHolder" xml:space="preserve">
-    <value>Job Name</value>
+    <value>Darba vārds</value>
   </data>
   <data name="JobSearchCardTitle" xml:space="preserve">
-    <value>Job search</value>
+    <value>Meklēt darbu</value>
   </data>
   <data name="JobStatus" xml:space="preserve">
-    <value>Job Status</value>
+    <value>Darba status</value>
   </data>
   <data name="JobStatusDone" xml:space="preserve">
-    <value>Done</value>
+    <value>Pabeigts</value>
   </data>
   <data name="JobStatusInProggress" xml:space="preserve">
-    <value>In Proggress</value>
+    <value>Progresā</value>
   </data>
   <data name="JobStatusUnassigned" xml:space="preserve">
-    <value>Unassigned</value>
+    <value>Nav uzsākts</value>
   </data>
   <data name="Latvian" xml:space="preserve">
-    <value>Latvian</value>
+    <value>Latviešu</value>
   </data>
   <data name="NewCompanyButton" xml:space="preserve">
-    <value>New Company</value>
+    <value>Jauna kompānija</value>
   </data>
   <data name="NewInvoiceButton" xml:space="preserve">
-    <value>New Invoice</value>
+    <value>Jauns rekvizīts</value>
   </data>
   <data name="NewItemButton" xml:space="preserve">
-    <value>Add New Item</value>
+    <value>Pievienot jaunu preci</value>
   </data>
   <data name="NewJob" xml:space="preserve">
-    <value>Create new job</value>
+    <value>Izveidot jaunu darbu</value>
   </data>
   <data name="NotificationStatus" xml:space="preserve">
-    <value>Notification Status</value>
+    <value>Paziņojuma statuss</value>
   </data>
   <data name="PaymentDateLabel" xml:space="preserve">
-    <value>Payment Date</value>
+    <value>Maksājuma datums</value>
   </data>
   <data name="PrescriptionDateLabel" xml:space="preserve">
-    <value>Prescription Date</value>
+    <value>Pieprasīšanas datums</value>
   </data>
   <data name="ProductBarcodeLabel" xml:space="preserve">
-    <value>Product Barcode</value>
+    <value>Produkta svītrkods</value>
   </data>
   <data name="ProductGroupMarginLabel" xml:space="preserve">
-    <value>Product Group Margin</value>
+    <value>Produkta grupas uzcenojums</value>
   </data>
   <data name="ProductGroupNameLabel" xml:space="preserve">
-    <value>Name</value>
+    <value>Produkta grupas vārds</value>
   </data>
   <data name="ProductNameLabel" xml:space="preserve">
-    <value>Product Name</value>
+    <value>Produkta vārds</value>
   </data>
   <data name="ProductPrice" xml:space="preserve">
-    <value>Product Price</value>
+    <value>Produkta cena</value>
   </data>
   <data name="ProductsLabel" xml:space="preserve">
-    <value>Products</value>
+    <value>Produkti</value>
   </data>
   <data name="QuantityLabel" xml:space="preserve">
-    <value>Quantity</value>
+    <value>Daudzums</value>
   </data>
   <data name="ReceiverCompanyLabel" xml:space="preserve">
-    <value>Receiver Company</value>
+    <value>Saņēmēja uzņēmums</value>
   </data>
   <data name="ReceivingCompany" xml:space="preserve">
-    <value>Receiving company</value>
+    <value>Saņēmēj uzņēmums</value>
   </data>
   <data name="ReceptionDateLabel" xml:space="preserve">
-    <value>Reception Date</value>
+    <value>Saņemšanas datums</value>
   </data>
   <data name="RepresentativeNameLabel" xml:space="preserve">
-    <value>Representative Name</value>
+    <value>Pārstāvja vārds</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Saglabāt</value>
   </data>
   <data name="SelectLanguage" xml:space="preserve">
-    <value>Select Language</value>
+    <value>Izvēlēties valodu</value>
   </data>
   <data name="SenderCompanyLabel" xml:space="preserve">
-    <value>Sender Company</value>
+    <value>Sūtītāja uzņēmums</value>
   </data>
   <data name="SendingCompany" xml:space="preserve">
-    <value>Sending company</value>
+    <value>Sūtītāj uzņēmums</value>
   </data>
   <data name="SerialNumberLabel" xml:space="preserve">
-    <value>Serial Number</value>
+    <value>Seriāla numurs</value>
   </data>
   <data name="StartedTimePlaceHolder" xml:space="preserve">
-    <value>Started Time</value>
+    <value>Uzsākšanas laiks</value>
   </data>
   <data name="Sum" xml:space="preserve">
-    <value>Sum</value>
+    <value>Summa</value>
   </data>
   <data name="TaxGroupLabel" xml:space="preserve">
-    <value>Tax Group</value>
+    <value>Nodokļu grupa</value>
   </data>
   <data name="TaxLabel" xml:space="preserve">
-    <value>Tax</value>
+    <value>Nodoklis</value>
   </data>
   <data name="TransportCostLabel" xml:space="preserve">
-    <value>Transport Cost</value>
+    <value>Transporta izmaksas</value>
   </data>
   <data name="YourContectPage" xml:space="preserve">
-    <value>Your contact page.</value>
+    <value>Jūsu kontaktpersonu lapa.</value>
   </data>
 </root>
