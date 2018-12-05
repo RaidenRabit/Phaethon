@@ -1,13 +1,11 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.Controllers
 {
-    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
     [RoutePrefix("Company")]
     public class CompanyController: ApiController
     {

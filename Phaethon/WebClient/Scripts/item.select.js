@@ -1,6 +1,4 @@
-﻿var url = "http://localhost:64007";
-
-$(function () {
+﻿$(function () {
     GetItems();
 
     //on search option change get corresponding items
@@ -13,7 +11,7 @@ $(function () {
 function GetItems() {
     $.ajax({
         type: "GET",
-        url: url + "/Item/GetItems",
+        url: "/Api/Item/GetItems",
         data: {
             serialNumber: $("#serialNumber").val(),
             productName: $("#productName").val(),

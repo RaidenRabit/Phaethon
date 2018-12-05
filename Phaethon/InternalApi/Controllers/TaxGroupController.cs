@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 
 namespace InternalApi.Controllers
 {
-    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
     [RoutePrefix("TaxGroup")]
     public class TaxGroupController : ApiController
     {

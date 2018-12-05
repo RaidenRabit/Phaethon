@@ -10,7 +10,6 @@ using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.Controllers
 {
-    [EnableCors(origins: "http://localhost:49873", headers: "*", methods: "*")]
     [RoutePrefix("Product")]
     public class ProductController : ApiController
     {
