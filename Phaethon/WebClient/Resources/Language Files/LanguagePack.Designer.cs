@@ -106,6 +106,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address Details.
+        /// </summary>
+        public static string AddressDetails {
+            get {
+                return ResourceManager.GetString("AddressDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extra Information.
         /// </summary>
         public static string AddressExtraPlaceholder {
@@ -129,6 +138,24 @@ namespace WebClient.Resources.Language_Files {
         public static string AddressNumberPlaceholder {
             get {
                 return ResourceManager.GetString("AddressNumberPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Street.
+        /// </summary>
+        public static string AddressStreetPlaceholder {
+            get {
+                return ResourceManager.GetString("AddressStreetPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -250,6 +277,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Details.
+        /// </summary>
+        public static string CustomerDetails {
+            get {
+                return ResourceManager.GetString("CustomerDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string CustomerEmailPlaceholder {
@@ -313,11 +349,29 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Document Number.
         /// </summary>
         public static string DocumentNumberPlaceholder {
             get {
                 return ResourceManager.GetString("DocumentNumberPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
@@ -354,6 +408,15 @@ namespace WebClient.Resources.Language_Files {
         public static string FinishedTimePlaceHolder {
             get {
                 return ResourceManager.GetString("FinishedTimePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incoming.
+        /// </summary>
+        public static string Incoming {
+            get {
+                return ResourceManager.GetString("Incoming", resourceCulture);
             }
         }
         
@@ -430,6 +493,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Selection.
+        /// </summary>
+        public static string ItemSelection {
+            get {
+                return ResourceManager.GetString("ItemSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Job Description.
         /// </summary>
         public static string JobDescriptionPlaceHolder {
@@ -471,6 +543,15 @@ namespace WebClient.Resources.Language_Files {
         public static string JobNamePlaceHolder {
             get {
                 return ResourceManager.GetString("JobNamePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jobs.
+        /// </summary>
+        public static string Jobs {
+            get {
+                return ResourceManager.GetString("Jobs", resourceCulture);
             }
         }
         
@@ -570,6 +651,15 @@ namespace WebClient.Resources.Language_Files {
         public static string NotificationStatus {
             get {
                 return ResourceManager.GetString("NotificationStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outgoing.
+        /// </summary>
+        public static string Outgoing {
+            get {
+                return ResourceManager.GetString("Outgoing", resourceCulture);
             }
         }
         
@@ -700,6 +790,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Language.
         /// </summary>
         public static string SelectLanguage {
@@ -777,6 +876,15 @@ namespace WebClient.Resources.Language_Files {
         public static string TransportCostLabel {
             get {
                 return ResourceManager.GetString("TransportCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Details.
+        /// </summary>
+        public static string ViewDetails {
+            get {
+                return ResourceManager.GetString("ViewDetails", resourceCulture);
             }
         }
         

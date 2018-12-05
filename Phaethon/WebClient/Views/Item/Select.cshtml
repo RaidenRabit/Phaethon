@@ -2,6 +2,9 @@
 @using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
 <div class="card-body" style="padding-left: 20px;">
+    <script>
+        var select = "@LanguagePack.Select";
+    </script>
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
@@ -11,19 +14,19 @@
                     <div class="row">
                         <div class="col-sm">
                             <label class="btn btn-info active">
-                                <input id="serialNumber" type="text" class="form-control" placeholder="@LanguagePack.SerialNumberLabel" /> @LanguagePack.SerialNumberLabel
+                                <input id="serialNumber" type="text" class="form-control" placeholder="@LanguagePack.SerialNumberLabel"/> @LanguagePack.SerialNumberLabel
                             </label>
                         </div>
 
                         <div class="col-sm">
                             <label class="btn btn-info active">
-                                <input id="productName" type="text" class="form-control" placeholder="@LanguagePack.ProductNameLabel" /> @LanguagePack.ProductNameLabel
+                                <input id="productName" type="text" class="form-control" placeholder="@LanguagePack.ProductNameLabel"/> @LanguagePack.ProductNameLabel
                             </label>
                         </div>
 
                         <div class="col-sm">
                             <label class="btn btn-info active">
-                                <input id="barcode" type="number" class="form-control" placeholder="@LanguagePack.ProductBarcodeLabel" value="0" min="0" /> @LanguagePack.ProductBarcodeLabel
+                                <input id="barcode" type="number" class="form-control" placeholder="@LanguagePack.ProductBarcodeLabel" value="0" min="0"/> @LanguagePack.ProductBarcodeLabel
                             </label>
                         </div>
                     </div>
@@ -39,26 +42,26 @@
                 <div id="itemList" class="card-body collapse show" style="padding-left: 20px;">
                     <table id="itemTable" class="table">
                         <thead>
-                            <tr>
-                                <th>
-                                    @LanguagePack.QuantityLabel
-                                </th>
-                                <th>
-                                    @LanguagePack.SerialNumberLabel
-                                </th>
-                                <th>
-                                    @LanguagePack.ProductNameLabel
-                                </th>
-                                <th>
-                                    @LanguagePack.ProductBarcodeLabel
-                                </th>
-                                <th>
-                                    @LanguagePack.ItemIncomingPriceLabel
-                                </th>
-                                <th>
+                        <tr>
+                            <th>
+                                @LanguagePack.QuantityLabel
+                            </th>
+                            <th>
+                                @LanguagePack.SerialNumberLabel
+                            </th>
+                            <th>
+                                @LanguagePack.ProductNameLabel
+                            </th>
+                            <th>
+                                @LanguagePack.ProductBarcodeLabel
+                            </th>
+                            <th>
+                                @LanguagePack.ItemIncomingPriceLabel
+                            </th>
+                            <th>
 
-                                </th>
-                            </tr>
+                            </th>
+                        </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
