@@ -56,7 +56,6 @@ namespace WebClient.Controllers
                 return View(new User());
             }
             
-            
         }
 
         [HttpPost]
