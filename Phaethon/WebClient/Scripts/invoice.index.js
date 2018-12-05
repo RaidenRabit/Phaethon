@@ -39,7 +39,7 @@ $(function () {
 function GetCompanies() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:64007/Company/GetCompanies",
+        url: url + "/Company/GetCompanies",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
