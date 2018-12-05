@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceSearch">Invoice search</div>
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceSearch">@LanguagePack.InvoiceSearch</div>
 
                 <div id="invoiceSearch" class="card-body collapse" style="padding-left: 20px;">
                     <div class="form-group">
@@ -53,8 +53,9 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceList">Invoices
-                    <div style="float: right"><Input type="button" id="newInvoice" class="btn btn-success" value="@LanguagePack.NewInvoiceButton"></div></div>
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceList">@LanguagePack.Invoices
+                                <div style="float: right"><Input type="button" id="newInvoice" class="btn btn-success" value="@LanguagePack.NewInvoiceButton"></div>
+                            </div>
 
                 <div id="invoiceList" class="card-body collapse show" style="padding-left: 20px;">
                     <table id="invoiceTable" class="table">
@@ -64,7 +65,7 @@
                                     @LanguagePack.DocumentNumberPlaceholder
                                 </th>
                                 <th>
-                                    Invoice type
+                                    @LanguagePack.InvoiceType
                                 </th>
                                 <th>
                                     @LanguagePack.PrescriptionDateLabel
@@ -82,7 +83,7 @@
                                     @LanguagePack.ReceiverCompanyLabel
                                 </th>
                                 <th>
-                                    Sum
+                                    @LanguagePack.Sum
                                 </th>
                                 <th>
                                     <input id="numOfRecords" type="number" class="form-control" value="10" />

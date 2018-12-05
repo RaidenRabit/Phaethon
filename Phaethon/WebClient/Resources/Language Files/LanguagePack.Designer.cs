@@ -376,11 +376,56 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invoices.
+        /// </summary>
+        public static string Invoices {
+            get {
+                return ResourceManager.GetString("Invoices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for invoice.
+        /// </summary>
+        public static string InvoiceSearch {
+            get {
+                return ResourceManager.GetString("InvoiceSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice type.
+        /// </summary>
+        public static string InvoiceType {
+            get {
+                return ResourceManager.GetString("InvoiceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price With Tax.
         /// </summary>
         public static string ItemIncomingPriceLabel {
             get {
                 return ResourceManager.GetString("ItemIncomingPriceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Items.
+        /// </summary>
+        public static string Items {
+            get {
+                return ResourceManager.GetString("Items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item search.
+        /// </summary>
+        public static string ItemSearch {
+            get {
+                return ResourceManager.GetString("ItemSearch", resourceCulture);
             }
         }
         
@@ -601,11 +646,29 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string QuantityLabel {
+            get {
+                return ResourceManager.GetString("QuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Receiver Company.
         /// </summary>
         public static string ReceiverCompanyLabel {
             get {
                 return ResourceManager.GetString("ReceiverCompanyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receiving company.
+        /// </summary>
+        public static string ReceivingCompany {
+            get {
+                return ResourceManager.GetString("ReceivingCompany", resourceCulture);
             }
         }
         
@@ -628,6 +691,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Language.
         /// </summary>
         public static string SelectLanguage {
@@ -646,6 +718,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sending company.
+        /// </summary>
+        public static string SendingCompany {
+            get {
+                return ResourceManager.GetString("SendingCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serial Number.
         /// </summary>
         public static string SerialNumberLabel {
@@ -660,6 +741,15 @@ namespace WebClient.Resources.Language_Files {
         public static string StartedTimePlaceHolder {
             get {
                 return ResourceManager.GetString("StartedTimePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sum.
+        /// </summary>
+        public static string Sum {
+            get {
+                return ResourceManager.GetString("Sum", resourceCulture);
             }
         }
         
