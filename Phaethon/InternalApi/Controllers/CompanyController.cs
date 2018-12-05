@@ -11,7 +11,7 @@ namespace InternalApi.Controllers
     [RoutePrefix("Company")]
     public class CompanyController: ApiController
     {
-        private readonly ICompanyDM _companyManagement = null;
+        private readonly ICompanyDM _companyManagement;
 
         public CompanyController()
         {

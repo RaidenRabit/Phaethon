@@ -21,14 +21,12 @@ namespace Core.Model
 
         [Required]
         [DataMember]
-        [DisplayName("Product")]
         [StringLength(50)]
         [Index(IsUnique = true)]
         public string Name { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Product group margin")]
         [Range(0, 100)]
         public int Margin { get; set; }
         

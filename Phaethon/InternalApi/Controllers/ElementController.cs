@@ -14,7 +14,7 @@ namespace InternalApi.Controllers
     [RoutePrefix("Element")]
     public class ElementController : ApiController
     {
-        private readonly IElementDM _elementManagement = null;
+        private readonly IElementDM _elementManagement;
 
         public ElementController()
         {

@@ -21,13 +21,11 @@ namespace Core.Model
 
         [Required]
         [DataMember]
-        [DisplayName("Product name")]
         [StringLength(100)]
         public string Name { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Barcode")]
         [Index(IsUnique = true)]
         public int Barcode { get; set; }
 

@@ -20,19 +20,16 @@ namespace Core.Model
         public int ID { get; set; }
         
         [DataMember]
-        [DisplayName("Serial number")]
         [StringLength(50)]
         [DefaultValue(null)]
         public string SerNumber { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Incoming price")]
         public decimal IncomingPrice { get; set; }
 
         [Required]
         [DataMember]
-        [DisplayName("Outgoing price")]
         public decimal OutgoingPrice { get; set; }
 
         [DataMember]
