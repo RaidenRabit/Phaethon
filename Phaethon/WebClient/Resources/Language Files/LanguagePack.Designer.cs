@@ -151,6 +151,150 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bank Number.
+        /// </summary>
+        public static string EditCompaniesPartialViewCompanyBankNumberLabel {
+            get {
+                return ResourceManager.GetString("EditCompaniesPartialViewCompanyBankNumberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string EditCompaniesPartialViewCompanyLocationLabel {
+            get {
+                return ResourceManager.GetString("EditCompaniesPartialViewCompanyLocationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registration Number.
+        /// </summary>
+        public static string EditCompaniesPartialViewCompanyRegistrationNumberLabel {
+            get {
+                return ResourceManager.GetString("EditCompaniesPartialViewCompanyRegistrationNumberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Representative Name.
+        /// </summary>
+        public static string EditCompaniesPartialViewRepresentativeNameLabel {
+            get {
+                return ResourceManager.GetString("EditCompaniesPartialViewRepresentativeNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Company.
+        /// </summary>
+        public static string EditCompanyPartialViewNewCompanyButton {
+            get {
+                return ResourceManager.GetString("EditCompanyPartialViewNewCompanyButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string EditCopmaniesPartialViewCompanyAddressLabel {
+            get {
+                return ResourceManager.GetString("EditCopmaniesPartialViewCompanyAddressLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transport Cost.
+        /// </summary>
+        public static string EditInvoicePartialViewTransportCostLabel {
+            get {
+                return ResourceManager.GetString("EditInvoicePartialViewTransportCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string EditItemsPartialViewActionLabel {
+            get {
+                return ResourceManager.GetString("EditItemsPartialViewActionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price With Tax.
+        /// </summary>
+        public static string EditItemsPartialViewItemIncomingPriceLabel {
+            get {
+                return ResourceManager.GetString("EditItemsPartialViewItemIncomingPriceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Item.
+        /// </summary>
+        public static string EditItemsPartialViewNewItemButton {
+            get {
+                return ResourceManager.GetString("EditItemsPartialViewNewItemButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Barcode.
+        /// </summary>
+        public static string EditItemsPartialViewProductBarcodeLabel {
+            get {
+                return ResourceManager.GetString("EditItemsPartialViewProductBarcodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string EditItemsPartialViewProductGroupNameLabel {
+            get {
+                return ResourceManager.GetString("EditItemsPartialViewProductGroupNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Name.
+        /// </summary>
+        public static string EditItemsPartialViewProductNameLabel {
+            get {
+                return ResourceManager.GetString("EditItemsPartialViewProductNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Price.
+        /// </summary>
+        public static string EditItemsPartialViewProductPrice {
+            get {
+                return ResourceManager.GetString("EditItemsPartialViewProductPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial Number.
+        /// </summary>
+        public static string EditItemsPartialViewSerialNumberLabel {
+            get {
+                return ResourceManager.GetString("EditItemsPartialViewSerialNumberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Group.
+        /// </summary>
+        public static string EditItemsPartialViewTaxGroupLabel {
+            get {
+                return ResourceManager.GetString("EditItemsPartialViewTaxGroupLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to City.
         /// </summary>
         public static string EditJobPartialPageAddressCityPlaceholder {
@@ -232,11 +376,119 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invoice Info.
+        /// </summary>
+        public static string EditViewInvoiceInfoLabel {
+            get {
+                return ResourceManager.GetString("EditViewInvoiceInfoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products.
+        /// </summary>
+        public static string EditViewProductsLabel {
+            get {
+                return ResourceManager.GetString("EditViewProductsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string ElementViewDeleteButton {
+            get {
+                return ResourceManager.GetString("ElementViewDeleteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This button removes item, action can be canceled by clicking button again..
+        /// </summary>
+        public static string ElementViewDeleteButtonTitle {
+            get {
+                return ResourceManager.GetString("ElementViewDeleteButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         public static string English {
             get {
                 return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Companies.
+        /// </summary>
+        public static string InvoiceIndexCompaniesPlaceholder {
+            get {
+                return ResourceManager.GetString("InvoiceIndexCompaniesPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Number.
+        /// </summary>
+        public static string InvoiceIndexDocumentNumberPlaceholder {
+            get {
+                return ResourceManager.GetString("InvoiceIndexDocumentNumberPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Invoice.
+        /// </summary>
+        public static string InvoiceIndexNewInvoiceButton {
+            get {
+                return ResourceManager.GetString("InvoiceIndexNewInvoiceButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Date.
+        /// </summary>
+        public static string InvoiceIndexPaymentDateLabel {
+            get {
+                return ResourceManager.GetString("InvoiceIndexPaymentDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prescription Date.
+        /// </summary>
+        public static string InvoiceIndexPrescriptionDateLabel {
+            get {
+                return ResourceManager.GetString("InvoiceIndexPrescriptionDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receiver Company.
+        /// </summary>
+        public static string InvoiceIndexReceiverCompanyLabel {
+            get {
+                return ResourceManager.GetString("InvoiceIndexReceiverCompanyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reception Date.
+        /// </summary>
+        public static string InvoiceIndexReceptionDateLabel {
+            get {
+                return ResourceManager.GetString("InvoiceIndexReceptionDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sender Company.
+        /// </summary>
+        public static string InvoiceIndexSenderCompanyLabel {
+            get {
+                return ResourceManager.GetString("InvoiceIndexSenderCompanyLabel", resourceCulture);
             }
         }
         

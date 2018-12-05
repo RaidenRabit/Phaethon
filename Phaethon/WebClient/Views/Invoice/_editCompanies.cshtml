@@ -1,5 +1,6 @@
 ﻿@using WebClient.Controllers
 @model Core.Model.Invoice
+@using a = WebClient.Resources.Language_Files.LanguagePack;
 
 <div class="row">
     <div class="col-sm">
@@ -9,7 +10,7 @@
                 <datalist id="ReceiverRepresentatives"></datalist>
                 @Html.HiddenFor(model => model.Receiver.ID)
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Receiver.Name, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.EditCompaniesPartialViewRepresentativeNameLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Name, new { htmlAttributes = new { @class = "form-control", @list = "ReceiverRepresentatives", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Name, "", new { @class = "text-danger" })
@@ -18,7 +19,7 @@
 
                 @Html.HiddenFor(model => model.Receiver.Company.ID)
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Receiver.Company.Name, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.InvoiceIndexSenderCompanyLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Company.Name, new { htmlAttributes = new { @class = "form-control", @list = "companies", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.Name, "", new { @class = "text-danger" })
@@ -26,7 +27,7 @@
                 </div>
 
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Receiver.Company.BankNumber, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.EditCompaniesPartialViewCompanyBankNumberLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Company.BankNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.BankNumber, "", new { @class = "text-danger" })
@@ -34,7 +35,7 @@
                 </div>
 
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Receiver.Company.RegNumber, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.EditCompaniesPartialViewCompanyRegistrationNumberLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Company.RegNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.RegNumber, "", new { @class = "text-danger" })
@@ -42,7 +43,7 @@
                 </div>
 
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Receiver.Company.Address, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.EditCopmaniesPartialViewCompanyAddressLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Company.Address, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.Address, "", new { @class = "text-danger" })
@@ -50,7 +51,7 @@
                 </div>
 
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Receiver.Company.Location, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.EditCompaniesPartialViewCompanyLocationLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Receiver.Company.Location, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Receiver.Company.Location, "", new { @class = "text-danger" })
@@ -58,7 +59,7 @@
                 </div>
 
                 <div class="form-group" align="center">
-                    <input id="resetReceiver" type="button" class="btn btn-danger btn-block" value="New company" />
+                    <input id="resetReceiver" type="button" class="btn btn-danger btn-block" value="@a.EditCompanyPartialViewNewCompanyButton" />
                 </div>
             </div>
         </div>
@@ -71,7 +72,7 @@
                 <datalist id="SenderRepresentatives"></datalist>
                 @Html.HiddenFor(model => model.Sender.ID)
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Sender.Name, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.EditCompaniesPartialViewRepresentativeNameLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Name, new { htmlAttributes = new { @class = "form-control", @list = "ReceiverRepresentatives", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Name, "", new { @class = "text-danger" })
@@ -80,7 +81,7 @@
 
                 @Html.HiddenFor(model => model.Sender.Company.ID)
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Sender.Company.Name, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.InvoiceIndexSenderCompanyLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Company.Name, new { htmlAttributes = new { @class = "form-control", @list = "companies", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.Name, "", new { @class = "text-danger" })
@@ -88,7 +89,7 @@
                 </div>
 
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Sender.Company.BankNumber, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.EditCompaniesPartialViewCompanyBankNumberLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Company.BankNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.BankNumber, "", new { @class = "text-danger" })
@@ -96,7 +97,7 @@
                 </div>
 
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Sender.Company.RegNumber, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.EditCompaniesPartialViewCompanyRegistrationNumberLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Company.RegNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.RegNumber, "", new { @class = "text-danger" })
@@ -104,7 +105,7 @@
                 </div>
 
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Sender.Company.Address, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.EditCopmaniesPartialViewCompanyAddressLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Company.Address, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.Address, "", new { @class = "text-danger" })
@@ -112,7 +113,7 @@
                 </div>
 
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.Sender.Company.Location, htmlAttributes: new { @class = "col-form-label col-md-4" })
+                    <div class="col-form-label col-md-4">@a.EditCompaniesPartialViewCompanyLocationLabel</div>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.Sender.Company.Location, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                         @Html.ValidationMessageFor(model => model.Sender.Company.Location, "", new { @class = "text-danger" })
@@ -120,7 +121,7 @@
                 </div>
 
                 <div class="form-group" align="center">
-                    <input id="resetSender" type="button" class="btn btn-danger btn-block" value="New company" />
+                    <input id="resetSender" type="button" class="btn btn-danger btn-block" value="@a.EditCompanyPartialViewNewCompanyButton" />
                 </div>
             </div>
         </div>

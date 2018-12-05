@@ -147,6 +147,56 @@
   <data name="ContactPageSupportEmail" xml:space="preserve">
     <value>1062012@ucn.dk</value>
   </data>
+  <data name="EditCompaniesPartialViewCompanyBankNumberLabel" xml:space="preserve">
+    <value>Bank Number</value>
+  </data>
+  <data name="EditCompaniesPartialViewCompanyLocationLabel" xml:space="preserve">
+    <value>Location</value>
+    <comment>What's this location about?</comment>
+  </data>
+  <data name="EditCompaniesPartialViewCompanyRegistrationNumberLabel" xml:space="preserve">
+    <value>Registration Number</value>
+  </data>
+  <data name="EditCompaniesPartialViewRepresentativeNameLabel" xml:space="preserve">
+    <value>Representative Name</value>
+  </data>
+  <data name="EditCompanyPartialViewNewCompanyButton" xml:space="preserve">
+    <value>New Company</value>
+  </data>
+  <data name="EditCopmaniesPartialViewCompanyAddressLabel" xml:space="preserve">
+    <value>Address</value>
+    <comment>Might be a good idea to make the Company Address use the Address table in db</comment>
+  </data>
+  <data name="EditInvoicePartialViewTransportCostLabel" xml:space="preserve">
+    <value>Transport Cost</value>
+  </data>
+  <data name="EditItemsPartialViewActionLabel" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="EditItemsPartialViewItemIncomingPriceLabel" xml:space="preserve">
+    <value>Price With Tax</value>
+  </data>
+  <data name="EditItemsPartialViewNewItemButton" xml:space="preserve">
+    <value>Add New Item</value>
+  </data>
+  <data name="EditItemsPartialViewProductBarcodeLabel" xml:space="preserve">
+    <value>Product Barcode</value>
+  </data>
+  <data name="EditItemsPartialViewProductGroupNameLabel" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="EditItemsPartialViewProductNameLabel" xml:space="preserve">
+    <value>Product Name</value>
+  </data>
+  <data name="EditItemsPartialViewProductPrice" xml:space="preserve">
+    <value>Product Price</value>
+  </data>
+  <data name="EditItemsPartialViewSerialNumberLabel" xml:space="preserve">
+    <value>Serial Number</value>
+  </data>
+  <data name="EditItemsPartialViewTaxGroupLabel" xml:space="preserve">
+    <value>Tax Group</value>
+  </data>
   <data name="EditJobPartialPageAddressCityPlaceholder" xml:space="preserve">
     <value>City</value>
   </data>
@@ -174,8 +224,44 @@
   <data name="EditJobPartiaPageCustomerEmailPlaceholder" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="EditViewInvoiceInfoLabel" xml:space="preserve">
+    <value>Invoice Info</value>
+  </data>
+  <data name="EditViewProductsLabel" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ElementViewDeleteButton" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ElementViewDeleteButtonTitle" xml:space="preserve">
+    <value>This button removes item, action can be canceled by clicking button again.</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
+  </data>
+  <data name="InvoiceIndexCompaniesPlaceholder" xml:space="preserve">
+    <value>Companies</value>
+  </data>
+  <data name="InvoiceIndexDocumentNumberPlaceholder" xml:space="preserve">
+    <value>Document Number</value>
+  </data>
+  <data name="InvoiceIndexNewInvoiceButton" xml:space="preserve">
+    <value>New Invoice</value>
+  </data>
+  <data name="InvoiceIndexPaymentDateLabel" xml:space="preserve">
+    <value>Payment Date</value>
+  </data>
+  <data name="InvoiceIndexPrescriptionDateLabel" xml:space="preserve">
+    <value>Prescription Date</value>
+  </data>
+  <data name="InvoiceIndexReceiverCompanyLabel" xml:space="preserve">
+    <value>Receiver Company</value>
+  </data>
+  <data name="InvoiceIndexReceptionDateLabel" xml:space="preserve">
+    <value>Reception Date</value>
+  </data>
+  <data name="InvoiceIndexSenderCompanyLabel" xml:space="preserve">
+    <value>Sender Company</value>
   </data>
   <data name="InvoiceList" xml:space="preserve">
     <value>Invoice List</value>
