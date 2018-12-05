@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -22,22 +20,29 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Delete()
+        public ActionResult Index()
         {
-            var response = await _client.PostAsJsonAsync("Delete", Session["ID"].ToString());
+            return View();
+        }
 
-            if (HttpStatusCode.OK == response.StatusCode)
+        [HttpPost]
+        public async Task<ActionResult> Index(User userModel)
+        {
+            var response = await _client.PostAsJsonAsync("Login", userModel);
+            var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+
+            if (HttpStatusCode.OK == response.StatusCode && deserializedResponse != 0)
             {
-                
-                Session["ID"] = null;
-                return RedirectToAction("Index","User");
+                Session["ID"] = deserializedResponse;
+                return RedirectToAction("Edit", "User");
             }
             else
             {
-                return View("Error");
+                return View();
             }
-        }
 
+        }
+        
         [HttpGet]
         public async Task<ActionResult> Edit()
         {
@@ -51,46 +56,37 @@ namespace WebClient.Controllers
                 return View(user);
             }
             catch
-
             {
                 return View(new User());
             }
-            
         }
 
         [HttpPost]
         public async Task<ActionResult> Edit(User userModel)
         {
+            try
+            {
+                userModel.id = Int32.Parse(Session["ID"].ToString());
+            }
+            catch{}
             await _client.PostAsJsonAsync("CreateOrUpdate", userModel);
-
             return await Edit();
         }
 
-        [HttpGet]
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public async Task<ActionResult> Index(User userModel)
+        public async Task<ActionResult> DeleteUser()
         {
-            var response = await _client.PostAsJsonAsync("Login", userModel);
-
-            if (HttpStatusCode.OK == response.StatusCode)
+            var response = await _client.PostAsJsonAsync("Delete", Session["ID"].ToString());
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
             {
-                var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
-                Session["ID"] = deserializedResponse;
-                return RedirectToAction("Edit", "User");
+                Session["ID"] = null;
+                return RedirectToAction("Index", "User");
             }
             else
             {
                 return View("Error");
             }
-
         }
-
-        
-
     }
 }

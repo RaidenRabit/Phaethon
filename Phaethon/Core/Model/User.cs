@@ -20,12 +20,10 @@ namespace Core.Model
 
         [DataMember]
         [DisplayName("User Name")]
-        [Required (ErrorMessage = "Please enter User Name")]
         public string UserName { get; set; }
 
         [DataMember]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Please enter Password")]
         public string Password { get; set; }
         
     }
