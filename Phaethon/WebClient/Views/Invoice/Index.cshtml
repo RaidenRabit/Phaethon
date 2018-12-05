@@ -1,7 +1,7 @@
 ﻿@model Core.Model.Invoice
 @Styles.Render("~/Content/Daterangepicker")
 @{ViewBag.Title = "Index";}
-@using a = WebClient.Resources.Language_Files.LanguagePack;
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
 <div class="card-body" style="padding-left: 20px;">
     <div class="row">
@@ -13,13 +13,13 @@
                     <div class="form-group">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-info active">
-                                <input type="radio" name="dateOption" value="0" checked> @a.InvoiceIndexPrescriptionDateLabel
+                                <input type="radio" name="dateOption" value="0" checked> @LanguagePack.InvoiceIndexPrescriptionDateLabel
                             </label>
                             <label class="btn btn-info">
-                                <input type="radio" name="dateOption" value="1"> @a.InvoiceIndexReceptionDateLabel
+                                <input type="radio" name="dateOption" value="1"> @LanguagePack.InvoiceIndexReceptionDateLabel
                             </label>
                             <label class="btn btn-info">
-                                <input type="radio" name="dateOption" value="2"> @a.InvoiceIndexPaymentDateLabel
+                                <input type="radio" name="dateOption" value="2"> @LanguagePack.InvoiceIndexPaymentDateLabel
                             </label>
                         </div>
 
@@ -29,19 +29,19 @@
                     <div class="form-group">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-info active">
-                                <input type="radio" name="companyOption" value="0" checked> @a.InvoiceIndexReceiverCompanyLabel
+                                <input type="radio" name="companyOption" value="0" checked> @LanguagePack.InvoiceIndexReceiverCompanyLabel
                             </label>
                             <label class="btn btn-info">
-                                <input type="radio" name="companyOption" value="1"> @a.InvoiceIndexSenderCompanyLabel
+                                <input type="radio" name="companyOption" value="1"> @LanguagePack.InvoiceIndexSenderCompanyLabel
                             </label>
                         </div>
 
-                        <input id="companyName" type="text" class="form-control" list="companies" placeholder="@a.InvoiceIndexCompaniesPlaceholder" />
+                        <input id="companyName" type="text" class="form-control" list="companies" placeholder="@LanguagePack.InvoiceIndexCompaniesPlaceholder" />
                         <datalist id="companies"></datalist>
                     </div>
 
                     <div class="form-group">
-                        <input id="docNumber" type="text" class="form-control" placeholder="@a.InvoiceIndexDocumentNumberPlaceholder" />
+                        <input id="docNumber" type="text" class="form-control" placeholder="@LanguagePack.InvoiceIndexDocumentNumberPlaceholder" />
                     </div>
                 </div>
             </div>
@@ -50,29 +50,29 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceList">Invoices<div style="float: right">@Html.ActionLink(a.InvoiceIndexNewInvoiceButton, "Edit", new { id = 0 })</div></div>
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceList">Invoices<div style="float: right">@Html.ActionLink(LanguagePack.InvoiceIndexNewInvoiceButton, "Edit", new { id = 0 })</div></div>
 
                 <div id="invoiceList" class="card-body collapse show" style="padding-left: 20px;">
                     <table id="invoiceTable" class="table">
                         <thead>
                             <tr>
                                 <th>
-                                    @a.InvoiceIndexDocumentNumberPlaceholder
+                                    @LanguagePack.InvoiceIndexDocumentNumberPlaceholder
                                 </th>
                                 <th>
-                                    @a.InvoiceIndexPrescriptionDateLabel
+                                    @LanguagePack.InvoiceIndexPrescriptionDateLabel
                                 </th>
                                 <th>
-                                    @a.InvoiceIndexReceiverCompanyLabel
+                                    @LanguagePack.InvoiceIndexReceiverCompanyLabel
                                 </th>
                                 <th>
-                                    @a.InvoiceIndexPaymentDateLabel
+                                    @LanguagePack.InvoiceIndexPaymentDateLabel
                                 </th>
                                 <th>
-                                    @a.InvoiceIndexSenderCompanyLabel
+                                    @LanguagePack.InvoiceIndexSenderCompanyLabel
                                 </th>
                                 <th>
-                                    @a.InvoiceIndexReceiverCompanyLabel
+                                    @LanguagePack.InvoiceIndexReceiverCompanyLabel
                                 </th>
                                 <th>
                                     <input id="numOfRecords" type="number" class="form-control" value="10" />

@@ -1,27 +1,27 @@
 ﻿@model IEnumerable<Core.Model.Job>
 @Styles.Render("~/Content/Daterangepicker")
 @{ViewBag.Title = "Index";}
-@using a = WebClient.Resources.Language_Files.LanguagePack;
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
 
 <div class="card-body" style="padding-left: 20px;">
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">@a.JobSearchCardTitle<div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10" /></div></div>
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">@LanguagePack.JobSearchCardTitle<div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10" /></div></div>
                 <div id="jobSearch" class="card-body collapse show" style="padding-left: 20px;">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="1"> @a.JobSearchJobStatusUnassigned
+                                        <input type="checkbox" name="jobStatus" value="1"> @LanguagePack.JobSearchJobStatusUnassigned
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="2"> @a.JobSearchJobStatusInProggress
+                                        <input type="checkbox" name="jobStatus" value="2"> @LanguagePack.JobSearchJobStatusInProggress
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="3"> @a.JobSearchJobStatusDone
+                                        <input type="checkbox" name="jobStatus" value="3"> @LanguagePack.JobSearchJobStatusDone
                                     </label>
                                 </div>
                                 <datalist id="jobs"></datalist>
@@ -29,21 +29,21 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="@a.JobSearchJobNamePlaceHolder" />
+                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobSearchJobNamePlaceHolder" />
                             </div>
 
                             <div class="form-group">
-                                <input id="jobId" type="text" class="form-control" placeholder="@a.JobSearchJobIdPlaceHolder" />
+                                <input id="jobId" type="text" class="form-control" placeholder="@LanguagePack.JobSearchJobIdPlaceHolder" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-info active">
-                                        <input type="radio" name="dateOption" value="0" checked> @a.JobSearchStartedTimePlaceHolder
+                                        <input type="radio" name="dateOption" value="0" checked> @LanguagePack.JobSearchStartedTimePlaceHolder
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="radio" name="dateOption" value="1">@a.JobSearchFinishedTimePlaceHolder
+                                        <input type="radio" name="dateOption" value="1">@LanguagePack.JobSearchFinishedTimePlaceHolder
                                     </label>
                                 </div>
                             </div>
@@ -53,13 +53,13 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="@a.JobSearchCustomerNamePlaceHolder" />
+                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="@LanguagePack.JobSearchCustomerNamePlaceHolder" />
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input id="description" type="text" class="form-control" list="jobs" placeholder="@a.JobSearchJobDescriptionPlaceHolder" />
+                                <input id="description" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobSearchJobDescriptionPlaceHolder" />
                             </div>
                         </div>
                     </div>
@@ -71,37 +71,37 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;">Jobs <div style="float: right"><Button class="btn" id="NewJob">@a.NewJobButtonTitle</Button></div></div>
+                <div class="card-header" style="clear: both;">Jobs <div style="float: right"><Button class="btn" id="NewJob">@LanguagePack.NewJobButtonTitle</Button></div></div>
                 <div class="card-body" style="padding-left: 20px;">
                     <table id="jobTable" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>
-                                    @a.JobSearchJobIdPlaceHolder
+                                    @LanguagePack.JobSearchJobIdPlaceHolder
                                 </th>
                                 <th>
-                                    @a.JobSearchJobNamePlaceHolder
+                                    @LanguagePack.JobSearchJobNamePlaceHolder
                                 </th>
                                 <th>
-                                    @a.JobSearchStartedTimePlaceHolder
+                                    @LanguagePack.JobSearchStartedTimePlaceHolder
                                 </th>
                                 <th>
-                                    @a.JobSearchFinishedTimePlaceHolder
+                                    @LanguagePack.JobSearchFinishedTimePlaceHolder
                                 </th>
                                 <th>
-                                    @a.JobTableCostColumnHeader
+                                    @LanguagePack.JobTableCostColumnHeader
                                 </th>
                                 <th>
-                                    @a.JobTableJobStatusColumnHeader
+                                    @LanguagePack.JobTableJobStatusColumnHeader
                                 </th>
                                 <th>
-                                    @a.JobSearchCustomerNamePlaceHolder
+                                    @LanguagePack.JobSearchCustomerNamePlaceHolder
                                 </th>
                                 <th>
-                                    @a.JobSearchJobDescriptionPlaceHolder
+                                    @LanguagePack.JobSearchJobDescriptionPlaceHolder
                                 </th>
                                 <th>
-                                    @a.JobTableEmailStatus
+                                    @LanguagePack.JobTableEmailStatus
                                 </th>
                             </tr>
                         </thead>

@@ -1,8 +1,8 @@
 ﻿@{
-    ViewBag.Title = a.About;
+    ViewBag.Title = LanguagePack.About;
 }
-@using a = WebClient.Resources.Language_Files.LanguagePack;
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<p>@a.AboutPageText</p>
+<p>@LanguagePack.AboutPageText</p>

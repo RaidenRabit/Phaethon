@@ -160,11 +160,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Language Files\LanguagePack.lv.Designer.cs">
-      <DependentUpon>LanguagePack.lv.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Resources\Language Files\LanguagePack.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -426,10 +421,6 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Language Files\LanguagePack.lv.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LanguagePack.lv.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Language Files\LanguagePack.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LanguagePack.Designer.cs</LastGenOutput>

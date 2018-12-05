@@ -421,6 +421,24 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while processing your request..
+        /// </summary>
+        public static string ErrorPageText {
+            get {
+                return ResourceManager.GetString("ErrorPageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error..
+        /// </summary>
+        public static string ErrorPageTitle {
+            get {
+                return ResourceManager.GetString("ErrorPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Companies.
         /// </summary>
         public static string InvoiceIndexCompaniesPlaceholder {

@@ -1,6 +1,6 @@
 ﻿@using Core.Model
 @model Core.Model.Invoice
-@using a = WebClient.Resources.Language_Files.LanguagePack;
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
 <div id="dialog" style="display: none">
 </div>
@@ -9,28 +9,28 @@
     <thead>
         <tr>
             <th>
-                @a.EditItemsPartialViewSerialNumberLabel
+                @LanguagePack.EditItemsPartialViewSerialNumberLabel
             </th>
             <th>
-                @a.EditItemsPartialViewProductNameLabel
+                @LanguagePack.EditItemsPartialViewProductNameLabel
             </th>
             <th>
-                @a.EditItemsPartialViewProductBarcodeLabel
+                @LanguagePack.EditItemsPartialViewProductBarcodeLabel
             </th>
             <th>
-                @a.EditItemsPartialViewProductPrice
+                @LanguagePack.EditItemsPartialViewProductPrice
             </th>
             <th id="taxGroupLabel">
-                @a.EditItemsPartialViewTaxGroupLabel
+                @LanguagePack.EditItemsPartialViewTaxGroupLabel
             </th>
             <th id="productGroupLabel">
-                @a.EditItemsPartialViewProductGroupNameLabel
+                @LanguagePack.EditItemsPartialViewProductGroupNameLabel
             </th>
             <th>
-                @a.EditItemsPartialViewItemIncomingPriceLabel
+                @LanguagePack.EditItemsPartialViewItemIncomingPriceLabel
             </th>
             <th>
-                @a.EditItemsPartialViewActionLabel
+                @LanguagePack.EditItemsPartialViewActionLabel
             </th>
         </tr>
     </thead>
@@ -42,7 +42,7 @@
                 <input type="number" step='0.01' id="totalAmount" class="form-control" readonly />
             </td>
             <td colspan="6">
-                <input type="button" id="newItemRow" class="btn btn-success" value="@a.EditItemsPartialViewNewItemButton" />
+                <input type="button" id="newItemRow" class="btn btn-success" value="@LanguagePack.EditItemsPartialViewNewItemButton" />
             </td>
         </tr>
     </tfoot>

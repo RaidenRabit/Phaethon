@@ -326,4 +326,10 @@
   <data name="YourContectPage" xml:space="preserve">
     <value>Your contact page.</value>
   </data>
+  <data name="ErrorPageText" xml:space="preserve">
+    <value>An error occurred while processing your request.</value>
+  </data>
+  <data name="ErrorPageTitle" xml:space="preserve">
+    <value>Error.</value>
+  </data>
 </root>

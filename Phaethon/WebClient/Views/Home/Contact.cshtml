@@ -1,17 +1,17 @@
 ﻿@{
-    ViewBag.Title = a.Contact;
+    ViewBag.Title = LanguagePack.Contact;
 }
-@using a = WebClient.Resources.Language_Files.LanguagePack;
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
 <address>
-    @a.ContactPageStreetAndNumber<br />
-    @a.ContactPageCityAndCountry<br />
-    <abbr title="@a.ContactPagePhone">@a.ContactPagePhone</abbr>
-    @a.ContactPagePhoneNumber/
+    @LanguagePack.ContactPageStreetAndNumber<br />
+    @LanguagePack.ContactPageCityAndCountry<br />
+    <abbr title="@LanguagePack.ContactPagePhone">@LanguagePack.ContactPagePhone</abbr>
+    @LanguagePack.ContactPagePhoneNumber/
 </address>
 
 <address>
-    <strong>@a.ContactPageSupport:</strong>   <a href="mailto:Support@example.com">@a.ContactPageSupportEmail</a>
+    <strong>@LanguagePack.ContactPageSupport:</strong>   <a href="mailto:Support@example.com">@LanguagePack.ContactPageSupportEmail</a>
 </address>
