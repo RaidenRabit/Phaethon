@@ -4,5 +4,8 @@
     },
     ajaxStop: function () {
         $(".modal").hide();
+    },
+    ajaxError: function() {
+        $(".modal").hide();
     }
 });
