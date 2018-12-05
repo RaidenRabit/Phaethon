@@ -1,5 +1,4 @@
-﻿@using WebClient.Controllers
-@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
+﻿@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/loading")
+    @Scripts.Render("~/bundles/language")
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-                <img src="/Content/Img/Means.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                <img src="/Resources/Images/Means.svg" width="30" height="30" class="d-inline-block align-top" alt="">
                 Means
             </a>
             <div class="collapse navbar-collapse">
@@ -35,7 +38,8 @@
             </div>
         </div>
         <div class="float-lg-right">
-            <div class="btn-group navbar-collapse"><button aria-expanded="true" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" type="button">@LanguagePack.SelectLanguage<b class="caret"></b></button>
+            <div class="btn-group navbar-collapse">
+                <button aria-expanded="true" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" type="button">@LanguagePack.SelectLanguage<b class="caret"></b></button>
                 <ul class="dropdown-menu">
                     <li style="margin: 10px">
                         <div class="container" id="ChangeLanguageEn">
@@ -57,27 +61,24 @@
             </div>
         </div>
     </nav>
-<div class="container body-content">
-    @RenderBody()
-    <hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year - Phaethon</p>
-    </footer>
-</div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Phaethon</p>
+        </footer>
+    </div>
 
-@* element for the loading animation *@
-<div class="modal" align="center" style="display: none">
-    <div class="h-100 row align-items-center">
-        <div class="col">
-            <div class="spinner"></div>
-            <div class="spinner-center"></div>
-            <div class="loading-text">Loading...</div>
+    @* element for the loading animation *@
+    <div class="modal" align="center" style="display: none">
+        <div class="h-100 row align-items-center">
+            <div class="col">
+                <div class="spinner"></div>
+                <div class="spinner-center"></div>
+                <div class="loading-text">Loading...</div>
+            </div>
         </div>
     </div>
-</div>
-
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/changeLanguage")
     @RenderSection("scripts", required: false)
 </body>
 </html>
