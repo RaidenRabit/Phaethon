@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Core.Model.Job>
-@Styles.Render("~/Content/Daterangepicker")
+@Styles.Render("~/Content/dateRangePicker")
 @{ViewBag.Title = "Index";}
 @using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
@@ -75,35 +75,35 @@
                 <div class="card-body" style="padding-left: 20px;">
                     <table id="jobTable" class="table table-striped">
                         <thead>
-                            <tr>
-                                <th>
-                                    @LanguagePack.JobIdPlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.JobNamePlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.StartedTimePlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.FinishedTimePlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.Cost
-                                </th>
-                                <th>
-                                    @LanguagePack.JobStatus
-                                </th>
-                                <th>
-                                    @LanguagePack.CustomerNamePlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.JobDescriptionPlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.NotificationStatus
-                                </th>
-                            </tr>
+                        <tr>
+                            <th>
+                                @LanguagePack.JobIdPlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.JobNamePlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.StartedTimePlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.FinishedTimePlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.Cost
+                            </th>
+                            <th>
+                                @LanguagePack.JobStatus
+                            </th>
+                            <th>
+                                @LanguagePack.CustomerNamePlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.JobDescriptionPlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.NotificationStatus
+                            </th>
+                        </tr>
                         </thead>
 
                         <tbody><tr></tr></tbody>
@@ -113,4 +113,6 @@
         </div>
     </div>
 </div>
+
 @Scripts.Render("~/bundles/Job")
+@Scripts.Render("~/bundles/dateRangePicker")

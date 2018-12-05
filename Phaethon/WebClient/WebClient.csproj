@@ -19,8 +19,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -191,8 +190,8 @@
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\daterangepicker.css" />
-    <Content Include="Content\Img\Means.svg" />
+    <Content Include="Content\dateRangePicker.css" />
+    <Content Include="Resources\Images\Means.svg" />
     <Content Include="Content\HoverElement.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -248,7 +247,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\daterangepicker.js" />
+    <Content Include="Scripts\dateRangePicker.js" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-reboot.min.css.map" />
@@ -348,13 +347,13 @@
     <Content Include="Scripts\i18n\defaults-zh_CN.min.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
-    <Content Include="Scripts\invoice.edit_elements.js" />
-    <Content Include="Scripts\invoice.edit_company.js" />
-    <Content Include="Scripts\invoice.index.js" />
-    <Content Include="Scripts\item.select.js" />
+    <Content Include="Scripts\page-scripts\invoice.edit_elements.js" />
+    <Content Include="Scripts\page-scripts\invoice.edit_company.js" />
+    <Content Include="Scripts\page-scripts\invoice.index.js" />
+    <Content Include="Scripts\page-scripts\item.select.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\loadingAnimation.js" />
-    <Content Include="Scripts\job.index.js" />
+    <Content Include="Scripts\page-scripts\job.index.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -403,7 +402,6 @@
     <Content Include="Views\Invoice\_editCompanies.cshtml" />
     <Content Include="Views\Invoice\_editInvoice.cshtml" />
     <Content Include="Views\Invoice\_editItems.cshtml" />
-    <Content Include="Views\Invoice\EditorTemplates\Element.cshtml" />
     <Content Include="Views\Job\Index.cshtml" />
     <Content Include="Views\Job\_editJob.cshtml" />
     <Content Include="Views\TaxGroup\Create.cshtml" />
