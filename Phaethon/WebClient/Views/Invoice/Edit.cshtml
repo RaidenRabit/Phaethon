@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card" style="height: 130px; height: auto;">
-                    <div class="card-header" style="clear:both;" data-toggle="collapse" href="#invoiceInfo">@LanguagePack.EditViewInvoiceInfoLabel</div>
+                    <div class="card-header" style="clear:both;" data-toggle="collapse" href="#invoiceInfo">@LanguagePack.InvoiceInfoLabel</div>
 
                     <div id="invoiceInfo" class="card-body collapse" style="padding-left: 20px;">
                         @{ Html.RenderPartial("_editInvoice", Model); }
@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card" style="height: 130px; height: auto;">
-                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#products">@LanguagePack.EditViewProductsLabel</div>
+                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#products">@LanguagePack.ProductsLabel</div>
 
                     <div id="products" class="card-body collapse show" style="padding-left: 20px;">
                         @{ Html.RenderPartial("_editItems", Model); }

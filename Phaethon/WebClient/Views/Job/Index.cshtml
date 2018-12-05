@@ -15,13 +15,13 @@
                             <div class="form-group">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="1"> @LanguagePack.JobSearchJobStatusUnassigned
+                                        <input type="checkbox" name="jobStatus" value="1"> @LanguagePack.JobStatusUnassigned
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="2"> @LanguagePack.JobSearchJobStatusInProggress
+                                        <input type="checkbox" name="jobStatus" value="2"> @LanguagePack.JobStatusInProggress
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="3"> @LanguagePack.JobSearchJobStatusDone
+                                        <input type="checkbox" name="jobStatus" value="3"> @LanguagePack.JobStatusDone
                                     </label>
                                 </div>
                                 <datalist id="jobs"></datalist>
@@ -29,21 +29,21 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobSearchJobNamePlaceHolder" />
+                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobNamePlaceHolder" />
                             </div>
 
                             <div class="form-group">
-                                <input id="jobId" type="text" class="form-control" placeholder="@LanguagePack.JobSearchJobIdPlaceHolder" />
+                                <input id="jobId" type="text" class="form-control" placeholder="@LanguagePack.JobIdPlaceHolder" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-info active">
-                                        <input type="radio" name="dateOption" value="0" checked> @LanguagePack.JobSearchStartedTimePlaceHolder
+                                        <input type="radio" name="dateOption" value="0" checked> @LanguagePack.StartedTimePlaceHolder
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="radio" name="dateOption" value="1">@LanguagePack.JobSearchFinishedTimePlaceHolder
+                                        <input type="radio" name="dateOption" value="1">@LanguagePack.FinishedTimePlaceHolder
                                     </label>
                                 </div>
                             </div>
@@ -53,13 +53,13 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="@LanguagePack.JobSearchCustomerNamePlaceHolder" />
+                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="@LanguagePack.CustomerNamePlaceHolder" />
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input id="description" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobSearchJobDescriptionPlaceHolder" />
+                                <input id="description" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobDescriptionPlaceHolder" />
                             </div>
                         </div>
                     </div>
@@ -71,37 +71,37 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;">Jobs <div style="float: right"><Button class="btn" id="NewJob">@LanguagePack.NewJobButtonTitle</Button></div></div>
+                <div class="card-header" style="clear: both;">Jobs <div style="float: right"><Button class="btn" id="NewJob">@LanguagePack.NewJob</Button></div></div>
                 <div class="card-body" style="padding-left: 20px;">
                     <table id="jobTable" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>
-                                    @LanguagePack.JobSearchJobIdPlaceHolder
+                                    @LanguagePack.JobIdPlaceHolder
                                 </th>
                                 <th>
-                                    @LanguagePack.JobSearchJobNamePlaceHolder
+                                    @LanguagePack.JobNamePlaceHolder
                                 </th>
                                 <th>
-                                    @LanguagePack.JobSearchStartedTimePlaceHolder
+                                    @LanguagePack.StartedTimePlaceHolder
                                 </th>
                                 <th>
-                                    @LanguagePack.JobSearchFinishedTimePlaceHolder
+                                    @LanguagePack.FinishedTimePlaceHolder
                                 </th>
                                 <th>
-                                    @LanguagePack.JobTableCostColumnHeader
+                                    @LanguagePack.Cost
                                 </th>
                                 <th>
-                                    @LanguagePack.JobTableJobStatusColumnHeader
+                                    @LanguagePack.JobStatus
                                 </th>
                                 <th>
-                                    @LanguagePack.JobSearchCustomerNamePlaceHolder
+                                    @LanguagePack.CustomerNamePlaceHolder
                                 </th>
                                 <th>
-                                    @LanguagePack.JobSearchJobDescriptionPlaceHolder
+                                    @LanguagePack.JobDescriptionPlaceHolder
                                 </th>
                                 <th>
-                                    @LanguagePack.JobTableEmailStatus
+                                    @LanguagePack.NotificationStatus
                                 </th>
                             </tr>
                         </thead>

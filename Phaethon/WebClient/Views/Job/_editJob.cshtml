@@ -16,19 +16,19 @@
 
             <div class="card">
                 <div class="card-header">
-                    @LanguagePack.EditJobPartialPageJobDetails
+                    @LanguagePack.JobDetails
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group">
-                            @LanguagePack.JobSearchJobIdPlaceHolder
+                            @LanguagePack.JobIdPlaceHolder
                             <div class="col-md-8">
                                 @Html.TextBoxFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" }, @readonly = "readonly", @disabled = "disabled" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.JobSearchJobNamePlaceHolder
+                            @LanguagePack.JobNamePlaceHolder
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.JobName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.JobName, "", new { @class = "text-danger" })
@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.JobSearchStartedTimePlaceHolder
+                            @LanguagePack.StartedTimePlaceHolder
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.StartedTime, new { htmlAttributes = new { @class = "form-control datepicker", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.StartedTime, "", new { @class = "text-danger" })
@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.JobSearchFinishedTimePlaceHolder
+                            @LanguagePack.FinishedTimePlaceHolder
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.FinishedTime, new { htmlAttributes = new { @class = "form-control datepicker", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.FinishedTime, "", new { @class = "text-danger" })
@@ -52,7 +52,7 @@
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.JobTableCostColumnHeader
+                            @LanguagePack.Cost
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "0.01", @value = "0", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.JobTableJobStatusColumnHeader
+                            @LanguagePack.JobStatus
                             <div class="col-md-10">
                                 @Html.EnumDropDownListFor(model => model.JobStatus, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.JobStatus, "", new { @class = "text-danger" })
@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.JobSearchJobDescriptionPlaceHolder
+                            @LanguagePack.JobDescriptionPlaceHolder
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -85,27 +85,27 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group">
-                                @LanguagePack.EditJobPartialPageCustomerIdPlaceholder
+                                @LanguagePack.CustomerIdPlaceholder
                                 <div class="col-md-10">
                                     @Html.TextBoxFor(model => model.Customer.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" }, @readonly = "readonly", @disabled = "disabled" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.EditJobPartialPageCustomerGivenNamePlaceholder
+                                @LanguagePack.CustomerGivenNamePlaceholder
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.GivenName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.GivenName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.EditJobPartialPageCustomerFamilyNamePlaceholder
+                                @LanguagePack.CustomerFamilyNamePlaceholder
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.FamilyName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.FamilyName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.EditJobPartiaPageCustomerEmailPlaceholder
+                                @LanguagePack.CustomerEmailPlaceholder
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.Email, "", new { @class = "text-danger" })
@@ -129,7 +129,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group">
-                                @LanguagePack.EditJobPartialPageAddressIDPlaceholder
+                                @LanguagePack.AddressIDPlaceholder
                                 <div class="col-md-10">
                                     @Html.TextBoxFor(model => model.Customer.Address.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" }, @readonly = "readonly", @disabled = "disabled" })
                                 </div>
@@ -142,21 +142,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.EditJobPartialPageAddressCityPlaceholder
+                                @LanguagePack.AddressCityPlaceholder
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.Address.Street, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.Address.Street, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.EditJobPartialPageAddressNumberPlaceholder
+                                @LanguagePack.AddressNumberPlaceholder
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.Address.Number, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.Address.Number, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.EditJobPartialPageAddressExtraPlaceholder
+                                @LanguagePack.AddressExtraPlaceholder
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.Address.Extra, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.Address.Extra, "", new { @class = "text-danger" })

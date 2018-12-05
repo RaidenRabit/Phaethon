@@ -2,11 +2,9 @@
 @using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
 @{
-                /**/
-
-                var procent = (decimal)Model.Item.IncomingTaxGroup.Tax / 100 + 1;
-                var val = Model.Item.IncomingPrice;
-                var price = val / procent;
+var procent = (decimal)Model.Item.IncomingTaxGroup.Tax / 100 + 1;
+var val = Model.Item.IncomingPrice;
+var price = val / procent;
 }
 <tr>
     @Html.HiddenFor(model => model.Invoice_ID, new { htmlAttributes = new { @required = "required" } })
@@ -21,5 +19,5 @@
     <td>@Html.EditorFor(model => model.Item.IncomingTaxGroup.Name, new { htmlAttributes = new { @class = "form-control", @list = "TaxGroups", @required = "required" } })</td>
     <td>@Html.EditorFor(model => model.Item.Product.ProductGroup.Name, new { htmlAttributes = new { @class = "form-control", @list = "ProductGroups", @required = "required" } })</td>
     <td>@Html.EditorFor(model => model.Item.IncomingPrice, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number", @min = "0", @step = "0.01", @value = "0" } })</td>
-    <td><input class="btn btn-block" type="button" value="@LanguagePack.ElementViewDeleteButton" title="@LanguagePack.ElementViewDeleteButtonTitle"></td>
+    <td><input class="btn btn-block" type="button" value="@LanguagePack.DeleteButton" title="@LanguagePack.DeleteButtonTitle"></td>
 </tr>
