@@ -51,7 +51,6 @@ namespace WebClient.Controllers
             jobFilter.JobName = jobName;
             
             var response = await _client.PostAsJsonAsync("ReadAll", jobFilter);
-            var a = await response.Content.ReadAsStringAsync();
             return await response.Content.ReadAsStringAsync();
         }
 

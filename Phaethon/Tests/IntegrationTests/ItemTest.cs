@@ -12,6 +12,20 @@ namespace Tests.IntegrationTests
 {
     public class ItemTest: InternalTestFakeServerBase
     {
+        private bool AreItemsEqual(Item firstItem, Item secondItem)
+        {
+            return firstItem.ID == secondItem.ID &&
+                   firstItem.SerNumber.Equals(secondItem.SerNumber) &&
+                   firstItem.IncomingPrice == secondItem.IncomingPrice &&
+                   firstItem.OutgoingPrice == secondItem.OutgoingPrice &&
+                   firstItem.IncomingTaxGroup_ID == secondItem.IncomingTaxGroup_ID &&
+                   firstItem.OutgoingTaxGroup_ID == secondItem.OutgoingTaxGroup_ID &&
+                   firstItem.Product.ID == secondItem.Product.ID &&
+                   firstItem.Product.Barcode == secondItem.Product.Barcode &&
+                   firstItem.Product.Name.Equals(secondItem.Product.Name) &&
+                   firstItem.Product.ProductGroup_ID == secondItem.Product.ProductGroup_ID;
+        }
+
         #region GetItem
         [Test]
         public async Task GetItem_CorrectItemId_IsSuccessStatusCodeAndItemReturned()
@@ -27,16 +41,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, element.Item.ID == item.ID &&
-                                  element.Item.SerNumber.Equals(item.SerNumber) &&
-                                  element.Item.IncomingPrice == item.IncomingPrice &&
-                                  element.Item.OutgoingPrice == item.OutgoingPrice &&
-                                  element.Item.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID &&
-                                  element.Item.OutgoingTaxGroup_ID == item.OutgoingTaxGroup_ID &&
-                                  element.Item.Product.ID == item.Product.ID &&
-                                  element.Item.Product.Barcode == item.Product.Barcode &&
-                                  element.Item.Product.Name.Equals(item.Product.Name) &&
-                                  element.Item.Product.ProductGroup_ID == item.Product.ProductGroup_ID);//check if object received is the same
+            Assert.AreEqual(true, AreItemsEqual(element.Item, item));//check if object received is the same
         }
 
         [Test]

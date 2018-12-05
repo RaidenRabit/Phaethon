@@ -8,6 +8,13 @@ namespace Tests.IntegrationTests
 {
     public class ProductTest: InternalTestFakeServerBase
     {
+        private bool AreProductsEqual(Product firstProduct, Product secondProduct)
+        {
+            return firstProduct.ID == secondProduct.ID &&
+                   firstProduct.Barcode.Equals(secondProduct.Barcode) &&
+                   firstProduct.Name.Equals(secondProduct.Name);
+        }
+
         #region GetProduct
         [Test]
         public async Task GetProduct_CorrectBarcode_IsSuccessStatusCodeAndSameObjectReturned()
@@ -23,9 +30,7 @@ namespace Tests.IntegrationTests
             
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, product.ID == testProduct.ID &&
-                                  product.Barcode.Equals(testProduct.Barcode) &&
-                                  product.Name.Equals(testProduct.Name));
+            Assert.AreEqual(true, AreProductsEqual(product, product));
         }
 
         [Test]

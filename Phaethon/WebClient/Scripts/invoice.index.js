@@ -12,24 +12,8 @@ $(function () {
             format: 'DD/MMM/YYYY'
         }
     });
-
-    //gets existing companies
-    $.ajax({
-        type: "GET",
-        url: "http://localhost:64007/Company/GetCompanies",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            var htmlText = "";
-            for (var i = 0; i < data.length; i++) {
-                htmlText += "<option value='" + data[i].Name + "'/>";
-            }
-            $("#companies").html(htmlText);
-        },
-        error: function () {
-            $("#companies").html("");
-        }
-    });
+    
+    GetCompanies();
 
     GetInvoices();
 
@@ -50,6 +34,26 @@ $(function () {
         });
     });
 });
+
+//gets existing companies
+function GetCompanies() {
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:64007/Company/GetCompanies",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            var htmlText = "";
+            for (var i = 0; i < data.length; i++) {
+                htmlText += "<option value='" + data[i].Name + "'/>";
+            }
+            $("#companies").html(htmlText);
+        },
+        error: function () {
+            $("#companies").html("");
+        }
+    });
+}
 
 //gets invoices
 function GetInvoices()
