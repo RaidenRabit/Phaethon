@@ -314,8 +314,14 @@
   <data name="NewJobButtonTitle" xml:space="preserve">
     <value>Create new job</value>
   </data>
+  <data name="ProductGroupCreateViewMarginLabel" xml:space="preserve">
+    <value>Product Group Margin</value>
+  </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Select Language</value>
+  </data>
+  <data name="TaxGroupViewTaxLabel" xml:space="preserve">
+    <value>Tax</value>
   </data>
   <data name="YourContectPage" xml:space="preserve">
     <value>Your contact page.</value>

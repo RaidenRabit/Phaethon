@@ -646,11 +646,29 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product Group Margin.
+        /// </summary>
+        public static string ProductGroupCreateViewMarginLabel {
+            get {
+                return ResourceManager.GetString("ProductGroupCreateViewMarginLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Language.
         /// </summary>
         public static string SelectLanguage {
             get {
                 return ResourceManager.GetString("SelectLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax.
+        /// </summary>
+        public static string TaxGroupViewTaxLabel {
+            get {
+                return ResourceManager.GetString("TaxGroupViewTaxLabel", resourceCulture);
             }
         }
         
