@@ -362,4 +362,10 @@
   <data name="Sum" xml:space="preserve">
     <value>Sum</value>
   </data>
+  <data name="Jobs" xml:space="preserve">
+    <value>Jobs</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
 </root>

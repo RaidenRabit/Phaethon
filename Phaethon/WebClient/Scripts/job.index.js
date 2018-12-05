@@ -38,7 +38,7 @@ function GetJobs() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-                    var htmlText = "";
+            var htmlText = "";
                     for (var i = 0; i < data.length; i++) {
                         var StartedTime = moment(data[i].StartedTime).format('DD-MM-YYYY');
                         var FinishedTime = moment(data[i].FinishedTime).format('DD-MM-YYYY');
@@ -83,7 +83,7 @@ function GetJobs() {
 
                         htmlText += "<td>" +
                             "<button class=\"btn\"  onclick=\"ReadJob(this)\">" +
-                            "Edit" +
+                            languagePack +
                             "</td>" +
                             "</tr>";
                     }

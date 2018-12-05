@@ -5,10 +5,14 @@
 
 
 <div class="card-body" style="padding-left: 20px;">
+    
+    <script>
+         var languagePack = "@LanguagePack.Edit";
+     </script>
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">@LanguagePack.JobSearchCardTitle<div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10" /></div></div>
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">@LanguagePack.JobSearchCardTitle<div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10"/></div></div>
                 <div id="jobSearch" class="card-body collapse show" style="padding-left: 20px;">
                     <div class="row">
                         <div class="col-md-6">
@@ -29,11 +33,11 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobNamePlaceHolder" />
+                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobNamePlaceHolder"/>
                             </div>
 
                             <div class="form-group">
-                                <input id="jobId" type="text" class="form-control" placeholder="@LanguagePack.JobIdPlaceHolder" />
+                                <input id="jobId" type="text" class="form-control" placeholder="@LanguagePack.JobIdPlaceHolder"/>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -49,17 +53,17 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="dateRange" type="datetime" class="datepicker form-control" placeholder="Date Range" />
+                                <input id="dateRange" type="datetime" class="datepicker form-control" placeholder="Date Range"/>
                             </div>
 
                             <div class="form-group">
-                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="@LanguagePack.CustomerNamePlaceHolder" />
+                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="@LanguagePack.CustomerNamePlaceHolder"/>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input id="description" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobDescriptionPlaceHolder" />
+                                <input id="description" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobDescriptionPlaceHolder"/>
                             </div>
                         </div>
                     </div>
@@ -71,39 +75,40 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;">Jobs <div style="float: right"><Button class="btn" id="NewJob">@LanguagePack.NewJob</Button></div></div>
+                <div class="card-header" style="clear: both;">@LanguagePack.Jobs
+                    <div style="float: right"><Button class="btn" id="NewJob">@LanguagePack.NewJob</Button></div></div>
                 <div class="card-body" style="padding-left: 20px;">
                     <table id="jobTable" class="table table-striped">
                         <thead>
-                            <tr>
-                                <th>
-                                    @LanguagePack.JobIdPlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.JobNamePlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.StartedTimePlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.FinishedTimePlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.Cost
-                                </th>
-                                <th>
-                                    @LanguagePack.JobStatus
-                                </th>
-                                <th>
-                                    @LanguagePack.CustomerNamePlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.JobDescriptionPlaceHolder
-                                </th>
-                                <th>
-                                    @LanguagePack.NotificationStatus
-                                </th>
-                            </tr>
+                        <tr>
+                            <th>
+                                @LanguagePack.JobIdPlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.JobNamePlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.StartedTimePlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.FinishedTimePlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.Cost
+                            </th>
+                            <th>
+                                @LanguagePack.JobStatus
+                            </th>
+                            <th>
+                                @LanguagePack.CustomerNamePlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.JobDescriptionPlaceHolder
+                            </th>
+                            <th>
+                                @LanguagePack.NotificationStatus
+                            </th>
+                        </tr>
                         </thead>
 
                         <tbody><tr></tr></tbody>

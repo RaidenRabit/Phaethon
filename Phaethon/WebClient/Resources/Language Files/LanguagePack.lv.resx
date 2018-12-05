@@ -362,4 +362,10 @@
   <data name="YourContectPage" xml:space="preserve">
     <value>Jūsu kontaktpersonu lapa.</value>
   </data>
+  <data name="Jobs" xml:space="preserve">
+    <value>Darbi</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Mainīt</value>
+  </data>
 </root>
