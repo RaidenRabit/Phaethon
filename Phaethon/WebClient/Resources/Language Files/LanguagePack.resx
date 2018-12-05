@@ -118,10 +118,61 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>Aboutsssss</value>
+    <value>About</value>
+  </data>
+  <data name="AboutPageDescriptionText" xml:space="preserve">
+    <value>Your application description page.</value>
+  </data>
+  <data name="AboutPageText" xml:space="preserve">
+    <value>Use this area to provide additional information.</value>
   </data>
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
+  </data>
+  <data name="ContactPageCityAndCountry" xml:space="preserve">
+    <value>Aalborg, Denmark</value>
+  </data>
+  <data name="ContactPagePhone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="ContactPagePhoneNumber" xml:space="preserve">
+    <value>+45 50 22 77 79</value>
+  </data>
+  <data name="ContactPageStreetAndNumber" xml:space="preserve">
+    <value>Sofiendalsvej 60</value>
+  </data>
+  <data name="ContactPageSupport" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="ContactPageSupportEmail" xml:space="preserve">
+    <value>1062012@ucn.dk</value>
+  </data>
+  <data name="EditJobPartialPageAddressCityPlaceholder" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="EditJobPartialPageAddressExtraPlaceholder" xml:space="preserve">
+    <value>Extra Information</value>
+  </data>
+  <data name="EditJobPartialPageAddressIDPlaceholder" xml:space="preserve">
+    <value>Address ID</value>
+  </data>
+  <data name="EditJobPartialPageAddressNumberPlaceholder" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="EditJobPartialPageCustomerFamilyNamePlaceholder" xml:space="preserve">
+    <value>Family Name</value>
+  </data>
+  <data name="EditJobPartialPageCustomerGivenNamePlaceholder" xml:space="preserve">
+    <value>Given Name</value>
+  </data>
+  <data name="EditJobPartialPageCustomerIdPlaceholder" xml:space="preserve">
+    <value>Customer ID</value>
+  </data>
+  <data name="EditJobPartialPageJobDetails" xml:space="preserve">
+    <value>Job Details</value>
+  </data>
+  <data name="EditJobPartiaPageCustomerEmailPlaceholder" xml:space="preserve">
+    <value>Email</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
@@ -132,10 +183,55 @@
   <data name="JobList" xml:space="preserve">
     <value>Job List</value>
   </data>
+  <data name="JobSearchCardTitle" xml:space="preserve">
+    <value>Job search</value>
+  </data>
+  <data name="JobSearchCustomerNamePlaceHolder" xml:space="preserve">
+    <value>Customer Name</value>
+  </data>
+  <data name="JobSearchFinishedTimePlaceHolder" xml:space="preserve">
+    <value>Finished Time</value>
+  </data>
+  <data name="JobSearchJobDescriptionPlaceHolder" xml:space="preserve">
+    <value>Job Description</value>
+  </data>
+  <data name="JobSearchJobIdPlaceHolder" xml:space="preserve">
+    <value>Job Id</value>
+  </data>
+  <data name="JobSearchJobNamePlaceHolder" xml:space="preserve">
+    <value>Job Name</value>
+  </data>
+  <data name="JobSearchJobStatusDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="JobSearchJobStatusInProggress" xml:space="preserve">
+    <value>In Proggress</value>
+  </data>
+  <data name="JobSearchJobStatusUnassigned" xml:space="preserve">
+    <value>Unassigned</value>
+  </data>
+  <data name="JobSearchStartedTimePlaceHolder" xml:space="preserve">
+    <value>Started Time</value>
+  </data>
+  <data name="JobTableCostColumnHeader" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="JobTableEmailStatus" xml:space="preserve">
+    <value>Notification Status</value>
+  </data>
+  <data name="JobTableJobStatusColumnHeader" xml:space="preserve">
+    <value>Job Status</value>
+  </data>
   <data name="Latvian" xml:space="preserve">
     <value>Latvian</value>
   </data>
+  <data name="NewJobButtonTitle" xml:space="preserve">
+    <value>Create new job</value>
+  </data>
   <data name="SelectLanguage" xml:space="preserve">
     <value>Select Language</value>
+  </data>
+  <data name="YourContectPage" xml:space="preserve">
+    <value>Your contact page.</value>
   </data>
 </root>

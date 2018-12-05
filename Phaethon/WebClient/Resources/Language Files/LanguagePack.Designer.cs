@@ -61,11 +61,29 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aboutsssss.
+        ///   Looks up a localized string similar to About.
         /// </summary>
         public static string About {
             get {
                 return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your application description page..
+        /// </summary>
+        public static string AboutPageDescriptionText {
+            get {
+                return ResourceManager.GetString("AboutPageDescriptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use this area to provide additional information..
+        /// </summary>
+        public static string AboutPageText {
+            get {
+                return ResourceManager.GetString("AboutPageText", resourceCulture);
             }
         }
         
@@ -75,6 +93,141 @@ namespace WebClient.Resources.Language_Files {
         public static string Contact {
             get {
                 return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aalborg, Denmark.
+        /// </summary>
+        public static string ContactPageCityAndCountry {
+            get {
+                return ResourceManager.GetString("ContactPageCityAndCountry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        public static string ContactPagePhone {
+            get {
+                return ResourceManager.GetString("ContactPagePhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to +45 50 22 77 79.
+        /// </summary>
+        public static string ContactPagePhoneNumber {
+            get {
+                return ResourceManager.GetString("ContactPagePhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sofiendalsvej 60.
+        /// </summary>
+        public static string ContactPageStreetAndNumber {
+            get {
+                return ResourceManager.GetString("ContactPageStreetAndNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support.
+        /// </summary>
+        public static string ContactPageSupport {
+            get {
+                return ResourceManager.GetString("ContactPageSupport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1062012@ucn.dk.
+        /// </summary>
+        public static string ContactPageSupportEmail {
+            get {
+                return ResourceManager.GetString("ContactPageSupportEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to City.
+        /// </summary>
+        public static string EditJobPartialPageAddressCityPlaceholder {
+            get {
+                return ResourceManager.GetString("EditJobPartialPageAddressCityPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extra Information.
+        /// </summary>
+        public static string EditJobPartialPageAddressExtraPlaceholder {
+            get {
+                return ResourceManager.GetString("EditJobPartialPageAddressExtraPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address ID.
+        /// </summary>
+        public static string EditJobPartialPageAddressIDPlaceholder {
+            get {
+                return ResourceManager.GetString("EditJobPartialPageAddressIDPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number.
+        /// </summary>
+        public static string EditJobPartialPageAddressNumberPlaceholder {
+            get {
+                return ResourceManager.GetString("EditJobPartialPageAddressNumberPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Family Name.
+        /// </summary>
+        public static string EditJobPartialPageCustomerFamilyNamePlaceholder {
+            get {
+                return ResourceManager.GetString("EditJobPartialPageCustomerFamilyNamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Given Name.
+        /// </summary>
+        public static string EditJobPartialPageCustomerGivenNamePlaceholder {
+            get {
+                return ResourceManager.GetString("EditJobPartialPageCustomerGivenNamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer ID.
+        /// </summary>
+        public static string EditJobPartialPageCustomerIdPlaceholder {
+            get {
+                return ResourceManager.GetString("EditJobPartialPageCustomerIdPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Details.
+        /// </summary>
+        public static string EditJobPartialPageJobDetails {
+            get {
+                return ResourceManager.GetString("EditJobPartialPageJobDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string EditJobPartiaPageCustomerEmailPlaceholder {
+            get {
+                return ResourceManager.GetString("EditJobPartiaPageCustomerEmailPlaceholder", resourceCulture);
             }
         }
         
@@ -106,6 +259,123 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Job search.
+        /// </summary>
+        public static string JobSearchCardTitle {
+            get {
+                return ResourceManager.GetString("JobSearchCardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Name.
+        /// </summary>
+        public static string JobSearchCustomerNamePlaceHolder {
+            get {
+                return ResourceManager.GetString("JobSearchCustomerNamePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finished Time.
+        /// </summary>
+        public static string JobSearchFinishedTimePlaceHolder {
+            get {
+                return ResourceManager.GetString("JobSearchFinishedTimePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Description.
+        /// </summary>
+        public static string JobSearchJobDescriptionPlaceHolder {
+            get {
+                return ResourceManager.GetString("JobSearchJobDescriptionPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Id.
+        /// </summary>
+        public static string JobSearchJobIdPlaceHolder {
+            get {
+                return ResourceManager.GetString("JobSearchJobIdPlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Name.
+        /// </summary>
+        public static string JobSearchJobNamePlaceHolder {
+            get {
+                return ResourceManager.GetString("JobSearchJobNamePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        public static string JobSearchJobStatusDone {
+            get {
+                return ResourceManager.GetString("JobSearchJobStatusDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Proggress.
+        /// </summary>
+        public static string JobSearchJobStatusInProggress {
+            get {
+                return ResourceManager.GetString("JobSearchJobStatusInProggress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unassigned.
+        /// </summary>
+        public static string JobSearchJobStatusUnassigned {
+            get {
+                return ResourceManager.GetString("JobSearchJobStatusUnassigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Started Time.
+        /// </summary>
+        public static string JobSearchStartedTimePlaceHolder {
+            get {
+                return ResourceManager.GetString("JobSearchStartedTimePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cost.
+        /// </summary>
+        public static string JobTableCostColumnHeader {
+            get {
+                return ResourceManager.GetString("JobTableCostColumnHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Status.
+        /// </summary>
+        public static string JobTableEmailStatus {
+            get {
+                return ResourceManager.GetString("JobTableEmailStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Status.
+        /// </summary>
+        public static string JobTableJobStatusColumnHeader {
+            get {
+                return ResourceManager.GetString("JobTableJobStatusColumnHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Latvian.
         /// </summary>
         public static string Latvian {
@@ -115,11 +385,29 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create new job.
+        /// </summary>
+        public static string NewJobButtonTitle {
+            get {
+                return ResourceManager.GetString("NewJobButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Language.
         /// </summary>
         public static string SelectLanguage {
             get {
                 return ResourceManager.GetString("SelectLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your contact page..
+        /// </summary>
+        public static string YourContectPage {
+            get {
+                return ResourceManager.GetString("YourContectPage", resourceCulture);
             }
         }
     }

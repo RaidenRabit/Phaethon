@@ -1,17 +1,17 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = a.Contact;
 }
+@using a = WebClient.Resources.Language_Files.LanguagePack;
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
 <address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
+    @a.ContactPageStreetAndNumber<br />
+    @a.ContactPageCityAndCountry<br />
+    <abbr title="@a.ContactPagePhone">@a.ContactPagePhone</abbr>
+    @a.ContactPagePhoneNumber/
 </address>
 
 <address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    <strong>@a.ContactPageSupport:</strong>   <a href="mailto:Support@example.com">@a.ContactPageSupportEmail</a>
 </address>

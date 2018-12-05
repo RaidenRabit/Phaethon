@@ -1,26 +1,27 @@
 ﻿@model IEnumerable<Core.Model.Job>
 @Styles.Render("~/Content/Daterangepicker")
 @{ViewBag.Title = "Index";}
+@using a = WebClient.Resources.Language_Files.LanguagePack;
 
 
 <div class="card-body" style="padding-left: 20px;">
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">Job search <div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10" /></div></div>
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">@a.JobSearchCardTitle<div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10" /></div></div>
                 <div id="jobSearch" class="card-body collapse show" style="padding-left: 20px;">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="1"> Unassigned
+                                        <input type="checkbox" name="jobStatus" value="1"> @a.JobSearchJobStatusUnassigned
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="2"> In progress
+                                        <input type="checkbox" name="jobStatus" value="2"> @a.JobSearchJobStatusInProggress
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="3"> Done
+                                        <input type="checkbox" name="jobStatus" value="3"> @a.JobSearchJobStatusDone
                                     </label>
                                 </div>
                                 <datalist id="jobs"></datalist>
@@ -28,21 +29,21 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="Job Name" />
+                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="@a.JobSearchJobNamePlaceHolder" />
                             </div>
 
                             <div class="form-group">
-                                <input id="jobId" type="text" class="form-control" placeholder="Job Id" />
+                                <input id="jobId" type="text" class="form-control" placeholder="@a.JobSearchJobIdPlaceHolder" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-info active">
-                                        <input type="radio" name="dateOption" value="0" checked> @Html.DisplayNameFor(model => model.StartedTime)
+                                        <input type="radio" name="dateOption" value="0" checked> @a.JobSearchStartedTimePlaceHolder
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="radio" name="dateOption" value="1"> @Html.DisplayNameFor(model => model.FinishedTime)
+                                        <input type="radio" name="dateOption" value="1">@a.JobSearchFinishedTimePlaceHolder
                                     </label>
                                 </div>
                             </div>
@@ -52,13 +53,13 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="Customer Name" />
+                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="@a.JobSearchCustomerNamePlaceHolder" />
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input id="description" type="text" class="form-control" list="jobs" placeholder="Job Description" />
+                                <input id="description" type="text" class="form-control" list="jobs" placeholder="@a.JobSearchJobDescriptionPlaceHolder" />
                             </div>
                         </div>
                     </div>
@@ -70,39 +71,39 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;">Jobs <div style="float: right"><Button class="btn" id="NewJob">New Job</Button></div></div>
+                <div class="card-header" style="clear: both;">Jobs <div style="float: right"><Button class="btn" id="NewJob">@a.NewJobButtonTitle</Button></div></div>
                 <div class="card-body" style="padding-left: 20px;">
                     <table id="jobTable" class="table table-striped">
                         <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.ID)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.JobName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.StartedTime)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FinishedTime)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Cost)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.JobStatus)
-                            </th>
-                            <th>
-                                Customer Name
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Description)
-                            </th>
-                            <th>
-                                Sent<br>Email
-                            </th>
-                        </tr>
+                            <tr>
+                                <th>
+                                    @a.JobSearchJobIdPlaceHolder
+                                </th>
+                                <th>
+                                    @a.JobSearchJobNamePlaceHolder
+                                </th>
+                                <th>
+                                    @a.JobSearchStartedTimePlaceHolder
+                                </th>
+                                <th>
+                                    @a.JobSearchFinishedTimePlaceHolder
+                                </th>
+                                <th>
+                                    @a.JobTableCostColumnHeader
+                                </th>
+                                <th>
+                                    @a.JobTableJobStatusColumnHeader
+                                </th>
+                                <th>
+                                    @a.JobSearchCustomerNamePlaceHolder
+                                </th>
+                                <th>
+                                    @a.JobSearchJobDescriptionPlaceHolder
+                                </th>
+                                <th>
+                                    @a.JobTableEmailStatus
+                                </th>
+                            </tr>
                         </thead>
 
                         <tbody><tr></tr></tbody>
