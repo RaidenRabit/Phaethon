@@ -151,6 +151,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Go back.
+        /// </summary>
+        public static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -466,11 +475,29 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new item.
+        /// </summary>
+        public static string ItemAdd {
+            get {
+                return ResourceManager.GetString("ItemAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price With Tax.
         /// </summary>
         public static string ItemIncomingPriceLabel {
             get {
                 return ResourceManager.GetString("ItemIncomingPriceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outgoing price.
+        /// </summary>
+        public static string ItemOutgoingPriceLabel {
+            get {
+                return ResourceManager.GetString("ItemOutgoingPriceLabel", resourceCulture);
             }
         }
         

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Core.Model;
+using Newtonsoft.Json;
+using WebClient.Controllers.Api;
 
 namespace WebClient.Controllers
 {
@@ -16,6 +20,37 @@ namespace WebClient.Controllers
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri("http://localhost:64007/Item/");
+        }
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
+        {
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = id.ToString();
+            var result = await _client.GetAsync("GetItem?" + parameters);
+            Item item = JsonConvert.DeserializeObject<Item>(await result.Content.ReadAsStringAsync());
+            return View(item);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditAsync(Item item)
+        {
+            var response = await _client.PostAsJsonAsync("CreateOrUpdate", item);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpGet]

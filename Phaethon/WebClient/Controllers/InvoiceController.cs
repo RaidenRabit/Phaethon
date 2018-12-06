@@ -34,8 +34,7 @@ namespace WebClient.Controllers
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = id.ToString();
             var result = await _client.GetAsync("GetInvoice?" + parameters);
-            string json = result.Content.ReadAsStringAsync().Result;
-            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(json);
+            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await result.Content.ReadAsStringAsync());
             return View(invoice);
         }
 

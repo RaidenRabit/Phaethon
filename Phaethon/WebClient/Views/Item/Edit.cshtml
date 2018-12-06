@@ -1,0 +1,56 @@
+﻿@model Core.Model.Item
+@{ViewBag.Title = "Edit";}
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.Product_ID)
+        @Html.HiddenFor(model => model.IncomingTaxGroup_ID)
+        @Html.HiddenFor(model => model.OutgoingTaxGroup_ID)
+
+        <div class="form-group">
+            <div class="col-form-label col-md-4">@LanguagePack.SerialNumberLabel</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SerNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SerNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-form-label col-md-4">@LanguagePack.ItemIncomingPriceLabel</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IncomingPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IncomingPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-form-label col-md-4">@LanguagePack.ItemOutgoingPriceLabel</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OutgoingPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OutgoingPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-form-label col-md-4">@LanguagePack.QuantityLabel</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="@LanguagePack.Save" class="btn btn-primary btn-lg btn-block" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink(LanguagePack.Back, "Index")
+</div>

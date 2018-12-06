@@ -37,7 +37,10 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#itemList">@LanguagePack.Items</div>
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#itemList">
+                    @LanguagePack.Items
+                    <div style="float: right"><Input type="button" id="newItem" class="btn btn-success" value="@LanguagePack.ItemAdd"></div>
+                </div>
 
                 <div id="itemList" class="card-body collapse show" style="padding-left: 20px;">
                     <table id="itemTable" class="table">

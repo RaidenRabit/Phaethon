@@ -398,4 +398,13 @@
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="ItemAdd" xml:space="preserve">
+    <value>Add new item</value>
+  </data>
+  <data name="ItemOutgoingPriceLabel" xml:space="preserve">
+    <value>Outgoing price</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Go back</value>
+  </data>
 </root>

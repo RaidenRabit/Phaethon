@@ -238,6 +238,9 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\page-scripts\item.index.js" />
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\Edit.cshtml" />
     <Resource Include="Resources\Images\english-flag.png" />
     <Resource Include="Resources\Images\latvian-flag.jpg" />
     <Content Include="Scripts\changeLanguage.js" />
@@ -406,7 +409,7 @@
     <Content Include="Views\Job\_editJob.cshtml" />
     <Content Include="Views\TaxGroup\Create.cshtml" />
     <Content Include="Views\ProductGroup\Create.cshtml" />
-    <Content Include="Views\Item\Select.cshtml" />
+    <Content Include="Views\Item\_select.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />

@@ -398,4 +398,13 @@
   <data name="Details" xml:space="preserve">
     <value>Detaļas</value>
   </data>
+  <data name="ItemAdd" xml:space="preserve">
+    <value>Pievienot jaunu preci</value>
+  </data>
+  <data name="ItemOutgoingPriceLabel" xml:space="preserve">
+    <value>Izejošā cena</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Atgriezties</value>
+  </data>
 </root>

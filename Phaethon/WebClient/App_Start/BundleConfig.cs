@@ -43,6 +43,9 @@ namespace WebClient
                 "~/Scripts/page-scripts/invoice.edit_company.js",
                 "~/Scripts/page-scripts/invoice.edit_elements.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/Item").Include(
+                "~/Scripts/page-scripts/item.index.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/Item/Select").Include(
                 "~/Scripts/page-scripts/item.select.js"));
 
