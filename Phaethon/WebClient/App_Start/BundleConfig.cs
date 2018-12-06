@@ -68,9 +68,11 @@ namespace WebClient
 
             #region All pages
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/HoverElement.css",
-                      "~/Content/bootstrap.css",
-                      "~/Content/themes/base/jquery-ui.css"));
+                "~/Content/HoverElement.css",
+                "~/Content/bootstrap.css",
+                "~/Content/themes/base/jquery-ui.css",
+                "~/Content/font-awesome.css",
+                "~/Content/site.css"));
             #endregion
 
             #region Use case specific
