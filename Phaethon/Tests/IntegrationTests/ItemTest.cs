@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Core.Model;
+using InternalApi.DataAccess;
 using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
@@ -25,6 +27,60 @@ namespace Tests.IntegrationTests
                    firstItem.Product.Name.Equals(secondItem.Product.Name) &&
                    firstItem.Product.ProductGroup_ID == secondItem.Product.ProductGroup_ID;
         }
+
+        #region CreateOrUpdate
+        [Test]
+        public async Task CreateOrUpdate_NewItemObject_IsSuccessStatusCodeAndResponseTrue()
+        {
+            //Setup
+            Element element = InvoiceTest.GetElementSeed();
+            Item item = element.Item;
+            using (var db = new DatabaseContext())
+            {
+                db.Items.Remove(db.Items.SingleOrDefault(x => x.ID == item.ID));
+                db.SaveChanges();
+            }
+
+            //Act
+            var response = await _client.PostAsJsonAsync("Item/CreateOrUpdate", item);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(deserializedResponse);
+        }
+
+        [Test]
+        public async Task CreateOrUpdate_ExistingItemObject_IsSuccessStatusCodeAndResponseTrue()
+        {
+            //Setup
+            Element element = InvoiceTest.GetElementSeed();
+            Item item = element.Item;
+
+            //Act
+            var response = await _client.PostAsJsonAsync("Item/CreateOrUpdate", item);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(deserializedResponse);
+        }
+
+        [Test]
+        public async Task CreateOrUpdate_ItemObjectNull_IsSuccessStatusCodeAndResponseFalse()
+        {
+            //Setup
+            Item item = null;
+
+            //Act
+            var response = await _client.PostAsJsonAsync("Item/CreateOrUpdate", item);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsFalse(deserializedResponse);
+        }
+        #endregion
 
         #region GetItem
         [Test]
@@ -71,6 +127,7 @@ namespace Tests.IntegrationTests
             parameters["serialNumber"] = "";
             parameters["productName"] = "";
             parameters["barcode"] = 0.ToString();
+            parameters["showAll"] = true.ToString();
 
             //Act
             var response = await _client.GetAsync("Item/GetItems?" + parameters);
@@ -79,6 +136,40 @@ namespace Tests.IntegrationTests
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode);
             Assert.AreNotEqual(0, items.Count);
+        }
+        #endregion
+
+        #region Delete
+        [Test]
+        public async Task Delete_CorrectID_IsSuccessStatusCodeAndItemDeleted()
+        {
+            //Setup
+            Element element = InvoiceTest.GetElementSeed();
+            Item item = element.Item;
+            int id = item.ID;
+
+            //Act
+            var response = await _client.PostAsJsonAsync("Item/Delete", id);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsTrue(deserializedResponse);
+        }
+
+        [Test]
+        public async Task Delete_WrongID_IsSuccessStatusCodeAndItemNotDeleted()
+        {
+            //Setup
+            int id = 0;
+
+            //Act
+            var response = await _client.PostAsJsonAsync("Item/Delete", id);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
+            //Assert
+            Assert.IsTrue(response.IsSuccessStatusCode);
+            Assert.IsFalse(deserializedResponse);
         }
         #endregion
     }
