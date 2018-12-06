@@ -61,9 +61,18 @@ namespace WebClient.Controllers
         }
 
         [HttpPost]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            _client.PostAsJsonAsync("Delete", id);
+            var response = await _client.PostAsJsonAsync("Delete", id);
+            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
         }
     }
 }
