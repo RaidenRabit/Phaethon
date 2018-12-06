@@ -63,6 +63,10 @@ namespace InternalApi.DataManagement
             using (var db = new DatabaseContext())
             {
                 Item item = _itemDa.GetItem(db, id);
+                if (item == null)
+                {
+                    return false;
+                }
                 return _itemDa.Delete(db, item);
             }
         }

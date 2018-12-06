@@ -46,8 +46,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Api didn't encounter unexpected issue");
+            Assert.IsTrue(deserializedResponse, "Api returned that operation has not succeeded");
         }
 
         [Test]
