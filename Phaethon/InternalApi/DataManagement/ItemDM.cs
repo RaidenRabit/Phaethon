@@ -8,11 +8,11 @@ using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.DataManagement
 {
-    internal class ItemDM: IItemDM
+    public class ItemDM: IItemDM
     {
         private readonly ItemDa _itemDa;
 
-        internal ItemDM()
+        public ItemDM()
         {
             _itemDa = new ItemDa();
         }
@@ -23,15 +23,8 @@ namespace InternalApi.DataManagement
             {
                 try
                 {
-                    try
-                    {
-                        ProductDa productDa = new ProductDa();
-                        productDa.CreateOrUpdate(db, item.Product);
-                    }
-                    catch
-                    {
-                        return true;
-                    }
+                    ProductDa productDa = new ProductDa();
+                    productDa.CreateOrUpdate(db, item.Product);
                     item.Product_ID = item.Product.ID;
                     item.Product = null;
                     _itemDa.CreateOrUpdate(db, item);

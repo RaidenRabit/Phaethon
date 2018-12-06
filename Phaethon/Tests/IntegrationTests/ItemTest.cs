@@ -35,6 +35,8 @@ namespace Tests.IntegrationTests
             //Setup
             Element element = InvoiceTest.GetElementSeed();
             Item item = element.Item;
+            item.IncomingTaxGroup = null;
+            item.OutgoingTaxGroup = null;
             using (var db = new DatabaseContext())
             {
                 db.Items.Remove(db.Items.SingleOrDefault(x => x.ID == item.ID));
