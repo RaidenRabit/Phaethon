@@ -17,6 +17,22 @@ namespace InternalApi.DataManagement
             _itemDa = new ItemDa();
         }
 
+        public bool CreateOrUpdate(Item item)
+        {
+            using (var db = new DatabaseContext())
+            {
+                try
+                {
+                    _itemDa.CreateOrUpdate(db, item);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
         public Item GetItem(int id)
         {
             using (var db = new DatabaseContext())
@@ -35,6 +51,15 @@ namespace InternalApi.DataManagement
             using (var db = new DatabaseContext())
             {
                 return _itemDa.GetItems(db, serialNumber, productName, barcode);
+            }
+        }
+
+        public bool Delete(int id)
+        {
+            using (var db = new DatabaseContext())
+            {
+                Item item = _itemDa.GetItem(db, id);
+                return _itemDa.Delete(db, item);
             }
         }
     }

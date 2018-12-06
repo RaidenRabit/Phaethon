@@ -47,10 +47,10 @@ namespace InternalApi.DataAccess
                 .ToList();
         }
 
-        internal void Delete(DatabaseContext db, Item item)
+        internal bool Delete(DatabaseContext db, Item item)
         {
             db.Items.Remove(item);
-            db.SaveChanges();
+            return db.SaveChanges() > 0;
         }
 
         internal List<Item> GetItemNotSoldItem(DatabaseContext db, Item item)

@@ -22,6 +22,10 @@
         </div>
 
         <div class="form-group">
+            <div class="col-form-label col-md-4">@LanguagePack.Incoming</div>
+            <div class="col-md-10">
+                <select class='form-control' data-val='true' id='IncomingTaxGroup' name='IncomingTaxGroup_ID' required='required'></select>
+            </div>
             <div class="col-form-label col-md-4">@LanguagePack.ItemIncomingPriceLabel</div>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.IncomingPrice, new { htmlAttributes = new { @class = "form-control" } })
@@ -30,6 +34,10 @@
         </div>
 
         <div class="form-group">
+            <div class="col-form-label col-md-4">@LanguagePack.Outgoing</div>
+            <div class="col-md-10">
+                <select class='form-control' data-val='true' id='OutgoingTaxGroup' name='OutgoingTaxGroup_ID' required='required'></select>
+            </div>
             <div class="col-form-label col-md-4">@LanguagePack.ItemOutgoingPriceLabel</div>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.OutgoingPrice, new { htmlAttributes = new { @class = "form-control" } })
@@ -38,10 +46,14 @@
         </div>
 
         <div class="form-group">
-            <div class="col-form-label col-md-4">@LanguagePack.QuantityLabel</div>
+            <div class="col-form-label col-md-4">@LanguagePack.ProductGroupNameLabel</div>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                <select class='form-control' data-val='true' id='ProductGroup' name='Product.ProductGroup_ID' required='required'></select>
+            </div>
+            <div class="col-form-label col-md-4">@LanguagePack.ProductBarcodeLabel</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Product.Barcode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Product.Barcode, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -51,6 +63,17 @@
     </div>
 }
 
+@if (Model != null)
+{
+    using (Html.BeginForm("Delete", "Item", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.ID)
+        <input type="submit" value="@LanguagePack.DeleteButton" class="btn btn-danger btn-block" />
+    }
+}
+
 <div>
     @Html.ActionLink(LanguagePack.Back, "Index")
 </div>
+
+@Scripts.Render("~/bundles/Item/Edit")

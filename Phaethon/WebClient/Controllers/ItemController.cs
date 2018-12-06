@@ -39,7 +39,7 @@ namespace WebClient.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditAsync(Item item)
+        public async Task<ActionResult> Edit(Item item)
         {
             var response = await _client.PostAsJsonAsync("CreateOrUpdate", item);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
@@ -54,9 +54,15 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        public ActionResult Select()
+        public ActionResult _select()
         {
             return PartialView(new List<Item>());
+        }
+
+        [HttpPost]
+        public void Delete(int id)
+        {
+            _client.PostAsJsonAsync("Delete", id);
         }
     }
 }
