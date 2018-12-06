@@ -41,11 +41,11 @@ namespace InternalApi.Controllers
 
         [Route("GetItems")]
         [HttpGet]
-        public HttpResponseMessage GetItems(string serialNumber, string productName, int barcode)
+        public HttpResponseMessage GetItems(string serialNumber, string productName, int barcode, bool showAll)
         {
             if (serialNumber == null) serialNumber = "";
             if (productName == null) productName = "";
-            return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItems(serialNumber, productName, barcode));
+            return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItems(serialNumber, productName, barcode, showAll));
         }
 
         [Route("Delete")]

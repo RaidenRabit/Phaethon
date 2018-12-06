@@ -23,6 +23,10 @@ namespace InternalApi.DataManagement
             {
                 try
                 {
+                    ProductDa productDa = new ProductDa();
+                    productDa.CreateOrUpdate(db, item.Product);
+                    item.Product_ID = item.Product.ID;
+                    item.Product = null;
                     _itemDa.CreateOrUpdate(db, item);
                     return true;
                 }
@@ -46,11 +50,11 @@ namespace InternalApi.DataManagement
             }
         }
 
-        public List<Item> GetItems(string serialNumber, string productName, int barcode)
+        public List<Item> GetItems(string serialNumber, string productName, int barcode, bool showAll)
         {
             using (var db = new DatabaseContext())
             {
-                return _itemDa.GetItems(db, serialNumber, productName, barcode);
+                return _itemDa.GetItems(db, serialNumber, productName, barcode, showAll);
             }
         }
 

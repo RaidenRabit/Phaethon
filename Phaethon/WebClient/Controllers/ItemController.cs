@@ -56,6 +56,7 @@ namespace WebClient.Controllers
         [HttpGet]
         public ActionResult _select()
         {
+            ViewBag.MethodCalled = new object();
             return PartialView(new List<Item>());
         }
 

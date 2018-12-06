@@ -31,12 +31,13 @@ namespace WebClient.Controllers.Api
 
         [Route("GetItems")]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetItems(string serialNumber, string productName, int barcode)
+        public async Task<HttpResponseMessage> GetItems(string serialNumber, string productName, int barcode, bool showAll)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["serialNumber"] = serialNumber;
             parameters["productName"] = productName;
             parameters["barcode"] = barcode.ToString();
+            parameters["showAll"] = showAll.ToString();
             return await _client.GetAsync("GetItems?" + parameters);
         }
     }

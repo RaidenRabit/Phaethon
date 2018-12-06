@@ -13,7 +13,7 @@ namespace InternalApi.DataManagement.IDataManagement
 
         Item GetItem(int id);
 
-        List<Item> GetItems(string serialNumber, string productName, int barcode);
+        List<Item> GetItems(string serialNumber, string productName, int barcode, bool showAll);
 
         bool Delete(int id);
     }
