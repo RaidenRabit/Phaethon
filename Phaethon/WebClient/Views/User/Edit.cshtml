@@ -1,5 +1,8 @@
 ﻿@model Core.Model.User
-@{ViewBag.Title = "ManageUser";}
+
+@{
+    ViewBag.Title = "ManageUser";
+}
 
 <h2>ManageUser</h2>
 
@@ -7,40 +10,37 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="row">
+ <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
 
-        <div class="col-sm-12">
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "col-form-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="col-sm-12">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "col-form-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="col-sm-12">
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn-primary btn-lg btn-block" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+                @if (Model != null)
+                {
+                    @Ajax.ActionLink("Delete", "Delete", new {}, new AjaxOptions { HttpMethod = "POST", OnSuccess = "window.location.reload()" })
+
+                }
             </div>
         </div>
     </div>
-}
-@if (Model != null)
-{
-    using (Html.BeginForm("DeleteUser", "User", FormMethod.Post))
-    {
-        <input type="submit" value="Delete" class="btn btn-danger btn-block" />
-    }
 }

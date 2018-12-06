@@ -32,6 +32,7 @@ namespace InternalApi.DataManagement
             {
                 User user = _UserDa.GetUser(db, id);
                 return _UserDa.Delete(db, user);
+
             }
         }
 
@@ -40,6 +41,8 @@ namespace InternalApi.DataManagement
             using (var db = new DatabaseContext())
             {
                 return _UserDa.GetUser(db, id);
+                
+
             }
         }
 
@@ -47,15 +50,7 @@ namespace InternalApi.DataManagement
         {
             using (var db = new DatabaseContext())
             {
-                user = _UserDa.Login(db, user);
-                if (user != null)
-                {
-                    return user.id;
-                }
-                else
-                {
-                    return 0;
-                }
+                return _UserDa.Login(db, user);
             }
         }
     }
