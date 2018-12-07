@@ -8,13 +8,33 @@ using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.DataManagement
 {
-    internal class ItemDM: IItemDM
+    public class ItemDM: IItemDM
     {
         private readonly ItemDa _itemDa;
 
-        internal ItemDM()
+        public ItemDM()
         {
             _itemDa = new ItemDa();
+        }
+
+        public bool CreateOrUpdate(Item item)
+        {
+            using (var db = new DatabaseContext())
+            {
+                try
+                {
+                    ProductDa productDa = new ProductDa();
+                    productDa.CreateOrUpdate(db, item.Product);
+                    item.Product_ID = item.Product.ID;
+                    item.Product = null;
+                    _itemDa.CreateOrUpdate(db, item);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
         }
 
         public Item GetItem(int id)
@@ -30,11 +50,24 @@ namespace InternalApi.DataManagement
             }
         }
 
-        public List<Item> GetItems(string serialNumber, string productName, int barcode)
+        public List<Item> GetItems(string serialNumber, string productName, int barcode, bool showAll)
         {
             using (var db = new DatabaseContext())
             {
-                return _itemDa.GetItems(db, serialNumber, productName, barcode);
+                return _itemDa.GetItems(db, serialNumber, productName, barcode, showAll);
+            }
+        }
+
+        public bool Delete(int id)
+        {
+            using (var db = new DatabaseContext())
+            {
+                Item item = _itemDa.GetItem(db, id);
+                if (item == null)
+                {
+                    return false;
+                }
+                return _itemDa.Delete(db, item);
             }
         }
     }

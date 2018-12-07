@@ -2,7 +2,7 @@
 @{ViewBag.Title = "Edit";}
 @using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
-@using (Html.BeginForm("Edit","Invoice"))
+@using (Html.BeginForm("Edit", "Invoice"))
 {
     @Html.AntiForgeryToken()
     <div class="card-body" style="padding-left: 20px;">
@@ -43,7 +43,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-group">
-                    <input type="submit" value="@LanguagePack.Save" class="btn btn-primary btn-lg btn-block"/>
+                    <input type="submit" value="@LanguagePack.Save" class="btn btn-primary btn-lg btn-block" />
                 </div>
             </div>
         </div>

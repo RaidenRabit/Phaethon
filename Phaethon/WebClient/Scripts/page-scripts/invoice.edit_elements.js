@@ -370,7 +370,7 @@ function getSelectItemForm() {
 
     $.ajax({
         type: "GET",
-        url: "/Item/Select",
+        url: "/Item/_select",
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (data) {
