@@ -13,14 +13,14 @@ using Newtonsoft.Json;
 
 namespace InternalApi.Controllers
 {
-    [RoutePrefix("User")]
-    public class UserController : ApiController
+    [RoutePrefix("Login")]
+    public class LoginController : ApiController
     {
-        private readonly IUserManagement _userManagement;
+        private readonly ILoginManagement _loginManagement;
 
-        internal UserController()
+        internal LoginController()
         {
-            _userManagement = new UserManagement();
+            _loginManagement = new LoginManagement();
         }
 
         [Route("CreateOrUpdate")]
@@ -28,24 +28,24 @@ namespace InternalApi.Controllers
         public async Task<HttpResponseMessage> CreateOrUpdate()
         {
             var requestContent = await Request.Content.ReadAsStringAsync();
-            User user = JsonConvert.DeserializeObject<User>(requestContent);
-            return Request.CreateResponse(HttpStatusCode.OK, _userManagement.CreateOrUpdate(user));
+            Login login = JsonConvert.DeserializeObject<Login>(requestContent);
+            return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.CreateOrUpdate(login));
         }
 
         [Route("Delete")]
         [HttpPost]
-        public async Task<HttpResponseMessage> DeleteUser()
+        public async Task<HttpResponseMessage> Delete()
         {
             var requestContent = await Request.Content.ReadAsStringAsync();
             int id = JsonConvert.DeserializeObject<int>(requestContent);
-            return Request.CreateResponse(HttpStatusCode.OK, _userManagement.DeleteUser(id));
+            return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.Delete(id));
         }
 
-        [Route("GetUser")]
+        [Route("GetLogin")]
         [HttpGet]
-        public HttpResponseMessage GetUser(int id)
+        public HttpResponseMessage GetLogin(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _userManagement.GetUser(id));
+            return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.GetLogin(id));
         }
 
         [Route("Login")]
@@ -53,8 +53,8 @@ namespace InternalApi.Controllers
         public async Task<HttpResponseMessage> Login()
         {
             var requestContent = await Request.Content.ReadAsStringAsync();
-            User user = JsonConvert.DeserializeObject<User>(requestContent);
-            return Request.CreateResponse(HttpStatusCode.OK, _userManagement.Login(user));
+            Login login = JsonConvert.DeserializeObject<Login>(requestContent);
+            return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.Login(login));
         }
 
     }

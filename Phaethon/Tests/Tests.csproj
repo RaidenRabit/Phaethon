@@ -248,6 +248,7 @@
     <Compile Include="IntegrationTests\CompanyTest.cs" />
     <Compile Include="IntegrationTests\InternalTestFakeServerBase.cs" />
     <Compile Include="IntegrationTests\JobTests.cs" />
+    <Compile Include="IntegrationTests\LoginTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\InvoiceTest.cs" />
   </ItemGroup>
@@ -258,7 +259,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AcceptanceTests\" />
-    <Folder Include="UnitTests\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

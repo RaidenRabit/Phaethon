@@ -20,6 +20,6 @@ namespace InternalApi.DataAccess
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Login> Login { get; set; }
     }
 }

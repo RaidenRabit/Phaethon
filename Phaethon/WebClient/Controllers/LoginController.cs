@@ -11,14 +11,14 @@ using Newtonsoft.Json;
 
 namespace WebClient.Controllers
 {
-    public class UserController : Controller
+    public class LoginController : Controller
     {
         private readonly HttpClient _client;
 
-        public UserController()
+        public LoginController()
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/User/");
+            _client.BaseAddress = new Uri("http://localhost:64007/Login/");
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace WebClient.Controllers
             {
                 
                 Session["ID"] = null;
-                return RedirectToAction("Index","User");
+                return RedirectToAction("Index","Login");
             }
             else
             {
@@ -45,24 +45,24 @@ namespace WebClient.Controllers
             {
                 var parameters = HttpUtility.ParseQueryString(string.Empty);
                 parameters["id"] = Session["ID"].ToString();
-                var result = await _client.GetAsync("GetUser?" + parameters);
+                var result = await _client.GetAsync("GetLogin?" + parameters);
                 string json = result.Content.ReadAsStringAsync().Result;
-                User user = JsonConvert.DeserializeObject<User>(json);
-                return View(user);
+                Login login = JsonConvert.DeserializeObject<Login>(json);
+                return View(login);
             }
             catch
 
             {
-                return View(new User());
+                return View(new Login());
             }
             
             
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(User userModel)
+        public async Task<ActionResult> Edit(Login loginModel)
         {
-            await _client.PostAsJsonAsync("CreateOrUpdate", userModel);
+            await _client.PostAsJsonAsync("CreateOrUpdate", loginModel);
 
             return await Edit();
         }
@@ -74,15 +74,15 @@ namespace WebClient.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(User userModel)
+        public async Task<ActionResult> Index(Login loginModel)
         {
-            var response = await _client.PostAsJsonAsync("Login", userModel);
+            var response = await _client.PostAsJsonAsync("Login", loginModel);
 
             if (HttpStatusCode.OK == response.StatusCode)
             {
                 var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
                 Session["ID"] = deserializedResponse;
-                return RedirectToAction("Edit", "User");
+                return RedirectToAction("Edit", "Login");
             }
             else
             {

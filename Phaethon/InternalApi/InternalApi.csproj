@@ -92,24 +92,25 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="DataAccess\CompanyDa.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
     <Compile Include="DataAccess\InvoiceDa.cs" />
     <Compile Include="DataAccess\JobDa.cs" />
-    <Compile Include="DataAccess\UserDa.cs" />
+    <Compile Include="DataAccess\LoginDa.cs" />
     <Compile Include="DataManagement\CompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
-    <Compile Include="DataManagement\IDataManagement\IUserManagement.cs" />
+    <Compile Include="DataManagement\IDataManagement\ILoginManagement.cs" />
     <Compile Include="DataManagement\InvoiceManagement.cs" />
     <Compile Include="DataManagement\JobDM.cs" />
-    <Compile Include="DataManagement\UserManagement.cs" />
+    <Compile Include="DataManagement\LoginManagement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\RegHash.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="libman.json" />

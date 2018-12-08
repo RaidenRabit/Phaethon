@@ -7,15 +7,15 @@ using Core.Model;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
-    interface IUserManagement
+    interface ILoginManagement
     {
-        bool CreateOrUpdate(User user);
+        bool CreateOrUpdate(Login user);
 
-        bool DeleteUser(int id);
+        bool Delete(int id);
 
-        User GetUser(int id);
+        Login GetLogin(int id);
 
-        int Login(User user);
+        int Login(Login user);
 
 
     }
