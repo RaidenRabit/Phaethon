@@ -28,21 +28,21 @@ namespace Core.Model
         [DataMember]
         [StringLength(100)]
         public string RegNumber { get; set; }
-
-        [Required]
-        [DataMember]
-        [StringLength(100)]
-        public string Location { get; set; }
-
-        [Required]
-        [DataMember]
-        [StringLength(100)]
-        public string Address { get; set; }
         
         [DataMember]
         [StringLength(100)]
         public string BankNumber { get; set; }
-        
+
+        [DataMember]
+        [ForeignKey("Address_ID")]
+        public virtual Address Address { get; set; }
+        public int? Address_ID { get; set; }
+
+        [DataMember]
+        [ForeignKey("Location_ID")]
+        public virtual Address Location { get; set; }
+        public int? Location_ID { get; set; }
+
         [DataMember]
         public virtual ICollection<Representative> Representatives { get; set; }
     }

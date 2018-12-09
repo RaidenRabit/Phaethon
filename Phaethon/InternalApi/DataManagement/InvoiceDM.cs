@@ -18,6 +18,7 @@ namespace InternalApi.DataManagement
 
         public bool CreateOrUpdate(Invoice invoice)
         {
+            AddressDa addressDa = new AddressDa();
             CompanyDa companyDa = new CompanyDa();
             RepresentativeDa representativeDa = new RepresentativeDa();
             ProductDa productDa = new ProductDa();
@@ -31,18 +32,43 @@ namespace InternalApi.DataManagement
                     try
                     {
                         #region Invoice
+
+                        #region Receiver
+                        addressDa.CreateOrUpdate(db, invoice.Receiver.Company.Address);
+                        invoice.Receiver.Company.Address_ID = invoice.Receiver.Company.Address.ID;
+                        invoice.Receiver.Company.Address = null;
+
+                        addressDa.CreateOrUpdate(db, invoice.Receiver.Company.Location);
+                        invoice.Receiver.Company.Location_ID = invoice.Receiver.Company.Location.ID;
+                        invoice.Receiver.Company.Location = null;
+
                         companyDa.CreateOrUpdate(db, invoice.Receiver.Company);
                         invoice.Receiver.Company_ID = invoice.Receiver.Company.ID;
                         invoice.Receiver.Company = null;
-                        companyDa.CreateOrUpdate(db, invoice.Sender.Company);
-                        invoice.Sender.Company_ID = invoice.Sender.Company.ID;
-                        invoice.Sender.Company = null;
+
                         representativeDa.CreateOrUpdate(db, invoice.Receiver);
                         invoice.Receiver_ID = invoice.Receiver.ID;
                         invoice.Receiver = null;
+                        #endregion
+
+                        #region Sender
+                        addressDa.CreateOrUpdate(db, invoice.Sender.Company.Address);
+                        invoice.Sender.Company.Address_ID = invoice.Sender.Company.Address.ID;
+                        invoice.Sender.Company.Address = null;
+
+                        addressDa.CreateOrUpdate(db, invoice.Sender.Company.Location);
+                        invoice.Sender.Company.Location_ID = invoice.Sender.Company.Location.ID;
+                        invoice.Sender.Company.Location = null;
+
+                        companyDa.CreateOrUpdate(db, invoice.Sender.Company);
+                        invoice.Sender.Company_ID = invoice.Sender.Company.ID;
+                        invoice.Sender.Company = null;
+
                         representativeDa.CreateOrUpdate(db, invoice.Sender);
                         invoice.Sender_ID = invoice.Sender.ID;
                         invoice.Sender = null;
+                        #endregion
+
                         List<Element> elements = invoice.Elements == null ? new List<Element>() : invoice.Elements.ToList();
                         invoice.Elements = null;
 
