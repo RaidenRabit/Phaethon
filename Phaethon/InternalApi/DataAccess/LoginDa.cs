@@ -11,7 +11,6 @@ namespace InternalApi.DataAccess
 {
     public class LoginDa
     {
-
         public void CreateOrUpdate(DatabaseContext db ,Login login)
         {
             db.Login.AddOrUpdate(login);
@@ -26,15 +25,12 @@ namespace InternalApi.DataAccess
 
         public Login GetLogin(DatabaseContext db, int id)
         {
-  
-                return db.Login.SingleOrDefault(x => x.ID == id);
+            return db.Login.SingleOrDefault(x => x.ID == id);
         }
 
-        public int Login(DatabaseContext db, Login login)
+        public Login Login(DatabaseContext db, string username)
         {
-
-            return db.Login.Where(x => x.Username.Equals(login.Username) && x.Password.Equals(login.Password)).FirstOrDefault().ID;
-
+            return db.Login.SingleOrDefault(a => a.Username.Equals(username));
         }
     }
 }

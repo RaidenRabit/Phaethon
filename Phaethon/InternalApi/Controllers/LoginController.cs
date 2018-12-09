@@ -54,7 +54,7 @@ namespace InternalApi.Controllers
         {
             var requestContent = await Request.Content.ReadAsStringAsync();
             Login login = JsonConvert.DeserializeObject<Login>(requestContent);
-            return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.Login(login));
+            return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.Login(login.Username, login.Password));
         }
 
     }

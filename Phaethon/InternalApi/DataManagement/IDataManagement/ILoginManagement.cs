@@ -15,7 +15,7 @@ namespace InternalApi.DataManagement.IDataManagement
 
         Login GetLogin(int id);
 
-        int Login(Login user);
+        int Login(string username, string password);
 
 
     }

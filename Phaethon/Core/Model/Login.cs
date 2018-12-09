@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 
 namespace Core.Model
@@ -19,16 +16,18 @@ namespace Core.Model
         public int ID { get; set; }
 
         [DataMember]
-        [DisplayName("User Name")]
-        [Required (ErrorMessage = "Please enter User Name")]
+        [DisplayName("Username")]
+        [Required]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "min 3, max 50 letters")]
+        [Index(IsUnique = true)]
         public string Username { get; set; }
 
         [DataMember]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Please enter Password")]
+        [Required]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "min 5, max 50 letters")]
         public string Password { get; set; }
 
-        public string PasswordSalt { get; set; }
-
+        public byte[] Salt { get; set; }
     }
 }
