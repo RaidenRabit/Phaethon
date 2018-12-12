@@ -27,15 +27,18 @@ namespace Tests.IntegrationTests
         private int count2;
         private string name;
         private string name2;
+        private string OGPass;
         private LoginDa loginDa;
 
         private void InitializeData()
         {
             userModel = new Login { Username = "Subject1", Password = "12355557" };
             userModel2 = new Login { Username = "Subject2", Password = "123456" };
+            
 
-           // userModel2.Salt = GenerateSalt();
-            // userModel2.Password = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(userModel2.Password), userModel2.Salt));
+            userModel2.Salt = GenerateSalt();
+            OGPass = userModel2.Password;
+            userModel2.Password = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(userModel2.Password), userModel2.Salt));
             loginDa = new LoginDa { }; 
 
             using (var db = new DatabaseContext())
@@ -62,7 +65,8 @@ namespace Tests.IntegrationTests
         {
             //Setup
             InitializeData();
-            
+            userModel2.Password = OGPass;
+
             var response = await _client.PostAsJsonAsync("Login/Login", userModel2);
             
             //Assert
