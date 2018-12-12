@@ -407,4 +407,19 @@
   <data name="Back" xml:space="preserve">
     <value>Atgriezties</value>
   </data>
+  <data name="Company" xml:space="preserve">
+    <value>Kompānija</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Datums</value>
+  </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>Pavadzīmes numurs</value>
+  </data>
+  <data name="RegistrationNumber" xml:space="preserve">
+    <value>Reģistrācijas numurs</value>
+  </data>
+  <data name="SumNoTax" xml:space="preserve">
+    <value>Summa bez nodokļiem</value>
+  </data>
 </root>

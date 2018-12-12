@@ -40,14 +40,15 @@ namespace InternalApi.Controllers
 
         [Route("GetInvoices")]
         [HttpGet]
-        public HttpResponseMessage GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, string from, string to, string docNumber)
-        {
+        public HttpResponseMessage GetInvoices(int numOfRecords, string regNumber, string invoiceNumber, string from, string to, string company, decimal sum)
+        { 
             DateTime fromDateTime = new DateTime(2000, 1, 1), toDateTime = DateTime.Now;
-            if (name == null) name = "";
+            if (regNumber == null) regNumber = "";
+            if (invoiceNumber == null) invoiceNumber = "";
             DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out fromDateTime);
             DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out toDateTime);
-            if (docNumber == null) docNumber = "";
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, selectedCompany, name, selectedDate, fromDateTime, toDateTime, docNumber));
+            if (company == null) company = "";
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, regNumber, invoiceNumber, fromDateTime, toDateTime, company, sum));
         }
 
         [Route("Delete")]

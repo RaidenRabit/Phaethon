@@ -18,27 +18,30 @@ namespace InternalApi.DataAccess
         internal Invoice GetInvoice(DatabaseContext db, int id)
         {
             return db.Invoices
-                .Include(x => x.Receiver.Company)
-                .Include(x => x.Sender.Company)
+                .Include(x => x.Receiver.Company.Address)
+                .Include(x => x.Receiver.Company.Location)
+                .Include(x => x.Sender.Company.Address)
+                .Include(x => x.Sender.Company.Location)
                 .SingleOrDefault(x => x.ID == id);
         }
 
-        internal List<Invoice> GetInvoices(DatabaseContext db, int numOfRecords, int selectedCompany, string name, int selectedDate,  DateTime from, DateTime to, string docNumber)
+        internal List<Invoice> GetInvoices(DatabaseContext db, int numOfRecords, string regNumber, string invoiceNumber, DateTime from, DateTime to, string company, decimal sum)
         {
+            //not used regNumber
             return db.Invoices
                     .Include(x => x.Sender.Company)
                     .Include(x => x.Receiver.Company)
-                    .Where(x => selectedCompany == 0 && x.Receiver.Company.Name.Contains(name) ||
-                                selectedCompany == 1 && x.Sender.Company.Name.Contains(name))
-                    .Where(x => selectedDate == 0 && from <= x.PrescriptionDate && x.PrescriptionDate <= to ||
-                                selectedDate == 1 && from <= x.ReceptionDate && x.ReceptionDate <= to ||
-                                selectedDate == 2 && from <= x.PaymentDate && x.PaymentDate <= to)
-                    .Where(x => x.DocNumber.Contains(docNumber))
+                    .Where(x => !x.Incoming && from <= x.PrescriptionDate && x.PrescriptionDate <= to ||
+                                x.Incoming && from <= x.ReceptionDate && x.ReceptionDate <= to)
+                    .Where(x => x.DocNumber.Contains(invoiceNumber))
+                    .Where(x => x.Receiver.Company.Name.Contains(company) ||
+                                x.Sender.Company.Name.Contains(company))
                     .OrderByDescending(x => x.ID)
                     .Take(numOfRecords)
                     .AsEnumerable()
                     .Select(invoice => new { invoice, Sum = db.Elements.Where(x => x.Invoice_ID == invoice.ID).Select(x => x.Item.IncomingPrice).DefaultIfEmpty(0).Sum(x => x)})
                     .Select(x => { x.invoice.Sum = x.Sum; return x.invoice; })
+                    .Where(x => x.Sum == sum)
                     .ToList();
         }
 

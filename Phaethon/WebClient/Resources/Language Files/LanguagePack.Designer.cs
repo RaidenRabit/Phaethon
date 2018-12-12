@@ -178,6 +178,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Company.
+        /// </summary>
+        public static string Company {
+            get {
+                return ResourceManager.GetString("Company", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Address.
         /// </summary>
         public static string CompanyAddressLabel {
@@ -340,6 +349,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string DeleteButton {
@@ -444,6 +462,15 @@ namespace WebClient.Resources.Language_Files {
         public static string InvoiceList {
             get {
                 return ResourceManager.GetString("InvoiceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice number.
+        /// </summary>
+        public static string InvoiceNumber {
+            get {
+                return ResourceManager.GetString("InvoiceNumber", resourceCulture);
             }
         }
         
@@ -799,6 +826,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registration number.
+        /// </summary>
+        public static string RegistrationNumber {
+            get {
+                return ResourceManager.GetString("RegistrationNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Representative Name.
         /// </summary>
         public static string RepresentativeNameLabel {
@@ -876,6 +912,15 @@ namespace WebClient.Resources.Language_Files {
         public static string Sum {
             get {
                 return ResourceManager.GetString("Sum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sum without tax.
+        /// </summary>
+        public static string SumNoTax {
+            get {
+                return ResourceManager.GetString("SumNoTax", resourceCulture);
             }
         }
         

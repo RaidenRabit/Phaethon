@@ -274,11 +274,11 @@ namespace InternalApi.DataManagement
             }
         }
 
-        public List<Invoice> GetInvoices(int numOfRecords, int selectedCompany, string name, int selectedDate, DateTime from, DateTime to, string docNumber)
+        public List<Invoice> GetInvoices(int numOfRecords, string regNumber, string invoiceNumber, DateTime from, DateTime to, string company, decimal sum)
         {
             using (var db = new DatabaseContext())
             {
-                return _invoiceDa.GetInvoices(db, numOfRecords, selectedCompany, name, selectedDate, from, to, docNumber);
+                return _invoiceDa.GetInvoices(db, numOfRecords, regNumber, invoiceNumber, from, to, company, sum);
             }
         }
 

@@ -16,7 +16,7 @@
     GetInvoices();
 
     //on search option change get corresponding invoices
-    $("#numOfRecords, #companyName, #dateRange, input[name=companyOption], input[name=dateOption], #docNumber").change(function() {
+    $("#numOfRecords, #regNumber, #invoiceNumber, #dateRange, #company, #sum").change(function() {
         GetInvoices();
     });
 
@@ -61,35 +61,38 @@ function GetInvoices()
         url: "Api/Invoice/GetInvoices",
         data: {
             numOfRecords: $("#numOfRecords").val(),
-            selectedCompany: $('input[name=companyOption]:checked').val(),
-            name: $("#companyName").val(),
-            selectedDate: $('input[name=dateOption]:checked').val(),
+            regNumber: $("#regNumber").val(),
+            invoiceNumber: $("#invoiceNumber").val(),
             from: $("#dateRange").data('daterangepicker').startDate.format('DD/MM/YYYY'),
             to: $("#dateRange").data('daterangepicker').endDate.format('DD/MM/YYYY'),
-            docNumber: $("#docNumber").val()
+            company: $("#company").val(),
+            sum: $("#sum").val()
         },
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
             var htmlText = "";
             for (var i = 0; i < data.length; i++) {
-                var PrescriptionDate = moment(data[i].PrescriptionDate).format('DD-MM-YYYY');
-                var ReceptionDate = moment(data[i].ReceptionDate).format('DD-MM-YYYY');
-                var PaymentDate = moment(data[i].PaymentDate).format('DD-MM-YYYY');
+                var date;
                 var invoiceType;
+                var companyName;
                 if (data[i].Incoming == true) {
+                    date = moment(data[i].ReceptionDate).format('DD-MM-YYYY');
                     invoiceType = incoming;
+                    companyName = data[i].Sender.Company.Name;
                 } else {
+                    date = moment(data[i].PrescriptionDate).format('DD-MM-YYYY');
                     invoiceType = outgoing;
+                    companyName = data[i].Receiver.Company.Name;
                 }
+
                 htmlText += "<tr>" +
                     "<td>" + data[i].DocNumber + "</td>" +
+                    "<td>" + data[i].DocNumber + "</td>" +
                     "<td>" + invoiceType + "</td>" +
-                    "<td>" + PrescriptionDate + "</td>" +
-                    "<td>" + ReceptionDate + "</td>" +
-                    "<td>" + PaymentDate + "</td>" +
-                    "<td>" + data[i].Sender.Company.Name + "</td>" +
-                    "<td>" + data[i].Receiver.Company.Name + "</td>" +
+                    "<td>" + date + "</td>" +
+                    "<td>" + companyName + "</td>" +
+                    "<td>" + data[i].Sum + "</td>" +
                     "<td>" + data[i].Sum + "</td>" +
                     "<td>" +
                     "<a href='/Invoice/Edit/" + data[i].ID + "'>" + details + "</a> |" +
