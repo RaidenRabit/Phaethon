@@ -1,31 +1,34 @@
 ﻿@model IEnumerable<Core.Model.Job>
-@Styles.Render("~/Content/Daterangepicker")
+@Styles.Render("~/Content/dateRangePicker")
 @{ViewBag.Title = "Index";}
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
 <div class="card-body" style="padding-left: 20px;">
+    
+    <script>
+        var editLabel = "@LanguagePack.Edit";
+        var viewDetails = "@LanguagePack.ViewDetails";
+        var cancel = "@LanguagePack.Cancel";
+        var save = "@LanguagePack.Save";
+     </script>
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">Job search <div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10" /></div></div>
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#jobSearch">@LanguagePack.JobSearchCardTitle<div style="float: right"><input id="numOfRecords" type="number" class="form-control" value="10"/></div></div>
                 <div id="jobSearch" class="card-body collapse show" style="padding-left: 20px;">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="1"> Unassigned
+                                        <input type="checkbox" name="jobStatus" value="1"> @LanguagePack.JobStatusUnassigned
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="2"> In progress
+                                        <input type="checkbox" name="jobStatus" value="2"> @LanguagePack.JobStatusInProggress
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="checkbox" name="jobStatus" value="3"> Completed
+                                        <input type="checkbox" name="jobStatus" value="3"> @LanguagePack.JobStatusDone
                                     </label>
                                 </div>
                                 <datalist id="jobs"></datalist>
@@ -33,37 +36,37 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="Job Name" />
+                                <input id="jobName" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobNamePlaceHolder"/>
                             </div>
 
                             <div class="form-group">
-                                <input id="jobId" type="text" class="form-control" placeholder="Job Id" />
+                                <input id="jobId" type="text" class="form-control" placeholder="@LanguagePack.JobIdPlaceHolder"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-info active">
-                                        <input type="radio" name="dateOption" value="0" checked> @Html.DisplayNameFor(model => model.StartedTime)
+                                        <input type="radio" name="dateOption" value="0" checked> @LanguagePack.StartedTimePlaceHolder
                                     </label>
                                     <label class="btn btn-info">
-                                        <input type="radio" name="dateOption" value="1"> @Html.DisplayNameFor(model => model.FinishedTime)
+                                        <input type="radio" name="dateOption" value="1">@LanguagePack.FinishedTimePlaceHolder
                                     </label>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <input id="dateRange" type="datetime" class="datepicker form-control" placeholder="Date Range" />
+                                <input id="dateRange" type="datetime" class="datepicker form-control" placeholder="Date Range"/>
                             </div>
 
                             <div class="form-group">
-                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="Customer Name" />
+                                <input id="customerName" type="text" class="form-control" list="customers" placeholder="@LanguagePack.CustomerNamePlaceHolder"/>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input id="description" type="text" class="form-control" list="jobs" placeholder="Job Description" />
+                                <input id="description" type="text" class="form-control" list="jobs" placeholder="@LanguagePack.JobDescriptionPlaceHolder"/>
                             </div>
                         </div>
                     </div>
@@ -75,34 +78,41 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;">Jobs <div style="float: right"><Button class="btn" id="NewJob">New Job</Button></div></div>
-                <div class="card-body" style="padding-left: 20px;">
+                <div class="card-header" style="clear: both;">@LanguagePack.Jobs
+                    <div style="float: right"><Button class="btn" id="NewJob">@LanguagePack.NewJob</Button></div></div>
+                <div class="card-body" style="padding-left: 20px; overflow: inherit">
                     <table id="jobTable" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.ID)
+                                    @LanguagePack.JobIdPlaceHolder
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.JobName)
+                                    @LanguagePack.JobNamePlaceHolder
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.StartedTime)
+                                    @LanguagePack.StartedTimePlaceHolder
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.FinishedTime)
+                                    @LanguagePack.FinishedTimePlaceHolder
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Cost)
+                                    @LanguagePack.Cost
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.JobStatus)
+                                    @LanguagePack.JobStatus
                                 </th>
                                 <th>
-                                    Customer Name
+                                    @LanguagePack.CustomerNamePlaceHolder
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Description)
+                                    @LanguagePack.JobDescriptionPlaceHolder
+                                </th>
+                                <th>
+                                    @LanguagePack.NotificationStatus
+                                </th>
+                                <th>
+                                    @LanguagePack.ActionLabel
                                 </th>
                             </tr>
                         </thead>
@@ -114,4 +124,6 @@
         </div>
     </div>
 </div>
+
 @Scripts.Render("~/bundles/Job")
+@Scripts.Render("~/bundles/dateRangePicker")

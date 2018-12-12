@@ -1,0 +1,129 @@
+﻿@model Core.Model.Invoice
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
+
+<div class="row">
+    <div class="col-sm">
+        <div class="card" style="height: 130px; height: auto;">
+            <div class="card-header" style="clear:both;" data-toggle="collapse" href="#receivingCompany">@LanguagePack.ReceivingCompany</div>
+            <div id="receivingCompany" class="card-body collapse" style="padding-left: 20px;">
+                <datalist id="ReceiverRepresentatives"></datalist>
+                @Html.HiddenFor(model => model.Receiver.ID)
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.RepresentativeNameLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Receiver.Name, new { htmlAttributes = new { @class = "form-control", @list = "ReceiverRepresentatives", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Receiver.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @Html.HiddenFor(model => model.Receiver.Company.ID)
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.SenderCompanyLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Receiver.Company.Name, new { htmlAttributes = new { @class = "form-control", @list = "companies", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Receiver.Company.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.CompanyBankNumberLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Receiver.Company.BankNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Receiver.Company.BankNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.CompanyRegistrationNumberLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Receiver.Company.RegNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Receiver.Company.RegNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.CompanyAddressLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Receiver.Company.Address, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Receiver.Company.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.CompanyLocationLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Receiver.Company.Location, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Receiver.Company.Location, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group" align="center">
+                    <input id="resetReceiver" type="button" class="btn btn-danger btn-block" value="@LanguagePack.NewCompanyButton" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm">
+        <div class="card" style="height: 130px; height: auto;">
+            <div class="card-header" style="clear:both;" data-toggle="collapse" href="#sendingCompany">@LanguagePack.SendingCompany</div>
+            <div id="sendingCompany" class="card-body collapse" style="padding-left: 20px;">
+                <datalist id="SenderRepresentatives"></datalist>
+                @Html.HiddenFor(model => model.Sender.ID)
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.RepresentativeNameLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Sender.Name, new { htmlAttributes = new { @class = "form-control", @list = "ReceiverRepresentatives", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Sender.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @Html.HiddenFor(model => model.Sender.Company.ID)
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.SenderCompanyLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Sender.Company.Name, new { htmlAttributes = new { @class = "form-control", @list = "companies", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Sender.Company.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.CompanyBankNumberLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Sender.Company.BankNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Sender.Company.BankNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.CompanyRegistrationNumberLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Sender.Company.RegNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Sender.Company.RegNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.CompanyAddressLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Sender.Company.Address, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Sender.Company.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-form-label col-md-4">@LanguagePack.CompanyLocationLabel</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Sender.Company.Location, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Sender.Company.Location, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group" align="center">
+                    <input id="resetSender" type="button" class="btn btn-danger btn-block" value="@LanguagePack.NewCompanyButton" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <datalist id="companies"></datalist>
+</div>

@@ -1,0 +1,52 @@
+﻿@model Core.Model.Invoice
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
+
+<table id="elementTable" class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @LanguagePack.QuantityLabel
+            </th>
+            <th>
+                @LanguagePack.SerialNumberLabel
+            </th>
+            <th>
+                @LanguagePack.ProductNameLabel
+            </th>
+            <th>
+                @LanguagePack.ProductBarcodeLabel
+            </th>
+            <th>
+                @LanguagePack.ProductPrice
+            </th>
+            <th id="taxGroupLabel" class="text-primary">
+                @LanguagePack.TaxGroupLabel
+            </th>
+            <th id="productGroupLabel" class="text-primary">
+                @LanguagePack.ProductGroupNameLabel
+            </th>
+            <th>
+                @LanguagePack.ItemIncomingPriceLabel
+            </th>
+            <th>
+                @LanguagePack.ActionLabel
+            </th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4"></td>
+            <td>
+                <input type="number" id="totalNoTax" class="form-control" readonly />
+            </td>
+            <td colspan="2"></td>
+            <td>
+                <input type="number" id="totalAmount" class="form-control" readonly />
+            </td>
+            <td>
+                <input type="button" id="newItemRow" class="btn btn-success" value="@LanguagePack.NewItemButton" />
+            </td>
+        </tr>
+    </tfoot>
+</table>

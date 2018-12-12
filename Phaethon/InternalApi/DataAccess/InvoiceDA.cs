@@ -1,66 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    internal class InvoiceDa
+    public class InvoiceDa
     {
-        internal bool Create(Invoice invoice)
+        internal void CreateOrUpdate(DatabaseContext db, Invoice invoice)
         {
-            using (var db = new DatabaseContext())
-            { 
-                if (db.Invoices.Any(i => i.ID == invoice.ID))
-                    db.Entry(invoice).State = EntityState.Modified;
-                if (db.Representatives.Any(i => i.ID == invoice.Receiver.ID))
-                    db.Entry(invoice.Receiver).State = EntityState.Modified;
-                if (db.Companies.Any(i => i.ID == invoice.Receiver.Company.ID))
-                    db.Entry(invoice.Receiver.Company).State = EntityState.Modified;
-                if (db.Representatives.Any(i => i.ID == invoice.Sender.ID))
-                    db.Entry(invoice.Sender).State = EntityState.Modified;
-                if (db.Companies.Any(i => i.ID == invoice.Sender.Company.ID))
-                    db.Entry(invoice.Sender.Company).State = EntityState.Modified;
-                db.Invoices.Add(invoice);
-                
-                return db.SaveChanges() > 0;
-            }
+            db.Invoices.AddOrUpdate(invoice);
+            db.SaveChanges();
         }
 
-        internal Invoice Read(int id)
+        internal Invoice GetInvoice(DatabaseContext db, int id)
         {
-            using (var db = new DatabaseContext())
-            {
-                return db.Invoices
-                    .Include(x => x.Sender)
-                    .Include(x => x.Sender.Company)
-                    .Include(x => x.Receiver)
-                    .Include(x => x.Receiver.Company)
-                    .SingleOrDefault(x => x.ID == id);
-            }
+            return db.Invoices
+                .Include(x => x.Receiver.Company)
+                .Include(x => x.Sender.Company)
+                .SingleOrDefault(x => x.ID == id);
         }
 
-        internal List<Invoice> GetInvoices()
+        internal List<Invoice> GetInvoices(DatabaseContext db, int numOfRecords, int selectedCompany, string name, int selectedDate,  DateTime from, DateTime to, string docNumber)
         {
-            using (var db = new DatabaseContext())
-            {
-                return db.Invoices
-                    .Include(x => x.Sender)
+            return db.Invoices
                     .Include(x => x.Sender.Company)
-                    .Include(x => x.Receiver)
                     .Include(x => x.Receiver.Company)
+                    .Where(x => selectedCompany == 0 && x.Receiver.Company.Name.Contains(name) ||
+                                selectedCompany == 1 && x.Sender.Company.Name.Contains(name))
+                    .Where(x => selectedDate == 0 && from <= x.PrescriptionDate && x.PrescriptionDate <= to ||
+                                selectedDate == 1 && from <= x.ReceptionDate && x.ReceptionDate <= to ||
+                                selectedDate == 2 && from <= x.PaymentDate && x.PaymentDate <= to)
+                    .Where(x => x.DocNumber.Contains(docNumber))
+                    .OrderByDescending(x => x.ID)
+                    .Take(numOfRecords)
+                    .AsEnumerable()
+                    .Select(invoice => new { invoice, Sum = db.Elements.Where(x => x.Invoice_ID == invoice.ID).Select(x => x.Item.IncomingPrice).DefaultIfEmpty(0).Sum(x => x)})
+                    .Select(x => { x.invoice.Sum = x.Sum; return x.invoice; })
                     .ToList();
-            }
         }
 
-        internal bool Delete(int id)
+        internal bool Delete(DatabaseContext db, Invoice invoice)
         {
-            using (var db = new DatabaseContext())
-            {
-                db.Invoices.Remove(db.Invoices.SingleOrDefault(x => x.ID == id));
-                return db.SaveChanges() > 0;
-            }
+            db.Invoices.Remove(invoice);
+            return db.SaveChanges() > 0;
         }
     }
 }

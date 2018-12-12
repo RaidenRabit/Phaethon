@@ -19,7 +19,7 @@
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <IISExpressUseClassicPipelineMode>true</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -60,6 +60,12 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.6\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -71,6 +77,9 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.6\lib\net45\System.Web.Http.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.6\lib\net45\System.Web.Http.WebHost.dll</HintPath>
@@ -90,25 +99,61 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\ElementController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductGroupController.cs" />
+    <Compile Include="Controllers\TaxGroupController.cs" />
     <Compile Include="DataAccess\CompanyDa.cs" />
+    <Compile Include="DataAccess\CustomerDa.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
+    <Compile Include="DataAccess\ElementDa.cs" />
     <Compile Include="DataAccess\InvoiceDa.cs" />
+    <Compile Include="DataAccess\ItemDa.cs" />
+    <Compile Include="DataAccess\ProductDa.cs" />
     <Compile Include="DataAccess\JobDa.cs" />
     <Compile Include="DataAccess\LoginDa.cs" />
     <Compile Include="DataManagement\CompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
     <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
+    <Compile Include="DataAccess\ProductGroupDa.cs" />
+    <Compile Include="DataAccess\RepresentativeDa.cs" />
+    <Compile Include="DataAccess\TaxGroupDa.cs" />
+    <Compile Include="DataManagement\CustomerDM.cs" />
+    <Compile Include="DataManagement\EmailSenderDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\ICustomerDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IEmailSenderDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
     <Compile Include="DataManagement\IDataManagement\ILoginManagement.cs" />
     <Compile Include="DataManagement\InvoiceManagement.cs" />
+    <Compile Include="DataManagement\CompanyDM.cs" />
+    <Compile Include="DataManagement\ElementDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\ICompanyDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IElementDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IInvoiceDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IItemDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IProductGroupDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\IProductDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\ITaxGroupDM.cs" />
+    <Compile Include="DataManagement\InvoiceDM.cs" />
+    <Compile Include="DataManagement\ItemDM.cs" />
+    <Compile Include="DataManagement\ProductGroupDM.cs" />
     <Compile Include="DataManagement\JobDM.cs" />
     <Compile Include="DataManagement\LoginManagement.cs" />
+    <Compile Include="DataManagement\ProductDM.cs" />
+    <Compile Include="DataManagement\TaxGroupDM.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812051928156_initial.cs" />
+    <Compile Include="Migrations\201812051928156_initial.Designer.cs">
+      <DependentUpon>201812051928156_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +174,11 @@
       <Project>{2f81d45f-2fd1-442c-b663-d04af5982d28}</Project>
       <Name>Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812051928156_initial.resx">
+      <DependentUpon>201812051928156_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

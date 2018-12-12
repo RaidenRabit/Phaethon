@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,6 +21,10 @@ namespace Core.Model
 
         [Required]
         [DataMember]
+        public bool Incoming { get; set; }
+
+        [Required]
+        [DataMember]
         public decimal Transport { get; set; }
 
         [Required]
@@ -27,21 +32,36 @@ namespace Core.Model
         public string DocNumber { get; set; }
 
         [Required]
+        [DataType(DataType.DateTime)]
         [DataMember]
         public DateTime PrescriptionDate { get; set; }
 
-        [Required]
+        [DataType(DataType.DateTime)]
         [DataMember]
+        [DefaultValue(null)]
         public DateTime ReceptionDate { get; set; }
 
-        [Required]
+        [DataType(DataType.DateTime)]
         [DataMember]
+        [DefaultValue(null)]
         public DateTime PaymentDate { get; set; }
         
         [DataMember]
+        [ForeignKey("Sender_ID")]
         public virtual Representative Sender { get; set; }
+        public int? Sender_ID { get; set; }
+
         [DataMember]
+        [ForeignKey("Receiver_ID")]
         public virtual Representative Receiver { get; set; }
+        public int? Receiver_ID { get; set; }
+
+        [DataMember]
         public virtual ICollection<Element> Elements { get; set; }
+
+        //extra
+        [NotMapped]
+        [DataMember]
+        public decimal Sum { get; set; }
     }
 }

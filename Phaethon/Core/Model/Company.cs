@@ -15,33 +15,35 @@ namespace Core.Model
     public class Company
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         [DataMember]
         public int ID { get; set; }
 
         [Required]
         [DataMember]
+        [StringLength(100)]
         public string Name { get; set; }
 
         [Required]
         [DataMember]
+        [StringLength(100)]
         public string RegNumber { get; set; }
 
         [Required]
         [DataMember]
+        [StringLength(100)]
         public string Location { get; set; }
 
         [Required]
         [DataMember]
+        [StringLength(100)]
         public string Address { get; set; }
         
         [DataMember]
+        [StringLength(100)]
         public string BankNumber { get; set; }
-
-
+        
         [DataMember]
-        [DefaultValue(null)]
         public virtual ICollection<Representative> Representatives { get; set; }
     }
 }
