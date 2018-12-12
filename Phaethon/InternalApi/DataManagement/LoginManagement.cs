@@ -33,8 +33,9 @@ namespace InternalApi.DataManagement
                     return true;
                 }
             }
-            catch
+            catch (Exception e)
             {
+                var whatever = e;
                 return false;
             }
         }
@@ -63,12 +64,25 @@ namespace InternalApi.DataManagement
                 Login login = _LoginDa.Login(db, username);
                 if (login != null)
                 {
-                    if (login.Password.Equals(Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(password), login.Salt))))
+                    if (password != null)
                     {
-                        return login.ID;
+                        if (login.Password.Equals(Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(password), login.Salt))))
+                        {
+                            return login.ID;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+
+                    }
+                    else
+                    { 
+                        return 0;
                     }
                 }
-                return 0;
+                 return 0;
+                
             }
         }
 

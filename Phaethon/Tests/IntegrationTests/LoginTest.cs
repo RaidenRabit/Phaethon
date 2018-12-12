@@ -14,6 +14,7 @@ using InternalApi.DataAccess;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Security.Cryptography;
+using InternalApi.DataManagement;
 
 namespace Tests.IntegrationTests
 {
@@ -22,18 +23,36 @@ namespace Tests.IntegrationTests
     {
         private Login userModel;
         private Login userModel2;
-        private Login userModel3;
         private int count1;
         private int count2;
         private string name;
         private string name2;
+        private LoginDa loginDa;
 
         private void InitializeData()
         {
-            userModel3 = new Login { Username = "Subject1", Password = "12000" };
-            userModel = new Login { Username = "Philip", Password = "14789632" };
+            userModel = new Login { Username = "Subject1", Password = "12355557" };
             userModel2 = new Login { Username = "Subject2", Password = "123456" };
+
+           // userModel2.Salt = GenerateSalt();
+            // userModel2.Password = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(userModel2.Password), userModel2.Salt));
+            loginDa = new LoginDa { }; 
+
+            using (var db = new DatabaseContext())
+            {
+                loginDa.CreateOrUpdate(db, userModel2);
+            }
+        }
+
+        private void Cleanup()
+        {
+            loginDa = new LoginDa { };
             
+            using (var db = new DatabaseContext())
+            {
+                Login deleted = db.Login.Attach(userModel2);
+                loginDa.Delete(db, deleted);
+            }
         }
 
         #region Post
@@ -43,81 +62,45 @@ namespace Tests.IntegrationTests
         {
             //Setup
             InitializeData();
-            userModel2.Salt = GenerateSalt();
-            userModel2.Password = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(userModel2.Password), userModel2.Salt));
-            using (var db = new DatabaseContext())
-            {
-                
-                db.Login.Add(userModel2);
-                db.SaveChanges();
-            }
+            
             var response = await _client.PostAsJsonAsync("Login/Login", userModel2);
             
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
-            using (var db = new DatabaseContext())
-            {
-                db.Login.Attach(userModel2);
-                db.Login.Remove(userModel2);
-                db.SaveChanges();
-            }
+            Cleanup();
         }
 
         [Test]
-        public async Task Login_IncorrectPasswordLoginInfo_InternalServerError()
+        public async Task Login_NullPasswordLoginInfo_BadRequest()
         {
             //Setup
             InitializeData();
             
             //Act
-            using (var db = new DatabaseContext())
-            {
-                db.Login.Add(userModel);
-                db.SaveChanges();
-            }
-
-            
-            var response = await _client.PostAsJsonAsync("Login/Login", userModel);
-
-            //Assert
-            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
-            
-            using (var db = new DatabaseContext())    
-            {
-                db.Login.Attach(userModel);
-                db.Login.Remove(userModel);
-                db.SaveChanges();
-            }
-        }
-
-        [Test]
-        public async Task Login_IncorrectUserNameLoginInfo_InternalServerError()
-        {
-            //Setup
-            InitializeData();
-            
-            userModel2.Salt = GenerateSalt();
-            userModel2.Password = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(userModel2.Password), userModel2.Salt));
-            //Act
-            using (var db = new DatabaseContext())
-            {
-                db.Login.Add(userModel2);
-                db.SaveChanges();
-            }
-
-            userModel2.Username = "Complete";
+            userModel2.Password = null;
             var response = await _client.PostAsJsonAsync("Login/Login", userModel2);
 
             //Assert
-            Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
-            
-            using (var db = new DatabaseContext())
-            {
-                db.Login.Attach(userModel2);
-                db.Login.Remove(userModel2);
-                db.SaveChanges();
-            }
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+
+            Cleanup();
+        }
+
+        [Test]
+        public async Task Login_NullUserNameLoginInfo_BadRequest()
+        {
+            //Setup
+            InitializeData();
+
+            //Act
+            userModel2.Username = null;
+            var response = await _client.PostAsJsonAsync("Login/Login", userModel2);
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+
+            Cleanup();
         }
         #endregion
 
@@ -131,18 +114,11 @@ namespace Tests.IntegrationTests
                 InitializeData();
            
             //Act
-            using (var db = new DatabaseContext())
-            {
-                db.Login.Add(userModel);
-                db.SaveChanges();
-
-            }
-            var response = await _client.PostAsJsonAsync("Login/Delete", userModel.ID.ToString());
+           
+            var response = await _client.PostAsJsonAsync("Login/Delete", userModel2.ID.ToString());
 
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            
-
         }
         #endregion
 
@@ -159,26 +135,23 @@ namespace Tests.IntegrationTests
                 count1 = db.Login.Count();
                 db.Login.Add(userModel);
                 db.SaveChanges();
-                
             }
             using (var db = new DatabaseContext())
             {
-                count2 = db.Login.Count();
-                
-                db.SaveChanges();
-
+                count2 = db.Login.Count();               
             }
             var response = await _client.PostAsJsonAsync("Login/CreateOrUpdate", userModel);
 
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.AreNotEqual(count1, count2);
+            loginDa = new LoginDa { };
             using (var db = new DatabaseContext())
             {
-                db.Login.Attach(userModel);
-                db.Login.Remove(userModel);
-                db.SaveChanges();
+                Login deleted = db.Login.Attach(userModel);
+                loginDa.Delete(db, deleted);
             }
+            Cleanup();
         }
         #endregion
 
@@ -190,27 +163,13 @@ namespace Tests.IntegrationTests
             InitializeData();
             name = userModel2.Username;
             userModel2.Username = "Maybe";
-            using (var db = new DatabaseContext())
-            {
-                db.Login.Add(userModel2);
-                db.SaveChanges();
-                name2 = userModel2.Username;
-            }
-            
-
+            name2 = userModel2.Username;
             //Act
             var response = await _client.PostAsJsonAsync("Login/CreateOrUpdate", userModel2);
-
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.AreNotEqual(name, name2);
-            
-            using (var db = new DatabaseContext())
-            {
-                db.Login.Attach(userModel2);
-                db.Login.Remove(userModel2);
-                db.SaveChanges();
-            }
+            Cleanup();
         }
         #endregion
 

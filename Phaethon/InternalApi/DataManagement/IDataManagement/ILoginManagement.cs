@@ -9,7 +9,7 @@ namespace InternalApi.DataManagement.IDataManagement
 {
     interface ILoginManagement
     {
-        bool CreateOrUpdate(Login user);
+        bool CreateOrUpdate(Login login);
 
         bool Delete(int id);
 
