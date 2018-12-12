@@ -62,7 +62,7 @@ function GetInvoices()
         data: {
             numOfRecords: $("#numOfRecords").val(),
             regNumber: $("#regNumber").val(),
-            invoiceNumber: $("#invoiceNumber").val(),
+            docNumber: $("#docNumber").val(),
             from: $("#dateRange").data('daterangepicker').startDate.format('DD/MM/YYYY'),
             to: $("#dateRange").data('daterangepicker').endDate.format('DD/MM/YYYY'),
             company: $("#company").val(),
@@ -87,13 +87,13 @@ function GetInvoices()
                 }
 
                 htmlText += "<tr>" +
-                    "<td>" + data[i].DocNumber + "</td>" +
+                    "<td>" + data[i].RegNumber + "</td>" +
                     "<td>" + data[i].DocNumber + "</td>" +
                     "<td>" + invoiceType + "</td>" +
                     "<td>" + date + "</td>" +
                     "<td>" + companyName + "</td>" +
                     "<td>" + data[i].Sum + "</td>" +
-                    "<td>" + data[i].Sum + "</td>" +
+                    "<td>" + data[i].SumNoTax + "</td>" +
                     "<td>" +
                     "<a href='/Invoice/Edit/" + data[i].ID + "'>" + details + "</a> |" +
                     "<a data-ajax='true' data-ajax-method='POST' data-ajax-success='window.location.reload()' href='/Invoice/Delete/" + data[i].ID + "'>" + deleteLabel + "</a>" +

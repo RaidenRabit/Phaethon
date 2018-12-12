@@ -274,11 +274,27 @@ namespace InternalApi.DataManagement
             }
         }
 
-        public List<Invoice> GetInvoices(int numOfRecords, string regNumber, string invoiceNumber, DateTime from, DateTime to, string company, decimal sum)
+        public List<Invoice> GetInvoices(int numOfRecords, string regNumber, string docNumber, DateTime from, DateTime to, string company, decimal sum)
         {
+            ElementDa elementDa = new ElementDa();
             using (var db = new DatabaseContext())
             {
-                return _invoiceDa.GetInvoices(db, numOfRecords, regNumber, invoiceNumber, from, to, company, sum);
+                List<Invoice> invoices =  _invoiceDa.GetInvoices(db, numOfRecords, regNumber, docNumber, from, to, company, sum);
+                foreach (Invoice invoice in invoices)
+                {
+                    var elements = elementDa.GetInvoiceElements(db, invoice.ID);
+                    if (invoice.Incoming)
+                    {
+                        invoice.Sum = elements.Sum(x => x.Item.IncomingPrice);
+                        invoice.SumNoTax = elements.Sum(x => x.Item.IncomingPrice - x.Item.IncomingPrice * (x.Item.IncomingTaxGroup.Tax / 100));
+                    }
+                    else
+                    {
+                        invoice.Sum = elements.Sum(x => x.Item.OutgoingPrice);
+                        invoice.SumNoTax = elements.Sum(x => x.Item.OutgoingPrice - x.Item.OutgoingPrice * (x.Item.OutgoingTaxGroup.Tax / 100));
+                    }
+                }
+                return invoices;
             }
         }
 

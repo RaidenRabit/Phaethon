@@ -19,12 +19,12 @@ namespace WebClient.Controllers.Api
 
         [Route("GetInvoices")]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetInvoices(int numOfRecords = 10, string regNumber = "", string invoiceNumber = "", string from = "01/01/0001", string to = "01/01/2100", string company = "", decimal sum = 0)
+        public async Task<HttpResponseMessage> GetInvoices(int numOfRecords = 10, string regNumber = "", string docNumber = "", string from = "01/01/0001", string to = "01/01/2100", string company = "", decimal sum = 0)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["numOfRecords"] = numOfRecords.ToString();
             parameters["regNumber"] = regNumber;
-            parameters["invoiceNumber"] = invoiceNumber;
+            parameters["docNumber"] = docNumber;
             parameters["from"] = from;
             parameters["to"] = to;
             parameters["company"] = company;

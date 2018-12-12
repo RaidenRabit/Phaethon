@@ -32,6 +32,10 @@ namespace Core.Model
         public string DocNumber { get; set; }
 
         [Required]
+        [DataMember]
+        public string RegNumber { get; set; }
+
+        [Required]
         [DataType(DataType.DateTime)]
         [DataMember]
         public DateTime PrescriptionDate { get; set; }
@@ -63,5 +67,9 @@ namespace Core.Model
         [NotMapped]
         [DataMember]
         public decimal Sum { get; set; }
+
+        [NotMapped]
+        [DataMember]
+        public decimal SumNoTax { get; set; }
     }
 }
