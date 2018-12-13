@@ -19,7 +19,8 @@
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode>true</IISExpressUseClassicPipelineMode>
+    <IISExpressUseClassicPipelineMode>
+    </IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -117,9 +118,6 @@
     <Compile Include="DataAccess\ProductDa.cs" />
     <Compile Include="DataAccess\JobDa.cs" />
     <Compile Include="DataAccess\LoginDa.cs" />
-    <Compile Include="DataManagement\CompanyManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\ICompanyManagement.cs" />
-    <Compile Include="DataManagement\IDataManagement\IInvoiceManagement.cs" />
     <Compile Include="DataAccess\ProductGroupDa.cs" />
     <Compile Include="DataAccess\RepresentativeDa.cs" />
     <Compile Include="DataAccess\TaxGroupDa.cs" />
@@ -129,7 +127,6 @@
     <Compile Include="DataManagement\IDataManagement\IEmailSenderDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
     <Compile Include="DataManagement\IDataManagement\ILoginManagement.cs" />
-    <Compile Include="DataManagement\InvoiceManagement.cs" />
     <Compile Include="DataManagement\CompanyDM.cs" />
     <Compile Include="DataManagement\ElementDM.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyDM.cs" />
@@ -149,11 +146,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201812051928156_initial.cs" />
-    <Compile Include="Migrations\201812051928156_initial.Designer.cs">
-      <DependentUpon>201812051928156_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,11 +166,6 @@
       <Project>{2f81d45f-2fd1-442c-b663-d04af5982d28}</Project>
       <Name>Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201812051928156_initial.resx">
-      <DependentUpon>201812051928156_initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
