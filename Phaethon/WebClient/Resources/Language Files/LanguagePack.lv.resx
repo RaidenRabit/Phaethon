@@ -422,4 +422,13 @@
   <data name="SumNoTax" xml:space="preserve">
     <value>Summa bez nodokļiem</value>
   </data>
+  <data name="Invoice" xml:space="preserve">
+    <value>Pavadzīme</value>
+  </data>
+  <data name="Receiver" xml:space="preserve">
+    <value>Saņēmējs</value>
+  </data>
+  <data name="Sender" xml:space="preserve">
+    <value>Sūtītājs</value>
+  </data>
 </root>

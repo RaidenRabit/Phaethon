@@ -1,0 +1,128 @@
+﻿@model Core.Model.Invoice
+@{ViewBag.Title = "Details";}
+@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
+
+<h2>@LanguagePack.Details</h2>
+
+<div>
+    <h4>@LanguagePack.Invoice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @LanguagePack.Incoming
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Incoming)
+        </dd>
+
+        <dt>
+            @LanguagePack.TransportCostLabel
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Transport)
+        </dd>
+
+        <dt>
+            @LanguagePack.DocumentNumberPlaceholder
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocNumber)
+        </dd>
+
+        <dt>
+            @LanguagePack.RegistrationNumber
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegNumber)
+        </dd>
+
+        <dt>
+            @LanguagePack.PrescriptionDateLabel
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrescriptionDate)
+        </dd>
+
+        <dt>
+            @LanguagePack.ReceptionDateLabel
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceptionDate)
+        </dd>
+
+        <dt>
+            @LanguagePack.PaymentDateLabel
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentDate)
+        </dd>
+
+        <dt>
+            @LanguagePack.Sender
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sender.Name)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sender.Company.Name)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sender.Company.RegNumber)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sender.Company.BankNumber)
+        </dd>
+
+        <dt>
+            @LanguagePack.Receiver
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Receiver.Name)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Receiver.Company.Name)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Receiver.Company.RegNumber)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Receiver.Company.BankNumber)
+        </dd>
+
+        <dt>
+            @LanguagePack.Sum
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sum)
+        </dd>
+
+        <dt>
+            @LanguagePack.SumNoTax
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SumNoTax)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit/"+ Model.ID, "Invoice") |
+    @Html.ActionLink("Back to List", "Index")
+</p>

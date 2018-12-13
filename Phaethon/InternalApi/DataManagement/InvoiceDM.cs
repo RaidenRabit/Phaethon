@@ -270,29 +270,18 @@ namespace InternalApi.DataManagement
         {
             using (var db = new DatabaseContext())
             {
-                return _invoiceDa.GetInvoice(db, id);
+                return GetInvoice(db, id);
             }
         }
 
         public List<Invoice> GetInvoices(int numOfRecords, string regNumber, string docNumber, DateTime from, DateTime to, string company, decimal sum)
         {
-            ElementDa elementDa = new ElementDa();
             using (var db = new DatabaseContext())
             {
-                List<Invoice> invoices =  _invoiceDa.GetInvoices(db, numOfRecords, regNumber, docNumber, from, to, company, sum);
-                foreach (Invoice invoice in invoices)
+                List<Invoice> invoices = new List<Invoice>();
+                foreach (int id in _invoiceDa.GetInvoices(db, numOfRecords, regNumber, docNumber, from, to, company, sum))
                 {
-                    var elements = elementDa.GetInvoiceElements(db, invoice.ID);
-                    if (invoice.Incoming)
-                    {
-                        invoice.Sum = elements.Sum(x => x.Item.IncomingPrice);
-                        invoice.SumNoTax = elements.Sum(x => x.Item.IncomingPrice - x.Item.IncomingPrice * (x.Item.IncomingTaxGroup.Tax / 100));
-                    }
-                    else
-                    {
-                        invoice.Sum = elements.Sum(x => x.Item.OutgoingPrice);
-                        invoice.SumNoTax = elements.Sum(x => x.Item.OutgoingPrice - x.Item.OutgoingPrice * (x.Item.OutgoingTaxGroup.Tax / 100));
-                    }
+                    invoices.Add(GetInvoice(db, id));
                 }
                 return invoices;
             }
@@ -309,6 +298,24 @@ namespace InternalApi.DataManagement
                 }
                 return _invoiceDa.Delete(db, invoice);
             }
+        }
+
+        private Invoice GetInvoice(DatabaseContext db, int id)
+        {
+            ElementDa elementDa = new ElementDa();
+            Invoice invoice = _invoiceDa.GetInvoice(db, id);
+            invoice.Elements = elementDa.GetInvoiceElements(db, invoice.ID);
+            if (invoice.Incoming)
+            {
+                invoice.Sum = invoice.Elements.Sum(x => x.Item.IncomingPrice * x.Item.Quantity);
+                invoice.SumNoTax = invoice.Elements.Sum(x => (x.Item.IncomingPrice - x.Item.IncomingPrice * (x.Item.IncomingTaxGroup.Tax / 100)) * x.Item.Quantity);
+            }
+            else
+            {
+                invoice.Sum = invoice.Elements.Sum(x => x.Item.OutgoingPrice * x.Item.Quantity);
+                invoice.SumNoTax = invoice.Elements.Sum(x => (x.Item.OutgoingPrice - x.Item.OutgoingPrice * (x.Item.OutgoingTaxGroup.Tax / 100)) * x.Item.Quantity);
+            }
+            return invoice;
         }
     }
 }

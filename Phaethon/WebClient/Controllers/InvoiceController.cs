@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -18,7 +16,7 @@ namespace WebClient.Controllers
         public InvoiceController()
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/Invoice/");
+            _client.BaseAddress = new Uri("http://localhost:64007/");
         }
 
         [HttpGet]
@@ -28,12 +26,22 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> Details(int id)
+        {
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = id.ToString();
+            var result = await _client.GetAsync("Invoice/GetInvoice?" + parameters);
+            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await result.Content.ReadAsStringAsync());
+            return View(invoice);
+        }
+
+        [HttpGet]
         [Route("Invoice/Edit/{id:int}")]
         public async Task<ActionResult> Edit(int id)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = id.ToString();
-            var result = await _client.GetAsync("GetInvoice?" + parameters);
+            var result = await _client.GetAsync("Invoice/GetInvoice?" + parameters);
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await result.Content.ReadAsStringAsync());
             return View(invoice);
         }
@@ -51,7 +59,7 @@ namespace WebClient.Controllers
         [Route("Invoice/Edit")]
         public async Task<ActionResult> Edit(Invoice invoice)
         {
-            var response = await _client.PostAsJsonAsync("CreateOrUpdate", invoice);
+            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
             if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
             {
@@ -66,7 +74,7 @@ namespace WebClient.Controllers
         [HttpPost]
         public void Delete(int id)
         {
-            _client.PostAsJsonAsync("Delete", id);
+            _client.PostAsJsonAsync("Invoice/Delete", id);
         }
     }
 }

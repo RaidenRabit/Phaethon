@@ -25,7 +25,7 @@ namespace InternalApi.DataAccess
                 .SingleOrDefault(x => x.ID == id);
         }
 
-        internal List<Invoice> GetInvoices(DatabaseContext db, int numOfRecords, string regNumber, string docNumber, DateTime from, DateTime to, string company, decimal sum)
+        internal List<int> GetInvoices(DatabaseContext db, int numOfRecords, string regNumber, string docNumber, DateTime from, DateTime to, string company, decimal sum)
         {
             return db.Invoices
                     .Include(x => x.Receiver.Company)
@@ -38,6 +38,7 @@ namespace InternalApi.DataAccess
                                 x.Sender.Company.Name.Contains(company))
                     .OrderByDescending(x => x.ID)
                     .Take(numOfRecords)
+                    .Select(x => x.ID)
                     .ToList();
         }
 
