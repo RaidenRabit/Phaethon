@@ -81,6 +81,10 @@
         </dd>
 
         <dd>
+            @Html.DisplayFor(model => model.Sender.Company.BankName)
+        </dd>
+
+        <dd>
             @Html.DisplayFor(model => model.Sender.Company.BankNumber)
         </dd>
 
@@ -98,6 +102,10 @@
 
         <dd>
             @Html.DisplayFor(model => model.Receiver.Company.RegNumber)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Receiver.Company.BankName)
         </dd>
 
         <dd>

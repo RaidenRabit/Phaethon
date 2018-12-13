@@ -37,11 +37,7 @@ namespace InternalApi.DataManagement
                         addressDa.CreateOrUpdate(db, invoice.Receiver.Company.Address);
                         invoice.Receiver.Company.Address_ID = invoice.Receiver.Company.Address.ID;
                         invoice.Receiver.Company.Address = null;
-
-                        addressDa.CreateOrUpdate(db, invoice.Receiver.Company.Location);
-                        invoice.Receiver.Company.Location_ID = invoice.Receiver.Company.Location.ID;
-                        invoice.Receiver.Company.Location = null;
-
+                        
                         companyDa.CreateOrUpdate(db, invoice.Receiver.Company);
                         invoice.Receiver.Company_ID = invoice.Receiver.Company.ID;
                         invoice.Receiver.Company = null;
@@ -56,10 +52,6 @@ namespace InternalApi.DataManagement
                         invoice.Sender.Company.Address_ID = invoice.Sender.Company.Address.ID;
                         invoice.Sender.Company.Address = null;
 
-                        addressDa.CreateOrUpdate(db, invoice.Sender.Company.Location);
-                        invoice.Sender.Company.Location_ID = invoice.Sender.Company.Location.ID;
-                        invoice.Sender.Company.Location = null;
-
                         companyDa.CreateOrUpdate(db, invoice.Sender.Company);
                         invoice.Sender.Company_ID = invoice.Sender.Company.ID;
                         invoice.Sender.Company = null;
@@ -68,6 +60,14 @@ namespace InternalApi.DataManagement
                         invoice.Sender_ID = invoice.Sender.ID;
                         invoice.Sender = null;
                         #endregion
+
+                        addressDa.CreateOrUpdate(db, invoice.ReceiverLocation);
+                        invoice.ReceiverLocation_ID = invoice.ReceiverLocation.ID;
+                        invoice.ReceiverLocation = null;
+
+                        addressDa.CreateOrUpdate(db, invoice.SenderLocation);
+                        invoice.SenderLocation_ID = invoice.SenderLocation.ID;
+                        invoice.SenderLocation = null;
 
                         List<Element> elements = invoice.Elements == null ? new List<Element>() : invoice.Elements.ToList();
                         invoice.Elements = null;

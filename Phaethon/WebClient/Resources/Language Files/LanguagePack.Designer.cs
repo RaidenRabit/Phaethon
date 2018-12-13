@@ -160,6 +160,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bank name.
+        /// </summary>
+        public static string BankName {
+            get {
+                return ResourceManager.GetString("BankName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -673,7 +682,7 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Company.
+        ///   Looks up a localized string similar to Clear information.
         /// </summary>
         public static string NewCompanyButton {
             get {

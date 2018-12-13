@@ -276,7 +276,7 @@
     <value>Latviešu</value>
   </data>
   <data name="NewCompanyButton" xml:space="preserve">
-    <value>Jauna kompānija</value>
+    <value>Notīrīt informāciju</value>
   </data>
   <data name="NewInvoiceButton" xml:space="preserve">
     <value>Jauns rekvizīts</value>
@@ -303,7 +303,7 @@
     <value>Produkta grupas uzcenojums</value>
   </data>
   <data name="ProductGroupNameLabel" xml:space="preserve">
-    <value>Produkta grupas vārds</value>
+    <value>Produkta grupa</value>
   </data>
   <data name="ProductNameLabel" xml:space="preserve">
     <value>Produkta vārds</value>
@@ -351,7 +351,7 @@
     <value>Summa</value>
   </data>
   <data name="TaxGroupLabel" xml:space="preserve">
-    <value>Nodokļu grupa</value>
+    <value>PVN</value>
   </data>
   <data name="TaxLabel" xml:space="preserve">
     <value>Nodoklis</value>
@@ -430,5 +430,8 @@
   </data>
   <data name="Sender" xml:space="preserve">
     <value>Sūtītājs</value>
+  </data>
+  <data name="BankName" xml:space="preserve">
+    <value>Banka</value>
   </data>
 </root>

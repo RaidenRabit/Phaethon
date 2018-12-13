@@ -22,13 +22,21 @@ namespace Core.Model
         [Required]
         [DataMember]
         [StringLength(100)]
+        [Index(IsUnique = true)]
         public string Name { get; set; }
 
         [Required]
         [DataMember]
         [StringLength(100)]
+        [Index(IsUnique = true)]
         public string RegNumber { get; set; }
-        
+
+        [Required]
+        [DataMember]
+        [StringLength(100)]
+        public string BankName { get; set; }
+
+        [Required]
         [DataMember]
         [StringLength(100)]
         public string BankNumber { get; set; }
@@ -37,11 +45,6 @@ namespace Core.Model
         [ForeignKey("Address_ID")]
         public virtual Address Address { get; set; }
         public int? Address_ID { get; set; }
-
-        [DataMember]
-        [ForeignKey("Location_ID")]
-        public virtual Address Location { get; set; }
-        public int? Location_ID { get; set; }
 
         [DataMember]
         public virtual ICollection<Representative> Representatives { get; set; }

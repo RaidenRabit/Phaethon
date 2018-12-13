@@ -36,12 +36,6 @@ function CompanyChange(element) {
         $("#" + element + "_Company_Address_Street").val("");
         $("#" + element + "_Company_Address_Number").val("");
         $("#" + element + "_Company_Address_Extra").val("");
-        //Location
-        $("#" + element + "_Company_Location_ID").val(0);
-        $("#" + element + "_Company_Location_City").val("");
-        $("#" + element + "_Company_Location_Street").val("");
-        $("#" + element + "_Company_Location_Number").val("");
-        $("#" + element + "_Company_Location_Extra").val("");
 
         $("#" + element + "_ID").change();
         $("#" + element + "_Company_ID").change();
@@ -59,11 +53,6 @@ function CompanyChange(element) {
             $('label[for="' + element + "_Company_Address_Street" + '"]').addClass("text-success");
             $('label[for="' + element + "_Company_Address_Number" + '"]').addClass("text-success");
             $('label[for="' + element + "_Company_Address_Extra" + '"]').addClass("text-success");
-            //Location
-            $('label[for="' + element + "_Company_Location_City" + '"]').addClass("text-success");
-            $('label[for="' + element + "_Company_Location_Street" + '"]').addClass("text-success");
-            $('label[for="' + element + "_Company_Location_Number" + '"]').addClass("text-success");
-            $('label[for="' + element + "_Company_Location_Extra" + '"]').addClass("text-success");
         } else {
             //company
             $('label[for="' + element + "_Company_Name" + '"]').removeClass("text-success");
@@ -74,11 +63,6 @@ function CompanyChange(element) {
             $('label[for="' + element + "_Company_Address_Street" + '"]').removeClass("text-success");
             $('label[for="' + element + "_Company_Address_Number" + '"]').removeClass("text-success");
             $('label[for="' + element + "_Company_Address_Extra" + '"]').removeClass("text-success");
-            //Location
-            $('label[for="' + element + "_Company_Location_City" + '"]').removeClass("text-success");
-            $('label[for="' + element + "_Company_Location_Street" + '"]').removeClass("text-success");
-            $('label[for="' + element + "_Company_Location_Number" + '"]').removeClass("text-success");
-            $('label[for="' + element + "_Company_Location_Extra" + '"]').removeClass("text-success");
         }
         $("#" + element + "_ID").change();
     });
@@ -166,12 +150,6 @@ function getCompany(element, id) {
             $("#" + element + "_Company_Address_Street").val(data.Address.Street);
             $("#" + element + "_Company_Address_Number").val(data.Address.Number);
             $("#" + element + "_Company_Address_Extra").val(data.Address.Extra);
-            //Location
-            $("#" + element + "_Company_Location_ID").val(data.Location.ID);
-            $("#" + element + "_Company_Location_City").val(data.Location.City);
-            $("#" + element + "_Company_Location_Street").val(data.Location.Street);
-            $("#" + element + "_Company_Location_Number").val(data.Location.Number);
-            $("#" + element + "_Company_Location_Extra").val(data.Location.Extra);
 
             //sets the companies representatives
             var htmlText = "";
@@ -205,12 +183,6 @@ function getCompany(element, id) {
             $("#" + element + "_Company_Address_Street").val("");
             $("#" + element + "_Company_Address_Number").val("");
             $("#" + element + "_Company_Address_Extra").val("");
-            //Location
-            $("#" + element + "_Company_Location_ID").val(0);
-            $("#" + element + "_Company_Location_City").val("");
-            $("#" + element + "_Company_Location_Street").val("");
-            $("#" + element + "_Company_Location_Number").val("");
-            $("#" + element + "_Company_Location_Extra").val("");
 
             $("#" + element + "Representatives").html("");
 

@@ -161,7 +161,7 @@
     <value>Representative Name</value>
   </data>
   <data name="NewCompanyButton" xml:space="preserve">
-    <value>New Company</value>
+    <value>Clear information</value>
   </data>
   <data name="CompanyAddressLabel" xml:space="preserve">
     <value>Address</value>
@@ -430,5 +430,8 @@
   </data>
   <data name="Sender" xml:space="preserve">
     <value>Sender</value>
+  </data>
+  <data name="BankName" xml:space="preserve">
+    <value>Bank name</value>
   </data>
 </root>

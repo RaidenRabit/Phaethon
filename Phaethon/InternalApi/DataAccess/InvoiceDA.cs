@@ -19,9 +19,9 @@ namespace InternalApi.DataAccess
         {
             return db.Invoices
                 .Include(x => x.Receiver.Company.Address)
-                .Include(x => x.Receiver.Company.Location)
+                .Include(x => x.ReceiverLocation)
                 .Include(x => x.Sender.Company.Address)
-                .Include(x => x.Sender.Company.Location)
+                .Include(x => x.SenderLocation)
                 .SingleOrDefault(x => x.ID == id);
         }
 

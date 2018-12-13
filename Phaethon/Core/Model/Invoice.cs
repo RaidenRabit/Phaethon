@@ -56,9 +56,19 @@ namespace Core.Model
         public int? Sender_ID { get; set; }
 
         [DataMember]
+        [ForeignKey("SenderLocation_ID")]
+        public virtual Address SenderLocation { get; set; }
+        public int? SenderLocation_ID { get; set; }
+
+        [DataMember]
         [ForeignKey("Receiver_ID")]
         public virtual Representative Receiver { get; set; }
         public int? Receiver_ID { get; set; }
+
+        [DataMember]
+        [ForeignKey("ReceiverLocation_ID")]
+        public virtual Address ReceiverLocation { get; set; }
+        public int? ReceiverLocation_ID { get; set; }
 
         [DataMember]
         public virtual ICollection<Element> Elements { get; set; }
