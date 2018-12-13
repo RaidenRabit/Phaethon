@@ -97,6 +97,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actual address.
+        /// </summary>
+        public static string ActualAddress {
+            get {
+                return ResourceManager.GetString("ActualAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to City.
         /// </summary>
         public static string AddressCityPlaceholder {
@@ -678,6 +687,15 @@ namespace WebClient.Resources.Language_Files {
         public static string Latvian {
             get {
                 return ResourceManager.GetString("Latvian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legal address.
+        /// </summary>
+        public static string LegalAddress {
+            get {
+                return ResourceManager.GetString("LegalAddress", resourceCulture);
             }
         }
         

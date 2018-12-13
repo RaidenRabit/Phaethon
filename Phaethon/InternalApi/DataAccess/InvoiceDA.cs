@@ -18,10 +18,10 @@ namespace InternalApi.DataAccess
         internal Invoice GetInvoice(DatabaseContext db, int id)
         {
             return db.Invoices
-                .Include(x => x.Receiver.Company.Address)
-                .Include(x => x.ReceiverLocation)
-                .Include(x => x.Sender.Company.Address)
-                .Include(x => x.SenderLocation)
+                .Include(x => x.Receiver.Company.ActualAddress)
+                .Include(x => x.Receiver.Company.LegalAddress)
+                .Include(x => x.Sender.Company.ActualAddress)
+                .Include(x => x.Sender.Company.LegalAddress)
                 .SingleOrDefault(x => x.ID == id);
         }
 

@@ -50,38 +50,76 @@
                 </div>
 
                 <div class="card" style="height: 130px; height: auto;">
-                    <div class="card-header" style="clear:both;" data-toggle="collapse" href="#receivingCompanyAddress">@LanguagePack.CompanyAddressLabel</div>
-                    <div id="receivingCompanyAddress" class="card-body collapse" style="padding-left: 20px;">
-                        @Html.HiddenFor(model => model.Receiver.Company.Address.ID)
+                    <div class="card-header" style="clear:both;" data-toggle="collapse" href="#receivingCompanyActualAddress">@LanguagePack.ActualAddress</div>
+                    <div id="receivingCompanyActualAddress" class="card-body collapse" style="padding-left: 20px;">
+                        @Html.HiddenFor(model => model.Receiver.Company.ActualAddress.ID)
                         <div class="form-group row">
-                            <label class="col-form-label col-md-4" for="Receiver_Company_Address_City">@LanguagePack.AddressCityPlaceholder</label>
+                            <label class="col-form-label col-md-4" for="Receiver_Company_ActualAddress_City">@LanguagePack.AddressCityPlaceholder</label>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.Receiver.Company.Address.City, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                @Html.ValidationMessageFor(model => model.Receiver.Company.Address.City, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Receiver.Company.ActualAddress.City, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Receiver.Company.ActualAddress.City, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label col-md-4" for="Receiver_Company_Address_Street">@LanguagePack.AddressStreetPlaceholder</label>
+                            <label class="col-form-label col-md-4" for="Receiver_Company_ActualAddress_Street">@LanguagePack.AddressStreetPlaceholder</label>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.Receiver.Company.Address.Street, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                @Html.ValidationMessageFor(model => model.Receiver.Company.Address.Street, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Receiver.Company.ActualAddress.Street, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Receiver.Company.ActualAddress.Street, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label col-md-4" for="Receiver_Company_Address_Number">@LanguagePack.AddressNumberPlaceholder</label>
+                            <label class="col-form-label col-md-4" for="Receiver_Company_ActualAddress_Number">@LanguagePack.AddressNumberPlaceholder</label>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.Receiver.Company.Address.Number, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                @Html.ValidationMessageFor(model => model.Receiver.Company.Address.Number, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Receiver.Company.ActualAddress.Number, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Receiver.Company.ActualAddress.Number, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label col-md-4" for="Receiver_Company_Address_Extra">@LanguagePack.AddressExtraPlaceholder</label>
+                            <label class="col-form-label col-md-4" for="Receiver_Company_ActualAddress_Extra">@LanguagePack.AddressExtraPlaceholder</label>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.Receiver.Company.Address.Extra, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Receiver.Company.Address.Extra, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Receiver.Company.ActualAddress.Extra, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Receiver.Company.ActualAddress.Extra, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="height: 130px; height: auto;">
+                    <div class="card-header" style="clear:both;" data-toggle="collapse" href="#receivingCompanyLegalAddress">@LanguagePack.LegalAddress</div>
+                    <div id="receivingCompanyLegalAddress" class="card-body collapse" style="padding-left: 20px;">
+                        @Html.HiddenFor(model => model.Receiver.Company.LegalAddress.ID)
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4" for="Receiver_Company_LegalAddress_City">@LanguagePack.AddressCityPlaceholder</label>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Receiver.Company.LegalAddress.City, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Receiver.Company.LegalAddress.City, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4" for="Receiver_Company_LegalAddress_Street">@LanguagePack.AddressStreetPlaceholder</label>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Receiver.Company.LegalAddress.Street, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Receiver.Company.LegalAddress.Street, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4" for="Receiver_Company_LegalAddress_Number">@LanguagePack.AddressNumberPlaceholder</label>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Receiver.Company.LegalAddress.Number, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Receiver.Company.LegalAddress.Number, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4" for="Receiver_Company_LegalAddress_Extra">@LanguagePack.AddressExtraPlaceholder</label>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Receiver.Company.LegalAddress.Extra, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Receiver.Company.LegalAddress.Extra, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -142,38 +180,76 @@
                 </div>
 
                 <div class="card" style="height: 130px; height: auto;">
-                    <div class="card-header" style="clear:both;" data-toggle="collapse" href="#sendingCompanyAddress">@LanguagePack.CompanyAddressLabel</div>
-                    <div id="sendingCompanyAddress" class="card-body collapse" style="padding-left: 20px;">
-                        @Html.HiddenFor(model => model.Sender.Company.Address.ID)
+                    <div class="card-header" style="clear:both;" data-toggle="collapse" href="#sendingCompanyActualAddress">@LanguagePack.ActualAddress</div>
+                    <div id="sendingCompanyActualAddress" class="card-body collapse" style="padding-left: 20px;">
+                        @Html.HiddenFor(model => model.Sender.Company.ActualAddress.ID)
                         <div class="form-group row">
-                            <label class="col-form-label col-md-4" for="Sender_Company_Address_City">@LanguagePack.AddressCityPlaceholder</label>
+                            <label class="col-form-label col-md-4" for="Sender_Company_ActualAddress_City">@LanguagePack.AddressCityPlaceholder</label>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.Sender.Company.Address.City, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                @Html.ValidationMessageFor(model => model.Sender.Company.Address.City, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Sender.Company.ActualAddress.City, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Sender.Company.ActualAddress.City, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label col-md-4" for="Sender_Company_Address_Street">@LanguagePack.AddressStreetPlaceholder</label>
+                            <label class="col-form-label col-md-4" for="Sender_Company_ActualAddress_Street">@LanguagePack.AddressStreetPlaceholder</label>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.Sender.Company.Address.Street, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                @Html.ValidationMessageFor(model => model.Sender.Company.Address.Street, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Sender.Company.ActualAddress.Street, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Sender.Company.ActualAddress.Street, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label col-md-4" for="Sender_Company_Address_Number">@LanguagePack.AddressNumberPlaceholder</label>
+                            <label class="col-form-label col-md-4" for="Sender_Company_ActualAddress_Number">@LanguagePack.AddressNumberPlaceholder</label>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.Sender.Company.Address.Number, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
-                                @Html.ValidationMessageFor(model => model.Sender.Company.Address.Number, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Sender.Company.ActualAddress.Number, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Sender.Company.ActualAddress.Number, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label col-md-4" for="Sender_Company_Address_Extra">@LanguagePack.AddressExtraPlaceholder</label>
+                            <label class="col-form-label col-md-4" for="Sender_Company_ActualAddress_Extra">@LanguagePack.AddressExtraPlaceholder</label>
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.Sender.Company.Address.Extra, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Sender.Company.Address.Extra, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Sender.Company.ActualAddress.Extra, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Sender.Company.ActualAddress.Extra, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="height: 130px; height: auto;">
+                    <div class="card-header" style="clear:both;" data-toggle="collapse" href="#sendingCompanyLegalAddress">@LanguagePack.LegalAddress</div>
+                    <div id="sendingCompanyLegalAddress" class="card-body collapse" style="padding-left: 20px;">
+                        @Html.HiddenFor(model => model.Sender.Company.LegalAddress.ID)
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4" for="Sender_Company_LegalAddress_City">@LanguagePack.AddressCityPlaceholder</label>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Sender.Company.LegalAddress.City, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Sender.Company.LegalAddress.City, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4" for="Sender_Company_LegalAddress_Street">@LanguagePack.AddressStreetPlaceholder</label>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Sender.Company.LegalAddress.Street, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Sender.Company.LegalAddress.Street, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4" for="Sender_Company_LegalAddress_Number">@LanguagePack.AddressNumberPlaceholder</label>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Sender.Company.LegalAddress.Number, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                                @Html.ValidationMessageFor(model => model.Sender.Company.LegalAddress.Number, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-4" for="Sender_Company_LegalAddress_Extra">@LanguagePack.AddressExtraPlaceholder</label>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Sender.Company.LegalAddress.Extra, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Sender.Company.LegalAddress.Extra, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>

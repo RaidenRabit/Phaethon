@@ -434,4 +434,10 @@
   <data name="BankName" xml:space="preserve">
     <value>Banka</value>
   </data>
+  <data name="ActualAddress" xml:space="preserve">
+    <value>Patiesā adrese</value>
+  </data>
+  <data name="LegalAddress" xml:space="preserve">
+    <value>Juridiskā adrese</value>
+  </data>
 </root>

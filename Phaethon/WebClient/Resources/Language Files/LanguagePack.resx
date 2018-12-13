@@ -434,4 +434,10 @@
   <data name="BankName" xml:space="preserve">
     <value>Bank name</value>
   </data>
+  <data name="ActualAddress" xml:space="preserve">
+    <value>Actual address</value>
+  </data>
+  <data name="LegalAddress" xml:space="preserve">
+    <value>Legal address</value>
+  </data>
 </root>

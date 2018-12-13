@@ -23,7 +23,8 @@ namespace InternalApi.DataAccess
         {
             return db.Companies
                 .Include(x => x.Representatives)
-                .Include(x => x.Address)
+                .Include(x => x.ActualAddress)
+                .Include(x => x.LegalAddress)
                 .SingleOrDefault(x => x.ID == id);
         }
     }

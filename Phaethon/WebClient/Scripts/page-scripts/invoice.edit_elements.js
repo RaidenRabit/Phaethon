@@ -26,7 +26,21 @@ $(function () {
     $.when(getProductGroups(), getTaxGroups()).done(function () {
         getInvoiceItems();
     });
+
+    allowEdit();
 });
+
+function allowEdit() {
+    if ($("#ID").val() != 0) {
+        $("input").attr("disabled", true);
+        $(":submit").parent("div")
+            .append("<input id='edit' type='button' value='Edit' class='btn btn-warning btn-lg btn-block' />");
+        $("#edit").click(function() {
+            $("input").attr("disabled", false);
+            $(this).remove();
+        });
+    }
+}
 
 //Change listeners
 function elementTableChange() {

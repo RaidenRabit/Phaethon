@@ -26,16 +26,6 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Details(int id)
-        {
-            var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["id"] = id.ToString();
-            var result = await _client.GetAsync("Invoice/GetInvoice?" + parameters);
-            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await result.Content.ReadAsStringAsync());
-            return View(invoice);
-        }
-
-        [HttpGet]
         [Route("Invoice/Edit/{id:int}")]
         public async Task<ActionResult> Edit(int id)
         {

@@ -42,9 +42,14 @@ namespace Core.Model
         public string BankNumber { get; set; }
 
         [DataMember]
-        [ForeignKey("Address_ID")]
-        public virtual Address Address { get; set; }
-        public int? Address_ID { get; set; }
+        [ForeignKey("LegalAddress_ID")]
+        public virtual Address LegalAddress { get; set; }
+        public int? LegalAddress_ID { get; set; }
+
+        [DataMember]
+        [ForeignKey("ActualAddress_ID")]
+        public virtual Address ActualAddress { get; set; }
+        public int? ActualAddress_ID { get; set; }
 
         [DataMember]
         public virtual ICollection<Representative> Representatives { get; set; }

@@ -34,10 +34,14 @@ namespace InternalApi.DataManagement
                         #region Invoice
 
                         #region Receiver
-                        addressDa.CreateOrUpdate(db, invoice.Receiver.Company.Address);
-                        invoice.Receiver.Company.Address_ID = invoice.Receiver.Company.Address.ID;
-                        invoice.Receiver.Company.Address = null;
-                        
+                        addressDa.CreateOrUpdate(db, invoice.Receiver.Company.ActualAddress);
+                        invoice.Receiver.Company.ActualAddress_ID = invoice.Receiver.Company.ActualAddress.ID;
+                        invoice.Receiver.Company.ActualAddress = null;
+
+                        addressDa.CreateOrUpdate(db, invoice.Receiver.Company.LegalAddress);
+                        invoice.Receiver.Company.LegalAddress_ID = invoice.Receiver.Company.LegalAddress.ID;
+                        invoice.Receiver.Company.LegalAddress = null;
+
                         companyDa.CreateOrUpdate(db, invoice.Receiver.Company);
                         invoice.Receiver.Company_ID = invoice.Receiver.Company.ID;
                         invoice.Receiver.Company = null;
@@ -48,9 +52,13 @@ namespace InternalApi.DataManagement
                         #endregion
 
                         #region Sender
-                        addressDa.CreateOrUpdate(db, invoice.Sender.Company.Address);
-                        invoice.Sender.Company.Address_ID = invoice.Sender.Company.Address.ID;
-                        invoice.Sender.Company.Address = null;
+                        addressDa.CreateOrUpdate(db, invoice.Sender.Company.ActualAddress);
+                        invoice.Sender.Company.ActualAddress_ID = invoice.Sender.Company.ActualAddress.ID;
+                        invoice.Sender.Company.ActualAddress = null;
+
+                        addressDa.CreateOrUpdate(db, invoice.Sender.Company.LegalAddress);
+                        invoice.Sender.Company.LegalAddress_ID = invoice.Sender.Company.LegalAddress.ID;
+                        invoice.Sender.Company.LegalAddress = null;
 
                         companyDa.CreateOrUpdate(db, invoice.Sender.Company);
                         invoice.Sender.Company_ID = invoice.Sender.Company.ID;
@@ -60,14 +68,6 @@ namespace InternalApi.DataManagement
                         invoice.Sender_ID = invoice.Sender.ID;
                         invoice.Sender = null;
                         #endregion
-
-                        addressDa.CreateOrUpdate(db, invoice.ReceiverLocation);
-                        invoice.ReceiverLocation_ID = invoice.ReceiverLocation.ID;
-                        invoice.ReceiverLocation = null;
-
-                        addressDa.CreateOrUpdate(db, invoice.SenderLocation);
-                        invoice.SenderLocation_ID = invoice.SenderLocation.ID;
-                        invoice.SenderLocation = null;
 
                         List<Element> elements = invoice.Elements == null ? new List<Element>() : invoice.Elements.ToList();
                         invoice.Elements = null;

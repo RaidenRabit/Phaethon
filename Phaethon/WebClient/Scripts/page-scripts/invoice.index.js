@@ -97,7 +97,7 @@ function GetInvoices()
                     "<td>" + data[i].Sum + "</td>" +
                     "<td>" + data[i].SumNoTax + "</td>" +
                     "<td>" +
-                    "<a href='/Invoice/Details/" + data[i].ID + "'>" + details + "</a> |" +
+                    "<a href='/Invoice/Edit/" + data[i].ID + "'>" + details + "</a> |" +
                     "<a data-ajax='true' data-ajax-method='POST' data-ajax-success='window.location.reload()' href='/Invoice/Delete/" + data[i].ID + "'>" + deleteLabel + "</a>" +
                     "</td>" +
                     "</tr>";

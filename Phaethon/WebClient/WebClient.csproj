@@ -242,7 +242,6 @@
     <Content Include="Scripts\page-scripts\item.index.js" />
     <Content Include="Views\Item\Index.cshtml" />
     <Content Include="Views\Item\Edit.cshtml" />
-    <Content Include="Views\Invoice\Details.cshtml" />
     <Resource Include="Resources\Images\english-flag.png" />
     <Resource Include="Resources\Images\latvian-flag.jpg" />
     <Content Include="Scripts\changeLanguage.js" />

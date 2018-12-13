@@ -9,13 +9,13 @@
         <script>
             var taxGroup = "@LanguagePack.TaxGroupLabel";
             var saving = "@LanguagePack.Save";
+            var delete = "@LanguagePack.DeleteButton";
             var productGroup = "@LanguagePack.ProductGroupNameLabel";
             var itemSelection = "@LanguagePack.ItemSelection";
             var deleteLabel = "@LanguagePack.DeleteButton";
             var deleteTitle = "@LanguagePack.DeleteButtonTitle";
         </script>
-        <div id="dialog" style="display: none">
-        </div>
+        <div id="dialog" style="display: none"></div>
 
         <div class="row">
             <div class="col-sm-12">
@@ -27,9 +27,8 @@
                         @{ Html.RenderPartial("_editCompanies", Model); }
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
+            </div> 
+
             <div class="col-sm-12">
                 <div class="card" style="height: 130px; height: auto;">
                     <div class="card-header" style="clear: both;" data-toggle="collapse" href="#products">@LanguagePack.ProductsLabel</div>
@@ -39,11 +38,17 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+
             <div class="col-sm-12">
                 <div class="form-group">
-                    <input type="submit" value="@LanguagePack.Save" class="btn btn-primary btn-lg btn-block" />
+                    <div class="row">
+                        <div class="col-sm">
+                            <input type="submit" value="@LanguagePack.Save" class="btn btn-primary btn-lg btn-block" />
+                        </div>
+                        <div class="col-sm" align="right">
+                            <input type="button" value="@LanguagePack.DeleteButton" class="btn btn-danger btn-lg btn-block" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
