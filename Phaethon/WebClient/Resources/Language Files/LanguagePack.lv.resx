@@ -219,19 +219,19 @@
     <value>Pabeigšanas laiks</value>
   </data>
   <data name="InvoiceInfoLabel" xml:space="preserve">
-    <value>Rekvizītu informācija</value>
+    <value>Pavadzīmes informācija</value>
   </data>
   <data name="InvoiceList" xml:space="preserve">
-    <value>Rekvizītu saraksts</value>
+    <value>Pavadzīmju saraksts</value>
   </data>
   <data name="Invoices" xml:space="preserve">
-    <value>Rekvizīti</value>
+    <value>Pavadzīmes</value>
   </data>
   <data name="InvoiceSearch" xml:space="preserve">
-    <value>Maklēt rekvizītu</value>
+    <value>Maklēt pavadzīmi</value>
   </data>
   <data name="InvoiceType" xml:space="preserve">
-    <value>Rekvizīta tips</value>
+    <value>Pavadzīmes tips</value>
   </data>
   <data name="ItemIncomingPriceLabel" xml:space="preserve">
     <value>Cena ar nodokli</value>
@@ -279,7 +279,7 @@
     <value>Notīrīt informāciju</value>
   </data>
   <data name="NewInvoiceButton" xml:space="preserve">
-    <value>Jauns rekvizīts</value>
+    <value>Jauna pavadzīme</value>
   </data>
   <data name="NewItemButton" xml:space="preserve">
     <value>Pievienot jaunu preci</value>
