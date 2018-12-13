@@ -72,7 +72,9 @@ function GetInvoices()
         dataType: "json",
         success: function (data) {
             var htmlText = "";
+            var rows = $("#numOfRecords").val();
             for (var i = 0; i < data.length; i++) {
+                rows = rows - 1;
                 var date;
                 var invoiceType;
                 var companyName;
@@ -98,6 +100,19 @@ function GetInvoices()
                     "<a href='/Invoice/Edit/" + data[i].ID + "'>" + details + "</a> |" +
                     "<a data-ajax='true' data-ajax-method='POST' data-ajax-success='window.location.reload()' href='/Invoice/Delete/" + data[i].ID + "'>" + deleteLabel + "</a>" +
                     "</td>" +
+                    "</tr>";
+            }
+            while (rows > 0) {
+                rows = rows - 1;
+                htmlText += "<tr>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
                     "</tr>";
             }
             $("#invoiceTable tbody").html(htmlText);
