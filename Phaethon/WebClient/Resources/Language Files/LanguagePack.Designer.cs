@@ -187,6 +187,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checkout date.
+        /// </summary>
+        public static string CheckoutDate {
+            get {
+                return ResourceManager.GetString("CheckoutDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Companies.
         /// </summary>
         public static string CompaniesPlaceholder {

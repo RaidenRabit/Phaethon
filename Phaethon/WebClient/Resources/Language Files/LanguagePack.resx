@@ -440,4 +440,7 @@
   <data name="LegalAddress" xml:space="preserve">
     <value>Legal address</value>
   </data>
+  <data name="CheckoutDate" xml:space="preserve">
+    <value>Checkout date</value>
+  </data>
 </root>

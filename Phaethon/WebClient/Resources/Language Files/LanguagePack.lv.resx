@@ -440,4 +440,7 @@
   <data name="LegalAddress" xml:space="preserve">
     <value>Juridiskā adrese</value>
   </data>
+  <data name="CheckoutDate" xml:space="preserve">
+    <value>Izrakstīšanas</value>
+  </data>
 </root>

@@ -30,7 +30,7 @@ namespace InternalApi.DataAccess
             return db.Invoices
                     .Include(x => x.Receiver.Company)
                     .Include(x => x.Receiver.Company)
-                    .Where(x => (!x.Incoming && from <= x.PrescriptionDate && x.PrescriptionDate <= to) ||
+                    .Where(x => (!x.Incoming && from <= x.CheckoutDate && x.CheckoutDate <= to) ||
                                 (x.Incoming && from <= x.ReceptionDate && x.ReceptionDate <= to))
                     .Where(x => x.DocNumber.Contains(docNumber))
                     .Where(x => x.RegNumber.Contains(regNumber))

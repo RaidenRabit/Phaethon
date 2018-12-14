@@ -38,17 +38,12 @@ namespace Core.Model
         [Required]
         [DataType(DataType.DateTime)]
         [DataMember]
-        public DateTime PrescriptionDate { get; set; }
+        public DateTime CheckoutDate { get; set; }
 
         [DataType(DataType.DateTime)]
         [DataMember]
         [DefaultValue(null)]
         public DateTime ReceptionDate { get; set; }
-
-        [DataType(DataType.DateTime)]
-        [DataMember]
-        [DefaultValue(null)]
-        public DateTime PaymentDate { get; set; }
         
         [DataMember]
         [ForeignKey("Sender_ID")]
