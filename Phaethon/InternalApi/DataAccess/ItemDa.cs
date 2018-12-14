@@ -28,14 +28,14 @@ namespace InternalApi.DataAccess
                 .Where(x => x.SerNumber.Contains(serialNumber))
                 .Where(x => x.Product.Name.Contains(productName))
                 .Where(x => barcode == 0 || x.Product.Barcode == barcode)
-                .Where(x => showAll || (!showAll && x.OutgoingPrice == 0))
+                .Where(x => showAll || (!showAll && x.Price == 0))
                 .Where(x => showAll || (!showAll && x.OutgoingTaxGroup_ID == null))
                 .AsEnumerable()
                 .GroupBy(x =>
                     new
                     {
                         x.SerNumber,
-                        x.IncomingPrice,
+                        x.Price,
                         x.Product_ID
                     })
                 .Select(g => new
@@ -57,8 +57,7 @@ namespace InternalApi.DataAccess
         {
             return db.Items
                 .Where(x => x.SerNumber.Equals(item.SerNumber) &&
-                        x.IncomingPrice == item.IncomingPrice &&
-                        x.OutgoingPrice == 0 &&
+                        x.Price == item.Price &&
                         x.Product_ID == item.Product_ID &&
                         x.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID &&
                         x.OutgoingTaxGroup_ID == null)

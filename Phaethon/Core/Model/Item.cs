@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Model
 {
@@ -26,11 +22,7 @@ namespace Core.Model
 
         [Required]
         [DataMember]
-        public decimal IncomingPrice { get; set; }
-
-        [Required]
-        [DataMember]
-        public decimal OutgoingPrice { get; set; }
+        public decimal Price { get; set; }
 
         [DataMember]
         [ForeignKey("Product_ID")]

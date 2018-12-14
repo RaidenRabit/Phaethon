@@ -74,14 +74,7 @@ namespace InternalApi.DataManagement
 
                         #region Transport
                         decimal total;
-                        if (invoice.Incoming) //incoming
-                        {
-                            total = elements.Sum(item => item.Item.IncomingPrice);
-                        }
-                        else//outgoing
-                        {
-                            total = elements.Sum(item => item.Item.OutgoingPrice);
-                        }
+                        total = elements.Sum(item => item.Item.Price);
                         decimal transport = invoice.Transport;
                         Invoice dbInvoice = _invoiceDa.GetInvoice(db, invoice.ID);
                         if (dbInvoice != null)
@@ -93,6 +86,8 @@ namespace InternalApi.DataManagement
                             transport = transport / total;
                         }
                         #endregion
+                        //generate the regNumber (cant be null)
+                        invoice.RegNumber = "r";
                         _invoiceDa.CreateOrUpdate(db, invoice);
                         #endregion
 
@@ -119,7 +114,7 @@ namespace InternalApi.DataManagement
                                         item = itemDa.GetItem(db, i);
                                         if (removedCount > 0)
                                         {
-                                            if (item.OutgoingPrice == 0 && item.OutgoingTaxGroup_ID == null)
+                                            if (item.OutgoingTaxGroup_ID == null)
                                             {
                                                 itemDa.Delete(db, item);
                                                 removedItemIds.Add(i);
@@ -140,7 +135,7 @@ namespace InternalApi.DataManagement
                                     if (element.Item.Delete)
                                     {
                                         //remove if item hasn't been sold yet
-                                        if (item != null && item.OutgoingPrice == 0 && item.OutgoingTaxGroup_ID == null)
+                                        if (item.OutgoingTaxGroup_ID == null)
                                         {
                                             itemDa.Delete(db, item);
                                         }
@@ -153,7 +148,7 @@ namespace InternalApi.DataManagement
                                         }
                                         item.Product_ID = element.Item.Product.ID;
                                         item.SerNumber = element.Item.SerNumber;
-                                        item.IncomingPrice = element.Item.IncomingPrice * transport + element.Item.IncomingPrice;
+                                        item.Price = element.Item.Price * transport + element.Item.Price;
                                         item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
                                         
                                         itemDa.CreateOrUpdate(db, item);
@@ -188,7 +183,6 @@ namespace InternalApi.DataManagement
                                         if (removedCount > 0)
                                         {
                                             //on delete of outgoing make item not sold and removes from invoice
-                                            item.OutgoingPrice = 0;
                                             item.OutgoingTaxGroup_ID = null;
                                             itemDa.CreateOrUpdate(db, item);
                                             Element tempElement = new Element
@@ -214,7 +208,6 @@ namespace InternalApi.DataManagement
                                     item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
                                     if (element.Item.Delete)//on delete of outgoing make item not sold and removes from invoice
                                     {
-                                        item.OutgoingPrice = 0;
                                         item.OutgoingTaxGroup_ID = null;
                                         itemDa.CreateOrUpdate(db, item);
                                         Element tempElement = new Element
@@ -236,8 +229,7 @@ namespace InternalApi.DataManagement
                                         if (item != null)
                                         {
                                             item.Product_ID = element.Item.Product.ID;
-                                            item.OutgoingPrice =
-                                                element.Item.OutgoingPrice * transport + element.Item.OutgoingPrice;
+                                            item.Price = element.Item.Price * transport + element.Item.Price;
                                             item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
 
                                             itemDa.CreateOrUpdate(db, item);
@@ -257,7 +249,7 @@ namespace InternalApi.DataManagement
                         dbTransaction.Commit();
                         return true;
                     }
-                    catch
+                    catch(Exception e)
                     {
                         dbTransaction.Rollback();
                         return false;
@@ -305,15 +297,14 @@ namespace InternalApi.DataManagement
             ElementDa elementDa = new ElementDa();
             Invoice invoice = _invoiceDa.GetInvoice(db, id);
             invoice.Elements = elementDa.GetInvoiceElements(db, invoice.ID);
+            invoice.SumNoTax = invoice.Elements.Sum(x => x.Item.Price * x.Item.Quantity);
             if (invoice.Incoming)
             {
-                invoice.Sum = invoice.Elements.Sum(x => x.Item.IncomingPrice * x.Item.Quantity);
-                invoice.SumNoTax = invoice.Elements.Sum(x => (x.Item.IncomingPrice - x.Item.IncomingPrice * (x.Item.IncomingTaxGroup.Tax / 100)) * x.Item.Quantity);
+                invoice.Sum = invoice.Elements.Sum(x => (x.Item.Price + x.Item.Price * ((decimal)x.Item.IncomingTaxGroup.Tax / 100)) * x.Item.Quantity);
             }
             else
             {
-                invoice.Sum = invoice.Elements.Sum(x => x.Item.OutgoingPrice * x.Item.Quantity);
-                invoice.SumNoTax = invoice.Elements.Sum(x => (x.Item.OutgoingPrice - x.Item.OutgoingPrice * (x.Item.OutgoingTaxGroup.Tax / 100)) * x.Item.Quantity);
+                invoice.Sum = invoice.Elements.Sum(x => (x.Item.Price + x.Item.Price * ((decimal)x.Item.OutgoingTaxGroup.Tax / 100)) * x.Item.Quantity);
             }
             return invoice;
         }

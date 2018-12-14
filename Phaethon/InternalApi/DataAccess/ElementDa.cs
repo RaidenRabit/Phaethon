@@ -24,13 +24,15 @@ namespace InternalApi.DataAccess
         {
             return db.Elements
                 .Include(x => x.Item.Product)
+                .Include(x => x.Item.IncomingTaxGroup)
+                .Include(x => x.Item.OutgoingTaxGroup)
                 .Where(x => x.Invoice_ID == id)
                 .AsEnumerable()
                 .GroupBy(x =>
                     new
                     {
                         x.Item.SerNumber,
-                        x.Item.IncomingPrice,
+                        x.Item.Price,
                         x.Item.Product_ID,
                         x.Item.IncomingTaxGroup_ID
                     })
@@ -49,7 +51,7 @@ namespace InternalApi.DataAccess
             var b = db.Elements
                 .Where(x => x.Invoice_ID == invoiceId &&
                             x.Item.SerNumber.Equals(item.SerNumber) &&
-                            x.Item.IncomingPrice == item.IncomingPrice &&
+                            x.Item.Price == item.Price &&
                             x.Item.Product_ID == item.Product_ID &&
                             x.Item.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID)
                 .Select(x => x.Item_ID)
@@ -63,7 +65,7 @@ namespace InternalApi.DataAccess
             return db.Elements
                 .Where(x => x.Invoice_ID == invoiceId &&
                             x.Item.SerNumber.Equals(item.SerNumber) &&
-                            x.Item.OutgoingPrice == item.OutgoingPrice &&
+                            x.Item.Price == item.Price &&
                             x.Item.Product_ID == item.Product_ID &&
                             x.Item.OutgoingTaxGroup_ID == item.OutgoingTaxGroup_ID)
                 .Select(x => x.Item_ID)
