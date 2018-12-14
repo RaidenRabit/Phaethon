@@ -238,6 +238,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\page-scripts\invoice.edit.js" />
     <Content Include="Scripts\page-scripts\item.edit.js" />
     <Content Include="Scripts\page-scripts\item.index.js" />
     <Content Include="Views\Item\Index.cshtml" />

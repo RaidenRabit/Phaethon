@@ -9,7 +9,6 @@
         <script>
             var taxGroup = "@LanguagePack.TaxGroupLabel";
             var saving = "@LanguagePack.Save";
-            var delete = "@LanguagePack.DeleteButton";
             var productGroup = "@LanguagePack.ProductGroupNameLabel";
             var itemSelection = "@LanguagePack.ItemSelection";
             var deleteLabel = "@LanguagePack.DeleteButton";
@@ -46,12 +45,12 @@
                             <input type="submit" value="@LanguagePack.Save" class="btn btn-primary btn-lg btn-block" />
                         </div>
                         <div class="col-sm" align="right">
-                            <input type="button" value="@LanguagePack.DeleteButton" class="btn btn-danger btn-lg btn-block" />
+                            <input type="button" id="deleteInvoice" value="@LanguagePack.DeleteButton" class="btn btn-danger btn-lg btn-block" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-}
+}=
 @Scripts.Render("~/bundles/Invoice/Edit")
