@@ -383,7 +383,7 @@ function taxGroupForm() {
                     var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
                     var taxGroup = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup");
                     var taxGroupId = taxGroup.val();
-                    taxGroup.html(ProductGroups);
+                    taxGroup.html(TaxGroups);
                     taxGroup.val(taxGroupId);
                 });
             });
