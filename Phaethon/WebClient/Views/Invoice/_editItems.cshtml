@@ -38,7 +38,7 @@
         <tr>
             <td>@LanguagePack.TransportCostLabel</td>
             <td>
-                @Html.EditorFor(model => model.Transport, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                @Html.EditorFor(model => model.Transport, new { htmlAttributes = new { @class = "form-control", @type= "number", @required = "required" } })
             </td>
             <td colspan="2"></td>
             <td>

@@ -3,7 +3,6 @@ var incoming;
 
 var ProductGroups;
 var TaxGroups;
-var transport;//saves already saved transport cost for calculations
 
 //On load
 $(function () {
@@ -15,32 +14,17 @@ $(function () {
         incoming = false;
         invoiceType = "Outgoing";
     }
-
-    //sets initial transport cost, to know what was added
-    transport = parseFloat($("#Transport").val());
     
     //Adds action listener to element table header and foot
     elementTableChange();
 
     //gets getProductGroups and getTaxGroups, than adds all Items in invoice to table
     $.when(getProductGroups(), getTaxGroups()).done(function () {
-        getInvoiceItems();
-    });
-
-    allowEdit();
-});
-
-function allowEdit() {
-    if ($("#ID").val() != 0) {
-        $("input").attr("disabled", true);
-        $(":submit").parent("div")
-            .append("<input id='edit' type='button' value='Edit' class='btn btn-warning btn-lg btn-block' />");
-        $("#edit").click(function() {
-            $("input").attr("disabled", false);
-            $(this).remove();
+        $.when(getItems()).done(function () {
+            allowEdit();
         });
-    }
-}
+    });
+});
 
 //Change listeners
 function elementTableChange() {
@@ -57,11 +41,6 @@ function elementTableChange() {
         } else {
             getSelectItemForm();
         }
-    });
-
-    //if transport cost changes
-    $("#Transport").change(function () {
-        totalAmount();
     });
 
     //on tax group label click will open dialog
@@ -94,50 +73,38 @@ function ItemChange(rowValue) {
     });
     
     //Price without tax changed
-    $("#Elements_" + rowValue + "__Item_Price").change(function () {
-        //gets tax in %
-        var tax = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup option[value='" + $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val() + "']").data("tax") / 100;
-        var val = parseFloat($(this).val());
+    $("#Elements_" + rowValue + "__Item_Price, #Elements_" + rowValue + "__" + invoiceType + "TaxGroup, #Elements_" + rowValue + "__Item_Quantity").change(function () {
+        var val = parseFloat($("#Elements_" + rowValue + "__Item_Price").val());
         if (!incoming) {
             //if invoice is outgoing add companies margin
             val = val + val * ($("#Elements_" + rowValue + "__ProductGroup option[value='" + $("#Elements_" + rowValue + "__ProductGroup").val() + "']").data("margin") / 100);
         }
         //add tax to item
-        var price = val + val * tax;
+        var price = val + val * ($("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup option[value='" + $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val() + "']").data("tax") / 100);
         $("#Elements_" + rowValue + "__" + invoiceType + "Price").val(price.toFixed(2));
         totalAmount();
     });
 
-    if (incoming) {
-        //on barcode change get corresponding info in database for product, product group and item
-        $("#Elements_" + rowValue + "__Item_Product_Barcode").change(function () {
-            getProduct(rowValue, $(this).val());
-        });
+    //on barcode change get corresponding info in database for product, product group and item
+    $("#Elements_" + rowValue + "__Item_Product_Barcode").change(function () {
+        getProduct(rowValue, $(this).val());
+    });
 
-        //Price, tax or quantity changed
-        $("#Elements_" + rowValue + "__" + invoiceType + "Price, #Elements_" + rowValue + "__" + invoiceType + "TaxGroup, #Elements_" + rowValue + "__Item_Quantity").change(function () {
-            //gets tax in % and than adds 1, so tax can be removed from item
-            var tax = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup option[value='" + $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val() + "']").data("tax") / 100 + 1;
-            var val = parseFloat($("#Elements_" + rowValue + "__Item_Price").val());
-            //removes tax from value
-            var price = val / tax;
-            $("#Elements_" + rowValue + "__" + invoiceType + "Price").val(price.toFixed(2));
-            totalAmount();
-        });
-    }
-    else {
-        //!! quantity should be added for outgoing
-
-        //tax or quantity changed
-        $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").change(function () {
-            $("#Elements_" + rowValue + "__Item_Price").change();
-        });
-
-        //Price, tax or quantity changed
-        $("#Elements_" + rowValue + "__" + invoiceType + "Price").change(function () {
-            totalAmount();
-        });
-    }
+    //Price, tax or quantity changed
+    $("#Elements_" + rowValue + "__" + invoiceType + "Price").change(function () {
+        //gets tax in % and than adds 1, so tax can be removed from item
+        var margin = $("#Elements_" + rowValue + "__ProductGroup option[value='" + $("#Elements_" + rowValue + "__ProductGroup").val() + "']").data("margin") / 100 + 1;
+        var tax = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup option[value='" + $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val() + "']").data("tax") / 100 + 1;
+        var val = parseFloat($("#Elements_" + rowValue + "__" + invoiceType + "Price").val());
+        //removes tax from value
+        var price = val / tax;
+        if (!incoming) {
+            //if invoice is outgoing remove companies margin
+            price = price / margin;
+        }
+        $("#Elements_" + rowValue + "__Item_Price").val(price.toFixed(2));
+        totalAmount();
+    });
 
     //delete button clicked 
     $("#Elements_" + rowValue + "__Delete").click(function () {
@@ -217,7 +184,7 @@ function getProduct(rowValue, barcode) {
                 if (data.Items.length != 0) {
                     var price = $("#Elements_" + rowValue + "__Item_Price");
                     price.val(data.Items[0].Price);
-                    $("#Elements_" + rowValue + "__Item_Price").change();
+                    price.change();
                 }
                 $("#Elements_" + rowValue + "__Item_Product_Name").val(data.Name);
                 $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
@@ -237,8 +204,8 @@ function getProduct(rowValue, barcode) {
     });
 }
 
-function getInvoiceItems() {
-    $.ajax({
+function getItems() {
+    return $.ajax({
         type: "GET",
         url: "/Api/Element/GetInvoiceElements",
         data: {
@@ -289,8 +256,7 @@ function getItem(id) {
         if ($("#elementTable tbody tr").length == 0) {
             rowValue = 0;
         } else {
-            rowValue =
-                parseInt($("#elementTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
+            rowValue = parseInt($("#elementTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
         }
 
         $.ajax({
@@ -394,9 +360,10 @@ function productGroupForm() {
             $.when(getProductGroups()).done(function () {
                 $("#elementTable tbody tr").each(function () {
                     var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
-                    var productGroupId = $("#Elements_" + rowValue + "__ProductGroup").val();
-                    $("#Elements_" + rowValue + "__ProductGroup").html(ProductGroups);
-                    $("#Elements_" + rowValue + "__ProductGroup").val(productGroupId);
+                    var productGroup = $("#Elements_" + rowValue + "__ProductGroup");
+                    var productGroupId = productGroup.val();
+                    productGroup.html(ProductGroups);
+                    productGroup.val(productGroupId);
                 });
             });
         }
@@ -414,9 +381,10 @@ function taxGroupForm() {
             $.when(getTaxGroups()).done(function () {
                 $("#elementTable tbody tr").each(function () {
                     var rowValue = $(this).find("input").attr("name").split("[")[1].split("]")[0];
-                    var taxGroupId = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val();
-                    $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").html(ProductGroups);
-                    $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val(taxGroupId);
+                    var taxGroup = $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup");
+                    var taxGroupId = taxGroup.val();
+                    taxGroup.html(ProductGroups);
+                    taxGroup.val(taxGroupId);
                 });
             });
         }
@@ -432,16 +400,28 @@ function elementSetUp(rowValue) {
     onlyNumbers("#elementTable tbody tr:last ");
 }
 
+function allowEdit() {
+    if ($("#ID").val() != 0) {
+        $("input, select").attr("disabled", true);
+        $(":submit").parent("div")
+            .append("<input id='edit' type='button' value='Edit' class='btn btn-warning btn-lg btn-block' />");
+        $("#edit").click(function () {
+            $("input, select").attr("disabled", false);
+            $(this).remove();
+        });
+    }
+}
+
 function totalAmount() {
     var amount = parseFloat(0);
     var amountNoTax = parseFloat(0);
     $("#elementTable tbody tr").each(function () {
         var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
         var quantity = parseFloat($("#Elements_" + row + "__Item_Quantity").val());
-        amount = amount + parseFloat($("#Elements_" + row + "__Item_" + invoiceType + "Price").val()) * quantity;
-        amountNoTax = amountNoTax + parseFloat($("#Elements_" + row + "__Price").val()) * quantity;
+        amountNoTax = amountNoTax + parseFloat($("#Elements_" + row + "__Item_Price").val()) * quantity;
+        amount = amount + parseFloat($("#Elements_" + row + "__" + invoiceType + "Price").val()) * quantity;
     });
-    $("#totalAmount").val(parseFloat(amount + parseFloat($("#Transport").val()) - transport).toFixed(2));
+    $("#totalAmount").val(amount.toFixed(2));
     $("#totalNoTax").val(amountNoTax.toFixed(2));
 }
 

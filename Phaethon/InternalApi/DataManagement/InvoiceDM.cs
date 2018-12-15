@@ -71,21 +71,6 @@ namespace InternalApi.DataManagement
 
                         List<Element> elements = invoice.Elements == null ? new List<Element>() : invoice.Elements.ToList();
                         invoice.Elements = null;
-
-                        #region Transport
-                        decimal total;
-                        total = elements.Sum(item => item.Item.Price);
-                        decimal transport = invoice.Transport;
-                        Invoice dbInvoice = _invoiceDa.GetInvoice(db, invoice.ID);
-                        if (dbInvoice != null)
-                        {
-                            transport = transport - dbInvoice.Transport;
-                        }
-                        if (total != 0)
-                        {
-                            transport = transport / total;
-                        }
-                        #endregion
                         //generate the regNumber (cant be null)
                         invoice.RegNumber = "r";
                         _invoiceDa.CreateOrUpdate(db, invoice);
@@ -148,7 +133,7 @@ namespace InternalApi.DataManagement
                                         }
                                         item.Product_ID = element.Item.Product.ID;
                                         item.SerNumber = element.Item.SerNumber;
-                                        item.Price = element.Item.Price * transport + element.Item.Price;
+                                        item.Price = element.Item.Price;
                                         item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
                                         
                                         itemDa.CreateOrUpdate(db, item);
@@ -229,7 +214,7 @@ namespace InternalApi.DataManagement
                                         if (item != null)
                                         {
                                             item.Product_ID = element.Item.Product.ID;
-                                            item.Price = element.Item.Price * transport + element.Item.Price;
+                                            item.Price = element.Item.Price;
                                             item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
 
                                             itemDa.CreateOrUpdate(db, item);
