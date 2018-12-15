@@ -234,7 +234,7 @@ namespace InternalApi.DataManagement
                         dbTransaction.Commit();
                         return true;
                     }
-                    catch(Exception e)
+                    catch
                     {
                         dbTransaction.Rollback();
                         return false;

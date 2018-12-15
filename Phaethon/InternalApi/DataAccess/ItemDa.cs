@@ -17,7 +17,9 @@ namespace InternalApi.DataAccess
         internal Item GetItem(DatabaseContext db, int id)
         {
             return db.Items
-                .Include(x => x.Product)
+                .Include(x => x.Product.ProductGroup)
+                .Include(x => x.IncomingTaxGroup)
+                .Include(x => x.OutgoingTaxGroup)
                 .SingleOrDefault(x => x.ID == id);
         }
 
@@ -28,7 +30,6 @@ namespace InternalApi.DataAccess
                 .Where(x => x.SerNumber.Contains(serialNumber))
                 .Where(x => x.Product.Name.Contains(productName))
                 .Where(x => barcode == 0 || x.Product.Barcode == barcode)
-                .Where(x => showAll || (!showAll && x.Price == 0))
                 .Where(x => showAll || (!showAll && x.OutgoingTaxGroup_ID == null))
                 .AsEnumerable()
                 .GroupBy(x =>

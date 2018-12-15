@@ -16,7 +16,7 @@
     GetInvoices();
 
     //on search option change get corresponding invoices
-    $("#numOfRecords, #regNumber, #invoiceNumber, #dateRange, #company, #sum").change(function() {
+    $("#numOfRecords, #regNumber, #docNumber, #dateRange, #company, #sum").change(function() {
         GetInvoices();
     });
 

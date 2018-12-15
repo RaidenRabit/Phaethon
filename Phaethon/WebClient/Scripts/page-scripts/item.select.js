@@ -29,7 +29,7 @@ function GetItems() {
                     "<td>" + data[i].SerNumber + "</td>" +
                     "<td>" + data[i].Product.Name + "</td>" +
                     "<td>" + data[i].Product.Barcode + "</td>" +
-                    "<td>" + data[i].IncomingPrice + "</td>" +
+                    "<td>" + data[i].Price + "</td>" +
                     "<td><input id='Items_" + i + "__Select' type='button' class='btn btn-success btn-block' value='"+select+"'/></td>" +
                     "</tr>";
             }
