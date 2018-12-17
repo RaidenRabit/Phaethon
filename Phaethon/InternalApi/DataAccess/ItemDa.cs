@@ -27,12 +27,9 @@ namespace InternalApi.DataAccess
         //gets all items which are similar items
         internal List<Item> GetNotSoldItems(DatabaseContext db, Item item)
         {
-            //include transport cost
             return db.Items
                 .Where(x => x.SerNumber.Equals(item.SerNumber) &&
-                            x.Price == item.Price &&
                             x.Product_ID == item.Product_ID &&
-                            x.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID &&
                             x.OutgoingTaxGroup_ID == null)
                 .ToList();
         }
@@ -46,20 +43,6 @@ namespace InternalApi.DataAccess
                 .Where(x => x.Product.Name.Contains(productName))
                 .Where(x => barcode == 0 || x.Product.Barcode == barcode)
                 .Where(x => showAll || (!showAll && x.OutgoingTaxGroup_ID == null))
-                .AsEnumerable()
-                .GroupBy(x =>
-                    new
-                    {
-                        x.SerNumber,
-                        x.Price,
-                        x.Product_ID
-                    })
-                .Select(g => new
-                {
-                    item = g.Select(c => c).FirstOrDefault(),
-                    count = g.Count()
-                })
-                .Select(x => { x.item.Quantity = x.count; return x.item; })
                 .ToList();
         }
 

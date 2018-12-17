@@ -208,7 +208,7 @@ namespace InternalApi.DataManagement
                                         if (item == null)
                                         {
                                             item = itemDa.GetItem(db, element.Item.ID);
-                                            item = itemDa.GetNotSoldItems(db, item).ElementAtOrDefault(0);
+                                            item = new ItemDM().GetSameIncomingPriceItems(db, item).ElementAtOrDefault(0);
                                         }
 
                                         if (item != null)
@@ -285,11 +285,11 @@ namespace InternalApi.DataManagement
             invoice.SumNoTax = invoice.Elements.Sum(x => x.Item.Price * x.Item.Quantity);
             if (invoice.Incoming)
             {
-                invoice.Sum = invoice.Elements.Sum(x => (x.Item.Price + x.Item.Price * ((decimal)x.Item.IncomingTaxGroup.Tax / 100)) * x.Item.Quantity);
+                invoice.Sum = invoice.Elements.Sum(x => x.Item.Price + x.Item.Price * ((decimal)x.Item.IncomingTaxGroup.Tax / 100));
             }
             else
             {
-                invoice.Sum = invoice.Elements.Sum(x => (x.Item.Price + x.Item.Price * ((decimal)x.Item.OutgoingTaxGroup.Tax / 100)) * x.Item.Quantity);
+                invoice.Sum = invoice.Elements.Sum(x => x.Item.Price + x.Item.Price * ((decimal)x.Item.OutgoingTaxGroup.Tax / 100));
             }
             return invoice;
         }

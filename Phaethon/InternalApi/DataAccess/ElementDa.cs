@@ -27,22 +27,14 @@ namespace InternalApi.DataAccess
                 .Include(x => x.Item.IncomingTaxGroup)
                 .Include(x => x.Item.OutgoingTaxGroup)
                 .Where(x => x.Invoice_ID == id)
-                .AsEnumerable()
-                .GroupBy(x =>
-                    new
-                    {
-                        x.Item.SerNumber,
-                        x.Item.Price,
-                        x.Item.Product_ID,
-                        x.Item.IncomingTaxGroup_ID
-                    })
-                .Select(g => new
-                {
-                    element = g.Select(c => c).FirstOrDefault(),
-                    count = g.Count()
-                })
-                .Select(x => { x.element.Item.Quantity = x.count; return x.element; })
                 .ToList();
+        }
+
+        internal Element GetItemElement(DatabaseContext db, int id)
+        {
+            return db.Elements
+                .Where(x => x.Invoice.Incoming)
+                .SingleOrDefault(x => x.Item_ID == id);
         }
 
         //gets all similar item, ids in incoming invoice
