@@ -1,6 +1,7 @@
 ﻿//On load
 $(function () {
     $("#deleteInvoice").click(function () {
+        $("#dialog").html("");
         $("#dialog").dialog({
             title: "Delete invoice",
             autoOpen: true,

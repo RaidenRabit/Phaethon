@@ -14,6 +14,7 @@ namespace InternalApi.DataAccess
             db.SaveChanges();
         }
 
+        //gets specific item
         internal Item GetItem(DatabaseContext db, int id)
         {
             return db.Items
@@ -23,6 +24,20 @@ namespace InternalApi.DataAccess
                 .SingleOrDefault(x => x.ID == id);
         }
 
+        //gets all items which are similar items
+        internal List<Item> GetNotSoldItems(DatabaseContext db, Item item)
+        {
+            //include transport cost
+            return db.Items
+                .Where(x => x.SerNumber.Equals(item.SerNumber) &&
+                            x.Price == item.Price &&
+                            x.Product_ID == item.Product_ID &&
+                            x.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID &&
+                            x.OutgoingTaxGroup_ID == null)
+                .ToList();
+        }
+
+        //Gets all items based on search
         internal List<Item> GetItems(DatabaseContext db, string serialNumber, string productName, int barcode, bool showAll)
         {
             return db.Items
@@ -52,17 +67,6 @@ namespace InternalApi.DataAccess
         {
             db.Items.Remove(item);
             return db.SaveChanges() > 0;
-        }
-
-        internal List<Item> GetItemNotSoldItem(DatabaseContext db, Item item)
-        {
-            return db.Items
-                .Where(x => x.SerNumber.Equals(item.SerNumber) &&
-                        x.Price == item.Price &&
-                        x.Product_ID == item.Product_ID &&
-                        x.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID &&
-                        x.OutgoingTaxGroup_ID == null)
-                .ToList();
         }
     }
 }

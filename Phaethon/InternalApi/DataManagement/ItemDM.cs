@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using Core.Model;
 using InternalApi.DataAccess;
 using InternalApi.DataManagement.IDataManagement;
@@ -37,6 +34,7 @@ namespace InternalApi.DataManagement
             }
         }
 
+        //gets item with price + tax + transport
         public Item GetItem(int id)
         {
             using (var db = new DatabaseContext())
@@ -44,7 +42,7 @@ namespace InternalApi.DataManagement
                 Item item = _itemDa.GetItem(db, id);
                 if (item != null)
                 {
-                    item.Quantity = _itemDa.GetItemNotSoldItem(db, item).Count;
+                    item.Quantity = _itemDa.GetNotSoldItems(db, item).Count;
                 }
                 return item;
             }

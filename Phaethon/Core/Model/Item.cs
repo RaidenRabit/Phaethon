@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -40,6 +41,9 @@ namespace Core.Model
         public virtual TaxGroup OutgoingTaxGroup { get; set; }
         [DataMember]
         public int? OutgoingTaxGroup_ID { get; set; }
+
+        [DataMember]
+        public virtual ICollection<Element> Elements { get; set; }
 
         //extra
         [NotMapped]

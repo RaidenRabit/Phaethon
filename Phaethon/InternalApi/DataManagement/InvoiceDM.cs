@@ -208,7 +208,7 @@ namespace InternalApi.DataManagement
                                         if (item == null)
                                         {
                                             item = itemDa.GetItem(db, element.Item.ID);
-                                            item = itemDa.GetItemNotSoldItem(db, item).ElementAtOrDefault(0);
+                                            item = itemDa.GetNotSoldItems(db, item).ElementAtOrDefault(0);
                                         }
 
                                         if (item != null)
