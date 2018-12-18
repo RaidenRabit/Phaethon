@@ -7,7 +7,7 @@
     <script>
         var incoming = "@LanguagePack.Incoming";
         var outgoing = "@LanguagePack.Outgoing";
-        var deleteLabel = "@LanguagePack.DeleteButton";
+        var deleteLabel = "@LanguagePack.Delete";
         var details = "@LanguagePack.Details";
     </script>
     <div id="dialog" style="display: none">
@@ -28,7 +28,7 @@
 
                         <div class="col-sm">
                             <label class="btn btn-info active">
-                                <input id="docNumber" type="text" class="form-control" placeholder="@LanguagePack.InvoiceNumber" /> @LanguagePack.InvoiceNumber
+                                <input id="docNumber" type="text" class="form-control" placeholder="@LanguagePack.Invoice_Number" /> @LanguagePack.Invoice_Number
                             </label>
                         </div>
 
@@ -59,7 +59,7 @@
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
                 <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceList"> @LanguagePack.Invoices
-                    <div style="float: right"><Input type="button" id="newInvoice" class="btn" value="@LanguagePack.NewInvoiceButton"></div>
+                    <div style="float: right"><Input type="button" id="newInvoice" class="btn" value="@LanguagePack.NewInvoice"></div>
                 </div>
 
                 <div id="invoiceList" class="card-body collapse show" style="padding-left: 20px;">
@@ -70,10 +70,10 @@
                                     @LanguagePack.RegistrationNumber
                                 </th>
                                 <th>
-                                    @LanguagePack.InvoiceNumber
+                                    @LanguagePack.Invoice_Number
                                 </th>
                                 <th>
-                                    @LanguagePack.InvoiceType
+                                    @LanguagePack.Invoice_Type
                                 </th>
                                 <th>
                                     @LanguagePack.Date

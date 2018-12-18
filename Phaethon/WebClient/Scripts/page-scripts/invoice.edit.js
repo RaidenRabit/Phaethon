@@ -3,7 +3,7 @@ $(function () {
     $("#deleteInvoice").click(function () {
         $("#dialog").html("");
         $("#dialog").dialog({
-            title: "Delete invoice",
+            title: deleteLabel,
             autoOpen: true,
             modal: true,
             buttons: {

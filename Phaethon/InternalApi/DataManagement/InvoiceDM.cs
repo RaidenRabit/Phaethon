@@ -134,7 +134,7 @@ namespace InternalApi.DataManagement
                                         item.Product_ID = element.Item.Product.ID;
                                         item.SerNumber = element.Item.SerNumber;
                                         item.Price = element.Item.Price;
-                                        item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup_ID;
+                                        item.IncomingTaxGroup_ID = element.Item.IncomingTaxGroup.ID;
                                         
                                         itemDa.CreateOrUpdate(db, item);
 
@@ -214,8 +214,7 @@ namespace InternalApi.DataManagement
                                         if (item != null)
                                         {
                                             item.Product_ID = element.Item.Product.ID;
-                                            item.Price = element.Item.Price;
-                                            item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup_ID;
+                                            item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup.ID;
 
                                             itemDa.CreateOrUpdate(db, item);
 

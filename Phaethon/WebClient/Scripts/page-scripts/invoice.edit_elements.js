@@ -137,7 +137,7 @@ function getProductGroups() {
             for (var i = 0; i < data.length; i++) {
                 htmlText += "<option value='" + data[i].ID + "' " +
                     "data-Margin='" + data[i].Margin + "'>" +
-                    data[i].Name + " " + data[i].Margin + "%" +
+                    data[i].Name +
                     "</option>";
             }
             ProductGroups = htmlText;
@@ -404,7 +404,7 @@ function allowEdit() {
     if ($("#ID").val() != 0) {
         $("input, select").attr("disabled", true);
         $(":submit").parent("div")
-            .append("<input id='edit' type='button' value='Edit' class='btn btn-warning btn-lg btn-block' />");
+            .append("<input id='edit' type='button' value='" + editLabel + "' class='btn btn-warning btn-lg btn-block' />");
         $("#edit").click(function () {
             $("input, select").attr("disabled", false);
             $(this).remove();
@@ -447,7 +447,7 @@ function addNewElement(rowValue, itemId, productId, quantity, serNumber, product
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Product name field is required.' id='Elements_" + rowValue + "__Item_Product_Name' name='Elements[" + rowValue + "].Item.Product.Name' required='required' type='text' value='" + productName + "' " + readonly + "></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-required='The Barcode field is required.' id='Elements_" + rowValue + "__Item_Product_Barcode' name='Elements[" + rowValue + "].Item.Product.Barcode' required='required' type='number' value='" + barcode + "' " + readonly + "></td>" +
         "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Price must be a number.' data-val-required='The Price field is required.' id='Elements_" + rowValue + "__Item_Price' name='Elements[" + rowValue + "].Item.Price' type='number' step='0.01' min='0' value='" + price + "' " + readonly + "></td>" +
-        "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__" + invoiceType + "TaxGroup' name='Elements[" + rowValue + "].Item." + invoiceType + "TaxGroup_ID' required='required'></select></td>" +
+        "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__" + invoiceType + "TaxGroup' name='Elements[" + rowValue + "].Item." + invoiceType + "TaxGroup.ID' required='required'></select></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__ProductGroup' name='Elements[" + rowValue + "].Item.Product.ProductGroup_ID' required='required'></select></td>" +
         "<td><input class='form-control' id='Elements_" + rowValue + "__" + invoiceType + "Price' type='number' " + readonly + "></td>" +
         "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='" + deleteLabel + "' title='" + deleteTitle+"' data-deletable='" + deletable + "'></td>" +

@@ -57,7 +57,6 @@ namespace InternalApi.DataManagement
                 List<Item> items = _itemDa.GetItems(db, serialNumber, productName, barcode, showAll);
                 foreach (Item item in items)
                 {
-                    //changes price in db needs changes
                     item.Price = CalculateIncomingPrice(db, item);
                 }
                 items = items.GroupBy(x =>
@@ -120,7 +119,6 @@ namespace InternalApi.DataManagement
 
                 decimal sum = elements.Sum(x =>
                     x.Item.Price + x.Item.Price * ((decimal)x.Item.IncomingTaxGroup.Tax / 100));
-                //change
                 decimal procent = decimal.Round((sum + transport) / sum, 4);
                 return decimal.Round((item.Price + item.Price * ((decimal)item.IncomingTaxGroup.Tax / 100)) * procent, 2);
             }

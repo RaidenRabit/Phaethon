@@ -8,7 +8,7 @@
 
     <div class="col-sm">
         <div class="form-group">
-            <div class="col-form-label col-md-12">@LanguagePack.DocumentNumberPlaceholder</div>
+            <div class="col-form-label col-md-12">@LanguagePack.DocumentNumber</div>
             <div class="col-md-12">
                 @Html.EditorFor(model => model.DocNumber, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                 @Html.ValidationMessageFor(model => model.DocNumber, "", new { @class = "text-danger" })
@@ -28,7 +28,7 @@
 
     <div class="col-sm">
         <div class="form-group">
-            <div class="col-form-label col-md-12">@LanguagePack.ReceptionDateLabel</div>
+            <div class="col-form-label col-md-12">@LanguagePack.ReceptionDate</div>
             <div class="col-md-12">
                 @Html.EditorFor(model => model.ReceptionDate, new { htmlAttributes = new { @class = "form-control date-picker", @required = "required", onkeydown = "return false", onpaste = "return false" } })
                 @Html.ValidationMessageFor(model => model.ReceptionDate, "", new { @class = "text-danger" })

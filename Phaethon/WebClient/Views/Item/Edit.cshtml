@@ -15,7 +15,7 @@
     @Html.HiddenFor(model => model.Product.ProductGroup.ID)
 
     <div class="form-group">
-        <div class="col-form-label col-md-4">@LanguagePack.SerialNumberLabel</div>
+        <div class="col-form-label col-md-4">@LanguagePack.SerialNumber</div>
         <div class="col-md-10">
             @Html.EditorFor(model => model.SerNumber, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.SerNumber, "", new { @class = "text-danger" })
@@ -23,7 +23,7 @@
     </div>
 
     <div class="form-group">
-        <div class="col-form-label col-md-4">@LanguagePack.ProductNameLabel</div>
+        <div class="col-form-label col-md-4">@LanguagePack.Product_Name</div>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Product.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Product.Name, "", new { @class = "text-danger" })
@@ -31,7 +31,7 @@
     </div>
 
     <div class="form-group">
-        <div class="col-form-label col-md-4">@LanguagePack.ProductBarcodeLabel</div>
+        <div class="col-form-label col-md-4">@LanguagePack.Product_Barcode</div>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Product.Barcode, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Product.Barcode, "", new { @class = "text-danger" })
@@ -57,7 +57,7 @@
     </div>
 
     <div class="form-group">
-        <div class="col-form-label col-md-4">@LanguagePack.ProductGroupNameLabel</div>
+        <div class="col-form-label col-md-4">@LanguagePack.ProductGroup</div>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Product.ProductGroup.Margin, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
             @Html.ValidationMessageFor(model => model.Product.ProductGroup.Margin, "", new { @class = "text-danger" })
@@ -75,7 +75,7 @@
     using (Html.BeginForm("Delete", "Item", FormMethod.Post))
     {
         @Html.HiddenFor(model => model.ID)
-        <input type="submit" value="@LanguagePack.DeleteButton" class="btn btn-danger btn-block" />
+        <input type="submit" value="@LanguagePack.Delete" class="btn btn-danger btn-block" />
     }
 }
 

@@ -21,8 +21,21 @@ namespace InternalApi.DataManagement
         {
             using (var db = new DatabaseContext())
             {
-                return _elementDa.GetInvoiceElements(db, id);
+                return _elementDa.GetInvoiceElements(db, id).GroupBy(x =>
+                        new
+                        {
+                            x.Item.SerNumber,
+                            x.Item.Price,
+                            x.Item.Product_ID
+                        })
+                    .Select(g => new
+                    {
+                        item = g.Select(c => c).FirstOrDefault(),
+                        count = g.Count()
+                    })
+                    .Select(x => { x.item.Item.Quantity = x.count; return x.item; })
+                    .ToList();
             }
         }
-    }
+    } 
 }

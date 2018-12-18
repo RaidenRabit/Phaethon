@@ -38,7 +38,9 @@ namespace InternalApi.DataAccess
         internal List<Item> GetItems(DatabaseContext db, string serialNumber, string productName, int barcode, bool showAll)
         {
             return db.Items
+                .AsNoTracking()
                 .Include(x => x.Product)
+                .Include(x => x.IncomingTaxGroup)
                 .Where(x => x.SerNumber.Contains(serialNumber))
                 .Where(x => x.Product.Name.Contains(productName))
                 .Where(x => barcode == 0 || x.Product.Barcode == barcode)
