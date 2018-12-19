@@ -253,17 +253,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcceptanceTests\AcceptanceTestBase.cs" />
-    <Compile Include="IntegrationTests\CompanyApi.cs" />
-    <Compile Include="IntegrationTests\CustomerApis.cs" />
-    <Compile Include="IntegrationTests\ElementApi.cs" />
-    <Compile Include="IntegrationTests\JobApis.cs" />
+    <Compile Include="IntegrationTests\CompanyTest.cs" />
+    <Compile Include="IntegrationTests\CustomerTest.cs" />
+    <Compile Include="IntegrationTests\ElementTest.cs" />
+    <Compile Include="IntegrationTests\JobTest.cs" />
     <Compile Include="InternalApiFakeServer.cs" />
-    <Compile Include="IntegrationTests\ItemApi.cs" />
-    <Compile Include="IntegrationTests\ProductGroupApi.cs" />
-    <Compile Include="IntegrationTests\ProductApi.cs" />
-    <Compile Include="IntegrationTests\TaxGroupApi.cs" />
+    <Compile Include="IntegrationTests\ItemTest.cs" />
+    <Compile Include="IntegrationTests\ProductGroupTest.cs" />
+    <Compile Include="IntegrationTests\ProductTest.cs" />
+    <Compile Include="IntegrationTests\TaxGroupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IntegrationTests\InvoiceApi.cs" />
+    <Compile Include="IntegrationTests\InvoiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

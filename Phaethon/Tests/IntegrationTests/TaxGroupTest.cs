@@ -9,14 +9,14 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class TaxGroupApi: InternalApiFakeServer
+    public class TaxGroupTest: InternalApiFakeServer
     {
         #region Create
         [Test]
         public async Task Create_NewTaxGroupObject_IsSuccessStatusCodeAndResponseTrue()
         {
             //Setup
-            TaxGroup taxGroup = InvoiceApi.GetElementSeed().Item.IncomingTaxGroup;
+            TaxGroup taxGroup = InvoiceTest.GetElementSeed().Item.IncomingTaxGroup;
             using (var db = new DatabaseContext())
             {
                 db.TaxGroups.Attach(taxGroup);
@@ -38,7 +38,7 @@ namespace Tests.IntegrationTests
         public async Task Create_ExistingTaxGroupObject_IsSuccessStatusCodeAndResponseFalse()
         {
             //Setup
-            TaxGroup taxGroup = InvoiceApi.GetElementSeed().Item.IncomingTaxGroup;
+            TaxGroup taxGroup = InvoiceTest.GetElementSeed().Item.IncomingTaxGroup;
 
             //Act
             var response = await _client.PostAsJsonAsync("TaxGroup/Create", taxGroup);
@@ -70,7 +70,7 @@ namespace Tests.IntegrationTests
         public async Task GetTaxGroups_MethodCalled_IsSuccessStatusCodeAndTaxGroupsReturned()
         {
             //Setup
-            InvoiceApi.GetElementSeed();
+            InvoiceTest.GetElementSeed();
 
             //Act
             var response = await _client.GetAsync("TaxGroup/GetTaxGroups");

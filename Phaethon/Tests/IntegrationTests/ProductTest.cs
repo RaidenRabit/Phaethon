@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class ProductApi: InternalApiFakeServer
+    public class ProductTest: InternalApiFakeServer
     {
         private bool AreProductsEqual(Product firstProduct, Product secondProduct)
         {
@@ -20,7 +20,7 @@ namespace Tests.IntegrationTests
         public async Task GetProduct_CorrectBarcode_IsSuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
-            Product testProduct = InvoiceApi.GetElementSeed().Item.Product;
+            Product testProduct = InvoiceTest.GetElementSeed().Item.Product;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["barcode"] = testProduct.Barcode.ToString();
 

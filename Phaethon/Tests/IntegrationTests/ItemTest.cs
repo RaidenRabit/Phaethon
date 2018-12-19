@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class ItemApi: InternalApiFakeServer
+    public class ItemTest: InternalApiFakeServer
     {
         private bool AreItemsEqual(Item firstItem, Item secondItem)
         {
@@ -33,7 +33,7 @@ namespace Tests.IntegrationTests
         public async Task CreateOrUpdate_NewItemObject_IsSuccessStatusCodeAndResponseTrue()
         {
             //Setup
-            Element element = InvoiceApi.GetElementSeed();
+            Element element = InvoiceTest.GetElementSeed();
             Item item = element.Item;
             item.IncomingTaxGroup = null;
             item.OutgoingTaxGroup = null;
@@ -56,7 +56,7 @@ namespace Tests.IntegrationTests
         public async Task CreateOrUpdate_ExistingItemObject_IsSuccessStatusCodeAndResponseTrue()
         {
             //Setup
-            Element element = InvoiceApi.GetElementSeed();
+            Element element = InvoiceTest.GetElementSeed();
             Item item = element.Item;
 
             //Act
@@ -89,7 +89,7 @@ namespace Tests.IntegrationTests
         public async Task GetItem_CorrectItemId_IsSuccessStatusCodeAndItemReturned()
         {
             //Setup
-            Element element = InvoiceApi.GetElementSeed();
+            Element element = InvoiceTest.GetElementSeed();
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = element.Item.ID.ToString();
 
@@ -124,7 +124,7 @@ namespace Tests.IntegrationTests
         public async Task GetItems_MethodCalled_IsSuccessStatusCodeAndItemsReturned()
         {
             //Setup
-            InvoiceApi.GetElementSeed();
+            InvoiceTest.GetElementSeed();
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["serialNumber"] = "";
             parameters["productName"] = "";
@@ -146,7 +146,7 @@ namespace Tests.IntegrationTests
         public async Task Delete_CorrectID_IsSuccessStatusCodeAndItemDeleted()
         {
             //Setup
-            Element element = InvoiceApi.GetElementSeed();
+            Element element = InvoiceTest.GetElementSeed();
             Item item = element.Item;
             int id = item.ID;
 

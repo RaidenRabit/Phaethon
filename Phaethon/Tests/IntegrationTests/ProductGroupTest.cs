@@ -9,14 +9,14 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class ProductGroupApi: InternalApiFakeServer
+    public class ProductGroupTest: InternalApiFakeServer
     {
         #region Create
         [Test]
         public async Task Create_NewProductGroupObject_IsSuccessStatusCodeAndResponseTrue()
         {
             //Setup
-            ProductGroup productGroup = InvoiceApi.GetElementSeed().Item.Product.ProductGroup;
+            ProductGroup productGroup = InvoiceTest.GetElementSeed().Item.Product.ProductGroup;
             using (var db = new DatabaseContext())
             {
                 db.ProductGroups.Attach(productGroup);
@@ -39,7 +39,7 @@ namespace Tests.IntegrationTests
         public async Task Create_ExistingProductGroupObject_IsSuccessStatusCodeAndResponseFalse()
         {
             //Setup
-            ProductGroup productGroup = InvoiceApi.GetElementSeed().Item.Product.ProductGroup;
+            ProductGroup productGroup = InvoiceTest.GetElementSeed().Item.Product.ProductGroup;
 
             //Act
             var response = await _client.PostAsJsonAsync("ProductGroup/Create", productGroup);
@@ -71,7 +71,7 @@ namespace Tests.IntegrationTests
         public async Task GetProductGroups_MethodCalled_IsSuccessStatusCodeAndProductGroupsReturned()
         {
             //Setup
-            InvoiceApi.GetElementSeed();
+            InvoiceTest.GetElementSeed();
 
             //Act
             var response = await _client.GetAsync("ProductGroup/GetProductGroups");

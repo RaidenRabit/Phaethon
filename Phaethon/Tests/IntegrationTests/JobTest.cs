@@ -12,7 +12,7 @@ using InternalApi.DataAccess;
 
 namespace Tests.IntegrationTests
 {
-    public class JobApis : InternalApiFakeServer
+    public class JobTest : InternalApiFakeServer
     {
 
         Address _address;

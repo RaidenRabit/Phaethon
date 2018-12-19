@@ -7,14 +7,14 @@ using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class ElementApi: InternalApiFakeServer
+    public class ElementTest: InternalApiFakeServer
     {
         #region GetInvoiceElements
         [Test]
         public async Task GetInvoiceElements_CorrectInvoiceId_IsSuccessStatusCodeAndElementsReturned()
         {
             //Setup
-            Element element = InvoiceApi.GetElementSeed();
+            Element element = InvoiceTest.GetElementSeed();
             Invoice invoice = element.Invoice;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = invoice.ID.ToString();

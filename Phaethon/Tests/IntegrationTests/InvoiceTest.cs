@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class InvoiceApi: InternalApiFakeServer
+    public class InvoiceTest: InternalApiFakeServer
     {
         private bool AreInvoicesEqual(Invoice firstInvoice, Invoice secondInvoice)
         {
