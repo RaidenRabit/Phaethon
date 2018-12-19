@@ -7,12 +7,12 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class InternalTestFakeServerBase
+    public class InternalApiFakeServer
     {
         protected HttpClient _client;
         private HttpServer _server;
 
-        public InternalTestFakeServerBase()
+        public InternalApiFakeServer()
         {
         }
 

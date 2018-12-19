@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class CompanyTest: InternalTestFakeServerBase
+    public class CompanyApi: InternalApiFakeServer
     {
         private bool AreCompaniesEqual(Company firstCompany, Company secondCompany)
         {
@@ -24,7 +24,7 @@ namespace Tests.IntegrationTests
         public async Task GetCompany_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
-            Element element = InvoiceTest.GetElementSeed();
+            Element element = InvoiceApi.GetElementSeed();
             Invoice invoice = element.Invoice;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = invoice.Sender.Company.ID.ToString();

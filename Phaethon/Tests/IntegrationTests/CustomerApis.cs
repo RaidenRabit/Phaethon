@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class CustomerTests : InternalTestFakeServerBase
+    public class CustomerApis : InternalApiFakeServer
     {
         private Address _address;
         private Customer _customer;

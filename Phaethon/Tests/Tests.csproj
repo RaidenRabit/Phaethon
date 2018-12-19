@@ -207,6 +207,7 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Pipelines, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Pipelines.4.5.2\lib\netstandard2.0\System.IO.Pipelines.dll</HintPath>
     </Reference>
@@ -243,19 +244,26 @@
     <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IntegrationTests\CompanyTest.cs" />
-    <Compile Include="IntegrationTests\CustomerTests.cs" />
-    <Compile Include="IntegrationTests\ElementTest.cs" />
-    <Compile Include="IntegrationTests\JobTests.cs" />
-    <Compile Include="IntegrationTests\InternalTestFakeServerBase.cs" />
-    <Compile Include="IntegrationTests\ItemTest.cs" />
-    <Compile Include="IntegrationTests\ProductGroupTest.cs" />
-    <Compile Include="IntegrationTests\ProductTest.cs" />
-    <Compile Include="IntegrationTests\TaxGroupTest.cs" />
+    <Compile Include="AcceptanceTests\AcceptanceTestBase.cs" />
+    <Compile Include="IntegrationTests\CompanyApi.cs" />
+    <Compile Include="IntegrationTests\CustomerApis.cs" />
+    <Compile Include="IntegrationTests\ElementApi.cs" />
+    <Compile Include="IntegrationTests\JobApis.cs" />
+    <Compile Include="InternalApiFakeServer.cs" />
+    <Compile Include="IntegrationTests\ItemApi.cs" />
+    <Compile Include="IntegrationTests\ProductGroupApi.cs" />
+    <Compile Include="IntegrationTests\ProductApi.cs" />
+    <Compile Include="IntegrationTests\TaxGroupApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IntegrationTests\InvoiceTest.cs" />
+    <Compile Include="IntegrationTests\InvoiceApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -263,7 +271,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AcceptanceTests\" />
     <Folder Include="UnitTests\" />
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +296,8 @@
     <Error Condition="!Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.11.0\build\NUnit.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.WebDriver.ChromeDriver.2.45.0\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.ChromeDriver.2.45.0\build\Selenium.WebDriver.ChromeDriver.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets" Condition="Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets')" />
+  <Import Project="..\packages\Selenium.WebDriver.ChromeDriver.2.45.0\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.ChromeDriver.2.45.0\build\Selenium.WebDriver.ChromeDriver.targets')" />
 </Project>
