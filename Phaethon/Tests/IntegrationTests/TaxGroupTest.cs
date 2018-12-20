@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class TaxGroupTest: IntergrationTestBase
+    public class TaxGroupTest: IntegrationTestBase
     {
         #region Create
         [Test]

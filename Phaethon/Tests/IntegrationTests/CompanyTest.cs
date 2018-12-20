@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class CompanyTest: IntergrationTestBase
+    public class CompanyTest: IntegrationTestBase
     {
         private bool AreCompaniesEqual(Company firstCompany, Company secondCompany)
         {

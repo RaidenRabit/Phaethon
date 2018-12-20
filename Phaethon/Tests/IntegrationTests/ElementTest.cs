@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class ElementTest: IntergrationTestBase
+    public class ElementTest: IntegrationTestBase
     {
         #region GetInvoiceElements
         [Test]

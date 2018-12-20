@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class ItemTest: IntergrationTestBase
+    public class ItemTest: IntegrationTestBase
     {
         private bool AreItemsEqual(Item firstItem, Item secondItem)
         {

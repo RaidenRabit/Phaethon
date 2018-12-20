@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class ProductTest: IntergrationTestBase
+    public class ProductTest: IntegrationTestBase
     {
         private bool AreProductsEqual(Product firstProduct, Product secondProduct)
         {

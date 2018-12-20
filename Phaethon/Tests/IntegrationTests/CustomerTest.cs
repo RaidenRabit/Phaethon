@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class CustomerTest : IntergrationTestBase
+    public class CustomerTest : IntegrationTestBase
     {
         private Address _address;
         private Customer _customer;

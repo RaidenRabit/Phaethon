@@ -256,7 +256,7 @@
     <Compile Include="IntegrationTests\CompanyTest.cs" />
     <Compile Include="IntegrationTests\CustomerTest.cs" />
     <Compile Include="IntegrationTests\ElementTest.cs" />
-    <Compile Include="IntegrationTests\IntergrationTestBase.cs" />
+    <Compile Include="IntegrationTests\IntegrationTestBase.cs" />
     <Compile Include="IntegrationTests\JobTest.cs" />
     <Compile Include="InternalApiFakeServer.cs" />
     <Compile Include="IntegrationTests\ItemTest.cs" />
