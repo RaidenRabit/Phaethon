@@ -1,53 +1,48 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
-using Newtonsoft.Json;
 using WebClient;
 
 namespace Tests
 {
     public class WebClientFakeServer
     {
-        protected HttpClient _webClient;
-        private HttpServer _webClientServer;
-
-        public HttpClient GetWebClient()
-        {
-            return _webClient;
-        }
-
+        private Process _iisProcess;
+        
         public void StartServer()
         {
-            //set up configuration for the server
-            HttpConfiguration config = new HttpConfiguration();
-            WebApiConfig.Register(config);
+            const int iisPort = 49873;
+            var applicationPath = GetApplicationPath();
+            var programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
-            AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            config.Filters.Add(new Core.Decorators.ExceptionFilter());
-            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
-                = ReferenceLoopHandling.Ignore;
-            config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling
-                = NullValueHandling.Ignore;
-            InternalApi.WebApiConfig.Register(config);
-
-            //create server and client
-            _webClientServer = new HttpServer(config);
-            _webClient = new HttpClient(_webClientServer);
-            _webClient.BaseAddress = new Uri("http://localhost:64007/");
-            _webClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _iisProcess = new Process();
+            _iisProcess.StartInfo.FileName = programFiles + @"\IIS Express\iisexpress.exe";
+            _iisProcess.StartInfo.Arguments = string.Format("/path:{0} /port:{1}", applicationPath, iisPort);
+            _iisProcess.Start();
 
         }
+        protected virtual string GetApplicationPath()
+        {
+            var solutionFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory)));
+            return Path.Combine(solutionFolder, "WebClient");
+        }
+        
 
         public void Dispose()
         {
-            _webClient.Dispose();
-            _webClientServer.Dispose();
+            // Ensure IISExpress is stopped
+            if (_iisProcess.HasExited == false)
+            {
+                _iisProcess.Kill();
+            }
+
         }
+
     }
 }

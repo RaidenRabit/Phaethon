@@ -1,5 +1,7 @@
 ﻿using System.Net.Http;
 using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using Tests.IntegrationTests;
 
 namespace Tests.AcceptanceTests
@@ -8,30 +10,31 @@ namespace Tests.AcceptanceTests
     {
         private InternalApiFakeServer _internalFakeServer;
         private WebClientFakeServer _webClientFakeServer;
-        private HttpClient _internalClient;
-        protected HttpClient _webClient;
+        protected IWebDriver _chromeDriver;
 
         public AcceptanceTestBase()
         {
             _internalFakeServer = new InternalApiFakeServer();
             _webClientFakeServer = new WebClientFakeServer();
+            _chromeDriver = new ChromeDriver();
+            _chromeDriver.Navigate().GoToUrl("http://localhost:49873/");
         }
 
         [SetUp]
         public void TestsSetup()
         {
             _internalFakeServer.StartServer();
-            _internalClient = _internalFakeServer.GetInternalClient();
 
             _webClientFakeServer.StartServer();
-            _webClient = _webClientFakeServer.GetWebClient();
         }
 
         [TearDown]
         public void TestsTearDown()
         {
+            _chromeDriver.Dispose();
             _internalFakeServer.Dispose();
             _webClientFakeServer.Dispose();
+
         }
     }
 }
