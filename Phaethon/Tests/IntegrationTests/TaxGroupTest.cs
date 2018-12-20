@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class TaxGroupTest: InternalApiFakeServer
+    public class TaxGroupTest: IntergrationTestBase
     {
         #region Create
         [Test]
@@ -26,7 +26,7 @@ namespace Tests.IntegrationTests
             }
 
             //Act
-            var response = await _client.PostAsJsonAsync("TaxGroup/Create", taxGroup);
+            var response = await _internalClient.PostAsJsonAsync("TaxGroup/Create", taxGroup);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -41,7 +41,7 @@ namespace Tests.IntegrationTests
             TaxGroup taxGroup = InvoiceTest.GetElementSeed().Item.IncomingTaxGroup;
 
             //Act
-            var response = await _client.PostAsJsonAsync("TaxGroup/Create", taxGroup);
+            var response = await _internalClient.PostAsJsonAsync("TaxGroup/Create", taxGroup);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -56,7 +56,7 @@ namespace Tests.IntegrationTests
             TaxGroup taxGroup = null;
 
             //Act
-            var response = await _client.PostAsJsonAsync("TaxGroup/Create", taxGroup);
+            var response = await _internalClient.PostAsJsonAsync("TaxGroup/Create", taxGroup);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -73,7 +73,7 @@ namespace Tests.IntegrationTests
             InvoiceTest.GetElementSeed();
 
             //Act
-            var response = await _client.GetAsync("TaxGroup/GetTaxGroups");
+            var response = await _internalClient.GetAsync("TaxGroup/GetTaxGroups");
             List<TaxGroup> taxGroups = JsonConvert.DeserializeObject<List<TaxGroup>>(await response.Content.ReadAsStringAsync());
 
             //Assert

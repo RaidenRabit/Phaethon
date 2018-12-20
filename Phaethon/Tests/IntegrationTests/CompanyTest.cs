@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class CompanyTest: InternalApiFakeServer
+    public class CompanyTest: IntergrationTestBase
     {
         private bool AreCompaniesEqual(Company firstCompany, Company secondCompany)
         {
@@ -30,7 +30,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = invoice.Sender.Company.ID.ToString();
 
             //Act
-            var response = await _client.GetAsync("Company/GetCompany?" + parameters);
+            var response = await _internalClient.GetAsync("Company/GetCompany?" + parameters);
             Company company = JsonConvert.DeserializeObject<Company>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -46,7 +46,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = 0.ToString();
 
             //Act
-            var response = await _client.GetAsync("Company/GetCompany?" + parameters);
+            var response = await _internalClient.GetAsync("Company/GetCompany?" + parameters);
             Company company = JsonConvert.DeserializeObject<Company>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -62,7 +62,7 @@ namespace Tests.IntegrationTests
             //Setup
 
             //Act
-            var response = await _client.GetAsync("Company/GetCompanies");
+            var response = await _internalClient.GetAsync("Company/GetCompanies");
             List<Company> companies = JsonConvert.DeserializeObject<List<Company>>(await response.Content.ReadAsStringAsync());
 
             //Assert

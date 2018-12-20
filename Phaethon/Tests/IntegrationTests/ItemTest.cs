@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class ItemTest: InternalApiFakeServer
+    public class ItemTest: IntergrationTestBase
     {
         private bool AreItemsEqual(Item firstItem, Item secondItem)
         {
@@ -44,7 +44,7 @@ namespace Tests.IntegrationTests
             }
 
             //Act
-            var response = await _client.PostAsJsonAsync("Item/CreateOrUpdate", item);
+            var response = await _internalClient.PostAsJsonAsync("Item/CreateOrUpdate", item);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -60,7 +60,7 @@ namespace Tests.IntegrationTests
             Item item = element.Item;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Item/CreateOrUpdate", item);
+            var response = await _internalClient.PostAsJsonAsync("Item/CreateOrUpdate", item);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -75,7 +75,7 @@ namespace Tests.IntegrationTests
             Item item = null;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Item/CreateOrUpdate", item);
+            var response = await _internalClient.PostAsJsonAsync("Item/CreateOrUpdate", item);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -94,7 +94,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = element.Item.ID.ToString();
 
             //Act
-            var response = await _client.GetAsync("Item/GetItem?" + parameters);
+            var response = await _internalClient.GetAsync("Item/GetItem?" + parameters);
             Item item = JsonConvert.DeserializeObject<Item>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -110,7 +110,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = 0.ToString();
 
             //Act
-            var response = await _client.GetAsync("Item/GetItem?" + parameters);
+            var response = await _internalClient.GetAsync("Item/GetItem?" + parameters);
             Item dbItem = JsonConvert.DeserializeObject<Item>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -132,7 +132,7 @@ namespace Tests.IntegrationTests
             parameters["showAll"] = true.ToString();
 
             //Act
-            var response = await _client.GetAsync("Item/GetItems?" + parameters);
+            var response = await _internalClient.GetAsync("Item/GetItems?" + parameters);
             List<Item> items = JsonConvert.DeserializeObject<List<Item>>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -151,7 +151,7 @@ namespace Tests.IntegrationTests
             int id = item.ID;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Item/Delete", id);
+            var response = await _internalClient.PostAsJsonAsync("Item/Delete", id);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -166,7 +166,7 @@ namespace Tests.IntegrationTests
             int id = 0;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Item/Delete", id);
+            var response = await _internalClient.PostAsJsonAsync("Item/Delete", id);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert

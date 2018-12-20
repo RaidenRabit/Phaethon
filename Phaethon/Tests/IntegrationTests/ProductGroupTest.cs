@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class ProductGroupTest: InternalApiFakeServer
+    public class ProductGroupTest: IntergrationTestBase
     {
         #region Create
         [Test]
@@ -27,7 +27,7 @@ namespace Tests.IntegrationTests
             }
 
             //Act
-            var response = await _client.PostAsJsonAsync("ProductGroup/Create", productGroup);
+            var response = await _internalClient.PostAsJsonAsync("ProductGroup/Create", productGroup);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -42,7 +42,7 @@ namespace Tests.IntegrationTests
             ProductGroup productGroup = InvoiceTest.GetElementSeed().Item.Product.ProductGroup;
 
             //Act
-            var response = await _client.PostAsJsonAsync("ProductGroup/Create", productGroup);
+            var response = await _internalClient.PostAsJsonAsync("ProductGroup/Create", productGroup);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -57,7 +57,7 @@ namespace Tests.IntegrationTests
             ProductGroup productGroup = null;
 
             //Act
-            var response = await _client.PostAsJsonAsync("ProductGroup/Create", productGroup);
+            var response = await _internalClient.PostAsJsonAsync("ProductGroup/Create", productGroup);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -74,7 +74,7 @@ namespace Tests.IntegrationTests
             InvoiceTest.GetElementSeed();
 
             //Act
-            var response = await _client.GetAsync("ProductGroup/GetProductGroups");
+            var response = await _internalClient.GetAsync("ProductGroup/GetProductGroups");
             List<ProductGroup> productGroups = JsonConvert.DeserializeObject<List<ProductGroup>>(await response.Content.ReadAsStringAsync());
 
             //Assert

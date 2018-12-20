@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class CustomerTest : InternalApiFakeServer
+    public class CustomerTest : IntergrationTestBase
     {
         private Address _address;
         private Customer _customer;
@@ -41,7 +41,7 @@ namespace Tests.IntegrationTests
             };
 
             //Act
-            var result = await _client.PostAsJsonAsync("Customer/ReadAll", customerQueryFilter);
+            var result = await _internalClient.PostAsJsonAsync("Customer/ReadAll", customerQueryFilter);
             string json = await result.Content.ReadAsStringAsync();
             List<Customer> jobs = JsonConvert.DeserializeObject<List<Customer>>(json);
 

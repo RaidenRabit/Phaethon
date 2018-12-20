@@ -256,6 +256,7 @@
     <Compile Include="IntegrationTests\CompanyTest.cs" />
     <Compile Include="IntegrationTests\CustomerTest.cs" />
     <Compile Include="IntegrationTests\ElementTest.cs" />
+    <Compile Include="IntegrationTests\IntergrationTestBase.cs" />
     <Compile Include="IntegrationTests\JobTest.cs" />
     <Compile Include="InternalApiFakeServer.cs" />
     <Compile Include="IntegrationTests\ItemTest.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="IntegrationTests\TaxGroupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\InvoiceTest.cs" />
+    <Compile Include="WebClientFakeServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -12,7 +12,7 @@ using InternalApi.DataAccess;
 
 namespace Tests.IntegrationTests
 {
-    public class JobTest : InternalApiFakeServer
+    public class JobTest : IntergrationTestBase
     {
 
         Address _address;
@@ -38,7 +38,7 @@ namespace Tests.IntegrationTests
             var content = new StringContent(json);
 
             //Act
-            var response = await _client.PostAsync("/Job/InsertOrUpdate", content);
+            var response = await _internalClient.PostAsync("/Job/InsertOrUpdate", content);
             var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -52,7 +52,7 @@ namespace Tests.IntegrationTests
             var content = new StringContent("");
 
             //Act
-            var response = await _client.PostAsync("/Job/InsertOrUpdate", content);
+            var response = await _internalClient.PostAsync("/Job/InsertOrUpdate", content);
 
             //Assert
             Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
@@ -70,7 +70,7 @@ namespace Tests.IntegrationTests
             int id = jobDa.InsertOrUpdate(_job);
 
             //Act
-            var result = await _client.GetAsync($"/Job/Read?id={id}");
+            var result = await _internalClient.GetAsync($"/Job/Read?id={id}");
             string json = await result.Content.ReadAsStringAsync();
             Job job = JsonConvert.DeserializeObject<Job>(json);
 
@@ -88,7 +88,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = "";
 
             //Act
-            var result = await _client.GetAsync("Job/Read?" + parameters);
+            var result = await _internalClient.GetAsync("Job/Read?" + parameters);
 
             //Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);//check if internal server error
@@ -103,7 +103,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = "-1";
 
             //Act
-            var result = await _client.GetAsync("Job/Read?" + parameters);
+            var result = await _internalClient.GetAsync("Job/Read?" + parameters);
 
             //Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);//check if internal server error
@@ -117,7 +117,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = "as";
 
             //Act
-            var result = await _client.GetAsync("Job/Read?" + parameters);
+            var result = await _internalClient.GetAsync("Job/Read?" + parameters);
 
             //Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);//check if internal server error
@@ -136,7 +136,7 @@ namespace Tests.IntegrationTests
             _jobDa.InsertOrUpdate(_job);
 
             //Act
-            var result = await _client.PostAsync("Job/ReadAll", null);
+            var result = await _internalClient.PostAsync("Job/ReadAll", null);
             string json = await result.Content.ReadAsStringAsync();
             List<Job> jobs = JsonConvert.DeserializeObject<List<Job>>(json);
 
@@ -156,7 +156,7 @@ namespace Tests.IntegrationTests
             _jobDa.InsertOrUpdate(_job);
 
             //Act
-            var result = await _client.PostAsJsonAsync("Job/ReadAll", new JobQueryFilter());
+            var result = await _internalClient.PostAsJsonAsync("Job/ReadAll", new JobQueryFilter());
             string json = await result.Content.ReadAsStringAsync();
             List<Job> jobs = JsonConvert.DeserializeObject<List<Job>>(json);
 
@@ -189,7 +189,7 @@ namespace Tests.IntegrationTests
             };
 
             //Act
-            var result = await _client.PostAsJsonAsync("Job/ReadAll", jobQueryFilter);
+            var result = await _internalClient.PostAsJsonAsync("Job/ReadAll", jobQueryFilter);
             string json = await result.Content.ReadAsStringAsync();
             List<Job> jobs = JsonConvert.DeserializeObject<List<Job>>(json);
 
@@ -214,7 +214,7 @@ namespace Tests.IntegrationTests
             _job.Customer.Address = _address;
 
             //Act
-            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var response = await _internalClient.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
             var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
             Job putJob = jobDa.Read(deserializedResponse);
 
@@ -236,7 +236,7 @@ namespace Tests.IntegrationTests
             _job.Customer.Address = _address;
 
             //Act
-            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var response = await _internalClient.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
             var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
             Job putJob = jobDa.Read(deserializedResponse);
 
@@ -256,7 +256,7 @@ namespace Tests.IntegrationTests
             _job.JobName = "testChangedJobName";
 
             //Act
-            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var response = await _internalClient.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
             var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
             Job putJob = jobDa.Read(deserializedResponse);
 
@@ -279,7 +279,7 @@ namespace Tests.IntegrationTests
             _job.JobStatus = JobStatus_enum.InProgress;
 
             //Act
-            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var response = await _internalClient.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
             var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
             Job putJob = jobDa.Read(deserializedResponse);
 
@@ -302,7 +302,7 @@ namespace Tests.IntegrationTests
             _job.JobStatus = JobStatus_enum.Completed;
 
             //Act
-            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var response = await _internalClient.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
             var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
             Job putJob = jobDa.Read(deserializedResponse);
 
@@ -324,7 +324,7 @@ namespace Tests.IntegrationTests
             _job = new Job { ID = job.ID, Customer = job.Customer, JobName = "testChangedJobName" };
 
             //Act
-            var response = await _client.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
+            var response = await _internalClient.PostAsJsonAsync("/Job/InsertOrUpdate", _job);
 
             //Assert
             Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest);
