@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class ElementTest: InternalTestFakeServerBase
+    public class ElementTest: IntegrationTestBase
     {
         #region GetInvoiceElements
         [Test]
@@ -20,7 +20,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = invoice.ID.ToString();
 
             //Act
-            var response = await _client.GetAsync("Element/GetInvoiceElements?" + parameters);
+            var response = await _internalClient.GetAsync("Element/GetInvoiceElements?" + parameters);
             List<Element> invoiceElements = JsonConvert.DeserializeObject<List<Element>>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -36,7 +36,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = 0.ToString();
 
             //Act
-            var response = await _client.GetAsync("Element/GetInvoiceElements?" + parameters);
+            var response = await _internalClient.GetAsync("Element/GetInvoiceElements?" + parameters);
             List<Element> invoiceElements = JsonConvert.DeserializeObject<List<Element>>(await response.Content.ReadAsStringAsync());
 
             //Assert
