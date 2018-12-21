@@ -9,8 +9,7 @@ namespace InternalApi.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            ContextKey = "InternalApi.DataAccess.DatabaseContext";
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(InternalApi.DataAccess.DatabaseContext context)
