@@ -21,7 +21,14 @@ namespace InternalApi.DataManagement
         {
             using (var db = new DatabaseContext())
             {
-                return _elementDa.GetInvoiceElements(db, id).GroupBy(x =>
+                ItemDM itemDm = new ItemDM();
+                InvoiceDM invoiceDm = new InvoiceDM();
+                List<Element> elements = _elementDa.GetInvoiceElements(db, id);
+                if (!invoiceDm.GetInvoice(id).Incoming)
+                { 
+                    elements.ForEach(x => x.Item.Price = itemDm.CalculateIncomingPrice(db, x.Item));
+                }
+                return elements.GroupBy(x =>
                         new
                         {
                             x.Item.SerNumber,

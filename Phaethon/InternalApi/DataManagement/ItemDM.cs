@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Core.Model;
@@ -43,8 +44,9 @@ namespace InternalApi.DataManagement
                 Item item = _itemDa.GetItem(db, id);
                 if (item != null)
                 {
-                    item.Price = CalculateIncomingPrice(db, item);
-                    item.Quantity = GetSameIncomingPriceItems(db, item).Count;
+                    Tuple<List<Item>, decimal> tuple = GetSameIncomingPriceItems(db, item);
+                    item.Quantity = tuple.Item1.Count;
+                    item.Price = tuple.Item2;
                 }
                 return item;
             }
@@ -91,27 +93,30 @@ namespace InternalApi.DataManagement
             }
         }
         
-        public List<Item> GetSameIncomingPriceItems(DatabaseContext db, Item item)
+        public Tuple<List<Item>, decimal> GetSameIncomingPriceItems(DatabaseContext db, Item item)
         {
+            Tuple<List<Item>, decimal> tuple;
             List<Item> items = new List<Item>();
+            decimal price = CalculateIncomingPrice(db, item);
             foreach (Item tempItem in _itemDa.GetNotSoldItems(db, item))
             {
-                tempItem.Price = CalculateIncomingPrice(db, tempItem);
+                decimal tempPrice = CalculateIncomingPrice(db, tempItem);
 
-                if (item.Price == tempItem.Price)
+                if (price == tempPrice)
                 {
                     items.Add(tempItem);
                 }
             }
-            return items;
+            tuple = new Tuple<List<Item>, decimal>(items, price);
+            return tuple;
         }
 
-        private decimal CalculateIncomingPrice(DatabaseContext db, Item item)
+        public decimal CalculateIncomingPrice(DatabaseContext db, Item item)
         {
             InvoiceDa invoiceDa = new InvoiceDa();
             ElementDa elementDa = new ElementDa();
 
-            Element element = elementDa.GetItemElement(db, item.ID);
+            Element element = elementDa.GetItemElement(db, item.ID, true);
             if (element != null)//if item was added with invoice
             {
                 List<Element> elements = elementDa.GetInvoiceElements(db, element.Invoice_ID);
@@ -123,6 +128,13 @@ namespace InternalApi.DataManagement
                 return decimal.Round((item.Price + item.Price * ((decimal)item.IncomingTaxGroup.Tax / 100)) * procent, 2);
             }
             return item.Price;
+        }
+        public decimal CalculateOutgoingPrice(DatabaseContext db, Item item)
+        {
+            decimal price = CalculateIncomingPrice(db, item);
+            price = price + price * ((decimal)item.Product.ProductGroup.Margin / 100);
+            price = price + price * ((decimal)item.IncomingTaxGroup.Tax / 100);
+            return decimal.Round(price, 2);
         }
     }
 }

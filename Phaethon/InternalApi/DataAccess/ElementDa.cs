@@ -23,45 +23,32 @@ namespace InternalApi.DataAccess
         internal List<Element> GetInvoiceElements(DatabaseContext db, int id)
         {
             return db.Elements
-                .Include(x => x.Item.Product)
+                .Include(x => x.Item.Product.ProductGroup)
                 .Include(x => x.Item.IncomingTaxGroup)
                 .Include(x => x.Item.OutgoingTaxGroup)
                 .Where(x => x.Invoice_ID == id)
                 .ToList();
         }
 
-        internal Element GetItemElement(DatabaseContext db, int id)
+        internal Element GetItemElement(DatabaseContext db, int id, bool incoming)
         {
             return db.Elements
-                .Where(x => x.Invoice.Incoming)
+                .Where(x => (incoming && x.Invoice.Incoming) || (!incoming && !x.Invoice.Incoming))
                 .SingleOrDefault(x => x.Item_ID == id);
         }
 
-        //gets all similar item, ids in incoming invoice
-        internal List<int> GetSameItemIdsInIncomingInvoice(DatabaseContext db, Item item, int invoiceId)
+        //gets all similar item, ids in invoice
+        internal List<int> GetSameItemIdsFromInvoice(DatabaseContext db, Item item, int invoiceId, bool incoming)
         {
             var b = db.Elements
                 .Where(x => x.Invoice_ID == invoiceId &&
                             x.Item.SerNumber.Equals(item.SerNumber) &&
                             x.Item.Price == item.Price &&
                             x.Item.Product_ID == item.Product_ID &&
-                            x.Item.IncomingTaxGroup_ID == item.IncomingTaxGroup_ID)
+                            (incoming && x.Item.Product_ID == item.Product_ID || !incoming && x.Item.OutgoingTaxGroup_ID == item.OutgoingTaxGroup_ID))
                 .Select(x => x.Item_ID)
                 .ToList();
             return b;
-        }
-
-        //gets all similar item, ids in outgoing invoice
-        internal List<int> GetSameItemIdsInOutgoingInvoice(DatabaseContext db, Item item, int invoiceId)
-        {
-            return db.Elements
-                .Where(x => x.Invoice_ID == invoiceId &&
-                            x.Item.SerNumber.Equals(item.SerNumber) &&
-                            x.Item.Price == item.Price &&
-                            x.Item.Product_ID == item.Product_ID &&
-                            x.Item.OutgoingTaxGroup_ID == item.OutgoingTaxGroup_ID)
-                .Select(x => x.Item_ID)
-                .ToList();
         }
     }
 }

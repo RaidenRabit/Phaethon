@@ -455,11 +455,5 @@ function addNewElement(rowValue, itemId, productId, quantity, serNumber, product
     ItemChange(rowValue);
     $("#Elements_" + rowValue + "__ProductGroup").val(productGroupId);
     $("#Elements_" + rowValue + "__" + invoiceType + "TaxGroup").val(taxGroupId);
-    if (incoming) {
-        $("#Elements_" + rowValue + "__Item_Price").change();
-    } else {
-        if (price == 0) {
-            $("#Elements_" + rowValue + "__Price").change();
-        }
-    }
+    $("#Elements_" + rowValue + "__Item_Price").change();
 }

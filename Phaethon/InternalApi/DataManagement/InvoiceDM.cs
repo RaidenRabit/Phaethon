@@ -84,7 +84,7 @@ namespace InternalApi.DataManagement
                                 List<int> itemIds = new List<int>();
                                 if (item != null)
                                 {
-                                    itemIds = elementDa.GetSameItemIdsInIncomingInvoice(db, item, invoice.ID);
+                                    itemIds = elementDa.GetSameItemIdsFromInvoice(db, item, invoice.ID, true);
                                 }
 
                                 productDa.CreateOrUpdate(db, element.Item.Product);
@@ -153,16 +153,16 @@ namespace InternalApi.DataManagement
                             foreach (Element element in elements)
                             {
                                 Item item = itemDa.GetItem(db, element.Item.ID);
-                                List<int> itemIds = elementDa.GetSameItemIdsInOutgoingInvoice(db, item, invoice.ID);
+                                List<int> sameItemIds = elementDa.GetSameItemIdsFromInvoice(db, item, invoice.ID, false);//gets similar items in invoice
 
                                 productDa.CreateOrUpdate(db, element.Item.Product);
 
                                 //removes from invoice if count was reduced
-                                if (itemIds.Count > element.Item.Quantity)
+                                if (sameItemIds.Count > element.Item.Quantity)
                                 {
-                                    int removedCount = itemIds.Count - element.Item.Quantity;
+                                    int removedCount = sameItemIds.Count - element.Item.Quantity;
                                     List<int> removedItemIds = new List<int>();
-                                    foreach (int i in itemIds)
+                                    foreach (int i in sameItemIds)
                                     {
                                         item = itemDa.GetItem(db, i);
                                         if (removedCount > 0)
@@ -185,12 +185,14 @@ namespace InternalApi.DataManagement
                                             break;
                                         }
                                     }
-                                    itemIds = itemIds.Except(removedItemIds).ToList();
+                                    sameItemIds = sameItemIds.Except(removedItemIds).ToList();
                                 }
 
                                 for (int i = 0; i < element.Item.Quantity; i++)
                                 {
-                                    item = itemDa.GetItem(db, itemIds.ElementAtOrDefault(i));
+                                    //tries to get the item
+                                    item = itemDa.GetItem(db, sameItemIds.ElementAtOrDefault(i));
+
                                     if (element.Item.Delete)//on delete of outgoing make item not sold and removes from invoice
                                     {
                                         item.OutgoingTaxGroup_ID = null;
@@ -205,17 +207,17 @@ namespace InternalApi.DataManagement
                                     }
                                     else
                                     {
-                                        if (item == null)
+                                        if (item == null)//if item not found take same, but nut sold
                                         {
                                             item = itemDa.GetItem(db, element.Item.ID);
-                                            item = new ItemDM().GetSameIncomingPriceItems(db, item).ElementAtOrDefault(0);
+                                            item = new ItemDM().GetSameIncomingPriceItems(db, item).Item1.FirstOrDefault();
                                         }
 
                                         if (item != null)
                                         {
                                             item.Product_ID = element.Item.Product.ID;
                                             item.OutgoingTaxGroup_ID = element.Item.OutgoingTaxGroup.ID;
-
+                                            
                                             itemDa.CreateOrUpdate(db, item);
 
                                             Element tempElement = new Element
@@ -281,14 +283,20 @@ namespace InternalApi.DataManagement
             ElementDa elementDa = new ElementDa();
             Invoice invoice = _invoiceDa.GetInvoice(db, id);
             invoice.Elements = elementDa.GetInvoiceElements(db, invoice.ID);
-            invoice.SumNoTax = invoice.Elements.Sum(x => x.Item.Price * x.Item.Quantity);
+            //sets the price with and without taxes
             if (invoice.Incoming)
             {
+                invoice.SumNoTax = invoice.Elements.Sum(x => x.Item.Price);
+
                 invoice.Sum = invoice.Elements.Sum(x => x.Item.Price + x.Item.Price * ((decimal)x.Item.IncomingTaxGroup.Tax / 100));
+                invoice.Sum += invoice.Transport;
             }
             else
             {
-                invoice.Sum = invoice.Elements.Sum(x => x.Item.Price + x.Item.Price * ((decimal)x.Item.OutgoingTaxGroup.Tax / 100));
+                //should be improved for performance
+                ItemDM itemDm = new ItemDM();
+                invoice.SumNoTax = invoice.Elements.Sum(x => itemDm.CalculateIncomingPrice(db, x.Item));
+                invoice.Sum = invoice.Elements.Sum(x => itemDm.CalculateOutgoingPrice(db, x.Item)) + invoice.Transport;
             }
             return invoice;
         }
