@@ -25,8 +25,9 @@ namespace WebClient.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            Session["Username"] = "";
             return View();
-            
+
         }
 
         [HttpPost]
@@ -39,6 +40,7 @@ namespace WebClient.Controllers
                 if (deserializedResponse != 0)
                 {
                     Session["ID"] = deserializedResponse;
+                    Session["Username"] = loginModel.Username + " ";
                     return RedirectToAction("Edit", "Login");
                 }
             }

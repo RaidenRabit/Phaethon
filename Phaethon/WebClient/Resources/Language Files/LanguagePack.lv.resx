@@ -407,4 +407,16 @@
   <data name="Back" xml:space="preserve">
     <value>Atgriezties</value>
   </data>
+  <data name="LogIn" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LogOff" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value />
+  </data>
 </root>

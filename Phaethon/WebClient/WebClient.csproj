@@ -431,9 +431,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Invoice\Edit.cshtml" />
-    <Content Include="Views\Job\Index.cshtml" />
-    <Content Include="Views\Job\_editJob.cshtml" />
     <Content Include="Views\Login\Edit.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>

@@ -13,20 +13,16 @@ namespace Tests.IntegrationTests
 {
    public class LoginTest : InternalTestFakeServerBase
     {
-        private Login _userModel;
         private Login _userModel2;
-        private string _name;
-        private string _name2;
-        private string _originalPass;
         private LoginDa _loginDa;
 
-        private void InitializeData()
+        [SetUp]
+        public void InitializeData()
         {
-            _userModel = new Login { Username = "Subject1", Password = "12355557" };
+            
             _userModel2 = new Login { Username = "Subject2", Password = "123456" };
 
             _userModel2.Salt = GenerateSalt();
-            _originalPass = _userModel2.Password;
             _userModel2.Password = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(_userModel2.Password), _userModel2.Salt));
             _loginDa = new LoginDa { }; 
 
@@ -63,7 +59,8 @@ namespace Tests.IntegrationTests
         public async Task Login_CorrectLoginInfo_OK()
         {
             //Setup
-            InitializeData();
+            var _originalPass = "123456";
+
             _userModel2.Password = _originalPass;
 
             //Act
@@ -79,7 +76,6 @@ namespace Tests.IntegrationTests
         public async Task Login_NullPasswordLoginInfo_BadRequest()
         {
             //Setup
-            InitializeData();
             
             //Act
             _userModel2.Password = null;
@@ -94,7 +90,6 @@ namespace Tests.IntegrationTests
         public async Task Login_NullUserNameLoginInfo_BadRequest()
         {
             //Setup
-            InitializeData();
 
             //Act
             _userModel2.Username = null;
@@ -102,6 +97,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            _userModel2.Username = "Subject2";
 
         }
         #endregion
@@ -111,8 +107,6 @@ namespace Tests.IntegrationTests
         public async Task Delete_CorrectLoginInfo_OK()
         {
             // Setup
-           
-                InitializeData();
            
             //Act          
             var response = await _client.PostAsJsonAsync("Login/Delete", _userModel2.ID.ToString());
@@ -127,15 +121,13 @@ namespace Tests.IntegrationTests
         public async Task New_User_OK()
         {
             // Setup
+            Cleanup();
+
             _userModel2 = new Login { Username = "Subject2", Password = "123456" };
             //Act
             var response = await _client.PostAsJsonAsync("Login/CreateOrUpdate", _userModel2);
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            
-
-
-
         }
         #endregion
 
@@ -144,15 +136,20 @@ namespace Tests.IntegrationTests
         public async Task Edit_User_OK()
         {
             // Setup
-            InitializeData();
-            _name = _userModel2.Username;
-            _userModel2.Username = "Maybe";
-            _name2 = _userModel2.Username;
+            var name = _userModel2.Username;
+            
+            using (var db = new DatabaseContext())
+            {
+                _userModel2.Username = "Maybe";
+                _loginDa.CreateOrUpdate(db, _userModel2);
+                _userModel2 = db.Login.SingleOrDefault(a => a.Username.Equals(_userModel2.Username));
+            }
+            var name2 = _userModel2.Username;
             //Act
             var response = await _client.PostAsJsonAsync("Login/CreateOrUpdate", _userModel2);
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.AreNotEqual(_name, _name2);
+            Assert.AreNotEqual(name, name2);
         }
         #endregion
 

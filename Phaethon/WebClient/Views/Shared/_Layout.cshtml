@@ -10,7 +10,8 @@
         }
     }
     
-   
+
+
 }
 
 <!DOCTYPE html>
@@ -56,7 +57,10 @@
             </div>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li>@Html.ActionLink("LogOff", "Index", "Login", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+            <li>@Html.ActionLink(LanguagePack.LogOff, "Index", "Login", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" >
+            <li>@Session["Username"].ToString() .navbar-inverse { color : #FFFFFF !important }</li>
         </ul>
         <div class="float-lg-right">
             <div class="btn-group navbar-collapse">
