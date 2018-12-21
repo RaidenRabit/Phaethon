@@ -24,12 +24,15 @@ namespace Tests
             _iisProcess = new Process();
             _iisProcess.StartInfo.FileName = programFiles + @"\IIS Express\iisexpress.exe";
             _iisProcess.StartInfo.Arguments = string.Format("/path:{0} /port:{1}", applicationPath, iisPort);
+            _iisProcess.StartInfo.CreateNoWindow = true;
+            _iisProcess.StartInfo.RedirectStandardOutput = true;
+            _iisProcess.StartInfo.UseShellExecute = false;
             _iisProcess.Start();
 
         }
         protected virtual string GetApplicationPath()
         {
-            var solutionFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory)));
+            var solutionFolder = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory))));
             return Path.Combine(solutionFolder, "WebClient");
         }
         

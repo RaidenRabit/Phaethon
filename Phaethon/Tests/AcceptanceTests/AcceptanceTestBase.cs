@@ -16,8 +16,10 @@ namespace Tests.AcceptanceTests
         {
             _internalFakeServer = new InternalApiFakeServer();
             _webClientFakeServer = new WebClientFakeServer();
-            _chromeDriver = new ChromeDriver();
-            _chromeDriver.Navigate().GoToUrl("http://localhost:49873/");
+
+            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            chromeDriverService.HideCommandPromptWindow = true;
+            _chromeDriver = new ChromeDriver(chromeDriverService, new ChromeOptions());
         }
 
         [SetUp]
@@ -26,6 +28,7 @@ namespace Tests.AcceptanceTests
             _internalFakeServer.StartServer();
 
             _webClientFakeServer.StartServer();
+            _chromeDriver.Navigate().GoToUrl("http://localhost:49873/");
         }
 
         [TearDown]
