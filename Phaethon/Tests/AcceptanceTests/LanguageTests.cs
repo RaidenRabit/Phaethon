@@ -7,6 +7,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Tests.AcceptanceTests
 {
+    [Category("Acceptance")]
     public class LanguageTests: AcceptanceTestBase
     {
         [Test]
