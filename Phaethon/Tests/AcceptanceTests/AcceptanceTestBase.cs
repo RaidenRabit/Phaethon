@@ -8,13 +8,11 @@ namespace Tests.AcceptanceTests
 {
     public class AcceptanceTestBase
     {
-        private InternalApiFakeServer _internalFakeServer;
         private WebClientFakeServer _webClientFakeServer;
         protected IWebDriver _chromeDriver;
 
         public AcceptanceTestBase()
         {
-            _internalFakeServer = new InternalApiFakeServer();
             _webClientFakeServer = new WebClientFakeServer();
 
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
@@ -25,17 +23,15 @@ namespace Tests.AcceptanceTests
         [SetUp]
         public void TestsSetup()
         {
-            _internalFakeServer.StartServer();
 
             _webClientFakeServer.StartServer();
             _chromeDriver.Navigate().GoToUrl("http://localhost:49873/");
         }
-
+        
         [TearDown]
         public void TestsTearDown()
         {
             _chromeDriver.Dispose();
-            _internalFakeServer.Dispose();
             _webClientFakeServer.Dispose();
 
         }
