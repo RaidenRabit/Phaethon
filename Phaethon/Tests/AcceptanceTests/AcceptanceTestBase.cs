@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using Tests.IntegrationTests;
 
 namespace Tests.AcceptanceTests
@@ -9,15 +10,15 @@ namespace Tests.AcceptanceTests
     public class AcceptanceTestBase
     {
         private WebClientFakeServer _webClientFakeServer;
-        protected IWebDriver _chromeDriver;
+        protected IWebDriver _firefoxDriver;
 
         public AcceptanceTestBase()
         {
             _webClientFakeServer = new WebClientFakeServer();
 
-            var chromeDriverService = ChromeDriverService.CreateDefaultService();
-            chromeDriverService.HideCommandPromptWindow = true;
-            _chromeDriver = new ChromeDriver(chromeDriverService, new ChromeOptions());
+            var firefoxDriverService = FirefoxDriverService.CreateDefaultService();
+            firefoxDriverService.HideCommandPromptWindow = true;
+            _firefoxDriver = new FirefoxDriver(firefoxDriverService, new FirefoxOptions());
         }
 
         [SetUp]
@@ -25,13 +26,13 @@ namespace Tests.AcceptanceTests
         {
 
             _webClientFakeServer.StartServer();
-            _chromeDriver.Navigate().GoToUrl("http://localhost:49873/");
+            _firefoxDriver.Navigate().GoToUrl("http://localhost:49873/");
         }
         
         [TearDown]
         public void TestsTearDown()
         {
-            _chromeDriver.Dispose();
+            _firefoxDriver.Dispose();
             _webClientFakeServer.Dispose();
 
         }
