@@ -14,6 +14,7 @@ namespace Tests
     public class WebClientFakeServer
     {
         private Process _iisProcess;
+        private Process _iisProcess2;
         
         public void StartServer()
         {
@@ -21,21 +22,22 @@ namespace Tests
             var internalApiApplicationPath = GetApplicationPath("InternalApi");
 
             KillAllIIS();
-            IISProcess(49873, webClientApplicationPath);
-            IISProcess(64007, internalApiApplicationPath);
+            _iisProcess = IISProcess(49873, webClientApplicationPath);
+            _iisProcess2 = IISProcess(64007, internalApiApplicationPath);
 
         }
 
-        private void IISProcess(int iisPort, string path)
+        private Process IISProcess(int iisPort, string path)
         {
             var programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-            _iisProcess = new Process();
-            _iisProcess.StartInfo.FileName = programFiles + @"\IIS Express\iisexpress.exe";
-            _iisProcess.StartInfo.Arguments = string.Format("/path:{0} /port:{1}", path, iisPort);
-            _iisProcess.StartInfo.CreateNoWindow = true;
-            _iisProcess.StartInfo.RedirectStandardOutput = true;
-            _iisProcess.StartInfo.UseShellExecute = false;
-            _iisProcess.Start();
+            Process iisProcess = new Process();
+            iisProcess.StartInfo.FileName = programFiles + @"\IIS Express\iisexpress.exe";
+            iisProcess.StartInfo.Arguments = string.Format("/path:{0} /port:{1}", path, iisPort);
+            iisProcess.StartInfo.CreateNoWindow = true;
+            iisProcess.StartInfo.RedirectStandardOutput = true;
+            iisProcess.StartInfo.UseShellExecute = false;
+            iisProcess.Start();
+            return iisProcess;
         }
 
         protected virtual string GetApplicationPath(string app)
@@ -71,6 +73,11 @@ namespace Tests
             if (_iisProcess.HasExited == false)
             {
                 _iisProcess.Kill();
+            }
+
+            if (_iisProcess2.HasExited == false)
+            {
+                _iisProcess2.Kill();
             }
 
         }
