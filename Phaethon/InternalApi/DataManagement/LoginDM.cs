@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
-using System.Web.Security;
 using Core.Model;
 using InternalApi.DataAccess;
 using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.DataManagement
 {
-    public class LoginManagement : ILoginManagement
+    public class LoginDM : ILoginDM
     {
         private readonly LoginDa _LoginDa;
-        
-        internal LoginManagement()
+
+        internal LoginDM()
         {
             _LoginDa = new LoginDa();
         }
@@ -33,9 +29,9 @@ namespace InternalApi.DataManagement
                     return true;
                 }
             }
-            catch (Exception e)
+
+            catch
             {
-                var whatever = e;
                 return false;
             }
         }
@@ -66,27 +62,22 @@ namespace InternalApi.DataManagement
                 {
                     if (password != null)
                     {
-                        if (login.Password.Equals(Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(password), login.Salt))))
+                        if (login.Password.Equals(
+                            Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(password), login.Salt))))
                         {
                             return login.ID;
                         }
                         else
                         {
                             return 0;
-                        }
-
-                    }
-                    else
-                    { 
-                        return 0;
+                        }  
                     }
                 }
-                 return 0;
-                
             }
+            return 0;
         }
 
-        #region Encryption
+    #region Encryption
         private const int SaltSize = 32;
 
         private byte[] GenerateSalt()

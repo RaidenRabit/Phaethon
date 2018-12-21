@@ -7,7 +7,7 @@ using Core.Model;
 
 namespace InternalApi.DataManagement.IDataManagement
 {
-    interface ILoginManagement
+    interface ILoginDM
     {
         bool CreateOrUpdate(Login login);
 

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Core.Model;
-using InternalApi.DataAccess;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 using Newtonsoft.Json;
@@ -17,11 +12,11 @@ namespace InternalApi.Controllers
     [RoutePrefix("Login")]
     public class LoginController : ApiController
     {
-        private readonly ILoginManagement _loginManagement;
+        private readonly ILoginDM _loginManagement;
 
         internal LoginController()
         {
-            _loginManagement = new LoginManagement();
+            _loginManagement = new LoginDM();
         }
 
         [Route("CreateOrUpdate")]

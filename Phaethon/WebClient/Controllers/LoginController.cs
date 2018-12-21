@@ -19,12 +19,14 @@ namespace WebClient.Controllers
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri("http://localhost:64007/Login/");
+            
         }
 
         [HttpGet]
         public ActionResult Index()
         {
             return View();
+            
         }
 
         [HttpPost]
@@ -83,6 +85,13 @@ namespace WebClient.Controllers
             {
                 return View("Error");
             }
+        }
+
+        [HttpPost]
+        public ActionResult LogOff()
+        {
+            Session["ID"] = null;
+            return RedirectToAction("Index", "Login");
         }
     }
 }

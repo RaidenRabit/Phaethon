@@ -126,7 +126,7 @@
     <Compile Include="DataManagement\IDataManagement\ICustomerDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IEmailSenderDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
-    <Compile Include="DataManagement\IDataManagement\ILoginManagement.cs" />
+    <Compile Include="DataManagement\IDataManagement\ILoginDM.cs" />
     <Compile Include="DataManagement\CompanyDM.cs" />
     <Compile Include="DataManagement\ElementDM.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyDM.cs" />
@@ -140,12 +140,17 @@
     <Compile Include="DataManagement\ItemDM.cs" />
     <Compile Include="DataManagement\ProductGroupDM.cs" />
     <Compile Include="DataManagement\JobDM.cs" />
-    <Compile Include="DataManagement\LoginManagement.cs" />
+    <Compile Include="DataManagement\LoginDM.cs" />
     <Compile Include="DataManagement\ProductDM.cs" />
     <Compile Include="DataManagement\TaxGroupDM.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812101323380_InitialCreate.cs" />
+    <Compile Include="Migrations\201812101323380_InitialCreate.Designer.cs">
+      <DependentUpon>201812101323380_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +171,11 @@
       <Project>{2f81d45f-2fd1-442c-b663-d04af5982d28}</Project>
       <Name>Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812101323380_InitialCreate.resx">
+      <DependentUpon>201812101323380_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
