@@ -18,15 +18,16 @@ namespace Tests.AcceptanceTests
             _webClientFakeServer = new WebClientFakeServer();
 
             //in case you want firefox, just uncomment this, and comment the chrome one :D
-            /* 
+            
             var firefoxDriverService = FirefoxDriverService.CreateDefaultService();
             firefoxDriverService.HideCommandPromptWindow = true;
-            _firefoxDriver = new FirefoxDriver(firefoxDriverService, new FirefoxOptions());
-            */
-
+            _chromeDriver = new FirefoxDriver(firefoxDriverService, new FirefoxOptions());
+            
+            /*
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
             chromeDriverService.HideCommandPromptWindow = true;
             _chromeDriver = new ChromeDriver(chromeDriverService, new ChromeOptions());
+            */
             _wait = new WebDriverWait(_chromeDriver, TimeSpan.FromSeconds(2));
         }
 

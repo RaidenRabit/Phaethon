@@ -323,6 +323,13 @@
       <Name>WebClient</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\packages\Selenium.Mozilla.Firefox.Webdriver.0.6.0.1\driver\wires-0.6.0-win.exe">
+      <Link>wires-0.6.0-win.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Readme.txt" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -333,9 +340,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets'))" />
     <Error Condition="!Exists('..\packages\Selenium.WebDriver.ChromeDriver.2.45.0\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.ChromeDriver.2.45.0\build\Selenium.WebDriver.ChromeDriver.targets'))" />
-    <Error Condition="!Exists('..\packages\Selenium.Firefox.WebDriver.0.23.0\build\Selenium.Firefox.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Firefox.WebDriver.0.23.0\build\Selenium.Firefox.WebDriver.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets" Condition="Exists('..\packages\Microsoft.Extensions.Configuration.UserSecrets.2.1.1\build\netstandard2.0\Microsoft.Extensions.Configuration.UserSecrets.targets')" />
   <Import Project="..\packages\Selenium.WebDriver.ChromeDriver.2.45.0\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.ChromeDriver.2.45.0\build\Selenium.WebDriver.ChromeDriver.targets')" />
-  <Import Project="..\packages\Selenium.Firefox.WebDriver.0.23.0\build\Selenium.Firefox.WebDriver.targets" Condition="Exists('..\packages\Selenium.Firefox.WebDriver.0.23.0\build\Selenium.Firefox.WebDriver.targets')" />
 </Project>
