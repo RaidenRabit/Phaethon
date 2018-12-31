@@ -64,7 +64,7 @@ namespace Tests.IntegrationTests
             _userModel2.Password = _originalPass;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Login/Login", _userModel2);
+            var response = await _internalClient.PostAsJsonAsync("Login/Login", _userModel2);
             
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -79,7 +79,7 @@ namespace Tests.IntegrationTests
             
             //Act
             _userModel2.Password = null;
-            var response = await _client.PostAsJsonAsync("Login/Login", _userModel2);
+            var response = await _internalClient.PostAsJsonAsync("Login/Login", _userModel2);
 
             //Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
@@ -93,7 +93,7 @@ namespace Tests.IntegrationTests
 
             //Act
             _userModel2.Username = null;
-            var response = await _client.PostAsJsonAsync("Login/Login", _userModel2);
+            var response = await _internalClient.PostAsJsonAsync("Login/Login", _userModel2);
 
             //Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
@@ -109,7 +109,7 @@ namespace Tests.IntegrationTests
             // Setup
            
             //Act          
-            var response = await _client.PostAsJsonAsync("Login/Delete", _userModel2.ID.ToString());
+            var response = await _internalClient.PostAsJsonAsync("Login/Delete", _userModel2.ID.ToString());
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             _userModel2.Username = null;
@@ -125,7 +125,7 @@ namespace Tests.IntegrationTests
 
             _userModel2 = new Login { Username = "Subject2", Password = "123456" };
             //Act
-            var response = await _client.PostAsJsonAsync("Login/CreateOrUpdate", _userModel2);
+            var response = await _internalClient.PostAsJsonAsync("Login/CreateOrUpdate", _userModel2);
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -146,7 +146,7 @@ namespace Tests.IntegrationTests
             }
             var name2 = _userModel2.Username;
             //Act
-            var response = await _client.PostAsJsonAsync("Login/CreateOrUpdate", _userModel2);
+            var response = await _internalClient.PostAsJsonAsync("Login/CreateOrUpdate", _userModel2);
             //Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.AreNotEqual(name, name2);
