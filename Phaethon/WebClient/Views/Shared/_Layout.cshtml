@@ -1,16 +1,10 @@
 ﻿@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 @{
-
     var viewControlerName = ViewContext.RouteData.Values["controller"].ToString();
-    if (viewControlerName != "Login")
+    if (viewControlerName != "Login" && Session["ID"] == null)
     {
-        if (Session["ID"] == null)
-        {
-            Response.Redirect("~/Login/Index");
-        }
+        Response.Redirect("~/Login/Index");
     }
-    
-
 
 }
 
