@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 
 namespace Tests.IntegrationTests
 {
-   public class LoginTest : InternalTestFakeServerBase
+   public class LoginTest : IntegrationTestBase
     {
         private Login _userModel2;
         private LoginDa _loginDa;
