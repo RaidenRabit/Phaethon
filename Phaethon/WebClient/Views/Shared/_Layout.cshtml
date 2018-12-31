@@ -1,9 +1,13 @@
 ﻿@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 @{
     var viewControlerName = ViewContext.RouteData.Values["controller"].ToString();
-    if (viewControlerName != "Login" && Session["ID"] == null)
+    if (viewControlerName != "Login")
     {
-        Response.Redirect("~/Login/Index");
+        if (Session["Username"] == null)
+        {
+            Response.Redirect("~/Login/Index");
+        }
+
     }
 
 }
@@ -47,13 +51,13 @@
                         @Html.ActionLink(LanguagePack.JobList, "Index", "Job", null, htmlAttributes: new { @class = "nav-link" })
                     </li>
                 </ul>
-                
+
             </div>
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li>@Html.ActionLink(LanguagePack.LogOff, "Index", "Login", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
         </ul>
-        <ul class="nav navbar-nav navbar-right" >
+        <ul class="nav navbar-nav navbar-right">
             <li>@Session["Username"].ToString()</li>
         </ul>
         <div class="float-lg-right">
