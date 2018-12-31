@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class InvoiceTest: InternalTestFakeServerBase
+    public class InvoiceTest: IntegrationTestBase
     {
         private bool AreInvoicesEqual(Invoice firstInvoice, Invoice secondInvoice)
         {
@@ -245,7 +245,7 @@ namespace Tests.IntegrationTests
             }
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
+            var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -264,7 +264,7 @@ namespace Tests.IntegrationTests
             invoice.Elements = new List<Element>() { element };
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
+            var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
             Invoice dbInvoice = null;
             using (var db = new DatabaseContext())
@@ -293,7 +293,7 @@ namespace Tests.IntegrationTests
             }
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
+            var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -311,7 +311,7 @@ namespace Tests.IntegrationTests
             element.Invoice = null;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
+            var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
             Invoice dbInvoice = null;
             using (var db = new DatabaseContext())
@@ -332,7 +332,7 @@ namespace Tests.IntegrationTests
             Invoice invoice = null;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
+            var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -352,7 +352,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = oldInvoice.ID.ToString();
 
             //Act
-            var response = await _client.GetAsync("Invoice/GetInvoice?" + parameters);
+            var response = await _internalClient.GetAsync("Invoice/GetInvoice?" + parameters);
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -368,7 +368,7 @@ namespace Tests.IntegrationTests
             parameters["id"] = 0.ToString();
 
             //Act
-            var response = await _client.GetAsync("Invoice/GetInvoice?" + parameters);
+            var response = await _internalClient.GetAsync("Invoice/GetInvoice?" + parameters);
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -393,7 +393,7 @@ namespace Tests.IntegrationTests
             parameters["docNumber"] = "";
 
             //Act
-            var response = await _client.GetAsync("Invoice/GetInvoices?" + parameters);
+            var response = await _internalClient.GetAsync("Invoice/GetInvoices?" + parameters);
             List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -412,7 +412,7 @@ namespace Tests.IntegrationTests
             int id = invoice.ID;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/Delete", id);
+            var response = await _internalClient.PostAsJsonAsync("Invoice/Delete", id);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
@@ -427,7 +427,7 @@ namespace Tests.IntegrationTests
             int id = 0;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/Delete", id);
+            var response = await _internalClient.PostAsJsonAsync("Invoice/Delete", id);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert

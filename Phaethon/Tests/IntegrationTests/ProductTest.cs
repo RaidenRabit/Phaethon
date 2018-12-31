@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class ProductTest: InternalTestFakeServerBase
+    public class ProductTest: IntegrationTestBase
     {
         private bool AreProductsEqual(Product firstProduct, Product secondProduct)
         {
@@ -25,7 +25,7 @@ namespace Tests.IntegrationTests
             parameters["barcode"] = testProduct.Barcode.ToString();
 
             //Act
-            var response = await _client.GetAsync("Product/GetProduct?" + parameters);
+            var response = await _internalClient.GetAsync("Product/GetProduct?" + parameters);
             Product product = JsonConvert.DeserializeObject<Product>(await response.Content.ReadAsStringAsync());
             
             //Assert
@@ -41,7 +41,7 @@ namespace Tests.IntegrationTests
             parameters["barcode"] = "-1794";
 
             //Act
-            var response = await _client.GetAsync("Product/GetProduct?" + parameters);
+            var response = await _internalClient.GetAsync("Product/GetProduct?" + parameters);
             Product product = JsonConvert.DeserializeObject<Product>(await response.Content.ReadAsStringAsync());
 
             //Assert
