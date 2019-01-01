@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -25,7 +26,7 @@ namespace WebClient.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            Session["Username"] = "";
+            Session["Username"] = "i";
             return View();
 
         }
@@ -33,6 +34,7 @@ namespace WebClient.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(Login loginModel)
         {
+            
             var response = await _client.PostAsJsonAsync("Login", loginModel);
             if (HttpStatusCode.OK == response.StatusCode)
             {
@@ -40,8 +42,8 @@ namespace WebClient.Controllers
                 if (deserializedResponse != 0)
                 {
                     Session["ID"] = deserializedResponse;
-                    Session["Username"] = loginModel.Username + " ";
-                    return RedirectToAction("Edit", "Login");
+                    Session["Username"] = loginModel.Username;
+                    return RedirectToAction("Index", "Invoice");
                 }
             }
             return View();
@@ -80,7 +82,7 @@ namespace WebClient.Controllers
 
             if (HttpStatusCode.OK == response.StatusCode)
             {
-                Session["ID"] = null;
+                Session["Username"] = "i";
                 return RedirectToAction("Index", "Login");
             }
             else
@@ -92,8 +94,20 @@ namespace WebClient.Controllers
         [HttpPost]
         public ActionResult LogOff()
         {
-            Session["ID"] = null;
+            Session["Username"] = "i";
             return RedirectToAction("Index", "Login");
+        }
+
+        private const int SaltSize = 32;
+
+        private byte[] GenerateSalt()
+        {
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                var randomNumber = new byte[SaltSize];
+                rng.GetBytes(randomNumber);
+                return randomNumber;
+            }
         }
     }
 }

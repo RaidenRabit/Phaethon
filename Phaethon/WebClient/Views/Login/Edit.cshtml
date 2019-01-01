@@ -29,10 +29,10 @@
 
             <div class="form-group">
                 <div class="col-md-2 col-md-10">
-                    <input type="submit" value=@LanguagePack.Save class="btn"/>
+                    <input type="submit" value=@LanguagePack.Save class="btn" />
                     @if (Model != null)
                     {
-                        @Ajax.ActionLink("Delete", "Delete", new {}, new AjaxOptions {HttpMethod = "POST", OnSuccess = "window.location.reload()"})
+                        @Ajax.ActionLink("Delete", "Delete", new { }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "window.location.reload()" })
                     }
                 </div>
             </div>
