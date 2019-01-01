@@ -83,7 +83,7 @@ function GetInvoices()
                     invoiceType = incoming;
                     companyName = data[i].Sender.Company.Name;
                 } else {
-                    date = moment(data[i].PrescriptionDate).format('DD-MM-YYYY');
+                    date = moment(data[i].CheckoutDate).format('DD-MM-YYYY');
                     invoiceType = outgoing;
                     companyName = data[i].Receiver.Company.Name;
                 }
