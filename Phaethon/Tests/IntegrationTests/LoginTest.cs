@@ -55,12 +55,12 @@ namespace Tests.IntegrationTests
         }
 
         #region Post
-        [Test]
-        public async Task Login()
-        {
-            _userModel2.Username = null;
+        //[Test]
+        //public async Task Login()
+        //{
+        //    _userModel2.Username = null;
 
-        }
+        //}
         [Test]
         public async Task Login_CorrectLoginInfo_OK()
         {
