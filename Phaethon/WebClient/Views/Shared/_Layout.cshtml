@@ -1,14 +1,11 @@
 ﻿@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 @{
-
     var viewControlerName = ViewContext.RouteData.Values["controller"].ToString();
-    if (viewControlerName != "Login" && Session["Username"].ToString() == "i")
+    var viewActionName = ViewContext.RouteData.Values["action"].ToString();
+    bool logIn = viewControlerName.Equals("Login") && viewActionName.Equals("Index");
+    if (!logIn && Session["ID"] == null)
     {
-        
-        
-            Response.Redirect("~/Login/Index");
-        
-
+        Response.Redirect("~/Login");
     }
 }
 
@@ -58,16 +55,15 @@
                 </ul>
 
             </div>
-        </div>@if (viewControlerName != "Login")
-    {
-        <ul class="nav navbar-nav navbar-right">
-            <li>@Html.ActionLink(LanguagePack.LogOff, "Index", "Login", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
-        </ul>
-    }
+        </div>
         
-        <ul class="nav navbar-nav navbar-right">
-            <li>@Session["Username"].ToString()</li>
-        </ul>
+        <div class="float-lg-right">
+            @if (!logIn)
+            {
+                @Html.ActionLink(LanguagePack.LogOff, "Index", "Login", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+            }
+        </div>
+
         <div class="float-lg-right">
             <div class="btn-group navbar-collapse">
                 <button aria-expanded="true" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" type="button">@LanguagePack.SelectLanguage<b class="caret"></b></button>

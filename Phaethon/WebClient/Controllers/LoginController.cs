@@ -26,7 +26,7 @@ namespace WebClient.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            Session["Username"] = "i";
+            Session["ID"] = null;
             return View();
 
         }
@@ -34,15 +34,13 @@ namespace WebClient.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(Login loginModel)
         {
-            
             var response = await _client.PostAsJsonAsync("Login", loginModel);
             if (HttpStatusCode.OK == response.StatusCode)
             {
-                var deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+                int deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
                 if (deserializedResponse != 0)
                 {
                     Session["ID"] = deserializedResponse;
-                    Session["Username"] = loginModel.Username;
                     return RedirectToAction("Index", "Invoice");
                 }
             }
@@ -62,7 +60,6 @@ namespace WebClient.Controllers
                 return View(login);
             }
             catch
-
             {
                 return Index();
             }
@@ -72,41 +69,29 @@ namespace WebClient.Controllers
         public async Task<ActionResult> Edit(Login loginModel)
         {
             await _client.PostAsJsonAsync("CreateOrUpdate", loginModel);
+            //doesnt use the recieved response, most likely should, to inform user if the changes were done
+            //simple example in delete method
             return await Edit();
         }
 
         [HttpGet]
         public async Task<ActionResult> Delete()
         {
-            var response = await _client.PostAsJsonAsync("Delete", Session["ID"].ToString());
-
-            if (HttpStatusCode.OK == response.StatusCode)
+            try
             {
-                Session["Username"] = "i";
-                return RedirectToAction("Index", "Login");
+                var response = await _client.PostAsJsonAsync("Delete", Session["ID"].ToString());
+                if (HttpStatusCode.OK == response.StatusCode)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+                else
+                {
+                    return View("Error");
+                }
             }
-            else
+            catch
             {
                 return View("Error");
-            }
-        }
-
-        [HttpPost]
-        public ActionResult LogOff()
-        {
-            Session["Username"] = "i";
-            return RedirectToAction("Index", "Login");
-        }
-
-        private const int SaltSize = 32;
-
-        private byte[] GenerateSalt()
-        {
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                var randomNumber = new byte[SaltSize];
-                rng.GetBytes(randomNumber);
-                return randomNumber;
             }
         }
     }

@@ -23,8 +23,7 @@ namespace InternalApi.DataManagement
                 using (var db = new DatabaseContext())
                 {
                     login.Salt = GenerateSalt();
-                    login.Password =
-                        Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(login.Password), login.Salt));
+                    login.Password = Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(login.Password), login.Salt));
                     _LoginDa.CreateOrUpdate(db, login);
                     return true;
                 }
@@ -58,26 +57,19 @@ namespace InternalApi.DataManagement
             using (var db = new DatabaseContext())
             {
                 Login login = _LoginDa.Login(db, username);
-                if (login != null)
+                if (login != null && password != null)
                 {
-                    if (password != null)
+                    if (login.Password.Equals(Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(password),
+                        login.Salt))))
                     {
-                        if (login.Password.Equals(
-                            Convert.ToBase64String(ComputeHMAC_SHA256(Encoding.UTF8.GetBytes(password), login.Salt))))
-                        {
-                            return login.ID;
-                        }
-                        else
-                        {
-                            return 0;
-                        }  
+                        return login.ID;
                     }
                 }
             }
             return 0;
         }
 
-    #region Encryption
+        #region Encryption
         private const int SaltSize = 32;
 
         private byte[] GenerateSalt()

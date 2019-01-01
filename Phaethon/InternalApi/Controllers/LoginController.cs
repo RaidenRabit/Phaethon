@@ -51,8 +51,10 @@ namespace InternalApi.Controllers
             var requestContent = await Request.Content.ReadAsStringAsync();
             Login login = JsonConvert.DeserializeObject<Login>(requestContent);
             var loginID = _loginManagement.Login(login.Username, login.Password);
-            if(loginID !=0)
-                return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.Login(login.Username, login.Password));
+            if (loginID != 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, loginID);
+            }
             else
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "Incorrect login credentials");
