@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Core.Model;
 using Newtonsoft.Json;
+using WebClient.Resources.Language_Files;
 
 namespace WebClient.Controllers
 {
@@ -44,6 +45,7 @@ namespace WebClient.Controllers
                     return RedirectToAction("Index", "Invoice");
                 }
             }
+            ModelState.AddModelError("", LanguagePack.Error1);
             return View();
         }
         

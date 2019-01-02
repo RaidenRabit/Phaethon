@@ -419,4 +419,10 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Error1" xml:space="preserve">
+    <value>The user name or password provided is incorrect.</value>
+  </data>
+  <data name="Error2" xml:space="preserve">
+    <value>Login was unsuccessful. Please correct the errors and try again.</value>
+  </data>
 </root>

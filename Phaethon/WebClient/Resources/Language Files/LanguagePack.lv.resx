@@ -419,4 +419,10 @@
   <data name="Password" xml:space="preserve">
     <value>Parole</value>
   </data>
+  <data name="Error1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Error2" xml:space="preserve">
+    <value />
+  </data>
 </root>

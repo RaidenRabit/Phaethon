@@ -394,6 +394,24 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The user name or password provided is incorrect..
+        /// </summary>
+        public static string Error1 {
+            get {
+                return ResourceManager.GetString("Error1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login was unsuccessful. Please correct the errors and try again..
+        /// </summary>
+        public static string Error2 {
+            get {
+                return ResourceManager.GetString("Error2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while processing your request..
         /// </summary>
         public static string ErrorPageText {
