@@ -3,7 +3,8 @@
     var viewControlerName = ViewContext.RouteData.Values["controller"].ToString();
     var viewActionName = ViewContext.RouteData.Values["action"].ToString();
     bool logIn = viewControlerName.Equals("Login") && viewActionName.Equals("Index");
-    if (!logIn && Session["ID"] == null)
+    bool Reg = viewControlerName.Equals("Login") && viewActionName.Equals("Edit");
+    if (!Reg && !logIn && Session["ID"] == null)
     {
         Response.Redirect("~/Login");
     }
@@ -49,18 +50,33 @@
                     <li class="nav-item">
                         @Html.ActionLink(LanguagePack.JobList, "Index", "Job", null, htmlAttributes: new { @class = "nav-link" })
                     </li>
-                    <li class="nav-item">
-                        @Html.ActionLink(LanguagePack.EditUser, "Edit", "Login", null, htmlAttributes: new { @class = "nav-link" })
-                    </li>
+                    @if (!logIn)
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink(LanguagePack.EditUser, "Edit", "Login", null, htmlAttributes: new { @class = "nav-link" })
+                        </li>
+                    }
+                    @if (logIn)
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink(LanguagePack.RegisterUser, "Edit", "Login", null, htmlAttributes: new { @class = "nav-link" })
+                        </li>
+                    }
                 </ul>
 
             </div>
         </div>
-        
+
         <div class="float-right">
-            @if (!logIn)
+            @if (Session["ID"] != null)
             {
                 @Html.ActionLink(LanguagePack.LogOff, "Index", "Login", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+            }
+        </div>
+        <div class="float-right">
+            @if (Reg)
+            {
+                @Html.ActionLink(LanguagePack.Back, "Index", "Login", routeValues: null, htmlAttributes: new { @class = "nav-link" })
             }
         </div>
 

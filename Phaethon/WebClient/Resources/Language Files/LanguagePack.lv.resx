@@ -428,4 +428,7 @@
   <data name="EditUser" xml:space="preserve">
     <value>Rediģēt lietotāju</value>
   </data>
+  <data name="RegisterUser" xml:space="preserve">
+    <value>Reģistrs</value>
+  </data>
 </root>

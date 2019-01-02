@@ -862,6 +862,15 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string RegisterUser {
+            get {
+                return ResourceManager.GetString("RegisterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Representative Name.
         /// </summary>
         public static string RepresentativeNameLabel {

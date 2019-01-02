@@ -11,8 +11,8 @@
             <div class="form-group">
                 @LanguagePack.Name
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Username, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Username, "", new {@class = "text-danger"})
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -27,7 +27,7 @@
 
             <div class="form-group">
                 <div class="col-md-2 col-md-10">
-                    <input type="submit" value=@LanguagePack.LogIn class="btn"/>
+                    <input type="submit" value=@LanguagePack.LogIn class="btn" />
                 </div>
             </div>
         </div>

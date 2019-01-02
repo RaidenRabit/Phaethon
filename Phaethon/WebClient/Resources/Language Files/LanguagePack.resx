@@ -428,4 +428,7 @@
   <data name="EditUser" xml:space="preserve">
     <value>Edit Current User</value>
   </data>
+  <data name="RegisterUser" xml:space="preserve">
+    <value>Register</value>
+  </data>
 </root>
