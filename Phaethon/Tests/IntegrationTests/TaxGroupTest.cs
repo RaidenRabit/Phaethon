@@ -43,7 +43,7 @@ namespace Tests.IntegrationTests
             var response = await _internalClient.PostAsJsonAsync("TaxGroup/Create", taxGroup);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
 
         [Test]

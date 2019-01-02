@@ -29,6 +29,10 @@ namespace InternalApi.Controllers
             try
             {
                 ProductGroup productGroup = JsonConvert.DeserializeObject<ProductGroup>(requestContent);
+                if (productGroup == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
                 _productGroupManagement.Create(productGroup);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }

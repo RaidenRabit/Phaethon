@@ -32,6 +32,10 @@ namespace InternalApi.Controllers
             {
                 var requestContent = await Request.Content.ReadAsStringAsync();
                 Item item = JsonConvert.DeserializeObject<Item>(requestContent);
+                if (item == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
                 _itemManagement.CreateOrUpdate(item);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }

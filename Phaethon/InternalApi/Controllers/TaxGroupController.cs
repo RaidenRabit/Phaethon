@@ -29,6 +29,10 @@ namespace InternalApi.Controllers
             try
             {
                 TaxGroup taxGroup = JsonConvert.DeserializeObject<TaxGroup>(requestContent);
+                if (taxGroup == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
                 _taxGroupManagement.Create(taxGroup);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
