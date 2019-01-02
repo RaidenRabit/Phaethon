@@ -4,11 +4,11 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using Newtonsoft.Json;
 
-namespace Tests.IntegrationTests
+namespace Tests
 {
     public class InternalApiFakeServer
     {
-        protected HttpClient _internalClient;
+        private HttpClient _internalClient;
         private HttpServer _internalServer;
 
         public HttpClient GetInternalClient()

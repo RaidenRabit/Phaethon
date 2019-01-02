@@ -12,7 +12,8 @@ namespace Tests.IntegrationTests
         {
             return firstProduct.ID == secondProduct.ID &&
                    firstProduct.Barcode.Equals(secondProduct.Barcode) &&
-                   firstProduct.Name.Equals(secondProduct.Name);
+                   firstProduct.Name.Equals(secondProduct.Name) &&
+                   firstProduct.ProductGroup_ID == secondProduct.ProductGroup_ID;
         }
 
         #region GetProduct

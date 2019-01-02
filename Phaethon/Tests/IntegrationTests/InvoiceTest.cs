@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using InternalApi.DataAccess;
 using Newtonsoft.Json;
+using NUnit.Framework.Constraints;
 
 namespace Tests.IntegrationTests
 {
@@ -17,10 +18,14 @@ namespace Tests.IntegrationTests
         {
             return firstInvoice.ID == secondInvoice.ID &&
                    firstInvoice.DocNumber.Equals(secondInvoice.DocNumber) &&
-                   firstInvoice.PaymentDate.Equals(secondInvoice.PaymentDate) &&
+                   firstInvoice.Incoming == secondInvoice.Incoming &&
                    firstInvoice.ReceptionDate.Equals(secondInvoice.ReceptionDate) &&
-                   firstInvoice.PrescriptionDate.Equals(secondInvoice.PrescriptionDate) &&
-                   firstInvoice.Transport == secondInvoice.Transport;
+                   firstInvoice.CheckoutDate.Equals(secondInvoice.CheckoutDate) &&
+                   firstInvoice.RegNumber.Equals(secondInvoice.RegNumber) &&
+                   firstInvoice.Transport == secondInvoice.Transport &&
+
+                   firstInvoice.Receiver_ID == secondInvoice.Receiver_ID &&
+                   firstInvoice.Sender_ID == secondInvoice.Sender_ID;
         }
 
         internal static Element GetElementSeed()
@@ -97,7 +102,8 @@ namespace Tests.IntegrationTests
             #region Item
             Item item = new Item
             {
-                IncomingPrice = 100,
+                Price = 100,
+                Quantity = 1,
                 SerNumber = "0",
                 IncomingTaxGroup_ID = taxGroup.ID,
                 Product_ID = product.ID
@@ -120,14 +126,39 @@ namespace Tests.IntegrationTests
             item.IncomingTaxGroup = taxGroup;
             item.Product = product;
             #endregion
-            
+
+            #region Address
+            Address address = new Address
+            {
+                City = "TestCity",
+                Street = "Nibevej",
+                Number = "12A",
+                Extra = "Room 22"
+            };
+
+            using (var db = new DatabaseContext())
+            {
+                Address oldAddress = db.Addresses.SingleOrDefault(x => x.City.Equals(address.City));
+                if (oldAddress != null)
+                {
+                    address = oldAddress;
+                }
+                else
+                {
+                    db.Addresses.Add(address);
+                    db.SaveChanges();
+                }
+            }
+            #endregion
+
             #region Company
             Company company = new Company
             {
-                Location = "Test location",
+                ActualAddress_ID = address.ID,
+                LegalAddress_ID = address.ID,
                 Name = "Test",
                 RegNumber = "0",
-                Address = "Test address",
+                BankName = "TestBank",
                 BankNumber = "0"
             };
 
@@ -144,6 +175,9 @@ namespace Tests.IntegrationTests
                     db.SaveChanges();
                 }
             }
+
+            company.ActualAddress = address;
+            company.LegalAddress = address;
             #endregion
 
             #region Representative
@@ -173,11 +207,11 @@ namespace Tests.IntegrationTests
             #region Invoice
             Invoice invoice = new Invoice
             {
-                DocNumber = "0",
-                PaymentDate = new DateTime(2010, 1, 1),
-                PrescriptionDate = new DateTime(2010, 1, 1),
-                ReceptionDate = new DateTime(2010, 1, 1),
                 Incoming = true,
+                DocNumber = "0",
+                RegNumber = "0",
+                CheckoutDate = new DateTime(2010, 1, 1),
+                ReceptionDate = new DateTime(2010, 1, 1),
                 Transport = 10,
                 Sender_ID = representative.ID,
                 Receiver_ID = representative.ID

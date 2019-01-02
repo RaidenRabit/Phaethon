@@ -18,14 +18,9 @@ namespace Tests.IntegrationTests
         {
             return firstItem.ID == secondItem.ID &&
                    firstItem.SerNumber.Equals(secondItem.SerNumber) &&
-                   firstItem.IncomingPrice == secondItem.IncomingPrice &&
-                   firstItem.OutgoingPrice == secondItem.OutgoingPrice &&
+                   firstItem.Price == secondItem.Price &&
                    firstItem.IncomingTaxGroup_ID == secondItem.IncomingTaxGroup_ID &&
-                   firstItem.OutgoingTaxGroup_ID == secondItem.OutgoingTaxGroup_ID &&
-                   firstItem.Product.ID == secondItem.Product.ID &&
-                   firstItem.Product.Barcode == secondItem.Product.Barcode &&
-                   firstItem.Product.Name.Equals(secondItem.Product.Name) &&
-                   firstItem.Product.ProductGroup_ID == secondItem.Product.ProductGroup_ID;
+                   firstItem.OutgoingTaxGroup_ID == secondItem.OutgoingTaxGroup_ID;
         }
 
         #region CreateOrUpdate

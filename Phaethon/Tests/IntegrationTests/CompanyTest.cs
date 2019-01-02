@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using Core.Model;
@@ -12,11 +14,12 @@ namespace Tests.IntegrationTests
         private bool AreCompaniesEqual(Company firstCompany, Company secondCompany)
         {
             return firstCompany.ID == secondCompany.ID &&
-                   firstCompany.Address.Equals(secondCompany.Address) &&
+                   firstCompany.BankName.Equals(secondCompany.BankName) &&
                    firstCompany.BankNumber.Equals(secondCompany.BankNumber) &&
-                   firstCompany.Location.Equals(secondCompany.Location) &&
                    firstCompany.Name.Equals(secondCompany.Name) &&
-                   firstCompany.RegNumber.Equals(secondCompany.RegNumber);
+                   firstCompany.RegNumber.Equals(secondCompany.RegNumber) &&
+                   firstCompany.ActualAddress_ID == secondCompany.ActualAddress_ID &&
+                   firstCompany.LegalAddress_ID == secondCompany.LegalAddress_ID;
         }
 
         #region GetCompany
