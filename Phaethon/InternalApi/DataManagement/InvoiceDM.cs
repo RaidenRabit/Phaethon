@@ -282,22 +282,28 @@ namespace InternalApi.DataManagement
         {
             ElementDa elementDa = new ElementDa();
             Invoice invoice = _invoiceDa.GetInvoice(db, id);
-            invoice.Elements = elementDa.GetInvoiceElements(db, invoice.ID);
-            //sets the price with and without taxes
-            if (invoice.Incoming)
+            if (invoice != null)
             {
-                invoice.SumNoTax = invoice.Elements.Sum(x => x.Item.Price);
+                invoice.Elements = elementDa.GetInvoiceElements(db, invoice.ID);
+                //sets the price with and without taxes
+                if (invoice.Incoming)
+                {
+                    invoice.SumNoTax = invoice.Elements.Sum(x => x.Item.Price);
 
-                invoice.Sum = invoice.Elements.Sum(x => x.Item.Price + x.Item.Price * ((decimal)x.Item.IncomingTaxGroup.Tax / 100));
-                invoice.Sum += invoice.Transport;
+                    invoice.Sum = invoice.Elements.Sum(x =>
+                        x.Item.Price + x.Item.Price * ((decimal) x.Item.IncomingTaxGroup.Tax / 100));
+                    invoice.Sum += invoice.Transport;
+                }
+                else
+                {
+                    //should be improved for performance
+                    ItemDM itemDm = new ItemDM();
+                    invoice.SumNoTax = invoice.Elements.Sum(x => itemDm.CalculateIncomingPrice(db, x.Item));
+                    invoice.Sum = invoice.Elements.Sum(x => itemDm.CalculateOutgoingPrice(db, x.Item)) +
+                                  invoice.Transport;
+                }
             }
-            else
-            {
-                //should be improved for performance
-                ItemDM itemDm = new ItemDM();
-                invoice.SumNoTax = invoice.Elements.Sum(x => itemDm.CalculateIncomingPrice(db, x.Item));
-                invoice.Sum = invoice.Elements.Sum(x => itemDm.CalculateOutgoingPrice(db, x.Item)) + invoice.Transport;
-            }
+
             return invoice;
         }
     }

@@ -24,7 +24,8 @@ namespace InternalApi.DataManagement
                 ItemDM itemDm = new ItemDM();
                 InvoiceDM invoiceDm = new InvoiceDM();
                 List<Element> elements = _elementDa.GetInvoiceElements(db, id);
-                if (!invoiceDm.GetInvoice(id).Incoming)
+                Invoice invoice = invoiceDm.GetInvoice(id);
+                if (invoice != null && !invoice.Incoming)
                 { 
                     elements.ForEach(x => x.Item.Price = itemDm.CalculateIncomingPrice(db, x.Item));
                 }

@@ -403,7 +403,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsNull(invoice.Sender, "Invoice is null");
+            Assert.IsNull(invoice, "Invoice is null");
         }
         #endregion
 
