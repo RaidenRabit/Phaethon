@@ -35,7 +35,8 @@ namespace InternalApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetInvoice(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoice(id));
+            var x = _invoiceManagement.GetInvoice(id);
+            return Request.CreateResponse(HttpStatusCode.OK, x);
         }
 
         [Route("GetInvoices")]

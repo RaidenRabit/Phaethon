@@ -415,12 +415,12 @@ namespace Tests.IntegrationTests
             GetElementSeed();
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["numOfRecords"] = 1.ToString();
-            parameters["selectedCompany"] = 0.ToString();
-            parameters["name"] = "";
-            parameters["selectedDate"] = 0.ToString();
+            parameters["regNumber"] = "";
+            parameters["docNumber"] = "";
             parameters["from"] = new DateTime(2000, 1, 1).ToString("dd/MM/yyyy");
             parameters["to"] = DateTime.Now.ToString("dd/MM/yyyy");
-            parameters["docNumber"] = "";
+            parameters["company"] = "";
+            parameters["sum"] = "0";
 
             //Act
             var response = await _internalClient.GetAsync("Invoice/GetInvoices?" + parameters);

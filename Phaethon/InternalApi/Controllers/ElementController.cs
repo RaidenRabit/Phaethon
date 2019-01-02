@@ -24,8 +24,7 @@ namespace InternalApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetInvoiceElements(int id)
         {
-            var x = _elementManagement.GetInvoiceElements(id);
-            return Request.CreateResponse(HttpStatusCode.OK, x);
+            return Request.CreateResponse(HttpStatusCode.OK, _elementManagement.GetInvoiceElements(id));
         }
     }
 }
