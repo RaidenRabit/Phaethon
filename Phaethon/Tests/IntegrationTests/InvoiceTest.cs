@@ -24,8 +24,8 @@ namespace Tests.IntegrationTests
                    firstInvoice.RegNumber.Equals(secondInvoice.RegNumber) &&
                    firstInvoice.Transport == secondInvoice.Transport &&
 
-                   firstInvoice.Receiver_ID == secondInvoice.Receiver_ID &&
-                   firstInvoice.Sender_ID == secondInvoice.Sender_ID;
+                   firstInvoice.Receiver.ID == secondInvoice.Receiver.ID &&
+                   firstInvoice.Sender.ID == secondInvoice.Sender.ID;
         }
 
         internal static Element GetElementSeed()

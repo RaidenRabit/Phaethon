@@ -19,8 +19,8 @@ namespace Tests.IntegrationTests
             return firstItem.ID == secondItem.ID &&
                    firstItem.SerNumber.Equals(secondItem.SerNumber) &&
                    firstItem.Price == secondItem.Price &&
-                   firstItem.IncomingTaxGroup_ID == secondItem.IncomingTaxGroup_ID &&
-                   firstItem.OutgoingTaxGroup_ID == secondItem.OutgoingTaxGroup_ID;
+                   firstItem.IncomingTaxGroup.ID == secondItem.IncomingTaxGroup.ID &&
+                   firstItem.OutgoingTaxGroup.ID == secondItem.OutgoingTaxGroup.ID;
         }
 
         #region CreateOrUpdate

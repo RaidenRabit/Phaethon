@@ -18,8 +18,8 @@ namespace Tests.IntegrationTests
                    firstCompany.BankNumber.Equals(secondCompany.BankNumber) &&
                    firstCompany.Name.Equals(secondCompany.Name) &&
                    firstCompany.RegNumber.Equals(secondCompany.RegNumber) &&
-                   firstCompany.ActualAddress_ID == secondCompany.ActualAddress_ID &&
-                   firstCompany.LegalAddress_ID == secondCompany.LegalAddress_ID;
+                   firstCompany.ActualAddress.ID == secondCompany.ActualAddress.ID &&
+                   firstCompany.LegalAddress.ID == secondCompany.LegalAddress.ID;
         }
 
         #region GetCompany

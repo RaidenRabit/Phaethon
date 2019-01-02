@@ -48,9 +48,8 @@ namespace InternalApi.Controllers
             DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out fromDateTime);
             DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out toDateTime);
             if (company == null) company = "";
-            var t = _invoiceManagement.GetInvoices(numOfRecords, regNumber, docNumber, fromDateTime, toDateTime,
-                company, sum);
-            return Request.CreateResponse(HttpStatusCode.OK, t);
+            return Request.CreateResponse(HttpStatusCode.OK, _invoiceManagement.GetInvoices(numOfRecords, regNumber, docNumber, fromDateTime, toDateTime,
+                company, sum));
         }
 
         [Route("Delete")]
