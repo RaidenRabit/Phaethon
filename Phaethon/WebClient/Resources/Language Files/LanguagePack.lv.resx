@@ -420,12 +420,12 @@
     <value>Parole</value>
   </data>
   <data name="Error1" xml:space="preserve">
-    <value />
+    <value>**</value>
   </data>
   <data name="Error2" xml:space="preserve">
-    <value />
+    <value>***</value>
   </data>
   <data name="EditUser" xml:space="preserve">
-    <value />
+    <value>*</value>
   </data>
 </root>
