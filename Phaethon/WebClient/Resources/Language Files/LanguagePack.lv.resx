@@ -425,4 +425,7 @@
   <data name="Error2" xml:space="preserve">
     <value />
   </data>
+  <data name="EditUser" xml:space="preserve">
+    <value />
+  </data>
 </root>

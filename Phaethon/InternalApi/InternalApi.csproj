@@ -17,10 +17,9 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode>
-    </IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>true</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -146,9 +145,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201812211048211_initial.cs" />
-    <Compile Include="Migrations\201812211048211_initial.Designer.cs">
-      <DependentUpon>201812211048211_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201901021534330_fasdfdsaf.cs" />
+    <Compile Include="Migrations\201901021534330_fasdfdsaf.Designer.cs">
+      <DependentUpon>201901021534330_fasdfdsaf.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -173,8 +172,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201812211048211_initial.resx">
-      <DependentUpon>201812211048211_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901021534330_fasdfdsaf.resx">
+      <DependentUpon>201901021534330_fasdfdsaf.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

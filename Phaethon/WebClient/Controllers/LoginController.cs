@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -71,8 +68,6 @@ namespace WebClient.Controllers
         public async Task<ActionResult> Edit(Login loginModel)
         {
             await _client.PostAsJsonAsync("CreateOrUpdate", loginModel);
-            //doesnt use the recieved response, most likely should, to inform user if the changes were done
-            //simple example in delete method
             return await Edit();
         }
 

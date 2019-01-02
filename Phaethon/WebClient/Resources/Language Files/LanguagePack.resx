@@ -408,7 +408,7 @@
     <value>Go back</value>
   </data>
   <data name="LogIn" xml:space="preserve">
-    <value>Log In</value>
+    <value>Enter</value>
   </data>
   <data name="LogOff" xml:space="preserve">
     <value>Log Off</value>
@@ -424,5 +424,8 @@
   </data>
   <data name="Error2" xml:space="preserve">
     <value>Login was unsuccessful. Please correct the errors and try again.</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>Edit Current User</value>
   </data>
 </root>
