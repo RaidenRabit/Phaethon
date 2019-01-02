@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Core.Model;
@@ -18,10 +19,10 @@ namespace Tests.IntegrationTests
         {
             return firstInvoice.ID == secondInvoice.ID &&
                    firstInvoice.DocNumber.Equals(secondInvoice.DocNumber) &&
+                   firstInvoice.RegNumber.Equals(secondInvoice.RegNumber) &&
                    firstInvoice.Incoming == secondInvoice.Incoming &&
                    firstInvoice.ReceptionDate.Equals(secondInvoice.ReceptionDate) &&
                    firstInvoice.CheckoutDate.Equals(secondInvoice.CheckoutDate) &&
-                   firstInvoice.RegNumber.Equals(secondInvoice.RegNumber) &&
                    firstInvoice.Transport == secondInvoice.Transport &&
 
                    firstInvoice.Receiver.ID == secondInvoice.Receiver.ID &&
@@ -301,7 +302,10 @@ namespace Tests.IntegrationTests
             Invoice dbInvoice = null;
             using (var db = new DatabaseContext())
             {
-                dbInvoice = db.Invoices.SingleOrDefault(x => x.ID == invoice.ID);
+                dbInvoice = db.Invoices
+                    .Include(x => x.Sender)
+                    .Include(x => x.Receiver)
+                    .SingleOrDefault(x => x.ID == invoice.ID);
             }
             
             //Assert
@@ -346,7 +350,10 @@ namespace Tests.IntegrationTests
             Invoice dbInvoice = null;
             using (var db = new DatabaseContext())
             {
-                dbInvoice = db.Invoices.SingleOrDefault(x => x.ID == invoice.ID);
+                dbInvoice = db.Invoices
+                    .Include(x => x.Sender)
+                    .Include(x => x.Receiver)
+                    .SingleOrDefault(x => x.ID == invoice.ID);
             }
 
             //Assert
