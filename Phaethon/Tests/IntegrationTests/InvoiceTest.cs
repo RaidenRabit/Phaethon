@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.Model;
 using NUnit.Framework;
 using System.Linq;
+using System.Net;
 using System.Web;
 using InternalApi.DataAccess;
 using Newtonsoft.Json;
@@ -281,11 +282,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsTrue(deserializedResponse, "Invoice created");
         }
 
         [Test]
@@ -298,7 +297,6 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
             Invoice dbInvoice = null;
             using (var db = new DatabaseContext())
             {
@@ -310,7 +308,6 @@ namespace Tests.IntegrationTests
             
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsTrue(deserializedResponse, "Invoice updated");
             Assert.IsTrue(AreInvoicesEqual(invoice, dbInvoice), "Invoices are equal");//check if object received is the same
         }
 
@@ -329,11 +326,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsTrue(deserializedResponse, "Invoice created");
         }
 
         [Test]
@@ -346,7 +341,6 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
             Invoice dbInvoice = null;
             using (var db = new DatabaseContext())
             {
@@ -358,7 +352,6 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsTrue(deserializedResponse, "Invoice updated");
             Assert.IsTrue(AreInvoicesEqual(invoice, dbInvoice), "Invoices are equal");//check if object received is the same
         }
 
@@ -370,11 +363,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsFalse(deserializedResponse, "Invoice not created");
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
 
@@ -406,11 +397,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.GetAsync("Invoice/GetInvoice?" + parameters);
-            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsNull(invoice, "Invoice is null");
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
 
@@ -450,11 +439,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("Invoice/Delete", id);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsTrue(deserializedResponse, "Deleted was success");
         }
 
         [Test]
@@ -465,11 +452,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("Invoice/Delete", id);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsFalse(deserializedResponse, "Delete was fail");
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
     }

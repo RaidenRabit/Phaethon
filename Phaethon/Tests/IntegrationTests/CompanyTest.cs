@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -50,11 +51,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.GetAsync("Company/GetCompany?" + parameters);
-            Company company = JsonConvert.DeserializeObject<Company>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsNull(company, "No company received");
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
 

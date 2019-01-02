@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Core.Model;
@@ -27,11 +28,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("TaxGroup/Create", taxGroup);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsTrue(deserializedResponse, "Tax group created");
         }
 
         [Test]
@@ -42,11 +41,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("TaxGroup/Create", taxGroup);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsFalse(deserializedResponse, "tax group not created");
         }
 
         [Test]
@@ -57,11 +54,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("TaxGroup/Create", taxGroup);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsFalse(deserializedResponse, "Tax group not created");
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
 

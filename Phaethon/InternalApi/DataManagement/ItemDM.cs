@@ -17,23 +17,15 @@ namespace InternalApi.DataManagement
             _itemDa = new ItemDa();
         }
 
-        public bool CreateOrUpdate(Item item)
+        public void CreateOrUpdate(Item item)
         {
             using (var db = new DatabaseContext())
             {
-                try
-                {
-                    ProductDa productDa = new ProductDa();
-                    productDa.CreateOrUpdate(db, item.Product);
-                    item.Product_ID = item.Product.ID;
-                    item.Product = null;
-                    _itemDa.CreateOrUpdate(db, item);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                ProductDa productDa = new ProductDa();
+                productDa.CreateOrUpdate(db, item.Product);
+                item.Product_ID = item.Product.ID;
+                item.Product = null;
+                _itemDa.CreateOrUpdate(db, item);
             }
         }
         

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using Core.Model;
 using Newtonsoft.Json;
@@ -43,11 +44,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.GetAsync("Product/GetProduct?" + parameters);
-            Product product = JsonConvert.DeserializeObject<Product>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsNull(product, "Product group not received");
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
     }

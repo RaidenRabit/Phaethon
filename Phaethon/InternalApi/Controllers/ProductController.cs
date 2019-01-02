@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 
@@ -24,7 +25,15 @@ namespace InternalApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetProduct(int barcode)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _productManagement.GetProduct(barcode));
+            Product product = _productManagement.GetProduct(barcode);
+            if (product != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, product);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
     }
 }
