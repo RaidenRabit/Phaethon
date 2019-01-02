@@ -18,7 +18,6 @@ namespace Tests.IntegrationTests
         {
             return firstItem.ID == secondItem.ID &&
                    firstItem.SerNumber.Equals(secondItem.SerNumber) &&
-                   firstItem.Price == secondItem.Price &&
                    firstItem.IncomingTaxGroup.ID == secondItem.IncomingTaxGroup.ID &&
                    firstItem.OutgoingTaxGroup.ID == secondItem.OutgoingTaxGroup.ID;
         }

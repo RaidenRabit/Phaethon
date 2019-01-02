@@ -37,12 +37,11 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.GetAsync("Element/GetInvoiceElements?" + parameters);
-            List<Element> invoiceElements = new List<Element>();
-            invoiceElements.AddRange(JsonConvert.DeserializeObject<List<Element>>(await response.Content.ReadAsStringAsync()));
+            List<Element> invoiceElements = JsonConvert.DeserializeObject<List<Element>>(await response.Content.ReadAsStringAsync());
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.AreEqual(0, invoiceElements.Count, "No elements in invoice");
+            Assert.AreEqual(0, invoiceElements.Count, "There were no elements in invoice");
         }
         #endregion
     }

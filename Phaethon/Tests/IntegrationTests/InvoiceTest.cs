@@ -293,9 +293,7 @@ namespace Tests.IntegrationTests
             //Setup
             Element element = GetElementSeed();
             Invoice invoice = element.Invoice;
-            element.Invoice = null;
             invoice.Transport = 99;
-            invoice.Elements = new List<Element>() { element };
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
@@ -305,8 +303,7 @@ namespace Tests.IntegrationTests
             {
                 dbInvoice = db.Invoices.SingleOrDefault(x => x.ID == invoice.ID);
             }
-
-
+            
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
             Assert.IsTrue(deserializedResponse, "Invoice updated");
@@ -341,8 +338,7 @@ namespace Tests.IntegrationTests
             //Setup
             Element element = GetElementSeed();
             Invoice invoice = element.Invoice;
-            invoice.Transport = 99;
-            element.Invoice = null;
+            invoice.Elements = null;
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
@@ -407,7 +403,7 @@ namespace Tests.IntegrationTests
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
-            Assert.IsNull(invoice, "Invoice is null");
+            Assert.IsNull(invoice.Sender, "Invoice is null");
         }
         #endregion
 
