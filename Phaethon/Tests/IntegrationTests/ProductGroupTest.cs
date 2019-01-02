@@ -31,8 +31,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(deserializedResponse, "New product group created");
         }
 
         [Test]
@@ -46,8 +46,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsFalse(deserializedResponse, "Product group not created");
         }
 
         [Test]
@@ -61,8 +61,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsFalse(deserializedResponse, "Product group not created");
         }
         #endregion
 
@@ -78,8 +78,8 @@ namespace Tests.IntegrationTests
             List<ProductGroup> productGroups = JsonConvert.DeserializeObject<List<ProductGroup>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(0, productGroups.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreNotEqual(0, productGroups.Count, "Product groups received");
         }
         #endregion
     }

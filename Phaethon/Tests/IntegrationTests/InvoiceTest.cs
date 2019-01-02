@@ -283,8 +283,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(deserializedResponse, "Invoice created");
         }
 
         [Test]
@@ -308,9 +308,9 @@ namespace Tests.IntegrationTests
 
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
-            Assert.AreEqual(true, AreInvoicesEqual(invoice, dbInvoice));//check if object received is the same
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(deserializedResponse, "Invoice updated");
+            Assert.IsTrue(AreInvoicesEqual(invoice, dbInvoice), "Invoices are equal");//check if object received is the same
         }
 
         [Test]
@@ -331,8 +331,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(deserializedResponse, "Invoice created");
         }
 
         [Test]
@@ -354,9 +354,9 @@ namespace Tests.IntegrationTests
             }
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
-            Assert.AreEqual(true, AreInvoicesEqual(invoice, dbInvoice));//check if object received is the same
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(deserializedResponse, "Invoice updated");
+            Assert.IsTrue(AreInvoicesEqual(invoice, dbInvoice), "Invoices are equal");//check if object received is the same
         }
 
         [Test]
@@ -370,8 +370,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsFalse(deserializedResponse, "Invoice not created");
         }
         #endregion
 
@@ -390,8 +390,8 @@ namespace Tests.IntegrationTests
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, AreInvoicesEqual(oldInvoice, invoice));//check if object received is the same
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(AreInvoicesEqual(oldInvoice, invoice), "Invoices are equal");//check if object received is the same
         }
 
         [Test]
@@ -406,8 +406,8 @@ namespace Tests.IntegrationTests
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(null, invoice);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsNull(invoice, "Invoice is null");
         }
         #endregion
 
@@ -431,8 +431,8 @@ namespace Tests.IntegrationTests
             List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(0, invoices.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreNotEqual(0, invoices.Count, "Invoices received");
         }
         #endregion
 
@@ -450,8 +450,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(deserializedResponse, "Deleted was success");
         }
 
         [Test]
@@ -465,8 +465,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsFalse(deserializedResponse, "Delete was fail");
         }
         #endregion
     }

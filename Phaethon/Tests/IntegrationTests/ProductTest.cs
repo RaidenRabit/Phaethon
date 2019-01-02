@@ -30,8 +30,8 @@ namespace Tests.IntegrationTests
             Product product = JsonConvert.DeserializeObject<Product>(await response.Content.ReadAsStringAsync());
             
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, AreProductsEqual(product, product));
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(AreProductsEqual(product, product), "Products are equal");
         }
 
         [Test]
@@ -46,8 +46,8 @@ namespace Tests.IntegrationTests
             Product product = JsonConvert.DeserializeObject<Product>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(null, product);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsNull(product, "Product group not received");
         }
         #endregion
     }

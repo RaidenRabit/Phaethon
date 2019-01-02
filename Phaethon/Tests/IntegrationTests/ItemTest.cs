@@ -93,8 +93,8 @@ namespace Tests.IntegrationTests
             Item item = JsonConvert.DeserializeObject<Item>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, AreItemsEqual(element.Item, item));//check if object received is the same
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(AreItemsEqual(element.Item, item), "Items are equal");//check if object received is the same
         }
 
         [Test]
@@ -109,8 +109,8 @@ namespace Tests.IntegrationTests
             Item dbItem = JsonConvert.DeserializeObject<Item>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(null, dbItem);//check if object received is the same
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsNull(dbItem, "Item was not received");//check if object received is the same
         }
         #endregion
 
@@ -131,8 +131,8 @@ namespace Tests.IntegrationTests
             List<Item> items = JsonConvert.DeserializeObject<List<Item>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(0, items.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreNotEqual(0, items.Count, "Gets items");
         }
         #endregion
 
@@ -150,8 +150,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(deserializedResponse, "Item deleted");
         }
 
         [Test]
@@ -165,8 +165,8 @@ namespace Tests.IntegrationTests
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsFalse(deserializedResponse, "Not deleted");
         }
         #endregion
     }

@@ -37,8 +37,8 @@ namespace Tests.IntegrationTests
             Company company = JsonConvert.DeserializeObject<Company>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, AreCompaniesEqual(company, invoice.Sender.Company));//check if object received is the same
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(AreCompaniesEqual(company, invoice.Sender.Company), "Companies are equal");//check if object received is the same
         }
 
         [Test]
@@ -53,8 +53,8 @@ namespace Tests.IntegrationTests
             Company company = JsonConvert.DeserializeObject<Company>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(null, company);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsNull(company, "No company received");
         }
         #endregion
 
@@ -69,8 +69,8 @@ namespace Tests.IntegrationTests
             List<Company> companies = JsonConvert.DeserializeObject<List<Company>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(null, companies);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsNotNull(companies, "There were companies in database");
         }
         #endregion
     }

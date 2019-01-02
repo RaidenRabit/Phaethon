@@ -24,8 +24,8 @@ namespace Tests.IntegrationTests
             List<Element> invoiceElements = JsonConvert.DeserializeObject<List<Element>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(0, invoiceElements.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreNotEqual(0, invoiceElements.Count, "There were elements in invoice");
         }
 
         [Test]
@@ -40,8 +40,8 @@ namespace Tests.IntegrationTests
             List<Element> invoiceElements = JsonConvert.DeserializeObject<List<Element>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(0, invoiceElements.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreEqual(0, invoiceElements.Count, "No elements in invoice");
         }
         #endregion
     }
