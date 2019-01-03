@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Core.Model;
 using Core.Model.Filters;
+using InternalApi.DataAccess;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

@@ -7,9 +7,9 @@ using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    internal class JobDa
+    public class JobDa
     {
-        internal int InsertOrUpdate(Job job)
+        public int InsertOrUpdate(Job job)
         {
             using (var db = new DatabaseContext())
             {
@@ -23,7 +23,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        internal Job Read(int id)
+        public Job Read(int id)
         {
             using (var db = new DatabaseContext())
             {
@@ -35,7 +35,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        internal List<Job> ReadAll(JobQueryFilter jobQueryFilter)
+        public List<Job> ReadAll(JobQueryFilter jobQueryFilter)
         {
             jobQueryFilter.To = jobQueryFilter.To.AddDays(1);
             using (var db = new DatabaseContext())
@@ -56,7 +56,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        internal DateTime GetEarliestEntry()
+        public DateTime GetEarliestEntry()
         {
             using (var db = new DatabaseContext())
             {
@@ -66,7 +66,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        internal DateTime? GetLatestEntry()
+        public DateTime? GetLatestEntry()
         {
             using (var db = new DatabaseContext())
             {

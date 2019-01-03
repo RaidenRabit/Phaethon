@@ -7,9 +7,9 @@ using Core.Model.Filters;
 
 namespace InternalApi.DataAccess
 {
-    internal class CustomerDa
+    public class CustomerDa
     {
-        internal void InsertOrUpdate(Customer customer)
+        public void InsertOrUpdate(Customer customer)
         {
             using (var db = new DatabaseContext())
             {
@@ -20,7 +20,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        internal List<Customer> ReadAll(CustomerQueryFilter customerQueryFilter)
+        public List<Customer> ReadAll(CustomerQueryFilter customerQueryFilter)
         {
             using (var db = new DatabaseContext())
             {
