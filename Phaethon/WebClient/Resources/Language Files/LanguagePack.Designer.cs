@@ -367,7 +367,16 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Given Name.
+        ///   Looks up a localized string similar to Edit Current User.
+        /// </summary>
+        public static string EditUser {
+            get {
+                return ResourceManager.GetString("EditUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
         /// </summary>
         public static string GivenName {
             get {
@@ -376,7 +385,25 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incoming.
+        ///   Looks up a localized string similar to The user name or password provided is incorrect..
+        /// </summary>
+        public static string Error1 {
+            get {
+                return ResourceManager.GetString("Error1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login was unsuccessful. Please correct the errors and try again..
+        /// </summary>
+        public static string Error2 {
+            get {
+                return ResourceManager.GetString("Error2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while processing your request..
         /// </summary>
         public static string Incoming {
             get {
@@ -592,7 +619,34 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Legal address.
+        ///   Looks up a localized string similar to Enter.
+        /// </summary>
+        public static string LogIn {
+            get {
+                return ResourceManager.GetString("LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log Off.
+        /// </summary>
+        public static string LogOff {
+            get {
+                return ResourceManager.GetString("LogOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Company.
         /// </summary>
         public static string LegalAddress {
             get {
@@ -655,7 +709,16 @@ namespace WebClient.Resources.Language_Files {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Phone.
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Date.
         /// </summary>
         public static string Phone {
             get {
@@ -768,6 +831,15 @@ namespace WebClient.Resources.Language_Files {
         public static string RegistrationNumber {
             get {
                 return ResourceManager.GetString("RegistrationNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string RegisterUser {
+            get {
+                return ResourceManager.GetString("RegisterUser", resourceCulture);
             }
         }
         

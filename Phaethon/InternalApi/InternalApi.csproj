@@ -103,6 +103,7 @@
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductGroupController.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="DataAccess\ItemDa.cs" />
     <Compile Include="DataAccess\ProductDa.cs" />
     <Compile Include="DataAccess\JobDa.cs" />
+    <Compile Include="DataAccess\LoginDa.cs" />
     <Compile Include="DataAccess\ProductGroupDa.cs" />
     <Compile Include="DataAccess\RepresentativeDa.cs" />
     <Compile Include="DataAccess\TaxGroupDa.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="DataManagement\IDataManagement\ICustomerDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IEmailSenderDM.cs" />
     <Compile Include="DataManagement\IDataManagement\IJobDM.cs" />
+    <Compile Include="DataManagement\IDataManagement\ILoginDM.cs" />
     <Compile Include="DataManagement\CompanyDM.cs" />
     <Compile Include="DataManagement\ElementDM.cs" />
     <Compile Include="DataManagement\IDataManagement\ICompanyDM.cs" />
@@ -137,6 +140,7 @@
     <Compile Include="DataManagement\ItemDM.cs" />
     <Compile Include="DataManagement\ProductGroupDM.cs" />
     <Compile Include="DataManagement\JobDM.cs" />
+    <Compile Include="DataManagement\LoginDM.cs" />
     <Compile Include="DataManagement\ProductDM.cs" />
     <Compile Include="DataManagement\TaxGroupDM.cs" />
     <Compile Include="Global.asax.cs">
