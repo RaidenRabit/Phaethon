@@ -10,7 +10,6 @@ using System.Net;
 using System.Web;
 using InternalApi.DataAccess;
 using Newtonsoft.Json;
-using NUnit.Framework.Constraints;
 
 namespace Tests.IntegrationTests
 {
