@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
-using System.Globalization;
 using System.Linq;
 using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    public class JobDa
+    internal class JobDa
     {
-        public int InsertOrUpdate(Job job)
+        internal int InsertOrUpdate(Job job)
         {
             using (var db = new DatabaseContext())
             {
@@ -24,7 +23,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        public Job Read(int id)
+        internal Job Read(int id)
         {
             using (var db = new DatabaseContext())
             {
@@ -36,7 +35,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        public List<Job> ReadAll(JobQueryFilter jobQueryFilter)
+        internal List<Job> ReadAll(JobQueryFilter jobQueryFilter)
         {
             jobQueryFilter.To = jobQueryFilter.To.AddDays(1);
             using (var db = new DatabaseContext())
@@ -57,7 +56,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        public DateTime GetEarliestEntry()
+        internal DateTime GetEarliestEntry()
         {
             using (var db = new DatabaseContext())
             {
@@ -67,7 +66,7 @@ namespace InternalApi.DataAccess
             }
         }
 
-        public DateTime? GetLatestEntry()
+        internal DateTime? GetLatestEntry()
         {
             using (var db = new DatabaseContext())
             {

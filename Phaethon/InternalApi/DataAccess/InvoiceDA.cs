@@ -7,7 +7,7 @@ using Core.Model;
 
 namespace InternalApi.DataAccess
 {
-    public class InvoiceDa
+    internal class InvoiceDa
     {
         internal void CreateOrUpdate(DatabaseContext db, Invoice invoice)
         {

@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Web;
 using Core.Model;
 using Core.Model.Filters;
 
 namespace InternalApi.DataAccess
 {
-    public class CustomerDa
+    internal class CustomerDa
     {
-        public int InsertOrUpdate(Customer customer)
+        internal void InsertOrUpdate(Customer customer)
         {
             using (var db = new DatabaseContext())
             {
@@ -19,11 +17,10 @@ namespace InternalApi.DataAccess
                 customer.Address_ID = customer.Address.ID;
                 db.Customers.AddOrUpdate(customer);
                 db.SaveChanges();
-                return customer.ID;
             }
         }
 
-        public List<Customer> ReadAll(CustomerQueryFilter customerQueryFilter)
+        internal List<Customer> ReadAll(CustomerQueryFilter customerQueryFilter)
         {
             using (var db = new DatabaseContext())
             {

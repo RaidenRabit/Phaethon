@@ -14,10 +14,10 @@ namespace InternalApi.DataAccess
             db.SaveChanges();
         }
 
-        internal bool Delete(DatabaseContext db, Element element)
+        internal void Delete(DatabaseContext db, Element element)
         {
             db.Elements.Remove(element);
-            return db.SaveChanges() > 0;
+            db.SaveChanges();
         }
 
         internal List<Element> GetInvoiceElements(DatabaseContext db, int id)
