@@ -40,8 +40,27 @@
                         <input type="submit" value=@LanguagePack.RegisterUser class="btn" id="confirm-btn" />
                     
                     }
+
+                    <div id="Yes" style="display:none;"
+                         class="alert alert-success">
+                        <strong>Success!</strong>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 }
+
+<script>
+    //form name
+    $('form').submit( function () {
+        var formdata = $(this).serialize();
+        $.ajax({
+            type: "POST",
+            url: "/Login/Edit",
+            data: formdata
+        });
+        $("#Yes").fadeIn("slow");
+        return false;
+    });
+</script>
