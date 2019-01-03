@@ -35,29 +35,12 @@
 
                         @Ajax.ActionLink("Delete", "Delete", new { }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "window.location.reload()" })
                     }
-                    @if (Session["ID"] == null)
+                    else
                     {
                         <input type="submit" value=@LanguagePack.RegisterUser class="btn" id="confirm-btn" />
                     
                     }
-
-                    <div id="Yes" style="display:none;"
-                         class="alert alert-success">
-                        <strong>Success!</strong>
-                    </div>
-                    
-                        <script>
-                            $("#confirm-btn").on("click", function(){ 
-                                $("#Yes").fadeIn("slow");
-                                return false;
-                            });
-                        </script>
-                    
-                    
-
-
-
-                    </div>
+                </div>
             </div>
         </div>
     </div>
