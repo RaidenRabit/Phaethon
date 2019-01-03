@@ -3,7 +3,7 @@ namespace InternalApi.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class fasdfdsaf : DbMigration
     {
         public override void Up()
         {
@@ -166,6 +166,18 @@ namespace InternalApi.Migrations
                 .ForeignKey("dbo.Customers", t => t.Customer_ID)
                 .Index(t => t.Customer_ID);
             
+            CreateTable(
+                "dbo.Logins",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Username = c.String(nullable: false, maxLength: 50),
+                        Password = c.String(nullable: false, maxLength: 50),
+                        Salt = c.Binary(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .Index(t => t.Username, unique: true);
+            
         }
         
         public override void Down()
@@ -181,6 +193,7 @@ namespace InternalApi.Migrations
             DropForeignKey("dbo.Invoices", "Receiver_ID", "dbo.Representatives");
             DropForeignKey("dbo.Customers", "Address_ID", "dbo.Addresses");
             DropForeignKey("dbo.Representatives", "Company_ID", "dbo.Companies");
+            DropIndex("dbo.Logins", new[] { "Username" });
             DropIndex("dbo.Jobs", new[] { "Customer_ID" });
             DropIndex("dbo.ProductGroups", new[] { "Name" });
             DropIndex("dbo.Products", new[] { "ProductGroup_ID" });
@@ -195,6 +208,7 @@ namespace InternalApi.Migrations
             DropIndex("dbo.Elements", new[] { "Invoice_ID" });
             DropIndex("dbo.Customers", new[] { "Address_ID" });
             DropIndex("dbo.Representatives", new[] { "Company_ID" });
+            DropTable("dbo.Logins");
             DropTable("dbo.Jobs");
             DropTable("dbo.ProductGroups");
             DropTable("dbo.Products");

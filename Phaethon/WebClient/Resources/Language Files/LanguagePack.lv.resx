@@ -407,4 +407,28 @@
   <data name="Back" xml:space="preserve">
     <value>Atgriezties</value>
   </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Pieslēgties</value>
+  </data>
+  <data name="LogOff" xml:space="preserve">
+    <value>Izlogoties</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Vārds</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Parole</value>
+  </data>
+  <data name="Error1" xml:space="preserve">
+    <value>Lietotājvārds vai parole ir napareizi</value>
+  </data>
+  <data name="Error2" xml:space="preserve">
+    <value>Neizdevās pieslēgties. Lūdzu izlabojiet kļūdas un mēģiniet vēlreiz.</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>Rediģēt lietotāju</value>
+  </data>
+  <data name="RegisterUser" xml:space="preserve">
+    <value>Reģistrs</value>
+  </data>
 </root>
