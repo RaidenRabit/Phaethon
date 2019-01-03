@@ -11,7 +11,7 @@ namespace Tests.IntegrationTests
     {
         #region GetInvoiceElements
         [Test]
-        public async Task GetInvoiceElements_CorrectInvoiceId_IsSuccessStatusCodeAndElementsReturned()
+        public async Task GetInvoiceElements_CorrectInvoiceId_SuccessStatusCodeAndElementsReturned()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
@@ -29,7 +29,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task GetInvoiceElements_WrongInvoiceId_IsSuccessStatusCodeAndElementsNotReturned()
+        public async Task GetInvoiceElements_WrongInvoiceId_SuccessStatusCodeAndElementsNotReturned()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);

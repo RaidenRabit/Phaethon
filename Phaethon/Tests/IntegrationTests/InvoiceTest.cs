@@ -267,7 +267,7 @@ namespace Tests.IntegrationTests
         
         #region CreateOrUpdate
         [Test]
-        public async Task CreateOrUpdate_NewInvoiceObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_NewInvoiceObject_SuccessStatusCode()
         {
             //Setup
             Element element = GetElementSeed();
@@ -288,7 +288,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task CreateOrUpdate_UpdateInvoiceObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_UpdateInvoiceObject_SuccessStatusCodeAndInvoiceUpdated()
         {
             //Setup
             Element element = GetElementSeed();
@@ -312,7 +312,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task CreateOrUpdate_NewInvoiceObjectNoElements_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_NewInvoiceObjectNoElements_SuccessStatusCode()
         {
             //Setup
             Element element = GetElementSeed();
@@ -332,7 +332,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task CreateOrUpdate_UpdateInvoiceObjectNoElements_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_UpdateInvoiceObjectNoElements_SuccessStatusCodeAndInvoiceUpdated()
         {
             //Setup
             Element element = GetElementSeed();
@@ -356,7 +356,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task CreateOrUpdate_InvoiceObjectNull_IsSuccessStatusCodeAndResponseFalse()
+        public async Task CreateOrUpdate_InvoiceObjectNull_BadRequestStatusCode()
         {
             //Setup
             Invoice invoice = null;
@@ -371,7 +371,7 @@ namespace Tests.IntegrationTests
 
         #region GetInvoice
         [Test]
-        public async Task GetInvoice_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
+        public async Task GetInvoice_CorrectID_SuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
             Element element = GetElementSeed();
@@ -389,7 +389,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task GetInvoice_WrongId_IsSuccessStatusCodeAndNullObjectReturned()
+        public async Task GetInvoice_WrongId_BadRequestStatusCode()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -405,7 +405,7 @@ namespace Tests.IntegrationTests
 
         #region GetInvoices
         [Test]
-        public async Task GetInvoices_MethodCalled_IsSuccessStatusCodeAndInvoicesReturned()
+        public async Task GetInvoices_MethodCalled_SuccessStatusCodeAndInvoicesReturned()
         {
             //Setup
             GetElementSeed();
@@ -430,7 +430,7 @@ namespace Tests.IntegrationTests
 
         #region Delete
         [Test]
-        public async Task Delete_CorrectID_IsSuccessStatusCodeAndInvoiceDeleted()
+        public async Task Delete_CorrectID_SuccessStatusCode()
         {
             //Setup
             Element element = GetElementSeed();
@@ -445,7 +445,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task Delete_WrongID_IsSuccessStatusCodeAndInvoiceNotDeleted()
+        public async Task Delete_WrongID_BadRequestStatusCode()
         {
             //Setup
             int id = 0;

@@ -14,7 +14,7 @@ namespace Tests.IntegrationTests
     {
         #region Create
         [Test]
-        public async Task Create_NewTaxGroupObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task Create_NewTaxGroupObject_SuccessStatusCode()
         {
             //Setup
             TaxGroup taxGroup = InvoiceTest.GetElementSeed().Item.IncomingTaxGroup;
@@ -34,7 +34,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task Create_ExistingTaxGroupObject_IsSuccessStatusCodeAndResponseFalse()
+        public async Task Create_ExistingTaxGroupObject_BadRequestStatusCode()
         {
             //Setup
             TaxGroup taxGroup = InvoiceTest.GetElementSeed().Item.IncomingTaxGroup;
@@ -47,7 +47,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task Create_TaxGroupObjectNull_IsSuccessStatusCodeAndResponseFalse()
+        public async Task Create_TaxGroupObjectNull_BadRequestStatusCode()
         {
             //Setup
             TaxGroup taxGroup = null;
@@ -62,7 +62,7 @@ namespace Tests.IntegrationTests
 
         #region GetTaxGroups
         [Test]
-        public async Task GetTaxGroups_MethodCalled_IsSuccessStatusCodeAndTaxGroupsReturned()
+        public async Task GetTaxGroups_MethodCalled_SuccessStatusCodeAndTaxGroupsReturned()
         {
             //Setup
             InvoiceTest.GetElementSeed();

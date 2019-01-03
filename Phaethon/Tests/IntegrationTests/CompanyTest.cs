@@ -25,7 +25,7 @@ namespace Tests.IntegrationTests
 
         #region GetCompany
         [Test]
-        public async Task GetCompany_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
+        public async Task GetCompany_CorrectID_SuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
@@ -43,7 +43,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task GetCompany_WrongId_IsSuccessStatusCodeAndNullObjectReturned()
+        public async Task GetCompany_WrongId_BadRequestStatusCode()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -59,7 +59,7 @@ namespace Tests.IntegrationTests
 
         #region GetCompanies
         [Test]
-        public async Task GetCompanies_MethodCalled_IsSuccessStatusCodeAndCompaniesReturned()
+        public async Task GetCompanies_MethodCalled_SuccessStatusCodeAndCompaniesReturned()
         {
             //Setup
 

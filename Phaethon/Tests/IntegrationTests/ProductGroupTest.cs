@@ -14,7 +14,7 @@ namespace Tests.IntegrationTests
     {
         #region Create
         [Test]
-        public async Task Create_NewProductGroupObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task Create_NewProductGroupObject_SuccessStatusCode()
         {
             //Setup
             ProductGroup productGroup = InvoiceTest.GetElementSeed().Item.Product.ProductGroup;
@@ -35,7 +35,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task Create_ExistingProductGroupObject_IsSuccessStatusCodeAndResponseFalse()
+        public async Task Create_ExistingProductGroupObject_BadRequestStatusCode()
         {
             //Setup
             ProductGroup productGroup = InvoiceTest.GetElementSeed().Item.Product.ProductGroup;
@@ -48,7 +48,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task Create_ProductGroupObjectNull_IsSuccessStatusCodeAndResponseFalse()
+        public async Task Create_ProductGroupObjectNull_BadRequestStatusCode()
         {
             //Setup
             ProductGroup productGroup = null;
@@ -63,7 +63,7 @@ namespace Tests.IntegrationTests
 
         #region GetProductGroups
         [Test]
-        public async Task GetProductGroups_MethodCalled_IsSuccessStatusCodeAndProductGroupsReturned()
+        public async Task GetProductGroups_MethodCalled_SuccessStatusCodeAndProductGroupsReturned()
         {
             //Setup
             InvoiceTest.GetElementSeed();

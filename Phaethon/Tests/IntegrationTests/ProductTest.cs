@@ -19,7 +19,7 @@ namespace Tests.IntegrationTests
 
         #region GetProduct
         [Test]
-        public async Task GetProduct_CorrectBarcode_IsSuccessStatusCodeAndSameObjectReturned()
+        public async Task GetProduct_CorrectBarcode_SuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
             Product testProduct = InvoiceTest.GetElementSeed().Item.Product;
@@ -36,7 +36,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task GetProduct_WrongBarcode_IsSuccessStatusCodeAndNullObjectReturned()
+        public async Task GetProduct_WrongBarcode_BadRequestStatusCode()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);

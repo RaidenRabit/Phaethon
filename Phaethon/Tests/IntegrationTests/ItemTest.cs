@@ -24,7 +24,7 @@ namespace Tests.IntegrationTests
 
         #region CreateOrUpdate
         [Test]
-        public async Task CreateOrUpdate_NewItemObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_NewItemObject_SuccessStatusCode()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
@@ -45,7 +45,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task CreateOrUpdate_ExistingItemObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_ExistingItemObject_SuccessStatusCode()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
@@ -59,7 +59,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task CreateOrUpdate_ItemObjectNull_IsSuccessStatusCodeAndResponseFalse()
+        public async Task CreateOrUpdate_ItemObjectNull_BadRequestStatusCode()
         {
             //Setup
             Item item = null;
@@ -74,7 +74,7 @@ namespace Tests.IntegrationTests
 
         #region GetItem
         [Test]
-        public async Task GetItem_CorrectItemId_IsSuccessStatusCodeAndItemReturned()
+        public async Task GetItem_CorrectItemId_SuccessStatusCodeAndItemReturned()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
@@ -91,7 +91,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task GetItem_WrongItemId_IsSuccessStatusCodeAndNullReturned()
+        public async Task GetItem_WrongItemId_BadRequestStatusCode()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -107,7 +107,7 @@ namespace Tests.IntegrationTests
 
         #region GetItems
         [Test]
-        public async Task GetItems_MethodCalled_IsSuccessStatusCodeAndItemsReturned()
+        public async Task GetItems_MethodCalled_SuccessStatusCodeAndItemsReturned()
         {
             //Setup
             InvoiceTest.GetElementSeed();
@@ -129,7 +129,7 @@ namespace Tests.IntegrationTests
 
         #region Delete
         [Test]
-        public async Task Delete_CorrectID_IsSuccessStatusCodeAndItemDeleted()
+        public async Task Delete_CorrectID_SuccessStatusCode()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
@@ -142,7 +142,7 @@ namespace Tests.IntegrationTests
         }
 
         [Test]
-        public async Task Delete_WrongID_IsSuccessStatusCodeAndItemNotDeleted()
+        public async Task Delete_WrongID_BadRequestStatusCode()
         {
             //Setup
             int id = 0;
