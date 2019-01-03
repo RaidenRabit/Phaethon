@@ -29,12 +29,35 @@
 
             <div class="form-group">
                 <div class="col-md-2 col-md-10">
-                    <input type="submit" value=@LanguagePack.Save class="btn" />
-                    @if (Model != null)
+                    @if (Session["ID"] != null)
                     {
+                        <input type="submit" value=@LanguagePack.Save class="btn" />
+
                         @Ajax.ActionLink("Delete", "Delete", new { }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "window.location.reload()" })
                     }
-                </div>
+                    @if (Session["ID"] == null)
+                    {
+                        <input type="submit" value=@LanguagePack.RegisterUser class="btn" id="confirm-btn" />
+                    
+                    }
+
+                    <div id="Yes" style="display:none;"
+                         class="alert alert-success">
+                        <strong>Success!</strong>
+                    </div>
+                    
+                        <script>
+                            $("#confirm-btn").on("click", function(){ 
+                                $("#Yes").fadeIn("slow");
+                                return false;
+                            });
+                        </script>
+                    
+                    
+
+
+
+                    </div>
             </div>
         </div>
     </div>
