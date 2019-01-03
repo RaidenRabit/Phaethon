@@ -16,7 +16,7 @@ namespace WebClient.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = a.AboutPageDescriptionText;
+            ViewBag.Message = a.Description;
 
             return View();
         }

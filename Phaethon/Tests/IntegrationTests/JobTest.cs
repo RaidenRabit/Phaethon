@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using Core.Model;
+using InternalApi.DataAccess;
 using NUnit.Framework;
 using Newtonsoft.Json;
-using InternalApi.DataAccess;
 
 namespace Tests.IntegrationTests
 {

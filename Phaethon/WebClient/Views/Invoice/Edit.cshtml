@@ -7,43 +7,48 @@
     @Html.AntiForgeryToken()
     <div class="card-body" style="padding-left: 20px;">
         <script>
-            var taxGroup = "@LanguagePack.TaxGroupLabel";
+            var taxGroup = "@LanguagePack.TaxGroup";
             var saving = "@LanguagePack.Save";
-            var productGroup = "@LanguagePack.ProductGroupNameLabel";
+            var productGroup = "@LanguagePack.ProductGroup";
             var itemSelection = "@LanguagePack.ItemSelection";
-            var deleteLabel = "@LanguagePack.DeleteButton";
+            var deleteLabel = "@LanguagePack.Delete";
             var deleteTitle = "@LanguagePack.DeleteButtonTitle";
+            var editLabel = "@LanguagePack.Edit";
         </script>
-        <div id="dialog" style="display: none">
-        </div>
+        <div id="dialog" style="display: none"></div>
 
         <div class="row">
             <div class="col-sm-12">
                 <div class="card" style="height: 130px; height: auto;">
-                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceInfo">@LanguagePack.InvoiceInfoLabel</div>
+                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceInfo">@LanguagePack.InvoiceInfo</div>
 
-                    <div id="invoiceInfo" class="card-body collapse" style="padding-left: 20px;">
+                    <div id="invoiceInfo" class="card-body collapse show" style="padding-left: 20px;">
                         @{ Html.RenderPartial("_editInvoice", Model); }
                         @{ Html.RenderPartial("_editCompanies", Model); }
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
+            </div> 
+
             <div class="col-sm-12">
                 <div class="card" style="height: 130px; height: auto;">
-                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#products">@LanguagePack.ProductsLabel</div>
+                    <div class="card-header" style="clear: both;" data-toggle="collapse" href="#products">@LanguagePack.Products</div>
 
                     <div id="products" class="card-body collapse show" style="padding-left: 20px;">
                         @{ Html.RenderPartial("_editItems", Model); }
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+
             <div class="col-sm-12">
                 <div class="form-group">
-                    <input type="submit" value="@LanguagePack.Save" class="btn btn-primary btn-lg btn-block" />
+                    <div class="row">
+                        <div class="col-sm">
+                            <input type="submit" value="@LanguagePack.Save" class="btn btn-primary btn-lg btn-block" />
+                        </div>
+                        <div class="col-sm" align="right">
+                            <input type="button" id="deleteInvoice" value="@LanguagePack.Delete" class="btn btn-danger btn-lg btn-block" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

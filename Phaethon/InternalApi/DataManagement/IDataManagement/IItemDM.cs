@@ -9,7 +9,7 @@ namespace InternalApi.DataManagement.IDataManagement
 {
     interface IItemDM
     {
-        bool CreateOrUpdate(Item item);
+        void CreateOrUpdate(Item item);
 
         Item GetItem(int id);
 

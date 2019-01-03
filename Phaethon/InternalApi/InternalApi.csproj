@@ -17,9 +17,9 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>true</IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -108,6 +108,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductGroupController.cs" />
     <Compile Include="Controllers\TaxGroupController.cs" />
+    <Compile Include="DataAccess\AddressDa.cs" />
     <Compile Include="DataAccess\CompanyDa.cs" />
     <Compile Include="DataAccess\CustomerDa.cs" />
     <Compile Include="DataAccess\DatabaseContext.cs" />
@@ -145,11 +146,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901021534330_fasdfdsaf.cs" />
-    <Compile Include="Migrations\201901021534330_fasdfdsaf.Designer.cs">
-      <DependentUpon>201901021534330_fasdfdsaf.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -170,11 +166,6 @@
       <Project>{2f81d45f-2fd1-442c-b663-d04af5982d28}</Project>
       <Name>Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901021534330_fasdfdsaf.resx">
-      <DependentUpon>201901021534330_fasdfdsaf.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

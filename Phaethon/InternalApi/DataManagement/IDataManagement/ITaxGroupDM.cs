@@ -9,7 +9,7 @@ namespace InternalApi.DataManagement.IDataManagement
 {
     interface ITaxGroupDM
     {
-        bool Create(TaxGroup taxGroup);
+        void Create(TaxGroup taxGroup);
         List<TaxGroup> GetTaxGroups();
     }
 }

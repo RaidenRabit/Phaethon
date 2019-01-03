@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 
@@ -27,7 +28,15 @@ namespace InternalApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetCompany(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _companyManagement.GetCompany(id));
+            Company company = _companyManagement.GetCompany(id);
+            if (company != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, company);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
     }
 }

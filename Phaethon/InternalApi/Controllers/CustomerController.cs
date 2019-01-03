@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Data.Entity.Infrastructure;
-using System.Data.SqlClient;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Core.Model;
 using Core.Model.Filters;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
