@@ -1,8 +1,8 @@
-﻿using System.Net;
+﻿using System.Data.Entity.Infrastructure;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
@@ -25,15 +25,34 @@ namespace InternalApi.Controllers
         public async Task<HttpResponseMessage> Create()
         {
             var requestContent = await Request.Content.ReadAsStringAsync();
-            ProductGroup productGroup = JsonConvert.DeserializeObject<ProductGroup>(requestContent);
-            return Request.CreateResponse(HttpStatusCode.OK, _productGroupManagement.Create(productGroup));
+            try
+            {
+                ProductGroup productGroup = JsonConvert.DeserializeObject<ProductGroup>(requestContent);
+                if (productGroup == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
+                _productGroupManagement.Create(productGroup);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (DbUpdateException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
         }
 
         [Route("GetProductGroups")]
         [HttpGet]
         public HttpResponseMessage GetProductGroups()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _productGroupManagement.GetProductGroups());
+            try
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, _productGroupManagement.GetProductGroups());
+            }
+            catch (DbUpdateException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
         }
     }
 }

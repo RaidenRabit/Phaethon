@@ -7,7 +7,7 @@
     <script>
         var incoming = "@LanguagePack.Incoming";
         var outgoing = "@LanguagePack.Outgoing";
-        var deleteLabel = "@LanguagePack.DeleteButton";
+        var deleteLabel = "@LanguagePack.Delete";
         var details = "@LanguagePack.Details";
     </script>
     <div id="dialog" style="display: none">
@@ -18,39 +18,38 @@
             <div class="card" style="height: 130px; height: auto;">
                 <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceSearch">@LanguagePack.InvoiceSearch</div>
 
-                <div id="invoiceSearch" class="card-body collapse" style="padding-left: 20px;">
-                    <div class="form-group">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <div id="invoiceSearch" class="card-body collapse show" style="padding-left: 20px;">
+                    <div class="row">
+                        <div class="col-sm">
                             <label class="btn btn-info active">
-                                <input type="radio" name="dateOption" value="0" checked> @LanguagePack.PrescriptionDateLabel
-                            </label>
-                            <label class="btn btn-info">
-                                <input type="radio" name="dateOption" value="1"> @LanguagePack.ReceptionDateLabel
-                            </label>
-                            <label class="btn btn-info">
-                                <input type="radio" name="dateOption" value="2"> @LanguagePack.PaymentDateLabel
+                                <input id="regNumber" type="text" class="form-control" placeholder="@LanguagePack.RegistrationNumber" /> @LanguagePack.RegistrationNumber
                             </label>
                         </div>
 
-                        <input id="dateRange" type="datetime" class="daterange form-control" />
-                    </div>
-
-                    <div class="form-group">
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <div class="col-sm">
                             <label class="btn btn-info active">
-                                <input type="radio" name="companyOption" value="0" checked> @LanguagePack.ReceiverCompanyLabel
-                            </label>
-                            <label class="btn btn-info">
-                                <input type="radio" name="companyOption" value="1"> @LanguagePack.SenderCompanyLabel
+                                <input id="docNumber" type="text" class="form-control" placeholder="@LanguagePack.Invoice_Number" /> @LanguagePack.Invoice_Number
                             </label>
                         </div>
 
-                        <input id="companyName" type="text" class="form-control" list="companies" placeholder="@LanguagePack.CompaniesPlaceholder"/>
-                        <datalist id="companies"></datalist>
-                    </div>
+                        <div class="col-sm">
+                            <label class="btn btn-info active">
+                                <input id="dateRange" type="datetime" class="daterange form-control"/> @LanguagePack.Date
+                            </label>
+                        </div>
 
-                    <div class="form-group">
-                        <input id="docNumber" type="text" class="form-control" placeholder="@LanguagePack.DocumentNumberPlaceholder"/>
+                        <div class="col-sm">
+                            <label class="btn btn-info active">
+                                <input id="company" type="text" class="form-control" list="companies" placeholder="@LanguagePack.Company" /> @LanguagePack.Company
+                                <datalist id="companies"></datalist>
+                            </label>
+                        </div>
+
+                        <div class="col-sm">
+                            <label class="btn btn-info active">
+                                <input id="sum" type="number" class="form-control" placeholder="@LanguagePack.Sum" min="0" value="0"/> @LanguagePack.Sum
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,38 +58,34 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card" style="height: 130px; height: auto;">
-                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceList">
-                    @LanguagePack.Invoices
-                    <div style="float: right"><Input type="button" id="newInvoice" class="btn" value="@LanguagePack.NewInvoiceButton"></div>
+                <div class="card-header" style="clear: both;" data-toggle="collapse" href="#invoiceList"> @LanguagePack.Invoices
+                    <div style="float: right"><Input type="button" id="newInvoice" class="btn" value="@LanguagePack.NewInvoice"></div>
                 </div>
 
                 <div id="invoiceList" class="card-body collapse show" style="padding-left: 20px;">
-                    <table id="invoiceTable" class="table">
-                        <thead>
+                    <table id="invoiceTable" class="table table-hover table-bordered">
+                        <thead class="thead-light">
                             <tr>
                                 <th>
-                                    @LanguagePack.DocumentNumberPlaceholder
+                                    @LanguagePack.RegistrationNumber
                                 </th>
                                 <th>
-                                    @LanguagePack.InvoiceType
+                                    @LanguagePack.Invoice_Number
                                 </th>
                                 <th>
-                                    @LanguagePack.PrescriptionDateLabel
+                                    @LanguagePack.Invoice_Type
                                 </th>
                                 <th>
-                                    @LanguagePack.ReceiverCompanyLabel
+                                    @LanguagePack.Date
                                 </th>
                                 <th>
-                                    @LanguagePack.PaymentDateLabel
-                                </th>
-                                <th>
-                                    @LanguagePack.SenderCompanyLabel
-                                </th>
-                                <th>
-                                    @LanguagePack.ReceiverCompanyLabel
+                                    @LanguagePack.Company
                                 </th>
                                 <th>
                                     @LanguagePack.Sum
+                                </th>
+                                <th>
+                                    @LanguagePack.SumNoTax
                                 </th>
                                 <th>
                                     <input id="numOfRecords" type="number" class="form-control" value="10" />

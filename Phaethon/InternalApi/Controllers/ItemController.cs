@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Data.Entity.Infrastructure;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
@@ -23,29 +20,55 @@ namespace InternalApi.Controllers
             _itemManagement = new ItemDM();
         }
 
-        [Route("GetItem")]
-        [HttpGet]
-        public HttpResponseMessage GetItem(int id)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItem(id));
-        }
-
         [Route("CreateOrUpdate")]
         [HttpPost]
         public async Task<HttpResponseMessage> CreateOrUpdate()
         {
-            var requestContent = await Request.Content.ReadAsStringAsync();
-            Item item = JsonConvert.DeserializeObject<Item>(requestContent);
-            return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.CreateOrUpdate(item));
+            try
+            {
+                var requestContent = await Request.Content.ReadAsStringAsync();
+                Item item = JsonConvert.DeserializeObject<Item>(requestContent);
+                if (item == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
+                _itemManagement.CreateOrUpdate(item);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (DbUpdateException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        [Route("GetItem")]
+        [HttpGet]
+        public HttpResponseMessage GetItem(int id)
+        {
+            Item item = _itemManagement.GetItem(id);
+            if (item != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItem(id));
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         [Route("GetItems")]
         [HttpGet]
         public HttpResponseMessage GetItems(string serialNumber, string productName, int barcode, bool showAll)
         {
-            if (serialNumber == null) serialNumber = "";
-            if (productName == null) productName = "";
-            return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItems(serialNumber, productName, barcode, showAll));
+            try { 
+                if (serialNumber == null) serialNumber = "";
+                if (productName == null) productName = "";
+                return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItems(serialNumber, productName, barcode, showAll));
+            }
+            catch (DbUpdateException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
         }
 
         [Route("Delete")]
@@ -54,7 +77,14 @@ namespace InternalApi.Controllers
         {
             var requestContent = await Request.Content.ReadAsStringAsync();
             int id = JsonConvert.DeserializeObject<int>(requestContent);
-            return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.Delete(id));
+            if (_itemManagement.Delete(id))
+            {
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
     }
 }

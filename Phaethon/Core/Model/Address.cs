@@ -16,12 +16,15 @@ namespace Core.Model
         [DataMember]
         public int ID { get; set; }
 
+        [Required]
         [DataMember]
         public string City { get; set; }
 
+        [Required]
         [DataMember]
         public string Street { get; set; }
 
+        [Required]
         [DataMember]
         public string Number { get; set; }
         

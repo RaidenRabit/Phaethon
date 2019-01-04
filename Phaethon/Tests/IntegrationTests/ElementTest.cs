@@ -11,7 +11,7 @@ namespace Tests.IntegrationTests
     {
         #region GetInvoiceElements
         [Test]
-        public async Task GetInvoiceElements_CorrectInvoiceId_IsSuccessStatusCodeAndElementsReturned()
+        public async Task GetInvoiceElements_CorrectInvoiceId_SuccessStatusCodeAndElementsReturned()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
@@ -24,12 +24,12 @@ namespace Tests.IntegrationTests
             List<Element> invoiceElements = JsonConvert.DeserializeObject<List<Element>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(0, invoiceElements.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreNotEqual(0, invoiceElements.Count, "There were elements in invoice");
         }
 
         [Test]
-        public async Task GetInvoiceElements_WrongInvoiceId_IsSuccessStatusCodeAndElementsNotReturned()
+        public async Task GetInvoiceElements_WrongInvoiceId_SuccessStatusCodeAndElementsNotReturned()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -40,8 +40,8 @@ namespace Tests.IntegrationTests
             List<Element> invoiceElements = JsonConvert.DeserializeObject<List<Element>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(0, invoiceElements.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreEqual(0, invoiceElements.Count, "There were no elements in invoice");
         }
         #endregion
     }

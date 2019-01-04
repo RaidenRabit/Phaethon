@@ -83,6 +83,7 @@
     <Compile Include="Model\ProductGroup.cs" />
     <Compile Include="Model\Representative.cs" />
     <Compile Include="Model\TaxGroup.cs" />
+    <Compile Include="Model\Login.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

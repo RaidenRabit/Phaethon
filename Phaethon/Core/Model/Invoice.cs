@@ -32,19 +32,18 @@ namespace Core.Model
         public string DocNumber { get; set; }
 
         [Required]
+        [DataMember]
+        public string RegNumber { get; set; }
+
+        [Required]
         [DataType(DataType.DateTime)]
         [DataMember]
-        public DateTime PrescriptionDate { get; set; }
+        public DateTime CheckoutDate { get; set; }
 
         [DataType(DataType.DateTime)]
         [DataMember]
         [DefaultValue(null)]
         public DateTime ReceptionDate { get; set; }
-
-        [DataType(DataType.DateTime)]
-        [DataMember]
-        [DefaultValue(null)]
-        public DateTime PaymentDate { get; set; }
         
         [DataMember]
         [ForeignKey("Sender_ID")]
@@ -63,5 +62,9 @@ namespace Core.Model
         [NotMapped]
         [DataMember]
         public decimal Sum { get; set; }
+
+        [NotMapped]
+        [DataMember]
+        public decimal SumNoTax { get; set; }
     }
 }
