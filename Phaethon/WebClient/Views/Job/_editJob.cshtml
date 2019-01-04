@@ -17,14 +17,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group">
-                            @LanguagePack.JobIdPlaceHolder
+                            @LanguagePack.JobID
                             <div class="col-md-8">
                                 @Html.TextBoxFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" }, @readonly = "readonly", @disabled = "disabled" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.JobNamePlaceHolder
+                            @LanguagePack.Job_Name
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.JobName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.JobName, "", new { @class = "text-danger" })
@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.StartedTimePlaceHolder
+                            @LanguagePack.StartedTime
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.StartedTime, new { htmlAttributes = new { @class = "form-control datepicker", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.StartedTime, "", new { @class = "text-danger" })
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.FinishedTimePlaceHolder
+                            @LanguagePack.FinishedTime
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.FinishedTime, new { htmlAttributes = new { @class = "form-control datepicker", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.FinishedTime, "", new { @class = "text-danger" })
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.JobStatus
+                            @LanguagePack.Job_Status
                             <div class="col-md-10">
                                 @Html.EnumDropDownListFor(model => model.JobStatus, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.JobStatus, "", new { @class = "text-danger" })
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="form-group">
-                            @LanguagePack.JobDescriptionPlaceHolder
+                            @LanguagePack.Job_Description
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -81,34 +81,34 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group">
-                                @LanguagePack.CustomerIdPlaceholder
+                                @LanguagePack.CustomerID
                                 <div class="col-md-10">
                                     @Html.TextBoxFor(model => model.Customer.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" }, @readonly = "readonly", @disabled = "disabled" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.CustomerGivenNamePlaceholder
+                                @LanguagePack.GivenName
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.GivenName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.GivenName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.CustomerFamilyNamePlaceholder
+                                @LanguagePack.FamilyName
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.FamilyName, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.FamilyName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.CustomerEmailPlaceholder
+                                @LanguagePack.Email
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.Email, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.ContactPagePhone
+                                @LanguagePack.Phone
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.Phone, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.Phone, "", new { @class = "text-danger" })
@@ -125,34 +125,34 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group">
-                                @LanguagePack.AddressIDPlaceholder
+                                @LanguagePack.AddressID
                                 <div class="col-md-10">
                                     @Html.TextBoxFor(model => model.Customer.Address.ID, new { htmlAttributes = new { @class = "form-control", @required = "required" }, @readonly = "readonly", @disabled = "disabled" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.AddressCityPlaceholder
+                                @LanguagePack.City
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.Address.City, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.Address.City, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.AddressStreetPlaceholder
+                                @LanguagePack.Street
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.Address.Street, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.Address.Street, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.AddressNumberPlaceholder
+                                @LanguagePack.Street_Number
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.Address.Number, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.Address.Number, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @LanguagePack.AddressExtraPlaceholder
+                                @LanguagePack.Extra
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.Customer.Address.Extra, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                     @Html.ValidationMessageFor(model => model.Customer.Address.Extra, "", new { @class = "text-danger" })

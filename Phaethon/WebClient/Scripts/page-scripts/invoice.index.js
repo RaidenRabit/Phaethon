@@ -16,7 +16,7 @@
     GetInvoices();
 
     //on search option change get corresponding invoices
-    $("#numOfRecords, #companyName, #dateRange, input[name=companyOption], input[name=dateOption], #docNumber").change(function() {
+    $("#numOfRecords, #regNumber, #docNumber, #dateRange, #company, #sum").change(function() {
         GetInvoices();
     });
 
@@ -61,40 +61,57 @@ function GetInvoices()
         url: "Api/Invoice/GetInvoices",
         data: {
             numOfRecords: $("#numOfRecords").val(),
-            selectedCompany: $('input[name=companyOption]:checked').val(),
-            name: $("#companyName").val(),
-            selectedDate: $('input[name=dateOption]:checked').val(),
+            regNumber: $("#regNumber").val(),
+            docNumber: $("#docNumber").val(),
             from: $("#dateRange").data('daterangepicker').startDate.format('DD/MM/YYYY'),
             to: $("#dateRange").data('daterangepicker').endDate.format('DD/MM/YYYY'),
-            docNumber: $("#docNumber").val()
+            company: $("#company").val(),
+            sum: $("#sum").val()
         },
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
             var htmlText = "";
+            var rows = $("#numOfRecords").val();
             for (var i = 0; i < data.length; i++) {
-                var PrescriptionDate = moment(data[i].PrescriptionDate).format('DD-MM-YYYY');
-                var ReceptionDate = moment(data[i].ReceptionDate).format('DD-MM-YYYY');
-                var PaymentDate = moment(data[i].PaymentDate).format('DD-MM-YYYY');
+                rows = rows - 1;
+                var date;
                 var invoiceType;
+                var companyName;
                 if (data[i].Incoming == true) {
+                    date = moment(data[i].ReceptionDate).format('DD-MM-YYYY');
                     invoiceType = incoming;
+                    companyName = data[i].Sender.Company.Name;
                 } else {
+                    date = moment(data[i].CheckoutDate).format('DD-MM-YYYY');
                     invoiceType = outgoing;
+                    companyName = data[i].Receiver.Company.Name;
                 }
+
                 htmlText += "<tr>" +
+                    "<td>" + data[i].RegNumber + "</td>" +
                     "<td>" + data[i].DocNumber + "</td>" +
                     "<td>" + invoiceType + "</td>" +
-                    "<td>" + PrescriptionDate + "</td>" +
-                    "<td>" + ReceptionDate + "</td>" +
-                    "<td>" + PaymentDate + "</td>" +
-                    "<td>" + data[i].Sender.Company.Name + "</td>" +
-                    "<td>" + data[i].Receiver.Company.Name + "</td>" +
+                    "<td>" + date + "</td>" +
+                    "<td>" + companyName + "</td>" +
                     "<td>" + data[i].Sum + "</td>" +
+                    "<td>" + data[i].SumNoTax + "</td>" +
                     "<td>" +
-                    "<a href='/Invoice/Edit/" + data[i].ID + "'>" + details + "</a> |" +
-                    "<a data-ajax='true' data-ajax-method='POST' data-ajax-success='window.location.reload()' href='/Invoice/Delete/" + data[i].ID + "'>" + deleteLabel + "</a>" +
+                    "<a href='/Invoice/Edit/" + data[i].ID + "'>" + details + "</a>"+
                     "</td>" +
+                    "</tr>";
+            }
+            while (rows > 0) {
+                rows = rows - 1;
+                htmlText += "<tr>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td></td>" +
                     "</tr>";
             }
             $("#invoiceTable tbody").html(htmlText);

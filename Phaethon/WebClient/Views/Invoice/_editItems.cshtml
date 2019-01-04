@@ -1,42 +1,48 @@
 ﻿@model Core.Model.Invoice
+@using System.Threading
 @using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
+@{ Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator = "."; }
 
 <table id="elementTable" class="table table-hover">
     <thead>
         <tr>
             <th>
-                @LanguagePack.QuantityLabel
+                @LanguagePack.Quantity
             </th>
             <th>
-                @LanguagePack.SerialNumberLabel
+                @LanguagePack.SerialNumber
             </th>
             <th>
-                @LanguagePack.ProductNameLabel
+                @LanguagePack.Product_Name
             </th>
             <th>
-                @LanguagePack.ProductBarcodeLabel
+                @LanguagePack.Product_Barcode
             </th>
             <th>
                 @LanguagePack.ProductPrice
             </th>
             <th id="taxGroupLabel" class="text-primary">
-                @LanguagePack.TaxGroupLabel
+                @LanguagePack.TaxGroup
             </th>
             <th id="productGroupLabel" class="text-primary">
-                @LanguagePack.ProductGroupNameLabel
+                @LanguagePack.ProductGroup
             </th>
             <th>
-                @LanguagePack.ItemIncomingPriceLabel
+                @LanguagePack.Price
             </th>
             <th>
-                @LanguagePack.ActionLabel
+                @LanguagePack.Action
             </th>
         </tr>
     </thead>
     <tbody></tbody>
     <tfoot>
         <tr>
-            <td colspan="4"></td>
+            <td>@LanguagePack.TransportCost</td>
+            <td>
+                @Html.EditorFor(model => model.Transport, new { htmlAttributes = new { @class = "form-control", @type = "number", @step = "0.01", @min="0", @required = "required" } })
+            </td>
+            <td colspan="2"></td>
             <td>
                 <input type="number" id="totalNoTax" class="form-control" readonly />
             </td>
@@ -45,7 +51,7 @@
                 <input type="number" id="totalAmount" class="form-control" readonly />
             </td>
             <td>
-                <input type="button" id="newItemRow" class="btn btn-success" value="@LanguagePack.NewItemButton" />
+                <input type="button" id="newItemRow" class="btn btn-success" value="@LanguagePack.NewItem" />
             </td>
         </tr>
     </tfoot>

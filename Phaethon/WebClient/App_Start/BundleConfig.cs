@@ -40,6 +40,7 @@ namespace WebClient
                 "~/Scripts/page-scripts/invoice.index.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/Invoice/Edit").Include(
+                "~/Scripts/page-scripts/invoice.edit.js",
                 "~/Scripts/page-scripts/invoice.edit_company.js",
                 "~/Scripts/page-scripts/invoice.edit_elements.js"));
             

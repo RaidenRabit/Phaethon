@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using Core.Model;
 using InternalApi.DataAccess;
 using InternalApi.DataManagement.IDataManagement;
@@ -17,19 +14,11 @@ namespace InternalApi.DataManagement
             _taxGroupDa = new TaxGroupDa();
         }
 
-        public bool Create(TaxGroup taxGroup)
+        public void Create(TaxGroup taxGroup)
         {
             using (var db = new DatabaseContext())
             {
-                try
-                {
-                    _taxGroupDa.Create(db, taxGroup);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                _taxGroupDa.Create(db, taxGroup);
             }
         }
 

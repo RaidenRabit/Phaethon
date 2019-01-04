@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using Core.Model;
 using Core.Model.Filters;
 using InternalApi.DataAccess;
@@ -20,7 +17,6 @@ namespace InternalApi.DataManagement
 
         public List<Customer> ReadAll(CustomerQueryFilter customerQueryFilter)
         {
-
             if (customerQueryFilter.Email == null)
                 customerQueryFilter.Email = "";
             if (customerQueryFilter.FamilyName == null)

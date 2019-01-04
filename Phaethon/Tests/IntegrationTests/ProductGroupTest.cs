@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Core.Model;
@@ -13,7 +14,7 @@ namespace Tests.IntegrationTests
     {
         #region Create
         [Test]
-        public async Task Create_NewProductGroupObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task Create_NewProductGroupObject_SuccessStatusCode()
         {
             //Setup
             ProductGroup productGroup = InvoiceTest.GetElementSeed().Item.Product.ProductGroup;
@@ -28,47 +29,41 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("ProductGroup/Create", productGroup);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
         }
 
         [Test]
-        public async Task Create_ExistingProductGroupObject_IsSuccessStatusCodeAndResponseFalse()
+        public async Task Create_ExistingProductGroupObject_BadRequestStatusCode()
         {
             //Setup
             ProductGroup productGroup = InvoiceTest.GetElementSeed().Item.Product.ProductGroup;
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("ProductGroup/Create", productGroup);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
 
         [Test]
-        public async Task Create_ProductGroupObjectNull_IsSuccessStatusCodeAndResponseFalse()
+        public async Task Create_ProductGroupObjectNull_BadRequestStatusCode()
         {
             //Setup
             ProductGroup productGroup = null;
 
             //Act
             var response = await _internalClient.PostAsJsonAsync("ProductGroup/Create", productGroup);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
 
         #region GetProductGroups
         [Test]
-        public async Task GetProductGroups_MethodCalled_IsSuccessStatusCodeAndProductGroupsReturned()
+        public async Task GetProductGroups_MethodCalled_SuccessStatusCodeAndProductGroupsReturned()
         {
             //Setup
             InvoiceTest.GetElementSeed();
@@ -78,8 +73,8 @@ namespace Tests.IntegrationTests
             List<ProductGroup> productGroups = JsonConvert.DeserializeObject<List<ProductGroup>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(0, productGroups.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreNotEqual(0, productGroups.Count, "Product groups received");
         }
         #endregion
     }

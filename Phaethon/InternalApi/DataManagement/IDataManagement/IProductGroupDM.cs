@@ -9,7 +9,7 @@ namespace InternalApi.DataManagement.IDataManagement
 {
     interface IProductGroupDM
     {
-        bool Create(ProductGroup productGroup);
+        void Create(ProductGroup productGroup);
         List<ProductGroup> GetProductGroups();
     }
 }

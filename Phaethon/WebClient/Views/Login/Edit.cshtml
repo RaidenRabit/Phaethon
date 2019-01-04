@@ -1,0 +1,66 @@
+﻿@using WebClient.Resources.Language_Files
+@model Core.Model.Login
+@{ViewBag.Title = "Manage Login";}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-sm-12">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="form-group">
+                @LanguagePack.Name
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @LanguagePack.Password
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2 col-md-10">
+                    @if (Session["ID"] != null)
+                    {
+                        <input type="submit" value=@LanguagePack.Save class="btn" />
+
+                        @Ajax.ActionLink("Delete", "Delete", new { }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "window.location.reload()" })
+                    }
+                    else
+                    {
+                        <input type="submit" value=@LanguagePack.RegisterUser class="btn" id="confirm-btn" />
+                    
+                    }
+
+                    <div id="Yes" style="display:none;"
+                         class="alert alert-success">
+                        <strong>Success!</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    //form name
+    $('form').submit( function () {
+        var formdata = $(this).serialize();
+        $.ajax({
+            type: "POST",
+            url: "/Login/Edit",
+            data: formdata
+        });
+        $("#Yes").fadeIn("slow");
+        return false;
+    });
+</script>

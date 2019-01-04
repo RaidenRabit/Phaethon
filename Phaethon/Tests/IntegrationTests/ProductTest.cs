@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using Core.Model;
 using Newtonsoft.Json;
@@ -12,12 +13,13 @@ namespace Tests.IntegrationTests
         {
             return firstProduct.ID == secondProduct.ID &&
                    firstProduct.Barcode.Equals(secondProduct.Barcode) &&
-                   firstProduct.Name.Equals(secondProduct.Name);
+                   firstProduct.Name.Equals(secondProduct.Name) &&
+                   firstProduct.ProductGroup_ID == secondProduct.ProductGroup_ID;
         }
 
         #region GetProduct
         [Test]
-        public async Task GetProduct_CorrectBarcode_IsSuccessStatusCodeAndSameObjectReturned()
+        public async Task GetProduct_CorrectBarcode_SuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
             Product testProduct = InvoiceTest.GetElementSeed().Item.Product;
@@ -29,12 +31,12 @@ namespace Tests.IntegrationTests
             Product product = JsonConvert.DeserializeObject<Product>(await response.Content.ReadAsStringAsync());
             
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, AreProductsEqual(product, product));
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(AreProductsEqual(product, product), "Products are equal");
         }
 
         [Test]
-        public async Task GetProduct_WrongBarcode_IsSuccessStatusCodeAndNullObjectReturned()
+        public async Task GetProduct_WrongBarcode_BadRequestStatusCode()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -42,11 +44,9 @@ namespace Tests.IntegrationTests
 
             //Act
             var response = await _internalClient.GetAsync("Product/GetProduct?" + parameters);
-            Product product = JsonConvert.DeserializeObject<Product>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(null, product);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
     }

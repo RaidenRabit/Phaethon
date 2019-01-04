@@ -1,8 +1,8 @@
-﻿using System.Net;
+﻿using System.Data.Entity.Infrastructure;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
@@ -25,15 +25,33 @@ namespace InternalApi.Controllers
         public async Task<HttpResponseMessage> Create()
         {
             var requestContent = await Request.Content.ReadAsStringAsync();
-            TaxGroup taxGroup = JsonConvert.DeserializeObject<TaxGroup>(requestContent);
-            return Request.CreateResponse(HttpStatusCode.OK, _taxGroupManagement.Create(taxGroup));
+            try
+            {
+                TaxGroup taxGroup = JsonConvert.DeserializeObject<TaxGroup>(requestContent);
+                if (taxGroup == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
+                _taxGroupManagement.Create(taxGroup);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (DbUpdateException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
         }
 
         [Route("GetTaxGroups")]
         [HttpGet]
         public HttpResponseMessage GetTaxGroups()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _taxGroupManagement.GetTaxGroups());
+            try { 
+                return Request.CreateResponse(HttpStatusCode.OK, _taxGroupManagement.GetTaxGroups());
+            }
+            catch (DbUpdateException e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
         }
     }
 }
