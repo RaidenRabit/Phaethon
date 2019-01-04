@@ -74,6 +74,7 @@
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\DatabaseContext.cs" />
     <Compile Include="Model\Filters\CustomerQueryFilter.cs" />
     <Compile Include="Model\Job.cs" />
     <Compile Include="Model\Invoice.cs" />

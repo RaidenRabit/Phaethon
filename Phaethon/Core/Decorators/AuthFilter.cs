@@ -3,6 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using Core.Model;
+using InternalApi.DataAccess;
+using System.Linq;
 
 namespace Core.Decorators
 {
@@ -21,10 +24,24 @@ namespace Core.Decorators
                     return;
 
                 var userToken = actionContext.Request.Headers.GetValues("UserToken");
+                
             }
             catch (Exception)
             {
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden);
+            }
+        }
+
+        private bool DecryptToken(string token)
+        {
+
+        }
+
+        private Login GetLogin(int id)
+        {
+            using (var db = new DatabaseContext())
+            {
+                return db.Login.SingleOrDefault(x => x.ID == id);
             }
         }
         
