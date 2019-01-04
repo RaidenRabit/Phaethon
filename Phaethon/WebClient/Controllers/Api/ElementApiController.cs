@@ -1,8 +1,8 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using WebClient.Models;
 
 namespace WebClient.Controllers.Api
 {
@@ -13,8 +13,9 @@ namespace WebClient.Controllers.Api
 
         public ElementApiController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/Element/");
+            HttpWebClientFactory clientFactory = new HttpWebClientFactory();
+            clientFactory.SetBaseAddress("http://localhost:64007/Element/");
+            _client = clientFactory.GetClient();
         }
 
         [Route("GetInvoiceElements")]

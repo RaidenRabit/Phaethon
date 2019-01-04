@@ -1,29 +1,34 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Core.Model;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using WebClient.Models;
 using WebClient.Resources.Language_Files;
 
 namespace WebClient.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly HttpWebClientFactory _clientFactory;
         private readonly HttpClient _client;
 
         public LoginController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/Login/");
-            
+            _clientFactory = new HttpWebClientFactory();
+            _clientFactory.SetBaseAddress("http://localhost:64007/Login/");
+            _client = _clientFactory.GetClient();
         }
 
         [HttpGet]
         public ActionResult Index()
         {
+            Session["userToken"] = null;
             Session["ID"] = null;
             return View();
 
@@ -35,10 +40,12 @@ namespace WebClient.Controllers
             var response = await _client.PostAsJsonAsync("Login", loginModel);
             if (HttpStatusCode.OK == response.StatusCode)
             {
-                int deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
-                if (deserializedResponse != 0)
+                string deserializedResponse = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
+                if (!deserializedResponse.IsNullOrWhiteSpace() && !deserializedResponse.Contains("Incorrect login credentials"))
                 {
-                    Session["ID"] = deserializedResponse;
+                    Session["userToken"] = deserializedResponse;
+                    _clientFactory.SetUserToken(deserializedResponse);
+                    Session["ID"] = Int32.Parse(deserializedResponse.Remove(deserializedResponse.Length - 64));
                     return RedirectToAction("Index", "Invoice");
                 }
             }

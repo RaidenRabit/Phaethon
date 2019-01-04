@@ -27,11 +27,11 @@ namespace Core.Decorators
                 if (requestUrl.Contains("Login/Login")) //if you're just trying to login, allow for it to go on
                     return;
 
-                var userToken = actionContext.Request.Headers.GetValues("UserToken").ToString();
+                var userToken = actionContext.Request.Headers.GetValues("UserToken").FirstOrDefault().ToString();
                 if (!UtilityMethods.EvaluateToken(userToken))
                     throw new Exception("Not logged in");
 
-                string id = string.Concat(userToken.Reverse().Skip(3).Reverse()); //user id
+                string id = userToken.Remove(userToken.Length - 64);
                 actionContext.Request.Headers.Remove("UserToken");
                 actionContext.Request.Headers.Add("UserToken", id);
             }
@@ -47,7 +47,7 @@ namespace Core.Decorators
         {
             try
             {
-                int id = Int32.Parse(string.Concat(token.Reverse().Skip(3).Reverse()));
+                int id = Int32.Parse(token.Remove(token.Length - 64));
                 Login login = GetLogin(id);
                 string shaComposed = id + ComputeSha256Hash(Encipher(login.Username, id));
                 if(shaComposed.Equals(token))

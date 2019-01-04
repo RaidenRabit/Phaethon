@@ -1,5 +1,5 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Core.Decorators;
 
 namespace WebClient
 {
@@ -10,4 +10,5 @@ namespace WebClient
             filters.Add(new HandleErrorAttribute());
         }
     }
+
 }

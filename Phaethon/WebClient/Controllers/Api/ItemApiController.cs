@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using WebClient.Models;
 
 namespace WebClient.Controllers.Api
 {
@@ -16,8 +13,9 @@ namespace WebClient.Controllers.Api
 
         public ItemApiController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/Item/");
+            HttpWebClientFactory clientFactory = new HttpWebClientFactory();
+            clientFactory.SetBaseAddress("http://localhost:64007/Item/");
+            _client = clientFactory.GetClient();
         }
 
         [Route("GetItem")]

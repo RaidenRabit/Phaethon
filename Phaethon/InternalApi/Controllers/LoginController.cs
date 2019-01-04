@@ -52,7 +52,7 @@ namespace InternalApi.Controllers
             var requestContent = await Request.Content.ReadAsStringAsync();
             Login login = JsonConvert.DeserializeObject<Login>(requestContent);
             int loginID = _loginManagement.Login(login.Username, login.Password);
-            string userToken = UtilityMethods.ComputeSha256Hash(UtilityMethods.Encipher(login.Username, loginID));
+            string userToken = loginID + UtilityMethods.ComputeSha256Hash(UtilityMethods.Encipher(login.Username, loginID));
             if (loginID != 0)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, userToken);

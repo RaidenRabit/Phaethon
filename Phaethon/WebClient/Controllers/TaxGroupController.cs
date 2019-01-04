@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Core.Model;
-using Newtonsoft.Json;
+using WebClient.Models;
 
 namespace WebClient.Controllers
 {
@@ -17,8 +12,9 @@ namespace WebClient.Controllers
 
         public TaxGroupController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/TaxGroup/");
+            HttpWebClientFactory clientFactory = new HttpWebClientFactory();
+            clientFactory.SetBaseAddress("http://localhost:64007/TaxGroup/");
+            _client = clientFactory.GetClient();
         }
 
         [HttpGet]
