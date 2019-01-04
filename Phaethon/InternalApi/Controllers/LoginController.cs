@@ -6,6 +6,7 @@ using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 using Newtonsoft.Json;
+using Core.Decorators;
 
 namespace InternalApi.Controllers
 {
@@ -50,10 +51,11 @@ namespace InternalApi.Controllers
         {
             var requestContent = await Request.Content.ReadAsStringAsync();
             Login login = JsonConvert.DeserializeObject<Login>(requestContent);
-            var loginID = _loginManagement.Login(login.Username, login.Password);
+            int loginID = _loginManagement.Login(login.Username, login.Password);
+            string userToken = UtilityMethods.ComputeSha256Hash(UtilityMethods.Encipher(login.Username, loginID));
             if (loginID != 0)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, loginID);
+                return Request.CreateResponse(HttpStatusCode.OK, userToken);
             }
             else
             {
