@@ -17,6 +17,8 @@ namespace Core.Decorators
 
                 if (requestUrl.Contains("Login/CreateOrUpdate")) //if you're just trying to register, allow for it to go on
                     return;
+                if (requestUrl.Contains("Login/Login")) //if you're just trying to login, allow for it to go on
+                    return;
 
                 var userToken = actionContext.Request.Headers.GetValues("UserToken");
             }
