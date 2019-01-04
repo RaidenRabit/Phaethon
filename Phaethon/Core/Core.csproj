@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Decorators\AuthFilter.cs" />
     <Compile Include="Decorators\ExceptionFilter.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Address.cs" />
