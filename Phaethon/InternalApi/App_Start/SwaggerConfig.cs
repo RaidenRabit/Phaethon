@@ -2,11 +2,32 @@ using System.Web.Http;
 using WebActivatorEx;
 using InternalApi;
 using Swashbuckle.Application;
+using Swashbuckle.Swagger;
+using System.Web.Http.Description;
+using System.Collections.Generic;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
 namespace InternalApi
 {
+    public class AddRequiredHeaderParameter : IOperationFilter
+    {
+        public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
+        {
+            if (operation.parameters == null)
+                operation.parameters = new List<Parameter>();
+
+            operation.parameters.Add(new Parameter
+            {
+                name = "UserToken",
+                @in = "header",
+                type = "string",
+                description = "My header field",
+                required = false
+            });
+        }
+    }
+
     public class SwaggerConfig
     {
         public static void Register()
@@ -36,6 +57,7 @@ namespace InternalApi
                         c.IncludeXmlComments(string.Format(@"{0}\bin\InternalApi.xml",
                             System.AppDomain.CurrentDomain.BaseDirectory));
                         c.DescribeAllEnumsAsStrings();
+                        c.OperationFilter<AddRequiredHeaderParameter>(); // Add this here
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //
