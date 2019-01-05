@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Core.Decorators;
 
 namespace WebClient
 {
