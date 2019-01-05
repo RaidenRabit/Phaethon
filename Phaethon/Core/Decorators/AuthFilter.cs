@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
@@ -8,7 +7,6 @@ using Core.Model;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using InternalApi.DataAccess;
 
 namespace Core.Decorators
 {
@@ -49,7 +47,7 @@ namespace Core.Decorators
             {
                 int id = Int32.Parse(token.Remove(token.Length - 64));
                 Login login = GetLogin(id);
-                string shaComposed = id + ComputeSha256Hash(Encipher(login.Username, id));
+                string shaComposed = id + ComputeSha256Hash(Encipher(login.Username + login.Salt, id));
                 if(shaComposed.Equals(token))
                     return true;
                 return false;

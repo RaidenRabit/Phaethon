@@ -56,9 +56,10 @@ namespace InternalApi.Controllers
         public async Task<HttpResponseMessage> Login([FromBody]Login login)
         {
             int loginID = _loginManagement.Login(login.Username, login.Password);
+            login = _loginManagement.GetLogin(loginID);
             if (loginID != 0)
             {
-                string userToken = "UserToken: " + loginID + UtilityMethods.ComputeSha256Hash(UtilityMethods.Encipher(login.Username, loginID));
+                string userToken = "UserToken: " + loginID + UtilityMethods.ComputeSha256Hash(UtilityMethods.Encipher(login.Username + login.Salt, loginID));
                 return Request.CreateResponse(HttpStatusCode.OK, userToken);
             }
             else

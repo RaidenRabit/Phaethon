@@ -89,9 +89,6 @@ function GetJobs() {
                     }
             $("#jobTable tbody").html(htmlText);
                 },
-        error: function () {
-            $("#jobsList").html(error.message);
-        }
     });
 }
 

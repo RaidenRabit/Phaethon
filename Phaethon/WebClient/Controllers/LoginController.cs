@@ -15,12 +15,11 @@ namespace WebClient.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly HttpWebClientFactory _clientFactory;
         private readonly HttpClient _client;
 
         public LoginController()
         {
-            _clientFactory = new HttpWebClientFactory();
+            HttpWebClientFactory _clientFactory = new HttpWebClientFactory();
             _clientFactory.SetBaseAddress("http://localhost:64007/Login/");
             _client = _clientFactory.GetClient();
         }
@@ -43,9 +42,9 @@ namespace WebClient.Controllers
                 string deserializedResponse = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
                 if (!deserializedResponse.IsNullOrWhiteSpace() && !deserializedResponse.Contains("Incorrect login credentials"))
                 {
-                    Session["userToken"] = deserializedResponse;
-                    _clientFactory.SetUserToken(deserializedResponse);
-                    Session["ID"] = Int32.Parse(deserializedResponse.Remove(deserializedResponse.Length - 64));
+                    string cleanToken = deserializedResponse.Substring(deserializedResponse.IndexOf(" ")+1);
+                    Session["userToken"] = cleanToken;
+                    Session["ID"] = Int32.Parse(cleanToken.Remove(cleanToken.Length - 64));
                     return RedirectToAction("Index", "Invoice");
                 }
             }
