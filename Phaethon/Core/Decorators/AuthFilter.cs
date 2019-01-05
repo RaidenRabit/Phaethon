@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Core.Model;
-using InternalApi.DataAccess;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Cryptography;

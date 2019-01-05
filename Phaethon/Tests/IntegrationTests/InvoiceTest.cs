@@ -8,6 +8,7 @@ using NUnit.Framework;
 using System.Linq;
 using System.Net;
 using System.Web;
+using Core;
 using InternalApi.DataAccess;
 using Newtonsoft.Json;
 

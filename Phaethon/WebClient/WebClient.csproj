@@ -441,10 +441,6 @@
       <Project>{2f81d45f-2fd1-442c-b663-d04af5982d28}</Project>
       <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\InternalApi\InternalApi.csproj">
-      <Project>{904C3366-04E8-43CF-8677-3692D5CCF11D}</Project>
-      <Name>InternalApi</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

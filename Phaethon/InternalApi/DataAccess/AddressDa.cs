@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity.Migrations;
+using Core;
 using Core.Model;
 
 namespace InternalApi.DataAccess

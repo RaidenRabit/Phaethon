@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using Core;
 using Core.Model;
 using InternalApi.DataAccess;
 using InternalApi.DataManagement.IDataManagement;

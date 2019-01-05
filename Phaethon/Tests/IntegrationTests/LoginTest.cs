@@ -8,6 +8,7 @@ using Core.Model;
 using InternalApi.DataAccess;
 using NUnit.Framework;
 using System.Security.Cryptography;
+using Core;
 
 namespace Tests.IntegrationTests
 {

@@ -16,7 +16,7 @@ namespace WebClient.Controllers
         public InvoiceController()
         {
             HttpWebClientFactory clientFactory = new HttpWebClientFactory();
-            clientFactory.SetBaseAddress("http://localhost:64007/");
+            clientFactory.SetBaseAddress("http://localhost:64007/Invoice/");
             _client = clientFactory.GetClient();
         }
 
@@ -32,7 +32,7 @@ namespace WebClient.Controllers
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = id.ToString();
-            var result = await _client.GetAsync("Invoice/GetInvoice?" + parameters);
+            var result = await _client.GetAsync("GetInvoice?" + parameters);
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await result.Content.ReadAsStringAsync());
             return View(invoice);
         }
@@ -47,10 +47,9 @@ namespace WebClient.Controllers
         }
 
         [HttpPost]
-        [Route("Invoice/Edit")]
         public async Task<ActionResult> Edit(Invoice invoice)
         {
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
+            var response = await _client.PostAsJsonAsync("CreateOrUpdate", invoice);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
             if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
             {
@@ -65,7 +64,7 @@ namespace WebClient.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(int id)
         {
-            var response = await _client.PostAsJsonAsync("Invoice/Delete", id);
+            var response = await _client.PostAsJsonAsync("Delete", id);
             var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
             if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
             {
@@ -75,8 +74,7 @@ namespace WebClient.Controllers
         }
 
         //Ajax only
-
-        [Route("GetInvoices")]
+        
         [HttpGet]
         public async Task<string> GetInvoices(int numOfRecords = 10, string regNumber = "", string docNumber = "", string from = "01/01/0001", string to = "01/01/2100", string company = "", decimal sum = 0)
         {
@@ -88,7 +86,7 @@ namespace WebClient.Controllers
             parameters["to"] = to;
             parameters["company"] = company;
             parameters["sum"] = sum.ToString();
-            var response = await _client.GetAsync("Invoice/GetInvoices?" + parameters);
+            var response = await _client.GetAsync("GetInvoices?" + parameters);
             return await response.Content.ReadAsStringAsync();
         }
     }

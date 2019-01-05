@@ -1,7 +1,7 @@
-﻿using Core.Model;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using Core.Model;
 
-namespace InternalApi.DataAccess
+namespace Core
 {
     public class DatabaseContext : DbContext
     {
