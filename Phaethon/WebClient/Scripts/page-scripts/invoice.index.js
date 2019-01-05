@@ -37,7 +37,7 @@
 function GetCompanies() {
     $.ajax({
         type: "GET",
-        url: "Api/Company/GetCompanies",
+        url: "/Company/GetCompanies",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -58,7 +58,7 @@ function GetInvoices()
 {
     $.ajax({
         type: "GET",
-        url: "Api/Invoice/GetInvoices",
+        url: "/Invoice/GetInvoices",
         data: {
             numOfRecords: $("#numOfRecords").val(),
             regNumber: $("#regNumber").val(),

@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using Core;
 using Core.Model;
 
 namespace InternalApi.DataAccess

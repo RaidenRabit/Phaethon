@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Core.Model;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using WebClient.Models;
 
 namespace WebClient.Controllers
 {
@@ -18,9 +19,9 @@ namespace WebClient.Controllers
         private readonly HttpClient _client;
         public JobController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/Job/");
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpWebClientFactory clientFactory = new HttpWebClientFactory();
+            clientFactory.SetBaseAddress("http://localhost:64007/Job/");
+            _client = clientFactory.GetClient();
         }
         
         public ActionResult Index()
@@ -49,7 +50,6 @@ namespace WebClient.Controllers
             if (jobStatus != null)
                 jobFilter.JobStatus = (int) jobStatus;
             jobFilter.JobName = jobName;
-            
             var response = await _client.PostAsJsonAsync("ReadAll", jobFilter);
             return await response.Content.ReadAsStringAsync();
         }

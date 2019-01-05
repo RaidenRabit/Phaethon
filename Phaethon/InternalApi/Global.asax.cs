@@ -17,6 +17,7 @@ namespace InternalApi
             
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configuration.Filters.Add(new Core.Decorators.ExceptionFilter());
+            GlobalConfiguration.Configuration.Filters.Add(new Core.Decorators.AuthFilter());
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
                 = ReferenceLoopHandling.Ignore;
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.NullValueHandling 

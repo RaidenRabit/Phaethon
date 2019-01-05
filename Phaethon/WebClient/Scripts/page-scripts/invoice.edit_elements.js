@@ -129,7 +129,7 @@ function ItemChange(rowValue) {
 function getProductGroups() {
     return $.ajax({
         type: "GET",
-        url: "/Api/ProductGroup/GetProductGroups",
+        url: "/ProductGroup/GetProductGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -151,7 +151,7 @@ function getProductGroups() {
 function getTaxGroups() {
     return $.ajax({
         type: "GET",
-        url: "/Api/TaxGroup/GetTaxGroups",
+        url: "/TaxGroup/GetTaxGroups",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -173,7 +173,7 @@ function getTaxGroups() {
 function getProduct(rowValue, barcode) {
     $.ajax({
         type: "GET",
-        url: "/Api/Product/GetProduct",
+        url: "/Product/GetProduct",
         data: {
             barcode: barcode
         },
@@ -207,7 +207,7 @@ function getProduct(rowValue, barcode) {
 function getItems() {
     return $.ajax({
         type: "GET",
-        url: "/Api/Element/GetInvoiceElements",
+        url: "/Element/GetInvoiceElements",
         data: {
             id: $("#ID").val()
         },
@@ -261,7 +261,7 @@ function getItem(id) {
 
         $.ajax({
             type: "GET",
-            url: "/Api/Item/GetItem",
+            url: "/Item/GetItem",
             data: {
                 id: id
             },

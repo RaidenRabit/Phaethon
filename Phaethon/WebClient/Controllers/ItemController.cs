@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Core.Model;
 using Newtonsoft.Json;
-using WebClient.Controllers.Api;
+using WebClient.Models;
 
 namespace WebClient.Controllers
 {
@@ -18,8 +16,9 @@ namespace WebClient.Controllers
 
         public ItemController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/Item/");
+            HttpWebClientFactory clientFactory = new HttpWebClientFactory();
+            clientFactory.SetBaseAddress("http://localhost:64007/Item/");
+            _client = clientFactory.GetClient();
         }
 
         [HttpGet]
@@ -73,6 +72,31 @@ namespace WebClient.Controllers
             {
                 return Redirect(Request.UrlReferrer.ToString());
             }
+        }
+
+        //Ajax
+
+        [Route("GetItem")]
+        [HttpGet]
+        public async Task<string> GetItem(int id)
+        {
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = id.ToString();
+            var response = await _client.GetAsync("GetItem?" + parameters);
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        [Route("GetItems")]
+        [HttpGet]
+        public async Task<string> GetItems(string serialNumber, string productName, int barcode, bool showAll)
+        {
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["serialNumber"] = serialNumber;
+            parameters["productName"] = productName;
+            parameters["barcode"] = barcode.ToString();
+            parameters["showAll"] = showAll.ToString();
+            var response = await _client.GetAsync("GetItems?" + parameters);
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

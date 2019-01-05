@@ -8,7 +8,7 @@
 function getProduct(barcode) {
     $.ajax({
         type: "GET",
-        url: "/Api/Product/GetProduct",
+        url: "/Product/GetProduct",
         data: {
             barcode: barcode
         },

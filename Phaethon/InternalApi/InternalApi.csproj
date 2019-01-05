@@ -122,7 +122,6 @@
     <Compile Include="DataAccess\AddressDa.cs" />
     <Compile Include="DataAccess\CompanyDa.cs" />
     <Compile Include="DataAccess\CustomerDa.cs" />
-    <Compile Include="DataAccess\DatabaseContext.cs" />
     <Compile Include="DataAccess\ElementDa.cs" />
     <Compile Include="DataAccess\InvoiceDa.cs" />
     <Compile Include="DataAccess\ItemDa.cs" />

@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Core.Model;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using WebClient.Models;
 using WebClient.Resources.Language_Files;
 
 namespace WebClient.Controllers
@@ -16,14 +19,15 @@ namespace WebClient.Controllers
 
         public LoginController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/Login/");
-            
+            HttpWebClientFactory _clientFactory = new HttpWebClientFactory();
+            _clientFactory.SetBaseAddress("http://localhost:64007/Login/");
+            _client = _clientFactory.GetClient();
         }
 
         [HttpGet]
         public ActionResult Index()
         {
+            Session["userToken"] = null;
             Session["ID"] = null;
             return View();
 
@@ -35,10 +39,12 @@ namespace WebClient.Controllers
             var response = await _client.PostAsJsonAsync("Login", loginModel);
             if (HttpStatusCode.OK == response.StatusCode)
             {
-                int deserializedResponse = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
-                if (deserializedResponse != 0)
+                string deserializedResponse = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
+                if (!deserializedResponse.IsNullOrWhiteSpace() && !deserializedResponse.Contains("Incorrect login credentials"))
                 {
-                    Session["ID"] = deserializedResponse;
+                    string cleanToken = deserializedResponse.Substring(deserializedResponse.IndexOf(" ")+1);
+                    Session["userToken"] = cleanToken;
+                    Session["ID"] = Int32.Parse(cleanToken.Remove(cleanToken.Length - 64));
                     return RedirectToAction("Index", "Invoice");
                 }
             }

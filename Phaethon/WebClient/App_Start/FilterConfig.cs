@@ -9,4 +9,5 @@ namespace WebClient
             filters.Add(new HandleErrorAttribute());
         }
     }
+
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Core.Model;
+using WebClient.Models;
 
 namespace WebClient.Controllers
 {
@@ -15,8 +12,9 @@ namespace WebClient.Controllers
 
         public ProductGroupController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/ProductGroup/");
+            HttpWebClientFactory clientFactory = new HttpWebClientFactory();
+            clientFactory.SetBaseAddress("http://localhost:64007/ProductGroup/");
+            _client = clientFactory.GetClient();
         }
 
         [HttpGet]
@@ -29,6 +27,16 @@ namespace WebClient.Controllers
         public async Task<HttpResponseMessage> Create(ProductGroup productGroup)
         {
             return await _client.PostAsJsonAsync("Create", productGroup);
+        }
+
+        //Ajax
+
+        [Route("GetProductGroups")]
+        [HttpGet]
+        public async Task<string> GetProductGroups()
+        {
+            var response = await _client.GetAsync("GetProductGroups");
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

@@ -6,6 +6,7 @@ using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 using Newtonsoft.Json;
+using Core.Decorators;
 
 namespace InternalApi.Controllers
 {
@@ -44,16 +45,22 @@ namespace InternalApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.GetLogin(id));
         }
 
+        /// <summary>
+        /// Logs in.
+        /// </summary>
+        /// <returns>A userToken, required to be placed in every further API request</returns>
+        /// <response code="200">Returns a userToken</response>
+        /// <response code="400">Incorrect login credentials</response>     
         [Route("Login")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Login()
+        public async Task<HttpResponseMessage> Login([FromBody]Login login)
         {
-            var requestContent = await Request.Content.ReadAsStringAsync();
-            Login login = JsonConvert.DeserializeObject<Login>(requestContent);
-            var loginID = _loginManagement.Login(login.Username, login.Password);
+            int loginID = _loginManagement.Login(login.Username, login.Password);
+            login = _loginManagement.GetLogin(loginID);
             if (loginID != 0)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, loginID);
+                string userToken = "UserToken: " + loginID + UtilityMethods.ComputeSha256Hash(UtilityMethods.Encipher(login.Username + login.Salt, loginID));
+                return Request.CreateResponse(HttpStatusCode.OK, userToken);
             }
             else
             {
