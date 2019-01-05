@@ -11,7 +11,7 @@
 function GetItems() {
     $.ajax({
         type: "GET",
-        url: "/Api/Item/GetItems",
+        url: "/Item/GetItems",
         data: {
             serialNumber: $("#serialNumber").val(),
             productName: $("#productName").val(),

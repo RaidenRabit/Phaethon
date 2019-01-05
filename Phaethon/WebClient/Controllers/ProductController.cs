@@ -1,17 +1,17 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Http;
+using System.Web.Mvc;
 using WebClient.Models;
 
 namespace WebClient.Controllers.Api
 {
-    [RoutePrefix("Api/Product")]
-    public class ProductApiController : ApiController
+    [RoutePrefix("Product")]
+    public class ProductController : Controller
     {
         private readonly HttpClient _client;
 
-        public ProductApiController()
+        public ProductController()
         {
             HttpWebClientFactory clientFactory = new HttpWebClientFactory();
             clientFactory.SetBaseAddress("http://localhost:64007/Product/");
@@ -20,11 +20,12 @@ namespace WebClient.Controllers.Api
 
         [Route("GetProduct")]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetProduct(int barcode)
+        public async Task<string> GetProduct(int barcode)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["barcode"] = barcode.ToString();
-            return await _client.GetAsync("GetProduct?" + parameters);
+            var response = await _client.GetAsync("GetProduct?" + parameters);
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

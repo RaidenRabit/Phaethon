@@ -1,37 +1,41 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Http;
+using System.Web.Mvc;
 using WebClient.Models;
 
 namespace WebClient.Controllers.Api
 {
-    [RoutePrefix("Api/Company")]
-    public class CompanyApiController : ApiController
+    [RoutePrefix("Company")]
+    public class CompanyController : Controller
     {
         private readonly HttpClient _client;
 
-        public CompanyApiController()
+        public CompanyController()
         {
             HttpWebClientFactory clientFactory = new HttpWebClientFactory();
             clientFactory.SetBaseAddress("http://localhost:64007/Company/");
             _client = clientFactory.GetClient();
         }
 
+        //Ajax
+
         [Route("GetCompanies")]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetCompanies()
+        public async Task<string> GetCompanies()
         {
-            return await _client.GetAsync("GetCompanies");
+            var response = await _client.GetAsync("GetCompanies");
+            return await response.Content.ReadAsStringAsync();
         }
 
         [Route("GetCompany")]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetCompany(int id)
+        public async Task<string> GetCompany(int id)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = id.ToString();
-            return await _client.GetAsync("GetCompany?" + parameters);
+            var response = await _client.GetAsync("GetCompany?" + parameters);
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

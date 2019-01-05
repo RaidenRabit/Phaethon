@@ -131,7 +131,7 @@ function RepresentativeChange(element) {
 function getCompanies() {
     $.ajax({
         type: "GET",
-        url: "/Api/Company/GetCompanies",
+        url: "/Company/GetCompanies",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -151,7 +151,7 @@ function getCompanies() {
 function getCompany(element, id) {
     $.ajax({
         type: "GET",
-        url: "/Api/Company/GetCompany",
+        url: "/Company/GetCompany",
         data: {
             id: id
         },

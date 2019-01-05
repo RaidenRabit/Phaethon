@@ -28,5 +28,15 @@ namespace WebClient.Controllers
         {
             return await _client.PostAsJsonAsync("Create", taxGroup);
         }
+
+        //Ajax
+
+        [Route("GetTaxGroups")]
+        [HttpGet]
+        public async Task<string> GetTaxGroups()
+        {
+            var response = await _client.GetAsync("GetTaxGroups");
+            return await response.Content.ReadAsStringAsync();
+        }
     }
 }

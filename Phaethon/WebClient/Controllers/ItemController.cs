@@ -73,5 +73,30 @@ namespace WebClient.Controllers
                 return Redirect(Request.UrlReferrer.ToString());
             }
         }
+
+        //Ajax
+
+        [Route("GetItem")]
+        [HttpGet]
+        public async Task<string> GetItem(int id)
+        {
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = id.ToString();
+            var response = await _client.GetAsync("GetItem?" + parameters);
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        [Route("GetItems")]
+        [HttpGet]
+        public async Task<string> GetItems(string serialNumber, string productName, int barcode, bool showAll)
+        {
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["serialNumber"] = serialNumber;
+            parameters["productName"] = productName;
+            parameters["barcode"] = barcode.ToString();
+            parameters["showAll"] = showAll.ToString();
+            var response = await _client.GetAsync("GetItems?" + parameters);
+            return await response.Content.ReadAsStringAsync();
+        }
     }
 }

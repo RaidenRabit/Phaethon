@@ -28,5 +28,15 @@ namespace WebClient.Controllers
         {
             return await _client.PostAsJsonAsync("Create", productGroup);
         }
+
+        //Ajax
+
+        [Route("GetProductGroups")]
+        [HttpGet]
+        public async Task<string> GetProductGroups()
+        {
+            var response = await _client.GetAsync("GetProductGroups");
+            return await response.Content.ReadAsStringAsync();
+        }
     }
 }
