@@ -17,8 +17,12 @@ namespace Core.Decorators
             HttpRequestMessage request, CancellationToken cancellationToken)
         {
             Logs log = new Logs();
+
             // log request body
-            log.RequestBody = await request.Content.ReadAsStringAsync();
+            if (request.Content != null)
+            {
+                log.RequestBody = await request.Content.ReadAsStringAsync();
+            }
 
             // log request headers
             log.RequestHeaders = request.Headers.ToString();
@@ -35,22 +39,22 @@ namespace Core.Decorators
             {
                 log.UserToken = "";
             }
-
+            
             // let other handlers process the request
             var result = await base.SendAsync(request, cancellationToken);
-
+            
             if (result.Content != null)
             {
                 // once response body is ready, log it
                 log.ResponseBody = await result.Content.ReadAsStringAsync();
             }
-
+            
             if (!request.RequestUri.ToString().Contains("swagger"))
             {
                 log.TimeStamp = DateTime.Now;
                 LogToDb(log);
             }
-
+            
             return result;
         }
 
