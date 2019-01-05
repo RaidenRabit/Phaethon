@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Core.Model;
-using InternalApi.DataAccess;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -21,10 +20,9 @@ namespace Core.Decorators
                 base.OnActionExecuting(actionContext);
                 string requestUrl = actionContext.Request.RequestUri.ToString();
 
-                if (requestUrl.Contains("Login/CreateOrUpdate")
-                ) //if you're just trying to register, allow for it to go on
+                if (requestUrl.Contains("Login/CreateOrUpdate"))
                     return;
-                if (requestUrl.Contains("Login/Login")) //if you're just trying to login, allow for it to go on
+                if (requestUrl.Contains("Login/Login"))
                     return;
 
                 var userToken = actionContext.Request.Headers.GetValues("UserToken").FirstOrDefault().ToString();
@@ -41,6 +39,7 @@ namespace Core.Decorators
             }
         }
     }
+
     public abstract class UtilityMethods
     { 
         public static bool EvaluateToken(string token)
