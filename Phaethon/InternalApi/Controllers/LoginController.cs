@@ -45,16 +45,20 @@ namespace InternalApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.GetLogin(id));
         }
 
+        /// <summary>
+        /// Logs in.
+        /// </summary>
+        /// <returns>A userToken, required to be placed in every further API request</returns>
+        /// <response code="200">Returns a userToken</response>
+        /// <response code="400">Incorrect login credentials</response>     
         [Route("Login")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Login()
+        public async Task<HttpResponseMessage> Login([FromBody]Login login)
         {
-            var requestContent = await Request.Content.ReadAsStringAsync();
-            Login login = JsonConvert.DeserializeObject<Login>(requestContent);
             int loginID = _loginManagement.Login(login.Username, login.Password);
             if (loginID != 0)
             {
-                string userToken = loginID + UtilityMethods.ComputeSha256Hash(UtilityMethods.Encipher(login.Username, loginID));
+                string userToken = "UserToken: " + loginID + UtilityMethods.ComputeSha256Hash(UtilityMethods.Encipher(login.Username, loginID));
                 return Request.CreateResponse(HttpStatusCode.OK, userToken);
             }
             else

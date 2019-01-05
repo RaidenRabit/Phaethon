@@ -8,6 +8,7 @@ using Core.Model;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using InternalApi.DataAccess;
 
 namespace Core.Decorators
 {
