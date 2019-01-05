@@ -34,6 +34,8 @@ namespace InternalApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> CreateOrUpdate([FromBody]Invoice invoice)
         {
+            var requestContent = await Request.Content.ReadAsStringAsync();
+            invoice = JsonConvert.DeserializeObject<Invoice>(requestContent);
             bool success = _invoiceManagement.CreateOrUpdate(invoice);
             if(success) {
                 return Request.CreateResponse(HttpStatusCode.OK);
