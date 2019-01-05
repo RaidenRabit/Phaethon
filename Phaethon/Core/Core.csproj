@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="Decorators\AuthFilter.cs" />
     <Compile Include="Decorators\ExceptionFilter.cs" />
+    <Compile Include="Decorators\LogRequestAndResponseHandler.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Customer.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Element.cs" />
     <Compile Include="Model\Filters\JobQueryFilter.cs" />
+    <Compile Include="Model\Logs.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductGroup.cs" />
     <Compile Include="Model\Representative.cs" />
