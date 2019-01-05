@@ -20,14 +20,20 @@ namespace InternalApi.Controllers
             _productGroupManagement = new ProductGroupDM();
         }
 
+        /// <summary>
+        /// Creates or Updates a ProductGroup. Distincion based on assigned object ID.
+        /// ID = 0 -> new ProductGroup
+        /// ID != 0 -> update ProductGroup
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="400">Invalid posted object</response>
+        /// <response code="403">Missing/Invalid UserToken</response>   
         [Route("Create")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Create()
+        public async Task<HttpResponseMessage> Create([FromBody]ProductGroup productGroup)
         {
-            var requestContent = await Request.Content.ReadAsStringAsync();
             try
             {
-                ProductGroup productGroup = JsonConvert.DeserializeObject<ProductGroup>(requestContent);
                 if (productGroup == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
@@ -41,6 +47,13 @@ namespace InternalApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Get a list of ProductGroups
+        /// </summary>
+        /// <returns>A list of ProductGroups, inside response's body</returns>
+        /// <response code="200"></response>
+        /// <response code="400"></response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("GetProductGroups")]
         [HttpGet]
         public HttpResponseMessage GetProductGroups()

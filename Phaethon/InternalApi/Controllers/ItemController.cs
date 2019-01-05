@@ -20,14 +20,21 @@ namespace InternalApi.Controllers
             _itemManagement = new ItemDM();
         }
 
+
+        /// <summary>
+        /// Creates or Updates an item. Distincion based on assigned object ID.
+        /// ID = 0 -> new item
+        /// ID != 0 -> update item
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="400">Invalid posted object</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("CreateOrUpdate")]
         [HttpPost]
-        public async Task<HttpResponseMessage> CreateOrUpdate()
+        public async Task<HttpResponseMessage> CreateOrUpdate([FromBody]Item item)
         {
             try
             {
-                var requestContent = await Request.Content.ReadAsStringAsync();
-                Item item = JsonConvert.DeserializeObject<Item>(requestContent);
                 if (item == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
@@ -41,6 +48,14 @@ namespace InternalApi.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Get item by ID
+        /// </summary>
+        /// <returns>Item, inside response's body</returns>
+        /// <response code="200"></response>
+        /// <response code="400">No item with such ID</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("GetItem")]
         [HttpGet]
         public HttpResponseMessage GetItem(int id)
@@ -56,6 +71,18 @@ namespace InternalApi.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Get a list of items
+        /// </summary>
+        /// <returns>List of items, inside response's body</returns>
+        /// <param name="serialNumber">Item's serial number</param>
+        /// <param name="productName">Item name</param>
+        /// <param name="barcode">Item barcodoe (in numeral format)</param>
+        /// <param name="showAll">Show all items, regardless of previous filters</param>
+        /// <response code="200"></response>
+        /// <response code="400">No item meeting the filter criteria</response>
+        /// <response code="403">Missing/Invalid UserToken</response>  
         [Route("GetItems")]
         [HttpGet]
         public HttpResponseMessage GetItems(string serialNumber, string productName, int barcode, bool showAll)
@@ -71,12 +98,16 @@ namespace InternalApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete item
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="400">No item with such ID</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("Delete")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Delete()
+        public async Task<HttpResponseMessage> Delete([FromBody]int id)
         {
-            var requestContent = await Request.Content.ReadAsStringAsync();
-            int id = JsonConvert.DeserializeObject<int>(requestContent);
             if (_itemManagement.Delete(id))
             {
                 return Request.CreateResponse(HttpStatusCode.OK);

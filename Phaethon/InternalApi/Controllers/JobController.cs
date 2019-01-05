@@ -22,7 +22,15 @@ namespace InternalApi.Controllers
             _jobDm = new JobDm();
             _emailSenderDm = new EmailSenderDM();
         }
-        
+
+        /// <summary>
+        /// Creates or Updates a job. Distincion based on assigned object ID.
+        /// ID = 0 -> new job
+        /// ID != 0 -> update job
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="400">Invalid posted object</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("InsertOrUpdate")]
         [HttpPost]
         public async Task<HttpResponseMessage> Create()
@@ -54,6 +62,13 @@ namespace InternalApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Get job by ID
+        /// </summary>
+        /// <returns>Job, inside response's body</returns>
+        /// <response code="200"></response>
+        /// <response code="400">No job with such ID</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("Read")]
         [HttpGet]
         public HttpResponseMessage Read(string id)
@@ -68,9 +83,16 @@ namespace InternalApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Get a list of jobs
+        /// </summary>
+        /// <returns>List of jobs, inside response's body</returns>
+        /// <response code="200"></response>
+        /// <response code="400">No job meeting the filter criteria</response>
+        /// <response code="403">Missing/Invalid UserToken</response>  
         [Route("ReadAll")]
         [HttpPost]
-        public async Task<HttpResponseMessage> ReadAll()
+        public async Task<HttpResponseMessage> ReadAll([FromBody]JobQueryFilter jobQueryFilter)
         {
             try
             {
@@ -78,8 +100,6 @@ namespace InternalApi.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll(new JobQueryFilter()));
                 }
-                var json = await Request.Content.ReadAsStringAsync();
-                JobQueryFilter jobQueryFilter = JsonConvert.DeserializeObject<JobQueryFilter>(json);
                 return Request.CreateResponse(HttpStatusCode.OK, _jobDm.ReadAll(jobQueryFilter));
             }
             catch (Exception e)
@@ -88,6 +108,12 @@ namespace InternalApi.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Send new email to customer, informing of job's completion
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("ResendNotification")]
         [HttpGet]
         public HttpResponseMessage ResendNotification(string id)

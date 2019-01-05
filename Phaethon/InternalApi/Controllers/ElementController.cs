@@ -16,6 +16,12 @@ namespace InternalApi.Controllers
             _elementManagement = new ElementDM();
         }
 
+        /// <summary>
+        /// Get invoice elements, by ID
+        /// </summary>
+        /// <returns>Invoice elemnt, inside the response's body</returns>
+        /// <response code="200">Returns an element</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("GetInvoiceElements")]
         [HttpGet]
         public HttpResponseMessage GetInvoiceElements(int id)

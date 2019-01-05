@@ -17,6 +17,13 @@ namespace InternalApi.Controllers
             _productManagement = new ProductDM();
         }
 
+        /// <summary>
+        /// Get Product by barcode(in numeral form)
+        /// </summary>
+        /// <returns>Product, inside response's body</returns>
+        /// <response code="200"></response>
+        /// <response code="400">No Product with such ID</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("GetProduct")]
         [HttpGet]
         public HttpResponseMessage GetProduct(int barcode)

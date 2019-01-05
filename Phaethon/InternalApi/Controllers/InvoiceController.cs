@@ -21,13 +21,19 @@ namespace InternalApi.Controllers
         {
             _invoiceManagement = new InvoiceDM();
         }
-        
+
+        /// <summary>
+        /// Creates or Updates an invoice. Distincion based on assigned object ID.
+        /// ID = 0 -> new invoice
+        /// ID != 0 -> update invoice
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="400">Invalid posted object</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("CreateOrUpdate")]
         [HttpPost]
-        public async Task<HttpResponseMessage> CreateOrUpdate()
+        public async Task<HttpResponseMessage> CreateOrUpdate([FromBody]Invoice invoice)
         {
-            var requestContent = await Request.Content.ReadAsStringAsync();
-            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(requestContent);
             bool success = _invoiceManagement.CreateOrUpdate(invoice);
             if(success) {
                 return Request.CreateResponse(HttpStatusCode.OK);
@@ -38,6 +44,13 @@ namespace InternalApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Get invoice by ID
+        /// </summary>
+        /// <returns>Invoice, inside the response's body</returns>
+        /// <response code="200">Returns an invoice</response>
+        /// <response code="400">No invoice with such ID</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("GetInvoice")]
         [HttpGet]
         public HttpResponseMessage GetInvoice(int id)
@@ -53,6 +66,21 @@ namespace InternalApi.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Get invoices by filter
+        /// </summary>
+        /// <returns>List of invoices, inside the response's body</returns>
+        /// <param name="numOfRecords">Number of records to be selected from database</param>
+        /// <param name="regNumber">Inboice registration number</param>
+        /// <param name="docNumber">Inboice document number</param>
+        /// <param name="from">Starting DateTime period</param>
+        /// <param name="to">Ending DateTime period</param>
+        /// <param name="company">Invoice company</param>
+        /// <param name="sum">Invoice sum</param>
+        /// <response code="200">Returns a list of invoices</response>
+        /// <response code="400">No invoice meeting the filter criteria</response>
+        /// <response code="403">Missing/Invalid UserToken</response>   
         [Route("GetInvoices")]
         [HttpGet]
         public HttpResponseMessage GetInvoices(int numOfRecords, string regNumber, string docNumber, string from, string to, string company, decimal sum)
@@ -73,12 +101,17 @@ namespace InternalApi.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Delete invoice
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="400">No invoice with such ID</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("Delete")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Delete()
+        public async Task<HttpResponseMessage> Delete([FromBody] int id)
         {
-            var requestContent = await Request.Content.ReadAsStringAsync();
-            int id = JsonConvert.DeserializeObject<int>(requestContent);
             if (_invoiceManagement.Delete(id))
             {
                 return Request.CreateResponse(HttpStatusCode.OK);

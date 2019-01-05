@@ -19,10 +19,18 @@ namespace InternalApi.Controllers
         {
             _customerDm = new CustomerDM();
         }
-        
+
+
+        /// <summary>
+        /// Get all customers by filter
+        /// </summary>
+        /// <returns>A list of customers, inside the response's body</returns>
+        /// <response code="200">Returns a list of customers</response>
+        /// <response code="400">No customers meeting the queried criteria</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("ReadAll")]
         [HttpPost]
-        public async Task<HttpResponseMessage> ReadAll()
+        public async Task<HttpResponseMessage> ReadAll([FromBody]CustomerQueryFilter customerQueryFilter)
         {
             try
             {
@@ -30,8 +38,6 @@ namespace InternalApi.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, _customerDm.ReadAll(new CustomerQueryFilter()));
                 }
-                var json = await Request.Content.ReadAsStringAsync();
-                CustomerQueryFilter customerQueryFilter = JsonConvert.DeserializeObject<CustomerQueryFilter>(json);
                 return Request.CreateResponse(HttpStatusCode.OK, _customerDm.ReadAll(customerQueryFilter));
             }
             catch (Exception e)
