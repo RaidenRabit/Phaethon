@@ -22,5 +22,6 @@ namespace Core
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Login> Login { get; set; }
         public DbSet<Representative> Representatives { get; set; }
+        public DbSet<Logs> Logs { get; set; }
     }
 }
