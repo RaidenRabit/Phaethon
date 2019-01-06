@@ -20,14 +20,20 @@ namespace InternalApi.Controllers
             _taxGroupManagement = new TaxGroupDM();
         }
 
+        /// <summary>
+        /// Creates or Updates a TaxGroup. Distinction based on assigned object ID.
+        /// ID = 0 -> new TaxGroup
+        /// ID != 0 -> update TaxGroup
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="400">Invalid posted object</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("Create")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Create()
+        public async Task<HttpResponseMessage> Create([FromBody]TaxGroup taxGroup)
         {
-            var requestContent = await Request.Content.ReadAsStringAsync();
             try
             {
-                TaxGroup taxGroup = JsonConvert.DeserializeObject<TaxGroup>(requestContent);
                 if (taxGroup == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
@@ -41,6 +47,13 @@ namespace InternalApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Get a list of TaxGroups
+        /// </summary>
+        /// <returns>A list of TaxGroups, inside response's body</returns>
+        /// <response code="200">A list of TaxGroups</response>
+        /// <response code="400"></response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("GetTaxGroups")]
         [HttpGet]
         public HttpResponseMessage GetTaxGroups()

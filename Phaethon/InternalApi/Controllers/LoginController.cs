@@ -20,6 +20,14 @@ namespace InternalApi.Controllers
             _loginManagement = new LoginDM();
         }
 
+        /// <summary>
+        /// Creates or Updates an account. Distinction based on assigned object ID.
+        /// ID = 0 -> new account
+        /// ID != 0 -> update account
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="400">Invalid posted object</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("CreateOrUpdate")]
         [HttpPost]
         public async Task<HttpResponseMessage> CreateOrUpdate()
@@ -29,20 +37,36 @@ namespace InternalApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.CreateOrUpdate(login));
         }
 
+        /// <summary>
+        /// Delete an account
+        /// </summary>
+        /// <response code="200"></response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("Delete")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Delete()
+        public async Task<HttpResponseMessage> Delete([FromBody]int id)
         {
-            var requestContent = await Request.Content.ReadAsStringAsync();
-            int id = JsonConvert.DeserializeObject<int>(requestContent);
             return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.Delete(id));
         }
 
+        /// <summary>
+        /// Get account by ID
+        /// </summary>
+        /// <returns>Account, inside response's body</returns>
+        /// <response code="200"></response>
+        /// <response code="400">No Account with such ID</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("GetLogin")]
         [HttpGet]
         public HttpResponseMessage GetLogin(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _loginManagement.GetLogin(id));
+            Login login = _loginManagement.GetLogin(id);
+            if(login != null)
+                return Request.CreateResponse(HttpStatusCode.OK, login);
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
 
         /// <summary>
