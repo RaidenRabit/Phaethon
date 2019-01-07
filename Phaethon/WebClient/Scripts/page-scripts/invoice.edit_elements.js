@@ -297,7 +297,7 @@ function getTaxGroupForm() {
 
     $.ajax({
         type: "GET",
-        url: "/TaxGroup/Create",
+        url: "/TaxGroup/CreateGroup",
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (data) {
@@ -317,7 +317,7 @@ function getProductGroupForm() {
 
     $.ajax({
         type: "GET",
-        url: "/ProductGroup/Create",
+        url: "/ProductGroup/CreateGroup",
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (data) {
@@ -352,7 +352,7 @@ function getSelectItemForm() {
 function productGroupForm() {
     $.ajax({
         type: "POST",
-        url: "/ProductGroup/Create",
+        url: "/ProductGroup/CreateGroup",
         data: $("#productGroupForm").serialize(),
         success: function () {
             $("#dialog").html("");
@@ -373,7 +373,7 @@ function productGroupForm() {
 function taxGroupForm() {
     $.ajax({
         type: "POST",
-        url: "/TaxGroup/Create",
+        url: "/TaxGroup/CreateGroup",
         data: $("#taxGroupForm").serialize(),
         success: function () {
             $("#dialog").html("");

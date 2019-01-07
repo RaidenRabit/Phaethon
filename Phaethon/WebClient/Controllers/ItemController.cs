@@ -43,8 +43,7 @@ namespace WebClient.Controllers
         public async Task<ActionResult> Edit(Item item)
         {
             var response = await _client.PostAsJsonAsync("CreateOrUpdate", item);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-            if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
+            if (HttpStatusCode.OK == response.StatusCode)
             {
                 return RedirectToAction("Index");
             }

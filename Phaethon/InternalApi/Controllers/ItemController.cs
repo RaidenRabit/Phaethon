@@ -6,7 +6,6 @@ using System.Web.Http;
 using Core.Model;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
-using Newtonsoft.Json;
 
 namespace InternalApi.Controllers
 {

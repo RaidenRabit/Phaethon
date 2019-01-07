@@ -20,13 +20,13 @@ namespace WebClient.Controllers
 
         #region Page
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult CreateGroup()
         {
             return PartialView();
         }
         
         [HttpPost]
-        public async Task<HttpResponseMessage> Create(ProductGroup productGroup)
+        public async Task<HttpResponseMessage> CreateGroup(ProductGroup productGroup)
         {
             return await _client.PostAsJsonAsync("Create", productGroup);
         }

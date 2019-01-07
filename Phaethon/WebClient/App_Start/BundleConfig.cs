@@ -82,6 +82,11 @@ namespace WebClient
                 "~/Content/site.css"));
             #endregion
 
+            #region Page specific
+            bundles.Add(new StyleBundle("~/Content/Job/Edit").Include(
+                "~/Content/Job_Edit.css"));
+            #endregion
+
             #region Use case specific
             bundles.Add(new StyleBundle("~/Content/dateRangePicker").Include(
                 "~/Content/dateRangePicker.css"//Date Range Picker can be attached to any webpage element to pop up two calendars for selecting dates, times, or predefined ranges

@@ -1,14 +1,14 @@
 ﻿//on load
 $(function () {
     //creates date range picker
-    $('.daterange').daterangepicker({
+    $(".daterange").daterangepicker({
         "showDropdowns": true,
         "showWeekNumbers": true,
         "autoApply": true,
         "linkedCalendars": false,
         "startDate": "01/01/2001",
         locale: {
-            format: 'DD/MMM/YYYY'
+            format: "DD/MMM/YYYY"
         }
     });
     

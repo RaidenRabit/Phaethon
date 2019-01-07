@@ -199,6 +199,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dateRangePicker.css" />
+    <Content Include="Content\Job_Edit.css" />
     <Content Include="Resources\Images\Means.svg" />
     <Content Include="Content\HoverElement.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -417,8 +418,8 @@
     <Content Include="Views\Invoice\_editItems.cshtml" />
     <Content Include="Views\Job\Index.cshtml" />
     <Content Include="Views\Job\_editJob.cshtml" />
-    <Content Include="Views\TaxGroup\Create.cshtml" />
-    <Content Include="Views\ProductGroup\Create.cshtml" />
+    <Content Include="Views\TaxGroup\CreateGroup.cshtml" />
+    <Content Include="Views\ProductGroup\CreateGroup.cshtml" />
     <Content Include="Views\Item\_select.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />

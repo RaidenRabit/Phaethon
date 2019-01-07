@@ -8,7 +8,7 @@ namespace WebClient.Models
     public class HttpWebClientFactory
     {
         private HttpClient _client;
-         private HttpClient GenerateClient()
+        private HttpClient GenerateClient()
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -27,6 +27,5 @@ namespace WebClient.Models
             GetClient();
             _client.BaseAddress = new Uri(address);
         }
-        
     }
 }

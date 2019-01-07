@@ -52,15 +52,11 @@ namespace WebClient.Controllers
         public async Task<ActionResult> Edit(Invoice invoice)
         {
             var response = await _client.PostAsJsonAsync("CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-            if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
+            if (HttpStatusCode.OK == response.StatusCode)
             {
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return View();
-            }
+            return View(invoice);
         }
 
         [HttpPost]
