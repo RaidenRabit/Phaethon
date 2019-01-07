@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -13,17 +12,19 @@ using WebClient.Resources.Language_Files;
 
 namespace WebClient.Controllers
 {
+    [RoutePrefix("Login")]
     public class LoginController : Controller
     {
         private readonly HttpClient _client;
 
         public LoginController()
         {
-            HttpWebClientFactory _clientFactory = new HttpWebClientFactory();
-            _clientFactory.SetBaseAddress("http://localhost:64007/Login/");
-            _client = _clientFactory.GetClient();
+            HttpWebClientFactory clientFactory = new HttpWebClientFactory();
+            clientFactory.SetBaseAddress("http://localhost:64007/Login/");
+            _client = clientFactory.GetClient();
         }
 
+        #region Page
         [HttpGet]
         public ActionResult Index()
         {
@@ -97,5 +98,6 @@ namespace WebClient.Controllers
                 return View("Error");
             }
         }
+        #endregion
     }
 }

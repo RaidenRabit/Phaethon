@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿//on load
+$(function () {
     //on barcode change get corresponding info in database for product, product group and item
     $("#Product_Barcode").change(function () {
         getProduct($(this).val());
@@ -8,7 +9,7 @@
 function getProduct(barcode) {
     $.ajax({
         type: "GET",
-        url: "/Product/GetProduct",
+        url: "/Product/GetProductAjax",
         data: {
             barcode: barcode
         },

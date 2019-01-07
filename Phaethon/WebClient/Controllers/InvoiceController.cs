@@ -9,6 +9,7 @@ using WebClient.Models;
 
 namespace WebClient.Controllers
 {
+    [RoutePrefix("Invoice")]
     public class InvoiceController : Controller
     {
         private readonly HttpClient _client;
@@ -20,6 +21,7 @@ namespace WebClient.Controllers
             _client = clientFactory.GetClient();
         }
 
+        #region Page
         [HttpGet]
         public ActionResult Index()
         {
@@ -27,7 +29,7 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        [Route("Invoice/Edit/{id:int}")]
+        [Route("Edit/{id:int}")]
         public async Task<ActionResult> Edit(int id)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -38,7 +40,7 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        [Route("Invoice/Edit/{incoming:bool}")]
+        [Route("Edit/{incoming:bool}")]
         public ActionResult Edit(bool incoming)
         {
             Invoice invoice = new Invoice();
@@ -72,11 +74,11 @@ namespace WebClient.Controllers
             }
             return null;
         }
+        #endregion
 
-        //Ajax only
-        
+        #region Ajax
         [HttpGet]
-        public async Task<string> GetInvoices(int numOfRecords = 10, string regNumber = "", string docNumber = "", string from = "01/01/0001", string to = "01/01/2100", string company = "", decimal sum = 0)
+        public async Task<string> GetInvoicesAjax(int numOfRecords = 10, string regNumber = "", string docNumber = "", string from = "01/01/0001", string to = "01/01/2100", string company = "", decimal sum = 0)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["numOfRecords"] = numOfRecords.ToString();
@@ -89,5 +91,6 @@ namespace WebClient.Controllers
             var response = await _client.GetAsync("GetInvoices?" + parameters);
             return await response.Content.ReadAsStringAsync();
         }
+        #endregion
     }
 }

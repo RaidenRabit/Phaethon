@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿//on load
+$(function () {
     GetItems();
 
     //on search option change get corresponding items
@@ -11,7 +12,7 @@
 function GetItems() {
     $.ajax({
         type: "GET",
-        url: "/Item/GetItems",
+        url: "/Item/GetItemsAjax",
         data: {
             serialNumber: $("#serialNumber").val(),
             productName: $("#productName").val(),
