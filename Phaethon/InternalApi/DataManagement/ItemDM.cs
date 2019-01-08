@@ -19,9 +19,9 @@ namespace InternalApi.DataManagement
 
         public void CreateOrUpdate(Item item)
         {
+            ProductDa productDa = new ProductDa();
             using (var db = new DatabaseContext())
             {
-                ProductDa productDa = new ProductDa();
                 productDa.CreateOrUpdate(db, item.Product);
                 item.Product_ID = item.Product.ID;
                 item.Product = null;

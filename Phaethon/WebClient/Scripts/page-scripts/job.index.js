@@ -24,9 +24,6 @@ $(function () {
 
 //gets jobs
 function GetJobs() {
-    var h = $("input[name=jobStatus]:checked").val();
-
-    var j = $("input[name=dateOption]:checked").val();
     $.ajax({
         type: "GET",
         url: "/Job/GetJobsAjax",
