@@ -24,6 +24,9 @@ $(function () {
 
 //gets jobs
 function GetJobs() {
+    var h = $("input[name=jobStatus]:checked").val();
+
+    var j = $("input[name=dateOption]:checked").val();
     $.ajax({
         type: "GET",
         url: "/Job/GetJobsAjax",
@@ -34,7 +37,7 @@ function GetJobs() {
             jobStatus: $("input[name=jobStatus]:checked").val(),
             customerName: $("#customerName").val(),
             description: $("#description").val(),
-            selectedDate: $("input[name=dateOption]:checked").val(),
+            dateOption: $("input[name=dateOption]:checked").val(),
             from: $("#dateRange").data("daterangepicker").startDate.format("DD/MM/YYYY"),
             to: $("#dateRange").data("daterangepicker").endDate.format("DD/MM/YYYY")
         },

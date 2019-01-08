@@ -57,25 +57,26 @@ namespace WebClient.Controllers
 
         #region Ajax
         [HttpGet]
-        public async Task<string> GetJobsAjax(int? numOfRecords, int? jobId, string jobName, int? jobStatus, string customerName, string description, string dateOption, string from, string to)
+        public async Task<string> GetJobsAjax(string jobName, string customerName, string description, int dateOption, string from, string to, int numOfRecords = 10, int jobId = 0, int jobStatus = 0)
         {
             DateTime fromDateTime = DateTime.Now, toDateTime = DateTime.Now;
-            int dateOp = 0;
             if (!from.IsNullOrWhiteSpace())
                 DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out fromDateTime);
             if (!to.IsNullOrWhiteSpace())
                 DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out toDateTime);
-            if (!dateOption.IsNullOrWhiteSpace())
-                Int32.TryParse(dateOption, out dateOp);
 
-            JobQueryFilter jobFilter = new JobQueryFilter { CustomerName = customerName, DateOption = dateOp, Description = description, From = fromDateTime, To = toDateTime };
+            JobQueryFilter jobFilter = new JobQueryFilter
+            {
+                NumOfRecords = numOfRecords,
+                CustomerName = customerName,
+                JobId = jobId,
+                JobStatus = jobStatus,
+                Description = description,
+                DateOption = dateOption,
+                From = fromDateTime,
+                To = toDateTime
+            };
 
-            if (numOfRecords != null)
-                jobFilter.NumOfRecords = (int)numOfRecords;
-            if (jobId != null)
-                jobFilter.JobId = (int)jobId;
-            if (jobStatus != null)
-                jobFilter.JobStatus = (int)jobStatus;
             jobFilter.JobName = jobName;
             var response = await _client.PostAsJsonAsync("ReadAll", jobFilter);
             return await response.Content.ReadAsStringAsync();

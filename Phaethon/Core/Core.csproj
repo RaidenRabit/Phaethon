@@ -94,6 +94,11 @@
     <Compile Include="Decorators\AuthFilter.cs" />
     <Compile Include="Decorators\ExceptionFilter.cs" />
     <Compile Include="Decorators\LogRequestAndResponseHandler.cs" />
+    <Compile Include="Migrations\201901071228582_InitialCreate.cs" />
+    <Compile Include="Migrations\201901071228582_InitialCreate.Designer.cs">
+      <DependentUpon>201901071228582_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Customer.cs" />
@@ -112,7 +117,11 @@
     <Compile Include="Model\Login.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201901071228582_InitialCreate.resx">
+      <DependentUpon>201901071228582_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

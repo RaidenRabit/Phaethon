@@ -32,13 +32,10 @@
                     @if (Session["ID"] != null)
                     {
                         <input type="submit" value=@LanguagePack.Save class="btn" />
-
-                        @Ajax.ActionLink("Delete", "Delete", new { }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "window.location.reload()" })
-                    }
-                    else
-                    {
-                        <input type="submit" value=@LanguagePack.RegisterUser class="btn" id="confirm-btn" />
-                    
+                        if (Model.ID != 0)//if not creating new user
+                        {
+                            @Ajax.ActionLink("Delete", "Delete", new { }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "window.location.reload()" })
+                        }
                     }
 
                     <div id="Yes" style="display:none;"

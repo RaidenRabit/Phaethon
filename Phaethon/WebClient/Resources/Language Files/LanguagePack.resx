@@ -436,6 +436,6 @@
     <value>Edit Current User</value>
   </data>
   <data name="RegisterUser" xml:space="preserve">
-    <value>Register</value>
+    <value>Register user</value>
   </data>
 </root>

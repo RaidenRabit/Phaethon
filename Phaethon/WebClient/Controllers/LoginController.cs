@@ -54,15 +54,19 @@ namespace WebClient.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult> Edit()
+        public async Task<ActionResult> Edit(bool existing)
         {
             try
             {
-                var parameters = HttpUtility.ParseQueryString(string.Empty);
-                parameters["id"] = Session["ID"].ToString();
-                var result = await _client.GetAsync("GetLogin?" + parameters);
-                string json = result.Content.ReadAsStringAsync().Result;
-                Login login = JsonConvert.DeserializeObject<Login>(json);
+                Login login = new Login();
+                if (existing)
+                {
+                    var parameters = HttpUtility.ParseQueryString(string.Empty);
+                    parameters["id"] = Session["ID"].ToString();
+                    var result = await _client.GetAsync("GetLogin?" + parameters);
+                    string json = result.Content.ReadAsStringAsync().Result;
+                    login = JsonConvert.DeserializeObject<Login>(json);
+                }
                 return View(login);
             }
             catch
@@ -75,7 +79,7 @@ namespace WebClient.Controllers
         public async Task<ActionResult> Edit(Login loginModel)
         {
             await _client.PostAsJsonAsync("CreateOrUpdate", loginModel);
-            return await Edit();
+            return await Edit(loginModel.ID > 0);
         }
 
         [HttpGet]
