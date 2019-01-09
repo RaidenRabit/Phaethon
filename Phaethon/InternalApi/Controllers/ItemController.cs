@@ -84,12 +84,12 @@ namespace InternalApi.Controllers
         /// <response code="403">Missing/Invalid UserToken</response>  
         [Route("GetItems")]
         [HttpGet]
-        public HttpResponseMessage GetItems(string serialNumber, string productName, int barcode, bool showAll)
+        public HttpResponseMessage GetItems(string serialNumber, string productName, int barcode)
         {
             try { 
                 if (serialNumber == null) serialNumber = "";
                 if (productName == null) productName = "";
-                return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItems(serialNumber, productName, barcode, showAll));
+                return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItems(serialNumber, productName, barcode));
             }
             catch (DbUpdateException e)
             {

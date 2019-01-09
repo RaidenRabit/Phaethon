@@ -16,8 +16,7 @@ function GetItems() {
         data: {
             serialNumber: $("#serialNumber").val(),
             productName: $("#productName").val(),
-            barcode: $("#barcode").val(),
-            showAll: $("#showAll").val()
+            barcode: $("#barcode").val()
         },
         contentType: "application/json; charset=utf-8",
         dataType: "json",

@@ -87,13 +87,12 @@ namespace WebClient.Controllers
         }
         
         [HttpGet]
-        public async Task<string> GetItemsAjax(string serialNumber, string productName, int barcode, bool showAll)
+        public async Task<string> GetItemsAjax(string serialNumber, string productName, int barcode)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["serialNumber"] = serialNumber;
             parameters["productName"] = productName;
             parameters["barcode"] = barcode.ToString();
-            parameters["showAll"] = showAll.ToString();
             var response = await _client.GetAsync("GetItems?" + parameters);
             return await response.Content.ReadAsStringAsync();
         }

@@ -44,11 +44,11 @@ namespace InternalApi.DataManagement
             }
         }
 
-        public List<Item> GetItems(string serialNumber, string productName, int barcode, bool showAll)
+        public List<Item> GetItems(string serialNumber, string productName, int barcode)
         {
             using (var db = new DatabaseContext())
             {
-                List<Item> items = _itemDa.GetItems(db, serialNumber, productName, barcode, showAll);
+                List<Item> items = _itemDa.GetItems(db, serialNumber, productName, barcode);
                 foreach (Item item in items)
                 {
                     item.Price = CalculateIncomingPrice(db, item);
