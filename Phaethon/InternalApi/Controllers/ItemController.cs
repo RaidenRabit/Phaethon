@@ -62,7 +62,7 @@ namespace InternalApi.Controllers
             Item item = _itemManagement.GetItem(id);
             if (item != null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, _itemManagement.GetItem(id));
+                return Request.CreateResponse(HttpStatusCode.OK, item);
             }
             else
             {

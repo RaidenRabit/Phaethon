@@ -221,6 +221,7 @@ namespace Core
                     Address_ID = 1,
                     GivenName = "Brad",
                     FamilyName = "Pit",
+                    Email = "Pit@hotmail.com",
                     Phone = "+45 20546643"
                 },
                 new Customer
@@ -228,6 +229,7 @@ namespace Core
                     Address_ID = 2,
                     GivenName = "Angelina",
                     FamilyName = "Jolie",
+                    Email = "TheAngelina@gmail.com",
                     Phone = "+1 456302086"
                 }
             );

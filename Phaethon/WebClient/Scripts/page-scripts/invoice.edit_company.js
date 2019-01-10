@@ -4,6 +4,9 @@ $(function () {
     CompanyChange("Receiver");
     CompanyChange("Sender");
 
+    getCompany("Receiver", $("#Receiver_Company_ID").val());
+    getCompany("Sender", $("#Sender_Company_ID").val());
+
     //allows only int values for all number fields created in right now
     onlyNumbers("");
 

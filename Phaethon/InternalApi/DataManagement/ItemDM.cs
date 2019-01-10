@@ -33,14 +33,7 @@ namespace InternalApi.DataManagement
         {
             using (var db = new DatabaseContext())
             {
-                Item item = _itemDa.GetItem(db, id);
-                if (item != null)
-                {
-                    Tuple<List<Item>, decimal> tuple = GetSameIncomingPriceItems(db, item);
-                    item.Quantity = tuple.Item1.Count;
-                    item.Price = tuple.Item2;
-                }
-                return item;
+                return _itemDa.GetItem(db, id);
             }
         }
 
