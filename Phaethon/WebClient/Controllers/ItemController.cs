@@ -10,6 +10,7 @@ using WebClient.Models;
 
 namespace WebClient.Controllers
 {
+    [RoutePrefix("Item")]
     public class ItemController : Controller
     {
         private readonly HttpClient _client;
@@ -21,6 +22,7 @@ namespace WebClient.Controllers
             _client = clientFactory.GetClient();
         }
 
+        #region Page
         [HttpGet]
         public ActionResult Index()
         {
@@ -41,8 +43,7 @@ namespace WebClient.Controllers
         public async Task<ActionResult> Edit(Item item)
         {
             var response = await _client.PostAsJsonAsync("CreateOrUpdate", item);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-            if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
+            if (HttpStatusCode.OK == response.StatusCode)
             {
                 return RedirectToAction("Index");
             }
@@ -73,30 +74,28 @@ namespace WebClient.Controllers
                 return Redirect(Request.UrlReferrer.ToString());
             }
         }
+        #endregion
 
-        //Ajax
-
-        [Route("GetItem")]
+        #region Ajax
         [HttpGet]
-        public async Task<string> GetItem(int id)
+        public async Task<string> GetItemAjax(int id)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = id.ToString();
             var response = await _client.GetAsync("GetItem?" + parameters);
             return await response.Content.ReadAsStringAsync();
         }
-
-        [Route("GetItems")]
+        
         [HttpGet]
-        public async Task<string> GetItems(string serialNumber, string productName, int barcode, bool showAll)
+        public async Task<string> GetItemsAjax(string serialNumber, string productName, int barcode)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["serialNumber"] = serialNumber;
             parameters["productName"] = productName;
             parameters["barcode"] = barcode.ToString();
-            parameters["showAll"] = showAll.ToString();
             var response = await _client.GetAsync("GetItems?" + parameters);
             return await response.Content.ReadAsStringAsync();
         }
+        #endregion
     }
 }

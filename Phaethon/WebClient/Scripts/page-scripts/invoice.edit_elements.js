@@ -129,7 +129,7 @@ function ItemChange(rowValue) {
 function getProductGroups() {
     return $.ajax({
         type: "GET",
-        url: "/ProductGroup/GetProductGroups",
+        url: "/ProductGroup/GetProductGroupsAjax",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -151,7 +151,7 @@ function getProductGroups() {
 function getTaxGroups() {
     return $.ajax({
         type: "GET",
-        url: "/TaxGroup/GetTaxGroups",
+        url: "/TaxGroup/GetTaxGroupsAjax",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -173,7 +173,7 @@ function getTaxGroups() {
 function getProduct(rowValue, barcode) {
     $.ajax({
         type: "GET",
-        url: "/Product/GetProduct",
+        url: "/Product/GetProductAjax",
         data: {
             barcode: barcode
         },
@@ -188,15 +188,20 @@ function getProduct(rowValue, barcode) {
                 }
                 $("#Elements_" + rowValue + "__Item_Product_Name").val(data.Name);
                 $("#Elements_" + rowValue + "__Item_Product_ID").val(data.ID);
-
+                
                 var productId = $("#Elements_" + rowValue + "__Item_Product_ID").val();
+                var changed = false;
                 $("#elementTable tbody tr").each(function () {
                     var row = $(this).find("input").attr("name").split("[")[1].split("]")[0];
                     if (productId == $("#Elements_" + row + "__Item_Product_ID").val()) {
                         var productGroupId = $("#Elements_" + row + "__ProductGroup").val();
                         $("#Elements_" + rowValue + "__ProductGroup").val(productGroupId);
+                        changed = true;
                     }
                 });
+                if (!changed) {
+                    $("#Elements_" + rowValue + "__ProductGroup").val(data.ProductGroup.ID);
+                }
             } else {
                 $("#Elements_" + rowValue + "__Item_Product_ID").val(0);
             }
@@ -207,7 +212,7 @@ function getProduct(rowValue, barcode) {
 function getItems() {
     return $.ajax({
         type: "GET",
-        url: "/Element/GetInvoiceElements",
+        url: "/Element/GetInvoiceElementsAjax",
         data: {
             id: $("#ID").val()
         },
@@ -261,7 +266,7 @@ function getItem(id) {
 
         $.ajax({
             type: "GET",
-            url: "/Item/GetItem",
+            url: "/Item/GetItemAjax",
             data: {
                 id: id
             },
@@ -297,7 +302,7 @@ function getTaxGroupForm() {
 
     $.ajax({
         type: "GET",
-        url: "/TaxGroup/Create",
+        url: "/TaxGroup/CreateGroup",
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (data) {
@@ -317,7 +322,7 @@ function getProductGroupForm() {
 
     $.ajax({
         type: "GET",
-        url: "/ProductGroup/Create",
+        url: "/ProductGroup/CreateGroup",
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (data) {
@@ -352,7 +357,7 @@ function getSelectItemForm() {
 function productGroupForm() {
     $.ajax({
         type: "POST",
-        url: "/ProductGroup/Create",
+        url: "/ProductGroup/CreateGroup",
         data: $("#productGroupForm").serialize(),
         success: function () {
             $("#dialog").html("");
@@ -373,7 +378,7 @@ function productGroupForm() {
 function taxGroupForm() {
     $.ajax({
         type: "POST",
-        url: "/TaxGroup/Create",
+        url: "/TaxGroup/CreateGroup",
         data: $("#taxGroupForm").serialize(),
         success: function () {
             $("#dialog").html("");
@@ -438,6 +443,9 @@ function onlyNumbers(path) {
 }
 
 function addNewElement(rowValue, itemId, productId, quantity, serNumber, productName, barcode, price, readonly, productGroupId, taxGroupId, deletable) {
+    if (serNumber == null) {
+        serNumber = "";
+    }
     $("#elementTable tbody").append("<tr>" +
         "<input data-val='true' data-val-number='The Delete must be a boolean.' data-val-required='The Delete field is required.' id='Elements_" + rowValue + "__Item_Delete' name='Elements[" + rowValue + "].Item.Delete' type='hidden' value='false'>" +
         "<input data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__Item_ID' name='Elements[" + rowValue + "].Item.ID' type='hidden' value='" + itemId + "'>" +
@@ -449,7 +457,7 @@ function addNewElement(rowValue, itemId, productId, quantity, serNumber, product
         "<td><input class='form-control text-box single-line' data-val='true' data-val-number='The field Price must be a number.' data-val-required='The Price field is required.' id='Elements_" + rowValue + "__Item_Price' name='Elements[" + rowValue + "].Item.Price' type='number' step='0.01' min='0' value='" + price + "' " + readonly + "></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__" + invoiceType + "TaxGroup' name='Elements[" + rowValue + "].Item." + invoiceType + "TaxGroup.ID' required='required'></select></td>" +
         "<td><select class='form-control' data-val='true' data-val-number='The field ID must be a number.' data-val-required='The ID field is required.' id='Elements_" + rowValue + "__ProductGroup' name='Elements[" + rowValue + "].Item.Product.ProductGroup_ID' required='required'></select></td>" +
-        "<td><input class='form-control' id='Elements_" + rowValue + "__" + invoiceType + "Price' type='number' " + readonly + "></td>" +
+        "<td><input class='form-control' id='Elements_" + rowValue + "__" + invoiceType + "Price' type='number' step='0.01' min='0' " + readonly + "></td>" +
         "<td><input type='button' class='btn btn-block' id='Elements_" + rowValue + "__Delete' value='" + deleteLabel + "' title='" + deleteTitle+"' data-deletable='" + deletable + "'></td>" +
         "</tr>");
     ItemChange(rowValue);

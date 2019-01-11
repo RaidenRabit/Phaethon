@@ -1,6 +1,7 @@
-﻿$(function () {
+﻿//on load
+$(function () {
     //creates date range picker
-    $('#dateRange').daterangepicker({
+    $("#dateRange").daterangepicker({
         "showDropdowns": true,
         "showWeekNumbers": true,
         "autoApply": true,
@@ -16,33 +17,35 @@
     $("#numOfRecords, #jobId, #jobName, #dateRange, input[name=jobStatus], input[name=dateOption], #customerName, #description").change(function () {
         GetJobs();
     });
-    $('#NewJob').click(function(){
+    $("#NewJob").click(function(){
         NewJob();
     }); 
 });
 
-//gets invoices
+//gets jobs
 function GetJobs() {
     $.ajax({
         type: "GET",
-        url: "Job/GetJobs?" +
-            "&numOfRecords=" + $("#numOfRecords").val() +
-            "&jobId=" + $("#jobId").val() +
-            "&jobName=" + $("#jobName").val() +
-            "&jobStatus=" + $('input[name=jobStatus]:checked').val() +
-            "&customerName=" + $("#customerName").val() +
-            "&description=" + $("#description").val() +
-            "&selectedDate=" + $('input[name=dateOption]:checked').val() +
-            "&from=" + $("#dateRange").data('daterangepicker').startDate.format('DD/MM/YYYY') +
-            "&to=" + $("#dateRange").data('daterangepicker').endDate.format('DD/MM/YYYY'),
+        url: "/Job/GetJobsAjax",
+        data: {
+            numOfRecords: $("#numOfRecords").val(),
+            jobId: $("#jobId").val(),
+            jobName: $("#jobName").val(),
+            jobStatus: $("input[name=jobStatus]:checked").val(),
+            customerName: $("#customerName").val(),
+            description: $("#description").val(),
+            dateOption: $("input[name=dateOption]:checked").val(),
+            from: $("#dateRange").data("daterangepicker").startDate.format("DD/MM/YYYY"),
+            to: $("#dateRange").data("daterangepicker").endDate.format("DD/MM/YYYY")
+        },
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
             var htmlText = "";
                     for (var i = 0; i < data.length; i++) {
-                        var StartedTime = moment(data[i].StartedTime).format('DD-MM-YYYY');
-                        var FinishedTime = moment(data[i].FinishedTime).format('DD-MM-YYYY');
-                        var NotificationTime = moment(data[i].NotificationTime).format('DD-MM-YYYY HH:mm');
+                        var StartedTime = moment(data[i].StartedTime).format("DD-MM-YYYY");
+                        var FinishedTime = moment(data[i].FinishedTime).format("DD-MM-YYYY");
+                        var NotificationTime = moment(data[i].NotificationTime).format("DD-MM-YYYY HH:mm");
                         var CustomerName = data[i].Customer.FamilyName + " " + data[i].Customer.GivenName;
                         statusJob = ["", "Unassigned", "In Progress", "Done"];
                         htmlText += "<tr>" +
@@ -88,14 +91,14 @@ function GetJobs() {
                             "</tr>";
                     }
             $("#jobTable tbody").html(htmlText);
-                },
+                }
     });
 }
 
 function Edit() {
     $.ajax({
         type: "POST",
-        url: "Job/PostJob",
+        url: "/Job/PostJobAjax",
         data: $("#editJobPartial").serialize(),
         success: function () {
             $("#dialog").html("");
@@ -106,26 +109,29 @@ function Edit() {
 };
 
 function ReadJob(obj) {
-    var jobId = $(obj).closest("tr").find('td:nth-child(1)').html();
+    var jobId = $(obj).closest("tr").find("td:nth-child(1)").html();
     $.ajax({
         type: "GET",
-        url: "/Job/ReadJob?" +
-        "&id="+jobId,
+        url: "/Job/ReadJob",
+        data: {
+            id: jobId
+        },
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function(response) {
             InitializeDialog(response);
         }
     });
-    
 };
 
 function ResendNotification(obj) {
-    var jobId = $(obj).closest("tr").find('td:nth-child(1)').html();
+    var jobId = $(obj).closest("tr").find("td:nth-child(1)").html();
     $.ajax({
         type: "GET",
-        url: "/Job/ResendNotification?" +
-            "&jobId=" + jobId,
+        url: "/Job/ResendNotificationAjax",
+        data: {
+            id: jobId
+        },
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function () {
@@ -137,8 +143,10 @@ function ResendNotification(obj) {
 function NewJob() {
     $.ajax({
         type: "GET",
-        url: "/Job/ReadJob?" +
-            "&id=" + 0,
+        url: "/Job/ReadJob",
+        data: {
+            id: 0
+        },
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (response) {
@@ -167,7 +175,7 @@ function InitializeDialog(data) {
     dialog.html(data);
     dialog.dialog("open");
 
-    $('.datepicker').datepicker({
+    $(".datepicker").datepicker({
         changeMonth: true,
         changeYear: true,
         changeDay: true

@@ -36,7 +36,7 @@ namespace InternalApi.DataAccess
         }
 
         //Gets all items based on search
-        internal List<Item> GetItems(DatabaseContext db, string serialNumber, string productName, int barcode, bool showAll)
+        internal List<Item> GetItems(DatabaseContext db, string serialNumber, string productName, int barcode)
         {
             return db.Items
                 .AsNoTracking()
@@ -45,7 +45,7 @@ namespace InternalApi.DataAccess
                 .Where(x => x.SerNumber.Contains(serialNumber))
                 .Where(x => x.Product.Name.Contains(productName))
                 .Where(x => barcode == 0 || x.Product.Barcode == barcode)
-                .Where(x => showAll || (!showAll && x.OutgoingTaxGroup_ID == null))
+                .Where(x => x.OutgoingTaxGroup_ID == null)
                 .ToList();
         }
 

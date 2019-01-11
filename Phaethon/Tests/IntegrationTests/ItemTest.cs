@@ -114,7 +114,6 @@ namespace Tests.IntegrationTests
             parameters["serialNumber"] = "";
             parameters["productName"] = "";
             parameters["barcode"] = 0.ToString();
-            parameters["showAll"] = true.ToString();
 
             //Act
             var response = await _internalClient.GetAsync("Item/GetItems?" + parameters);

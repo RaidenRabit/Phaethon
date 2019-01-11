@@ -1,5 +1,8 @@
-﻿$("#newItem").click(function () {
-    document.location.href = "Item/Edit/0";
+﻿//on load
+$(function () {
+    $("#newItem").click(function () {
+        document.location.href = "Item/Edit/0";
+    });
 });
 
 function getItem(id)

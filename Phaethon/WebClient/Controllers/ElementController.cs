@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebClient.Models;
 
-namespace WebClient.Controllers.Api
+namespace WebClient.Controllers
 {
     [RoutePrefix("Element")]
     public class ElementController : Controller
@@ -18,16 +18,15 @@ namespace WebClient.Controllers.Api
             _client = clientFactory.GetClient();
         }
 
-        //Ajax
-
-        [Route("GetInvoiceElements")]
+        #region Ajax
         [HttpGet]
-        public async Task<string> GetInvoiceElements(int id)
+        public async Task<string> GetInvoiceElementsAjax(int id)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = id.ToString();
             var response = await _client.GetAsync("GetInvoiceElements?" + parameters);
             return await response.Content.ReadAsStringAsync();
         }
+        #endregion
     }
 }

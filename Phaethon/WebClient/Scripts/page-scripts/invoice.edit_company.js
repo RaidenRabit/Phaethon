@@ -4,6 +4,9 @@ $(function () {
     CompanyChange("Receiver");
     CompanyChange("Sender");
 
+    getCompany("Receiver", $("#Receiver_Company_ID").val());
+    getCompany("Sender", $("#Sender_Company_ID").val());
+
     //allows only int values for all number fields created in right now
     onlyNumbers("");
 
@@ -131,7 +134,7 @@ function RepresentativeChange(element) {
 function getCompanies() {
     $.ajax({
         type: "GET",
-        url: "/Company/GetCompanies",
+        url: "/Company/GetCompaniesAjax",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -151,7 +154,7 @@ function getCompanies() {
 function getCompany(element, id) {
     $.ajax({
         type: "GET",
-        url: "/Company/GetCompany",
+        url: "/Company/GetCompanyAjax",
         data: {
             id: id
         },

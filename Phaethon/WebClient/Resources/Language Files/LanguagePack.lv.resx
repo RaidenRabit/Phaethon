@@ -436,6 +436,9 @@
     <value>Rediģēt lietotāju</value>
   </data>
   <data name="RegisterUser" xml:space="preserve">
-    <value>Reģistrs</value>
+    <value>Reģistrēt lietotāju</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Visi</value>
   </data>
 </root>

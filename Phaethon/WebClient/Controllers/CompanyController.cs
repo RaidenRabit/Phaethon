@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebClient.Models;
 
-namespace WebClient.Controllers.Api
+namespace WebClient.Controllers
 {
     [RoutePrefix("Company")]
     public class CompanyController : Controller
@@ -18,24 +18,22 @@ namespace WebClient.Controllers.Api
             _client = clientFactory.GetClient();
         }
 
-        //Ajax
-
-        [Route("GetCompanies")]
+        #region Ajax
         [HttpGet]
-        public async Task<string> GetCompanies()
+        public async Task<string> GetCompaniesAjax()
         {
             var response = await _client.GetAsync("GetCompanies");
             return await response.Content.ReadAsStringAsync();
         }
-
-        [Route("GetCompany")]
+        
         [HttpGet]
-        public async Task<string> GetCompany(int id)
+        public async Task<string> GetCompanyAjax(int id)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = id.ToString();
             var response = await _client.GetAsync("GetCompany?" + parameters);
             return await response.Content.ReadAsStringAsync();
         }
+        #endregion
     }
 }

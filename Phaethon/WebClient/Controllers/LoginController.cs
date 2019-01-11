@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -13,17 +12,19 @@ using WebClient.Resources.Language_Files;
 
 namespace WebClient.Controllers
 {
+    [RoutePrefix("Login")]
     public class LoginController : Controller
     {
         private readonly HttpClient _client;
 
         public LoginController()
         {
-            HttpWebClientFactory _clientFactory = new HttpWebClientFactory();
-            _clientFactory.SetBaseAddress("http://localhost:64007/Login/");
-            _client = _clientFactory.GetClient();
+            HttpWebClientFactory clientFactory = new HttpWebClientFactory();
+            clientFactory.SetBaseAddress("http://localhost:64007/Login/");
+            _client = clientFactory.GetClient();
         }
 
+        #region Page
         [HttpGet]
         public ActionResult Index()
         {
@@ -53,15 +54,19 @@ namespace WebClient.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult> Edit()
+        public async Task<ActionResult> Edit(bool existing)
         {
             try
             {
-                var parameters = HttpUtility.ParseQueryString(string.Empty);
-                parameters["id"] = Session["ID"].ToString();
-                var result = await _client.GetAsync("GetLogin?" + parameters);
-                string json = result.Content.ReadAsStringAsync().Result;
-                Login login = JsonConvert.DeserializeObject<Login>(json);
+                Login login = new Login();
+                if (existing)
+                {
+                    var parameters = HttpUtility.ParseQueryString(string.Empty);
+                    parameters["id"] = Session["ID"].ToString();
+                    var result = await _client.GetAsync("GetLogin?" + parameters);
+                    string json = result.Content.ReadAsStringAsync().Result;
+                    login = JsonConvert.DeserializeObject<Login>(json);
+                }
                 return View(login);
             }
             catch
@@ -74,7 +79,7 @@ namespace WebClient.Controllers
         public async Task<ActionResult> Edit(Login loginModel)
         {
             await _client.PostAsJsonAsync("CreateOrUpdate", loginModel);
-            return await Edit();
+            return await Edit(loginModel.ID > 0);
         }
 
         [HttpGet]
@@ -97,5 +102,6 @@ namespace WebClient.Controllers
                 return View("Error");
             }
         }
+        #endregion
     }
 }

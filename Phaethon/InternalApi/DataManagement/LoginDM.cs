@@ -72,13 +72,11 @@ namespace InternalApi.DataManagement
         }
 
         #region Encryption
-        private const int SaltSize = 32;
-
         private byte[] GenerateSalt()
         {
             using (var rng = new RNGCryptoServiceProvider())
             {
-                var randomNumber = new byte[SaltSize];
+                var randomNumber = new byte[32];
                 rng.GetBytes(randomNumber);
                 return randomNumber;
             }

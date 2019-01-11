@@ -1,13 +1,14 @@
-﻿$(function () {
+﻿//on load
+$(function () {
     //creates date range picker
-    $('.daterange').daterangepicker({
+    $(".daterange").daterangepicker({
         "showDropdowns": true,
         "showWeekNumbers": true,
         "autoApply": true,
         "linkedCalendars": false,
         "startDate": "01/01/2001",
         locale: {
-            format: 'DD/MMM/YYYY'
+            format: "DD/MMM/YYYY"
         }
     });
     
@@ -37,7 +38,7 @@
 function GetCompanies() {
     $.ajax({
         type: "GET",
-        url: "/Company/GetCompanies",
+        url: "/Company/GetCompaniesAjax",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -58,13 +59,13 @@ function GetInvoices()
 {
     $.ajax({
         type: "GET",
-        url: "/Invoice/GetInvoices",
+        url: "/Invoice/GetInvoicesAjax",
         data: {
             numOfRecords: $("#numOfRecords").val(),
             regNumber: $("#regNumber").val(),
             docNumber: $("#docNumber").val(),
-            from: $("#dateRange").data('daterangepicker').startDate.format('DD/MM/YYYY'),
-            to: $("#dateRange").data('daterangepicker').endDate.format('DD/MM/YYYY'),
+            from: $("#dateRange").data("daterangepicker").startDate.format("DD/MM/YYYY"),
+            to: $("#dateRange").data("daterangepicker").endDate.format("DD/MM/YYYY"),
             company: $("#company").val(),
             sum: $("#sum").val()
         },

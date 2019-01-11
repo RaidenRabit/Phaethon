@@ -35,7 +35,7 @@ namespace InternalApi.DataAccess
                                 (x.Incoming && from <= x.ReceptionDate && x.ReceptionDate <= to))
                     .Where(x => x.DocNumber.Contains(docNumber))
                     .Where(x => x.RegNumber.Contains(regNumber))
-                    .Where(x => x.Elements.Sum(y => y.Item.Price) >= sum)
+                    .Where(x => sum == 0 || x.Elements.Sum(y => y.Item.Price) >= sum)
                     .Where(x => x.Receiver.Company.Name.Contains(company) ||
                                 x.Sender.Company.Name.Contains(company))
                     .OrderByDescending(x => x.ID)

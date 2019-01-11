@@ -19,9 +19,9 @@ namespace InternalApi.DataManagement
 
         public void CreateOrUpdate(Item item)
         {
+            ProductDa productDa = new ProductDa();
             using (var db = new DatabaseContext())
             {
-                ProductDa productDa = new ProductDa();
                 productDa.CreateOrUpdate(db, item.Product);
                 item.Product_ID = item.Product.ID;
                 item.Product = null;
@@ -33,22 +33,15 @@ namespace InternalApi.DataManagement
         {
             using (var db = new DatabaseContext())
             {
-                Item item = _itemDa.GetItem(db, id);
-                if (item != null)
-                {
-                    Tuple<List<Item>, decimal> tuple = GetSameIncomingPriceItems(db, item);
-                    item.Quantity = tuple.Item1.Count;
-                    item.Price = tuple.Item2;
-                }
-                return item;
+                return _itemDa.GetItem(db, id);
             }
         }
 
-        public List<Item> GetItems(string serialNumber, string productName, int barcode, bool showAll)
+        public List<Item> GetItems(string serialNumber, string productName, int barcode)
         {
             using (var db = new DatabaseContext())
             {
-                List<Item> items = _itemDa.GetItems(db, serialNumber, productName, barcode, showAll);
+                List<Item> items = _itemDa.GetItems(db, serialNumber, productName, barcode);
                 foreach (Item item in items)
                 {
                     item.Price = CalculateIncomingPrice(db, item);

@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebClient.Models;
 
-namespace WebClient.Controllers.Api
+namespace WebClient.Controllers
 {
     [RoutePrefix("Product")]
     public class ProductController : Controller
@@ -18,14 +18,15 @@ namespace WebClient.Controllers.Api
             _client = clientFactory.GetClient();
         }
 
-        [Route("GetProduct")]
+        #region Ajax
         [HttpGet]
-        public async Task<string> GetProduct(int barcode)
+        public async Task<string> GetProductAjax(int barcode)
         {
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["barcode"] = barcode.ToString();
             var response = await _client.GetAsync("GetProduct?" + parameters);
             return await response.Content.ReadAsStringAsync();
         }
+        #endregion
     }
 }

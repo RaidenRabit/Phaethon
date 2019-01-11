@@ -18,9 +18,7 @@ namespace Core.Decorators
             {
                 base.OnActionExecuting(actionContext);
                 string requestUrl = actionContext.Request.RequestUri.ToString();
-
-                if (requestUrl.Contains("Login/CreateOrUpdate"))
-                    return;
+                
                 if (requestUrl.Contains("Login/Login"))
                     return;
 

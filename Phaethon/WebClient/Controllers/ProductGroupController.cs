@@ -6,6 +6,7 @@ using WebClient.Models;
 
 namespace WebClient.Controllers
 {
+    [RoutePrefix("ProductGroup")]
     public class ProductGroupController : Controller
     {
         private readonly HttpClient _client;
@@ -17,26 +18,27 @@ namespace WebClient.Controllers
             _client = clientFactory.GetClient();
         }
 
+        #region Page
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult CreateGroup()
         {
             return PartialView();
         }
         
         [HttpPost]
-        public async Task<HttpResponseMessage> Create(ProductGroup productGroup)
+        public async Task<HttpResponseMessage> CreateGroup(ProductGroup productGroup)
         {
             return await _client.PostAsJsonAsync("Create", productGroup);
         }
+        #endregion
 
-        //Ajax
-
-        [Route("GetProductGroups")]
+        #region Page
         [HttpGet]
-        public async Task<string> GetProductGroups()
+        public async Task<string> GetProductGroupsAjax()
         {
             var response = await _client.GetAsync("GetProductGroups");
             return await response.Content.ReadAsStringAsync();
         }
+        #endregion
     }
 }

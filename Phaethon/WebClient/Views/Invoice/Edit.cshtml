@@ -2,7 +2,7 @@
 @{ViewBag.Title = "Edit";}
 @using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
 
-@using (Html.BeginForm("Edit", "Invoice"))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @action = "/Invoice/Edit"}))
 {
     @Html.AntiForgeryToken()
     <div class="card-body" style="padding-left: 20px;">
