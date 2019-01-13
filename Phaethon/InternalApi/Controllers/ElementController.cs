@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using InternalApi.DataManagement;
 using InternalApi.DataManagement.IDataManagement;
 
@@ -20,6 +16,12 @@ namespace InternalApi.Controllers
             _elementManagement = new ElementDM();
         }
 
+        /// <summary>
+        /// Get invoice elements, by ID
+        /// </summary>
+        /// <returns>Invoice elemnt, inside the response's body</returns>
+        /// <response code="200">Returns an element</response>
+        /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("GetInvoiceElements")]
         [HttpGet]
         public HttpResponseMessage GetInvoiceElements(int id)

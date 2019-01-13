@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using Core;
 using Core.Model;
 using InternalApi.DataAccess;
 using InternalApi.DataManagement.IDataManagement;
@@ -17,19 +15,11 @@ namespace InternalApi.DataManagement
             _productGroupDa = new ProductGroupDa();
         }
 
-        public bool Create(ProductGroup productGroup)
+        public void Create(ProductGroup productGroup)
         {
             using (var db = new DatabaseContext())
             {
-                try
-                {
-                    _productGroupDa.Create(db, productGroup);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                _productGroupDa.Create(db, productGroup);
             }
         }
 

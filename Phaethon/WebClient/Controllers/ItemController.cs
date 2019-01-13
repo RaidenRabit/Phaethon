@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,20 +6,23 @@ using System.Web;
 using System.Web.Mvc;
 using Core.Model;
 using Newtonsoft.Json;
-using WebClient.Controllers.Api;
+using WebClient.Models;
 
 namespace WebClient.Controllers
 {
+    [RoutePrefix("Item")]
     public class ItemController : Controller
     {
         private readonly HttpClient _client;
 
         public ItemController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/Item/");
+            HttpWebClientFactory clientFactory = new HttpWebClientFactory();
+            clientFactory.SetBaseAddress("http://localhost:64007/Item/");
+            _client = clientFactory.GetClient();
         }
 
+        #region Page
         [HttpGet]
         public ActionResult Index()
         {
@@ -42,8 +43,7 @@ namespace WebClient.Controllers
         public async Task<ActionResult> Edit(Item item)
         {
             var response = await _client.PostAsJsonAsync("CreateOrUpdate", item);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-            if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
+            if (HttpStatusCode.OK == response.StatusCode)
             {
                 return RedirectToAction("Index");
             }
@@ -74,5 +74,28 @@ namespace WebClient.Controllers
                 return Redirect(Request.UrlReferrer.ToString());
             }
         }
+        #endregion
+
+        #region Ajax
+        [HttpGet]
+        public async Task<string> GetItemAjax(int id)
+        {
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = id.ToString();
+            var response = await _client.GetAsync("GetItem?" + parameters);
+            return await response.Content.ReadAsStringAsync();
+        }
+        
+        [HttpGet]
+        public async Task<string> GetItemsAjax(string serialNumber, string productName, int barcode)
+        {
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["serialNumber"] = serialNumber;
+            parameters["productName"] = productName;
+            parameters["barcode"] = barcode.ToString();
+            var response = await _client.GetAsync("GetItems?" + parameters);
+            return await response.Content.ReadAsStringAsync();
+        }
+        #endregion
     }
 }

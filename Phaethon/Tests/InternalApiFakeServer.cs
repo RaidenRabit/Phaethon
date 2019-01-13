@@ -3,20 +3,19 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using Newtonsoft.Json;
-using NUnit.Framework;
 
-namespace Tests.IntegrationTests
+namespace Tests
 {
-    public class InternalTestFakeServerBase
+    public class InternalApiFakeServer
     {
-        protected HttpClient _client;
-        private HttpServer _server;
+        private HttpClient _internalClient;
+        private HttpServer _internalServer;
 
-        public InternalTestFakeServerBase()
+        public HttpClient GetInternalClient()
         {
+            return _internalClient;
         }
-
-        [SetUp]
+        
         public void StartServer()
         {
             HttpConfiguration config = new HttpConfiguration();
@@ -27,18 +26,17 @@ namespace Tests.IntegrationTests
                 = NullValueHandling.Ignore;
             InternalApi.WebApiConfig.Register(config);
 
-            _server = new HttpServer(config);
-            _client = new HttpClient(_server);
-            _client.BaseAddress = new Uri("http://localhost:64007/");
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _internalServer = new HttpServer(config);
+            _internalClient = new HttpClient(_internalServer);
+            _internalClient.BaseAddress = new Uri("http://localhost:64007/");
+            _internalClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         }
 
-        [TearDown]
         public void Dispose()
         {
-            _client.Dispose();
-            _server.Dispose();
+            _internalClient.Dispose();
+            _internalServer.Dispose();
         }
     }
 }

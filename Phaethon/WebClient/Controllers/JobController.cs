@@ -10,48 +10,25 @@ using System.Web.Mvc;
 using Core.Model;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using WebClient.Models;
 
 namespace WebClient.Controllers
 {
+    [RoutePrefix("Job")]
     public class JobController : Controller
     {
         private readonly HttpClient _client;
         public JobController()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:64007/Job/");
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpWebClientFactory clientFactory = new HttpWebClientFactory();
+            clientFactory.SetBaseAddress("http://localhost:64007/Job/");
+            _client = clientFactory.GetClient();
         }
-        
+
+        #region Page
         public ActionResult Index()
         {
             return View();
-        }
-
-        [HttpGet]
-        public async Task<string> GetJobs(int? numOfRecords, int? jobId, string jobName, int? jobStatus, string customerName, string description, string dateOption, string from, string to)
-        {
-            DateTime fromDateTime = DateTime.Now, toDateTime = DateTime.Now;
-            int dateOp = 0;
-            if(!from.IsNullOrWhiteSpace())
-                DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out fromDateTime);
-            if(!to.IsNullOrWhiteSpace())
-                DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out toDateTime);
-            if (!dateOption.IsNullOrWhiteSpace())
-                Int32.TryParse(dateOption, out dateOp);
-
-            JobQueryFilter jobFilter = new JobQueryFilter { CustomerName = customerName, DateOption = dateOp, Description = description, From = fromDateTime, To = toDateTime };
-
-            if(numOfRecords != null)
-                    jobFilter.NumOfRecords = (int)numOfRecords;
-            if (jobId != null)
-                jobFilter.JobId = (int)jobId;
-            if (jobStatus != null)
-                jobFilter.JobStatus = (int) jobStatus;
-            jobFilter.JobName = jobName;
-            
-            var response = await _client.PostAsJsonAsync("ReadAll", jobFilter);
-            return await response.Content.ReadAsStringAsync();
         }
 
         [HttpGet]
@@ -73,18 +50,46 @@ namespace WebClient.Controllers
                 job = JsonConvert.DeserializeObject<Job>(json);
             }
             else
-                job = new Job {ID = 0};
+                job = new Job { ID = 0 };
             return PartialView("_editJob", job);
+        }
+        #endregion
+
+        #region Ajax
+        [HttpGet]
+        public async Task<string> GetJobsAjax(string jobName, string customerName, string description, int dateOption, string from, string to, int numOfRecords = 10, int jobId = 0, int jobStatus = 0)
+        {
+            DateTime fromDateTime = DateTime.Now, toDateTime = DateTime.Now;
+            if (!from.IsNullOrWhiteSpace())
+                DateTime.TryParseExact(from, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out fromDateTime);
+            if (!to.IsNullOrWhiteSpace())
+                DateTime.TryParseExact(to, "dd/MM/yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out toDateTime);
+
+            JobQueryFilter jobFilter = new JobQueryFilter
+            {
+                NumOfRecords = numOfRecords,
+                CustomerName = customerName,
+                JobId = jobId,
+                JobStatus = jobStatus,
+                Description = description,
+                DateOption = dateOption,
+                From = fromDateTime,
+                To = toDateTime
+            };
+
+            jobFilter.JobName = jobName;
+            var response = await _client.PostAsJsonAsync("ReadAll", jobFilter);
+            return await response.Content.ReadAsStringAsync();
         }
 
         [HttpPost]
-        public async Task PostJob(Job job)
+        public async Task PostJobAjax(Job job)
         {
             await _client.PostAsJsonAsync("InsertOrUpdate", job);
         }
 
         [HttpGet]
-        public async Task ResendNotification(string jobId)
+        public async Task ResendNotificationAjax(string jobId)
         {
             if (!string.IsNullOrEmpty(jobId) && !jobId.Equals("0"))
             {
@@ -93,5 +98,6 @@ namespace WebClient.Controllers
                 await _client.GetAsync("ResendNotification?" + parameters);
             }
         }
+        #endregion
     }
 }

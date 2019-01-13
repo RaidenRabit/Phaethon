@@ -1,4 +1,14 @@
 ﻿@using LanguagePack = WebClient.Resources.Language_Files.LanguagePack;
+@{
+    var viewControllerName = ViewContext.RouteData.Values["controller"].ToString();
+    var viewActionName = ViewContext.RouteData.Values["action"].ToString();
+    bool logIn = viewControllerName.Equals("Login") && viewActionName.Equals("Index");
+    if (!logIn && Session["ID"] == null)
+    {
+        Response.Redirect("~/Login");
+    }
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +30,8 @@
                 <img src="/Resources/Images/Means.svg" width="30" height="30" class="d-inline-block align-top" alt="">
                 Means
             </a>
+        @if (!logIn)//logged in
+        {
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -37,9 +49,25 @@
                     <li class="nav-item">
                         @Html.ActionLink(LanguagePack.JobList, "Index", "Job", null, htmlAttributes: new { @class = "nav-link" })
                     </li>
+                    <li class="nav-item">
+                        @Html.ActionLink(LanguagePack.EditUser, "Edit", "Login", new { existing = true }, htmlAttributes: new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink(LanguagePack.RegisterUser, "Edit", "Login", new { existing = false }, htmlAttributes: new { @class = "nav-link" })
+                    </li>
                 </ul>
             </div>
+
+            <div class="float-right">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        @Html.ActionLink(LanguagePack.LogOff, "Index", "Login", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                    </li>
+                </ul>
+            </div>
+        }
         </div>
+        
         <div class="float-lg-right">
             <div class="btn-group navbar-collapse">
                 <button aria-expanded="true" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" type="button">@LanguagePack.SelectLanguage<b class="caret"></b></button>

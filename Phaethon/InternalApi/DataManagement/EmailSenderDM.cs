@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Web;
 using InternalApi.DataManagement.IDataManagement;
 
 namespace InternalApi.DataManagement
 {
-    internal class EmailSenderDM : IEmailSenderDM
+    public class EmailSenderDM : IEmailSenderDM
     {
         public void SendEmail(string customerEmail, string customerName, string jobName, string jobDescription)
         {
@@ -36,16 +33,7 @@ namespace InternalApi.DataManagement
                 Subject = subject,
                 Body = body
             })
-            {
-                try
-                {
-                    smtp.Send(message);
-                }
-                catch (Exception e)
-                {
-                    throw (e);
-                }
-            }
+            smtp.Send(message);
         }
     }
     

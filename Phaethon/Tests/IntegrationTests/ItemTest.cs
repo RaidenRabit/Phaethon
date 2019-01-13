@@ -1,36 +1,29 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Core;
 using Core.Model;
 using InternalApi.DataAccess;
 using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class ItemTest: InternalTestFakeServerBase
+    public class ItemTest: IntegrationTestBase
     {
         private bool AreItemsEqual(Item firstItem, Item secondItem)
         {
             return firstItem.ID == secondItem.ID &&
                    firstItem.SerNumber.Equals(secondItem.SerNumber) &&
-                   firstItem.IncomingPrice == secondItem.IncomingPrice &&
-                   firstItem.OutgoingPrice == secondItem.OutgoingPrice &&
-                   firstItem.IncomingTaxGroup_ID == secondItem.IncomingTaxGroup_ID &&
-                   firstItem.OutgoingTaxGroup_ID == secondItem.OutgoingTaxGroup_ID &&
-                   firstItem.Product.ID == secondItem.Product.ID &&
-                   firstItem.Product.Barcode == secondItem.Product.Barcode &&
-                   firstItem.Product.Name.Equals(secondItem.Product.Name) &&
-                   firstItem.Product.ProductGroup_ID == secondItem.Product.ProductGroup_ID;
+                   firstItem.IncomingTaxGroup.ID == secondItem.IncomingTaxGroup.ID;
         }
 
         #region CreateOrUpdate
         [Test]
-        public async Task CreateOrUpdate_NewItemObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_NewItemObject_SuccessStatusCode()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
@@ -44,49 +37,43 @@ namespace Tests.IntegrationTests
             }
 
             //Act
-            var response = await _client.PostAsJsonAsync("Item/CreateOrUpdate", item);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Item/CreateOrUpdate", item);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode, "Api didn't encounter unexpected issue");
-            Assert.IsTrue(deserializedResponse, "Api returned that operation has not succeeded");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
         }
 
         [Test]
-        public async Task CreateOrUpdate_ExistingItemObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_ExistingItemObject_SuccessStatusCode()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
             Item item = element.Item;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Item/CreateOrUpdate", item);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Item/CreateOrUpdate", item);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
         }
 
         [Test]
-        public async Task CreateOrUpdate_ItemObjectNull_IsSuccessStatusCodeAndResponseFalse()
+        public async Task CreateOrUpdate_ItemObjectNull_BadRequestStatusCode()
         {
             //Setup
             Item item = null;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Item/CreateOrUpdate", item);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Item/CreateOrUpdate", item);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
 
         #region GetItem
         [Test]
-        public async Task GetItem_CorrectItemId_IsSuccessStatusCodeAndItemReturned()
+        public async Task GetItem_CorrectItemId_SuccessStatusCodeAndItemReturned()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
@@ -94,34 +81,32 @@ namespace Tests.IntegrationTests
             parameters["id"] = element.Item.ID.ToString();
 
             //Act
-            var response = await _client.GetAsync("Item/GetItem?" + parameters);
+            var response = await _internalClient.GetAsync("Item/GetItem?" + parameters);
             Item item = JsonConvert.DeserializeObject<Item>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, AreItemsEqual(element.Item, item));//check if object received is the same
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(AreItemsEqual(element.Item, item), "Items are equal");//check if object received is the same
         }
 
         [Test]
-        public async Task GetItem_WrongItemId_IsSuccessStatusCodeAndNullReturned()
+        public async Task GetItem_WrongItemId_BadRequestStatusCode()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = 0.ToString();
 
             //Act
-            var response = await _client.GetAsync("Item/GetItem?" + parameters);
-            Item dbItem = JsonConvert.DeserializeObject<Item>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.GetAsync("Item/GetItem?" + parameters);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(null, dbItem);//check if object received is the same
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
 
         #region GetItems
         [Test]
-        public async Task GetItems_MethodCalled_IsSuccessStatusCodeAndItemsReturned()
+        public async Task GetItems_MethodCalled_SuccessStatusCodeAndItemsReturned()
         {
             //Setup
             InvoiceTest.GetElementSeed();
@@ -129,49 +114,42 @@ namespace Tests.IntegrationTests
             parameters["serialNumber"] = "";
             parameters["productName"] = "";
             parameters["barcode"] = 0.ToString();
-            parameters["showAll"] = true.ToString();
 
             //Act
-            var response = await _client.GetAsync("Item/GetItems?" + parameters);
+            var response = await _internalClient.GetAsync("Item/GetItems?" + parameters);
             List<Item> items = JsonConvert.DeserializeObject<List<Item>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(0, items.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreNotEqual(0, items.Count, "Gets items");
         }
         #endregion
 
         #region Delete
         [Test]
-        public async Task Delete_CorrectID_IsSuccessStatusCodeAndItemDeleted()
+        public async Task Delete_CorrectID_SuccessStatusCode()
         {
             //Setup
             Element element = InvoiceTest.GetElementSeed();
-            Item item = element.Item;
-            int id = item.ID;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Item/Delete", id);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Item/Delete", element.Item.ID);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
         }
 
         [Test]
-        public async Task Delete_WrongID_IsSuccessStatusCodeAndItemNotDeleted()
+        public async Task Delete_WrongID_BadRequestStatusCode()
         {
             //Setup
             int id = 0;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Item/Delete", id);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Item/Delete", id);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
     }

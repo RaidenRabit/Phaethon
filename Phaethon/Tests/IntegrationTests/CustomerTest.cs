@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Core.Model;
 using Core.Model.Filters;
@@ -12,7 +9,7 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class CustomerTests : InternalTestFakeServerBase
+    public class CustomerTest : IntegrationTestBase
     {
         private Address _address;
         private Customer _customer;
@@ -41,7 +38,7 @@ namespace Tests.IntegrationTests
             };
 
             //Act
-            var result = await _client.PostAsJsonAsync("Customer/ReadAll", customerQueryFilter);
+            var result = await _internalClient.PostAsJsonAsync("Customer/ReadAll", customerQueryFilter);
             string json = await result.Content.ReadAsStringAsync();
             List<Customer> jobs = JsonConvert.DeserializeObject<List<Customer>>(json);
 

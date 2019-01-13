@@ -1,26 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Core.Model;
 using NUnit.Framework;
 using System.Linq;
+using System.Net;
 using System.Web;
+using Core;
 using InternalApi.DataAccess;
 using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
 {
-    public class InvoiceTest: InternalTestFakeServerBase
+    public class InvoiceTest: IntegrationTestBase
     {
         private bool AreInvoicesEqual(Invoice firstInvoice, Invoice secondInvoice)
         {
             return firstInvoice.ID == secondInvoice.ID &&
                    firstInvoice.DocNumber.Equals(secondInvoice.DocNumber) &&
-                   firstInvoice.PaymentDate.Equals(secondInvoice.PaymentDate) &&
+                   firstInvoice.RegNumber.Equals(secondInvoice.RegNumber) &&
+                   firstInvoice.Incoming == secondInvoice.Incoming &&
                    firstInvoice.ReceptionDate.Equals(secondInvoice.ReceptionDate) &&
-                   firstInvoice.PrescriptionDate.Equals(secondInvoice.PrescriptionDate) &&
-                   firstInvoice.Transport == secondInvoice.Transport;
+                   firstInvoice.CheckoutDate.Equals(secondInvoice.CheckoutDate) &&
+                   firstInvoice.Transport == secondInvoice.Transport &&
+
+                   firstInvoice.Receiver.ID == secondInvoice.Receiver.ID &&
+                   firstInvoice.Sender.ID == secondInvoice.Sender.ID;
         }
 
         internal static Element GetElementSeed()
@@ -97,7 +104,8 @@ namespace Tests.IntegrationTests
             #region Item
             Item item = new Item
             {
-                IncomingPrice = 100,
+                Price = 100,
+                Quantity = 1,
                 SerNumber = "0",
                 IncomingTaxGroup_ID = taxGroup.ID,
                 Product_ID = product.ID
@@ -120,14 +128,39 @@ namespace Tests.IntegrationTests
             item.IncomingTaxGroup = taxGroup;
             item.Product = product;
             #endregion
-            
+
+            #region Address
+            Address address = new Address
+            {
+                City = "TestCity",
+                Street = "Nibevej",
+                Number = "12A",
+                Extra = "Room 22"
+            };
+
+            using (var db = new DatabaseContext())
+            {
+                Address oldAddress = db.Addresses.SingleOrDefault(x => x.City.Equals(address.City));
+                if (oldAddress != null)
+                {
+                    address = oldAddress;
+                }
+                else
+                {
+                    db.Addresses.Add(address);
+                    db.SaveChanges();
+                }
+            }
+            #endregion
+
             #region Company
             Company company = new Company
             {
-                Location = "Test location",
+                ActualAddress_ID = address.ID,
+                LegalAddress_ID = address.ID,
                 Name = "Test",
                 RegNumber = "0",
-                Address = "Test address",
+                BankName = "TestBank",
                 BankNumber = "0"
             };
 
@@ -144,6 +177,9 @@ namespace Tests.IntegrationTests
                     db.SaveChanges();
                 }
             }
+
+            company.ActualAddress = address;
+            company.LegalAddress = address;
             #endregion
 
             #region Representative
@@ -173,11 +209,11 @@ namespace Tests.IntegrationTests
             #region Invoice
             Invoice invoice = new Invoice
             {
-                DocNumber = "0",
-                PaymentDate = new DateTime(2010, 1, 1),
-                PrescriptionDate = new DateTime(2010, 1, 1),
-                ReceptionDate = new DateTime(2010, 1, 1),
                 Incoming = true,
+                DocNumber = "0",
+                RegNumber = "0",
+                CheckoutDate = new DateTime(2010, 1, 1),
+                ReceptionDate = new DateTime(2010, 1, 1),
                 Transport = 10,
                 Sender_ID = representative.ID,
                 Receiver_ID = representative.ID
@@ -231,7 +267,7 @@ namespace Tests.IntegrationTests
         
         #region CreateOrUpdate
         [Test]
-        public async Task CreateOrUpdate_NewInvoiceObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_NewInvoiceObject_SuccessStatusCode()
         {
             //Setup
             Element element = GetElementSeed();
@@ -245,42 +281,38 @@ namespace Tests.IntegrationTests
             }
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
         }
 
         [Test]
-        public async Task CreateOrUpdate_UpdateInvoiceObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_UpdateInvoiceObject_SuccessStatusCodeAndInvoiceUpdated()
         {
             //Setup
             Element element = GetElementSeed();
             Invoice invoice = element.Invoice;
-            element.Invoice = null;
             invoice.Transport = 99;
-            invoice.Elements = new List<Element>() { element };
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             Invoice dbInvoice = null;
             using (var db = new DatabaseContext())
             {
-                dbInvoice = db.Invoices.SingleOrDefault(x => x.ID == invoice.ID);
+                dbInvoice = db.Invoices
+                    .Include(x => x.Sender)
+                    .Include(x => x.Receiver)
+                    .SingleOrDefault(x => x.ID == invoice.ID);
             }
-
-
+            
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
-            Assert.AreEqual(true, AreInvoicesEqual(invoice, dbInvoice));//check if object received is the same
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(AreInvoicesEqual(invoice, dbInvoice), "Invoices are equal");//check if object received is the same
         }
 
         [Test]
-        public async Task CreateOrUpdate_NewInvoiceObjectNoElements_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_NewInvoiceObjectNoElements_SuccessStatusCode()
         {
             //Setup
             Element element = GetElementSeed();
@@ -293,57 +325,53 @@ namespace Tests.IntegrationTests
             }
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
         }
 
         [Test]
-        public async Task CreateOrUpdate_UpdateInvoiceObjectNoElements_IsSuccessStatusCodeAndResponseTrue()
+        public async Task CreateOrUpdate_UpdateInvoiceObjectNoElements_SuccessStatusCodeAndInvoiceUpdated()
         {
             //Setup
             Element element = GetElementSeed();
             Invoice invoice = element.Invoice;
-            invoice.Transport = 99;
-            element.Invoice = null;
+            invoice.Elements = null;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
             Invoice dbInvoice = null;
             using (var db = new DatabaseContext())
             {
-                dbInvoice = db.Invoices.SingleOrDefault(x => x.ID == invoice.ID);
+                dbInvoice = db.Invoices
+                    .Include(x => x.Sender)
+                    .Include(x => x.Receiver)
+                    .SingleOrDefault(x => x.ID == invoice.ID);
             }
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
-            Assert.AreEqual(true, AreInvoicesEqual(invoice, dbInvoice));//check if object received is the same
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(AreInvoicesEqual(invoice, dbInvoice), "Invoices are equal");//check if object received is the same
         }
 
         [Test]
-        public async Task CreateOrUpdate_InvoiceObjectNull_IsSuccessStatusCodeAndResponseFalse()
+        public async Task CreateOrUpdate_InvoiceObjectNull_BadRequestStatusCode()
         {
             //Setup
             Invoice invoice = null;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Invoice/CreateOrUpdate", invoice);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
 
         #region GetInvoice
         [Test]
-        public async Task GetInvoice_CorrectID_IsSuccessStatusCodeAndSameObjectReturned()
+        public async Task GetInvoice_CorrectID_SuccessStatusCodeAndSameObjectReturned()
         {
             //Setup
             Element element = GetElementSeed();
@@ -352,59 +380,57 @@ namespace Tests.IntegrationTests
             parameters["id"] = oldInvoice.ID.ToString();
 
             //Act
-            var response = await _client.GetAsync("Invoice/GetInvoice?" + parameters);
+            var response = await _internalClient.GetAsync("Invoice/GetInvoice?" + parameters);
             Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(true, AreInvoicesEqual(oldInvoice, invoice));//check if object received is the same
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.IsTrue(AreInvoicesEqual(oldInvoice, invoice), "Invoices are equal");//check if object received is the same
         }
 
         [Test]
-        public async Task GetInvoice_WrongId_IsSuccessStatusCodeAndNullObjectReturned()
+        public async Task GetInvoice_WrongId_BadRequestStatusCode()
         {
             //Setup
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = 0.ToString();
 
             //Act
-            var response = await _client.GetAsync("Invoice/GetInvoice?" + parameters);
-            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.GetAsync("Invoice/GetInvoice?" + parameters);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreEqual(null, invoice);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
 
         #region GetInvoices
         [Test]
-        public async Task GetInvoices_MethodCalled_IsSuccessStatusCodeAndInvoicesReturned()
+        public async Task GetInvoices_MethodCalled_SuccessStatusCodeAndInvoicesReturned()
         {
             //Setup
             GetElementSeed();
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["numOfRecords"] = 1.ToString();
-            parameters["selectedCompany"] = 0.ToString();
-            parameters["name"] = "";
-            parameters["selectedDate"] = 0.ToString();
+            parameters["regNumber"] = "";
+            parameters["docNumber"] = "";
             parameters["from"] = new DateTime(2000, 1, 1).ToString("dd/MM/yyyy");
             parameters["to"] = DateTime.Now.ToString("dd/MM/yyyy");
-            parameters["docNumber"] = "";
+            parameters["company"] = "";
+            parameters["sum"] = "0";
 
             //Act
-            var response = await _client.GetAsync("Invoice/GetInvoices?" + parameters);
+            var response = await _internalClient.GetAsync("Invoice/GetInvoices?" + parameters);
             List<Invoice> invoices = JsonConvert.DeserializeObject<List<Invoice>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(0, invoices.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreNotEqual(0, invoices.Count, "Invoices received");
         }
         #endregion
 
         #region Delete
         [Test]
-        public async Task Delete_CorrectID_IsSuccessStatusCodeAndInvoiceDeleted()
+        public async Task Delete_CorrectID_SuccessStatusCode()
         {
             //Setup
             Element element = GetElementSeed();
@@ -412,27 +438,23 @@ namespace Tests.IntegrationTests
             int id = invoice.ID;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/Delete", id);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Invoice/Delete", id);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
         }
 
         [Test]
-        public async Task Delete_WrongID_IsSuccessStatusCodeAndInvoiceNotDeleted()
+        public async Task Delete_WrongID_BadRequestStatusCode()
         {
             //Setup
             int id = 0;
 
             //Act
-            var response = await _client.PostAsJsonAsync("Invoice/Delete", id);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("Invoice/Delete", id);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
     }

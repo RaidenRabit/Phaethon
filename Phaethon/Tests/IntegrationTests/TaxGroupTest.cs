@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Core;
 using Core.Model;
 using InternalApi.DataAccess;
 using Newtonsoft.Json;
@@ -9,11 +11,11 @@ using NUnit.Framework;
 
 namespace Tests.IntegrationTests
 {
-    public class TaxGroupTest: InternalTestFakeServerBase
+    public class TaxGroupTest: IntegrationTestBase
     {
         #region Create
         [Test]
-        public async Task Create_NewTaxGroupObject_IsSuccessStatusCodeAndResponseTrue()
+        public async Task Create_NewTaxGroupObject_SuccessStatusCode()
         {
             //Setup
             TaxGroup taxGroup = InvoiceTest.GetElementSeed().Item.IncomingTaxGroup;
@@ -26,59 +28,53 @@ namespace Tests.IntegrationTests
             }
 
             //Act
-            var response = await _client.PostAsJsonAsync("TaxGroup/Create", taxGroup);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("TaxGroup/Create", taxGroup);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsTrue(deserializedResponse);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
         }
 
         [Test]
-        public async Task Create_ExistingTaxGroupObject_IsSuccessStatusCodeAndResponseFalse()
+        public async Task Create_ExistingTaxGroupObject_BadRequestStatusCode()
         {
             //Setup
             TaxGroup taxGroup = InvoiceTest.GetElementSeed().Item.IncomingTaxGroup;
 
             //Act
-            var response = await _client.PostAsJsonAsync("TaxGroup/Create", taxGroup);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("TaxGroup/Create", taxGroup);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
 
         [Test]
-        public async Task Create_TaxGroupObjectNull_IsSuccessStatusCodeAndResponseFalse()
+        public async Task Create_TaxGroupObjectNull_BadRequestStatusCode()
         {
             //Setup
             TaxGroup taxGroup = null;
 
             //Act
-            var response = await _client.PostAsJsonAsync("TaxGroup/Create", taxGroup);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _internalClient.PostAsJsonAsync("TaxGroup/Create", taxGroup);
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.IsFalse(deserializedResponse);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error
         }
         #endregion
 
         #region GetTaxGroups
         [Test]
-        public async Task GetTaxGroups_MethodCalled_IsSuccessStatusCodeAndTaxGroupsReturned()
+        public async Task GetTaxGroups_MethodCalled_SuccessStatusCodeAndTaxGroupsReturned()
         {
             //Setup
             InvoiceTest.GetElementSeed();
 
             //Act
-            var response = await _client.GetAsync("TaxGroup/GetTaxGroups");
+            var response = await _internalClient.GetAsync("TaxGroup/GetTaxGroups");
             List<TaxGroup> taxGroups = JsonConvert.DeserializeObject<List<TaxGroup>>(await response.Content.ReadAsStringAsync());
 
             //Assert
-            Assert.IsTrue(response.IsSuccessStatusCode);
-            Assert.AreNotEqual(0, taxGroups.Count);
+            Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
+            Assert.AreNotEqual(0, taxGroups.Count, "Tax groups received");
         }
         #endregion
     }

@@ -9,11 +9,11 @@ namespace InternalApi.DataManagement.IDataManagement
 {
     interface IItemDM
     {
-        bool CreateOrUpdate(Item item);
+        void CreateOrUpdate(Item item);
 
         Item GetItem(int id);
 
-        List<Item> GetItems(string serialNumber, string productName, int barcode, bool showAll);
+        List<Item> GetItems(string serialNumber, string productName, int barcode);
 
         bool Delete(int id);
     }

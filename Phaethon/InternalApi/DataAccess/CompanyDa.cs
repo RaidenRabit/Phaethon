@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using Core;
 using Core.Model;
 
 namespace InternalApi.DataAccess
@@ -23,6 +24,8 @@ namespace InternalApi.DataAccess
         {
             return db.Companies
                 .Include(x => x.Representatives)
+                .Include(x => x.ActualAddress)
+                .Include(x => x.LegalAddress)
                 .SingleOrDefault(x => x.ID == id);
         }
     }
