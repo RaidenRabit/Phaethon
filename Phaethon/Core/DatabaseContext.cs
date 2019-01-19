@@ -235,7 +235,7 @@ namespace Core
             );
             #endregion
             context.SaveChanges();
-            #region Product group
+            #region Job
             context.Jobs.AddOrUpdate(
                 new Job
                 {
@@ -255,7 +255,6 @@ namespace Core
                     JobName = "Window installation",
                     StartedTime = new DateTime(2019, 1, 6),
                     FinishedTime = new DateTime(2019, 1, 6),
-                    NotificationTime = new DateTime(2019, 1, 6),
                     Cost = 10,
                     Description = "Windows 10 has to be installed, saving data"
                 },
@@ -266,7 +265,6 @@ namespace Core
                     JobName = "Set up router",
                     StartedTime = new DateTime(2019, 1, 7),
                     FinishedTime = new DateTime(2019, 1, 8),
-                    NotificationTime = new DateTime(2019, 1, 9),
                     Cost = 5,
                     Description = "New router has to be set up, last one left"
                 }
