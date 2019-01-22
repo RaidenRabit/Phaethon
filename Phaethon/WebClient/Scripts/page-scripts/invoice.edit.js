@@ -17,7 +17,7 @@ $(function () {
 function DeleteInvoice() {
     $.ajax({
         url: "/Invoice/Delete/" + $("#ID").val(),
-        type: "POST",
+        type: "Delete",
         contentType: "application/json;charset=utf-8",
         dataType: "json"
     }).done(function (res) {

@@ -37,7 +37,7 @@ function elementTableChange() {
             } else {
                 rowValue = parseInt($("#elementTable tbody tr:last").find("input").attr("name").split("[")[1].split("]")[0]) + 1;
             }
-            addNewElement(rowValue, 0, 0, 1, "", "", "", 0, 0, "", 0, 0, "True");
+            addNewElement(rowValue,0,0,1,"","",0,0,"",0,0,"True");
         } else {
             getSelectItemForm();
         }

@@ -111,8 +111,8 @@ namespace InternalApi.Controllers
         /// <response code="400">No invoice with such ID</response>
         /// <response code="403">Missing/Invalid UserToken</response>    
         [Route("Delete")]
-        [HttpPost]
-        public async Task<HttpResponseMessage> Delete([FromBody] int id)
+        [HttpDelete]
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             if (_invoiceManagement.Delete(id))
             {

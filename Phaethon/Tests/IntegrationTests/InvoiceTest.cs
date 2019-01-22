@@ -9,7 +9,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Core;
-using InternalApi.DataAccess;
 using Newtonsoft.Json;
 
 namespace Tests.IntegrationTests
@@ -436,9 +435,11 @@ namespace Tests.IntegrationTests
             Element element = GetElementSeed();
             Invoice invoice = element.Invoice;
             int id = invoice.ID;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = id.ToString();
 
             //Act
-            var response = await _internalClient.PostAsJsonAsync("Invoice/Delete", id);
+            var response = await _internalClient.DeleteAsync("Invoice/Delete?" + parameters);
 
             //Assert
             Assert.IsTrue(response.IsSuccessStatusCode, "Server responded with Success code");
@@ -449,9 +450,11 @@ namespace Tests.IntegrationTests
         {
             //Setup
             int id = 0;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = id.ToString();
 
             //Act
-            var response = await _internalClient.PostAsJsonAsync("Invoice/Delete", id);
+            var response = await _internalClient.DeleteAsync("Invoice/Delete?" + parameters);
 
             //Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode, "Server responded with bad request code");//check if internal server error

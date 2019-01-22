@@ -59,12 +59,13 @@ namespace WebClient.Controllers
             return View(invoice);
         }
 
-        [HttpPost]
+        [HttpDelete]
         public async Task<ActionResult> Delete(int id)
         {
-            var response = await _client.PostAsJsonAsync("Delete", id);
-            var deserializedResponse = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-            if (HttpStatusCode.OK == response.StatusCode && deserializedResponse)
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["id"] = id.ToString();
+            var response = await _client.DeleteAsync("Delete?" + parameters);
+            if (HttpStatusCode.OK == response.StatusCode)
             {
                 return Json(new { newUrl = Url.Action("Index") });
             }
